@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/home_p_web_item_bg"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_height="90dp">
+
+        <com.youth.xframe.widget.RoundedImagView
+            android:id="@+id/act_p_web_item_image"
+            android:layout_width="147dp"
+            android:layout_height="86dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/act_p_web_item_image_duf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+
+            android:src="@drawable/home_p_web_no_icon" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/act_p_web_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="JSMO智能产品个人网页JSMO智能产品个人网页"
+            android:textColor="@color/color010101"
+            android:textSize="@dimen/text_size_14" />
+
+        <LinearLayout
+            android:id="@+id/act_p_web_item_bs_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/act_p_web_item_browse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/marketing_web_browse_icon"
+                android:drawablePadding="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="1251"
+                android:textColor="@color/color999999"
+                android:textSize="@dimen/text_size_10" />
+
+            <TextView
+                android:id="@+id/act_p_web_item_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:drawableLeft="@drawable/marketing_web_share_icon"
+                android:drawablePadding="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="1251"
+                android:textColor="@color/color999999"
+                android:textSize="@dimen/text_size_10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/act_p_web_item_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="2018-12-15"
+                android:textColor="@color/color999999"
+                android:textSize="@dimen/text_size_10"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/act_p_web_item_sy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="100人使用"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/act_p_web_item_ljsy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mine_quwanshan_bg"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="5dp"
+            android:text="立即使用"
+            android:textColor="@color/main_color"
+            android:textSize="@dimen/text_size_12" />
+
+        <RelativeLayout
+            android:id="@+id/act_p_web_item_ss_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/act_p_web_item_share_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/act_p_web_item_set_btn"
+                android:drawableLeft="@drawable/home_share_icon"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:text="分享"
+                android:textColor="@color/color555555"
+                android:textSize="@dimen/text_size_10" />
+
+            <TextView
+                android:id="@+id/act_p_web_item_set_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/home_set_icon"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                android:text="设置"
+                android:textColor="@color/color555555"
+                android:textSize="@dimen/text_size_10" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

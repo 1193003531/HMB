@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/stub_title_bar" />
+
+
+    <com.youth.xframe.widget.XScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.youth.xframe.widget.NoScrollListView
+                android:id="@+id/wallet_bank_add_list"
+                android:layout_width="match_parent"
+                android:dividerHeight="0dp"
+                android:divider="@color/transparent"
+                android:listSelector="@color/transparent"
+                android:layout_height="wrap_content" />
+
+
+            <LinearLayout
+                android:id="@+id/wallet_bank_add_btn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="22dp"
+                android:background="@drawable/btn_blue_line_r50_bg"
+                android:gravity="center"
+                android:onClick="onAction"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/wallet_bank_add_icon"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="添加银行卡"
+                    android:textColor="@color/FF274FF3"
+                    android:textSize="@dimen/text_size_15"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.youth.xframe.widget.XScrollView>
+
+
+</LinearLayout>
+

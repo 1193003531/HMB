@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/FFf6f6f6"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/stub_title_bar" />
+
+
+    <TextView
+        android:id="@+id/setting_account_pwd_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/btn_duf"
+        android:drawableRight="@drawable/mine_right_icon"
+        android:drawablePadding="@dimen/text_image"
+        android:gravity="center_vertical"
+        android:onClick="onAction"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight"
+        android:text="修改密码"
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/text_size_15" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_05"
+        android:background="@color/linee7e7e7" />
+
+
+    <TextView
+        android:id="@+id/setting_account_phone_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/btn_duf"
+        android:drawableRight="@drawable/mine_right_icon"
+        android:drawablePadding="@dimen/text_image"
+        android:gravity="center_vertical"
+        android:onClick="onAction"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight"
+        android:text="更换手机号"
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/text_size_15" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_05"
+        android:background="@color/linee7e7e7" />
+
+
+</LinearLayout>
+

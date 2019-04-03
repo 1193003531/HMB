@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0">
+
+        <LinearLayout
+            android:id="@+id/list_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="100dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/blank_pages_4_icon" />
+
+            <TextView
+                android:id="@+id/list_no_data_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="@string/no_datas_4"
+                android:textColor="#484f64"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
+
+        <com.youth.xframe.widget.XSwipeRefreshView
+            android:id="@+id/list_swipe_value"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/list_pull_value"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:fadingEdge="none"
+                android:fastScrollEnabled="false"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:smoothScrollbar="true" />
+
+        </com.youth.xframe.widget.XSwipeRefreshView>
+
+
+        <LinearLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/fake_status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/transparent"
+                android:gravity="center_vertical">
+
+
+                <ImageView
+                    android:id="@+id/back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:onClick="onAction"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:src="@drawable/back_icon_w_left" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:text="营销奖励金"
+                    android:textColor="@color/fffefe"
+                    android:textSize="@dimen/text_size_17" />
+
+                <TextView
+                    android:id="@+id/right_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:onClick="onAction"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="赚钱攻略"
+                    android:textColor="@color/fffefe"
+                    android:textSize="@dimen/text_size_15" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/marketing_reward_to_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="#367df3"
+        android:gravity="center"
+        android:onClick="onAction"
+        android:text="转入钱包"
+        android:textColor="@color/fffefe"
+        android:textSize="@dimen/text_size_16" />
+
+</LinearLayout>
+

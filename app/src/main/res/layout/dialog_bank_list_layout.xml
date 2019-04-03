@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="314dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="选择银行卡"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_14" />
+
+        <ImageView
+            android:id="@+id/dialog_bank_card_list_del"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:src="@drawable/wallet_bank_pay_exit_icon" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_05"
+        android:background="@color/linee7e7e7" />
+
+    <ListView
+        android:id="@+id/dialog_bank_card_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/transparent"
+        android:dividerHeight="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+</LinearLayout>

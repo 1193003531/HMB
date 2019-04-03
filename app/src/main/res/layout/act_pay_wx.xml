@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".pay.wxpay.PayWXActivity">
+
+    <Button
+        android:id="@+id/appay_btn"
+        android:layout_width="match_parent"
+        android:text="服务器端签名微信支付"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/check_pay_btn"
+        android:layout_width="match_parent"
+        android:text="检查微信版本是否支持支付"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

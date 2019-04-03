@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/lib_focus_on_item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.youth.xframe.widget.CircleImageView
+                android:id="@+id/lib_focus_on_item_name_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/lib_focus_on_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="小麦包"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_14" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/efeff4" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp">
+
+
+        <TextView
+            android:id="@+id/lib_news_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/lib_news_item_image_right"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingRight="5dp"
+            android:text="10新增用户219人，高铁“霸座姐”在列"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_15" />
+
+        <com.youth.xframe.widget.RoundedImagView
+            android:id="@+id/lib_news_item_image_right"
+            android:layout_width="100dp"
+            android:layout_height="67dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1.0"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/lib_news_item_image_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lib_news_item_title"
+            android:layout_marginTop="9dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lib_news_item_image_3_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <com.youth.xframe.widget.RoundedImagView
+                    android:id="@+id/lib_news_item_image_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_weight="1.0"
+                    android:src="@drawable/ic_launcher"
+                    android:scaleType="centerCrop" />
+
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="@dimen/line_05" />
+
+                <com.youth.xframe.widget.RoundedImagView
+                    android:id="@+id/lib_news_item_image_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_weight="1.0"
+                    android:src="@drawable/ic_launcher"
+                    android:scaleType="centerCrop" />
+
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="@dimen/line_05" />
+
+                <com.youth.xframe.widget.RoundedImagView
+                    android:id="@+id/lib_news_item_image_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_weight="1.0"
+                    android:src="@drawable/ic_launcher"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <com.youth.xframe.widget.RoundedImagView
+                android:id="@+id/lib_news_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="168dp"
+                android:layout_weight="1.0"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lib_news_item_c_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lib_news_item_image_ll"
+            android:layout_marginTop="9dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lib_news_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="小麦包"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_11" />
+
+            <TextView
+                android:id="@+id/lib_news_item_browse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="728阅读"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_11" />
+
+            <TextView
+                android:id="@+id/lib_news_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="5分钟前"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_11" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_05"
+        android:layout_marginTop="10dp"
+        android:background="@color/linee7e7e7" />
+
+    <ImageView
+        android:id="@+id/lib_focus_on_item_line"
+        android:layout_width="match_parent"
+        android:layout_height="9.5dp"
+        android:background="@color/linee7e7e7" />
+
+</LinearLayout>

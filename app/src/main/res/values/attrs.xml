@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TagCloudView">
+        <attr name="autoScrollMode">
+            <enum name="disable" value="0" />
+            <enum name="decelerate" value="1" />
+            <enum name="uniform" value="2" />
+        </attr>
+        <attr name="manualScroll" format="boolean" />
+        <attr name="radiusPercent" format="float" />
+        <attr name="scrollSpeed" format="float" />
+        <attr name="lightColor" format="color" />
+        <attr name="darkColor" format="color" />
+        <attr name="startAngleX" format="float" />
+        <attr name="startAngleY" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsTabTextSize" format="dimension" />
+        <attr name="pstsDefTextColor" format="color" />
+        <attr name="pstsSelTextColor" format="color" />
+        <attr name="pstsIndicatorPaddingLeftRight" format="dimension" />
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsDividerWidth" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ViewfinderView">
+        <attr name="corner_color" format="color" />
+        <attr name="laser_color" format="color" />
+        <attr name="frame_color" format="color" />
+        <attr name="mask_color" format="color" />
+        <attr name="result_point_color" format="color" />
+        <attr name="result_color" format="color" />
+        <attr name="label_text_color" format="color" />
+        <attr name="label_text" format="string" />
+        <attr name="label_text_size" format="float" />
+    </declare-styleable>
+
+    <!-- 自定义验证码输入框-->
+    <declare-styleable name="vericationCodeView">
+        <!--输入框的数量-->
+        <attr name="vcv_et_number" format="integer" />
+        <!--输入类型-->
+        <attr name="vcv_et_inputType">
+            <enum name="number" value="0" />
+            <enum name="numberPassword" value="1" />
+            <enum name="text" value="2" />
+            <enum name="textPassword" value="3" />
+        </attr>
+        <!--输入框的宽度-->
+        <attr name="vcv_et_width" format="dimension|reference" />
+        <!--输入框文字颜色-->
+        <attr name="vcv_et_text_color" format="color|reference" />
+        <!--输入框文字大小-->
+        <attr name="vcv_et_text_size" format="dimension|reference" />
+        <!--输入框背景-->
+        <attr name="vcv_et_bg" format="reference" />
+        <!--光标样式-->
+        <attr name="vcv_et_cursor" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PayPsdInputView">
+
+        <attr name="maxCount" format="integer" />
+        <attr name="circleColor" format="color" />
+        <attr name="bottomLineColor" format="color" />
+        <attr name="radius" format="dimension" />
+        <attr name="divideLineWidth" format="dimension" />
+        <attr name="divideLineColor" format="color" />
+        <attr name="rectAngle" format="dimension" />
+        <attr name="focusedColor" format="color" />
+        <attr name="psdType" format="enum">
+            <enum name="weChat" value="0" />
+            <enum name="bottomLine" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!--收起展开textview-->
+    <declare-styleable name="ExpandableTextView">
+        <attr name="maxCollapsedLines" format="integer" />
+        <attr name="animDuration" format="integer" />
+        <attr name="expandDrawable" format="reference" />
+        <attr name="collapseDrawable" format="reference" />
+        <attr name="contentTextColor" format="color" />
+        <attr name="collapseExpandTextColor" format="color" />
+        <attr name="contentTextSize" format="dimension" />
+        <attr name="collapseExpandTextSize" format="dimension" />
+        <attr name="textCollapse" format="string" />
+        <attr name="textExpand" format="string" />
+        <attr name="collapseExpandGrarity">
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+        </attr>
+        <attr name="drawableGrarity">
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+        </attr>
+    </declare-styleable>
+
+    <!--编辑阴影-->
+    <declare-styleable name="ShadowContainer">
+        <attr name="containerShadowColor" format="color" />
+        <attr name="containerShadowRadius" format="dimension" />
+        <attr name="containerDeltaLength" format="dimension" />
+        <attr name="containerCornerRadius" format="dimension" />
+        <attr name="deltaX" format="dimension" />
+        <attr name="deltaY" format="dimension" />
+        <attr name="enable" format="boolean" />
+    </declare-styleable>
+
+</resources>

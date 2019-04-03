@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/msg_push_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="2018-11-22  12:06"
+        android:textColor="@color/color666666"
+        android:textSize="@dimen/text_size_11" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="245dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/msg_xt_1_bg"
+        android:orientation="vertical">
+
+        <com.youth.xframe.widget.RoundedImagView
+            android:id="@+id/msg_push_item_iv"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/welcome_icon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingTop="15dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/msg_push_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="见证40年行业变迁：教育信息化时代，每个求学者都有机会“节节升"
+                android:textColor="@color/color000000"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/msg_push_item_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:ellipsize="end"
+                android:visibility="gone"
+                android:maxLines="1"
+                android:text="精准推广，让用户变成主动推广敲门找你,精准推广，让用户"
+                android:textColor="@color/color999999"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+

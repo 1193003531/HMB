@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical">
+
+
+    <com.youth.xframe.widget.CircleImageView
+        android:id="@+id/fragment_lib_news_item_section_iv"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/fragment_lib_news_item_section_name"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5.0dp"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:text=""
+        android:textColor="@color/FF747474"
+        android:textSize="@dimen/text_size_12" />
+
+
+</LinearLayout>

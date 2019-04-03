@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sreach_ll_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f4f4f4"
+    android:onClick="onAction"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingTop="6dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/sreach_white_r15_bg"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/sreach_icon"
+            android:drawablePadding="6dp"
+            android:text="快速查找名片"
+            android:textColor="#b5b5b5"
+            android:textSize="@dimen/text_size_12" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

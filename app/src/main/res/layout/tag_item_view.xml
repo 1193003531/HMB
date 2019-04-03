@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <!--<View-->
+    <!--android:id="@+id/android_eye"-->
+    <!--android:layout_width="13dp"-->
+    <!--android:layout_height="4dp"-->
+    <!--android:background="#ff00ff"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginTop="4.5dp"/>-->
+
+
+    <com.youth.xframe.widget.CircleImageView
+        android:id="@+id/iv"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_launcher"
+        app:civ_border_color="@color/A5A8B6"
+        app:civ_border_width="2dp" />
+</LinearLayout>

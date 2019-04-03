@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_home_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:onClick="onAction"
+    android:orientation="vertical">
+
+
+    <com.youth.xframe.widget.RoundedImagView
+        android:id="@+id/dialog_home_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:onClick="onAction"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/dialog_home_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onAction"
+        android:padding="20dp"
+        android:src="@drawable/msg_dialog_del_bg" />
+
+
+</LinearLayout>

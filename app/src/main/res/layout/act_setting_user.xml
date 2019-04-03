@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/stub_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="@string/user_agreement_title"
+                android:textColor="@color/color000000"
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/user_agreement"
+                android:textColor="@color/transparent8"
+                android:textSize="@dimen/text_size_13" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/user_agreement_1"
+                android:textColor="@color/transparent8"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/user_agreement_2"
+                android:textColor="@color/transparent8"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/user_agreement_3"
+                android:textColor="@color/transparent8"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/user_agreement_4"
+                android:textColor="@color/transparent8"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="visible" />
+            <TextView
+                android:id="@+id/user_agreement_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:onClick="onAction"
+                android:clickable="true"
+                android:text="@string/user_agreement_5"
+                android:textColor="@color/transparent8"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="visible" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/user_agreement_6"
+                android:textColor="@color/transparent8"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="visible" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>
+

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FAFAFA</color>
+    <color name="colorAccent">#AFAEB1</color>
+
+    <!--主色-->
+    <color name="FAFAFA">#FAFAFA</color>
+    <color name="_274FF3">#f56900</color>
+    <color name="AFAEB1">#FAFAFA</color>
+    <color name="_535255">#535255</color>
+    <color name="main_color">#f56900</color>
+    <!--常用色-->
+    <color name="_34394C">#34394C</color>
+    <color name="_484F64">#484F64</color>
+    <color name="A5A8B6">#A5A8B6</color>
+    <color name="D2D3DA">#D2D3DA</color>
+
+    <!--辅助色-->
+    <color name="FF9068">#FF9068</color>
+    <color name="A8E063">#A8E063</color>
+    <color name="_7CE0C3">#7CE0C3</color>
+    <color name="FC6767">#FC6767</color>
+    <color name="F4F4F4">#F4F4F4</color>
+    <!--分割线-->
+    <color name="line">#F3F3F3</color>
+    <color name="line_F4F4F4">#F4F4F4</color>
+    <color name="line_d9d9d9">#d9d9d9</color>
+    <color name="line_f2f2f2">#f2f2f2</color>
+    <!--首页-->
+    <color name="F8F8F8">#F8F8F8</color>
+    <color name="ff8e8e93">#ff8e8e93</color>
+    <color name="fff56900">#fff56900</color>
+    <color name="_212121">#212121</color>
+    <!--首页字体-->
+    <color name="color000000">#000000</color>
+    <color name="color999999">#999999</color>
+    <color name="color666666">#666666</color>
+    <color name="color333333">#333333</color>
+    <color name="color555555">#555555</color>
+    <color name="color010101">#010101</color>
+    <color name="color101010">#101010</color>
+    <color name="colorbbbbbb">#bbbbbb</color>
+    <color name="color454545">#454545</color>
+    <color name="color888888">#888888</color>
+    <color name="color444444">#444444</color>
+    <color name="color0a0a0a">#0a0a0a</color>
+    <color name="color646464">#646464</color>
+    <color name="colorfac216">#fac216</color>
+    <color name="linee7e7e7">#e7e7e7</color>
+    <color name="colorcccccc">#cccccc</color>
+    <color name="colore6e6e6">#e6e6e6</color>
+    <color name="colorefffefe">#fffefe</color>
+    <color name="colored2d2d2">#d2d2d2</color>
+    <color name="coloreff7e27">#ff7e27</color>
+    <color name="colore262626">#262626</color>
+    <color name="colored0d0d0">#d0d0d0</color>
+    <color name="fffefe">#fffefe</color>
+
+    <!--互推圈-->
+    <color name="FF8aa1ff">#8aa1ff</color>
+    <color name="color040404">#040404</color>
+    <color name="color34bd0a">#34bd0a</color>
+    <!--文库-->
+    <color name="FF274FF3">#FFf56900</color>
+    <color name="ff274ff3">#FFf56900</color>
+    <color name="FF747474">#FF747474</color>
+    <color name="FF2732E1">#FF2732E1</color>
+
+
+
+    <!--消息-->
+    <color name="FF6e6e6e">#6e6e6e</color>
+    <color name="FF49be03">#49be03</color>
+    <color name="FFf81e1e">#f81e1e</color>
+
+    <!--我的-->
+    <color name="FFf6f6f6">#f6f6f6</color>
+    <color name="FF333333">#333333</color>
+    <color name="FFfefefe">#fefefe</color>
+    <color name="FF525252">#525252</color>
+    <color name="FFffad38">#ffad38</color>
+    <color name="line_eaeaea">#eaeaea</color>
+    <color name="line_d8d8dc">#d8d8dc</color>
+    <color name="color777777">#777777</color>
+    <color name="colorc7c7c7">#c7c7c7</color>
+    <color name="e92121">#e92121</color>
+    <color name="cecccc">#cecccc</color>
+    <color name="d8d8d8">#d8d8d8</color>
+    <color name="c2c2c2">#c2c2c2</color>
+    <color name="efeff4">#efeff4</color>
+    <color name="FF996b23">#996b23</color>
+    <color name="FFd6d6d6">#d6d6d6</color>
+    <color name="f3f3f3">#f3f3f3</color>
+    <color name="e0e0e0">#e0e0e0</color>
+    <color name="e8e8e8">#e8e8e8</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent5">#50000000</color>
+    <color name="transparent6">#60000000</color>
+    <color name="transparent7">#70000000</color>
+    <color name="transparent8">#80000000</color>
+    <color name="tagLight">#b1c914</color>
+    <color name="tagDark">#206fa1</color>
+
+    <color name="color66CDAA">#66CDAA</color>
+
+    <color name="color2f8aff">#2f8aff</color>
+    <!--登录-->
+    <color name="line_c3c3c3">#c3c3c3</color>
+    <color name="color_f7f7f7">#f7f7f7</color>
+    <color name="color_2d54f5">#2d54f5</color>
+    <color name="color_2950f3">#2950f3</color>
+
+    <!-- QRCode scanner color begin -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#B0000000</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_point_color">#f56900</color>
+    <color name="laser_color">#f56900</color>
+    <color name="corner_color">#f56900</color>
+
+    <!--buttondialog颜色-->
+    <color name="otherui_color_orange_f59">#F59523</color>
+    <color name="otherui_color_red_f59_f05">#F0561A</color>
+    <color name="navpage">#FFE1E8EB</color>
+
+    <color name="shape_point">#F59523</color>
+
+    <color name="subscribe_line_color">#ffd9d9d9</color>
+    <color name="subscribe_line_color_night">#ff464646</color>
+    <color name="subscribe_bg">#fff5f5f5</color>
+    <color name="subscribe_bg_night">#ff252525</color>
+    <color name="subscribe_icon_day">#ff444444</color>
+    <color name="subscribe_tip_text">#ff2e2e2e</color>
+
+    <color name="default_text_night">#ff747474</color>
+    <color name="default_text">#ff454545</color>
+    <color name="default_desc">#ff747474</color>
+    <color name="default_desc_night">#ff505050</color>
+
+    <item name="subscribe_tip_text_night" type="color">@color/default_text_night</item>
+
+    <color name="subscribe_activity_bg">#ffefefef</color>
+    <color name="subscribe_activity_bg_night">#ff252525</color>
+    <color name="subscribe_seperate_line">#ffcdcdcd</color>
+    <color name="subscribe_seperate_line_night">#ff464646</color>
+
+
+    <item name="subscribe_item_text_color_normal" type="color">@color/default_text</item>
+    <color name="subscribe_item_text_color_pressed">#ffb9b9b9</color>
+    <item name="subscribe_item_text_color_normal_night" type="color">@color/default_text_night
+    </item>
+    <color name="subscribe_item_focused_stroke">#ffd9d9d9</color>
+    <color name="subscribe_item_drag_stroke">#ffd2d2d2</color>
+    <color name="subscribe_item_drag_bg">#fff5f5f5</color>
+    <color name="subscribe_item_drag_stroke_night">#ff464646</color>
+    <color name="subscribe_item_drag_bg_night">#ff252525</color>
+    <color name="subscribe_item_selected_bg">#ffffffff</color>
+    <color name="subscribe_item_selected_stroke">#ffcc3131</color>
+    <color name="subscribe_item_disabled_bg">#ffefefef</color>
+    <color name="subscribe_item_disabled_stroke">#ffd9d9d9</color>
+    <color name="subscribe_item_pressed_bg">#fff9f9f9</color>
+    <color name="subscribe_item_pressed_stroke">#ffcdcdcd</color>
+    <color name="subscribe_item_normal_bg">#fff5f5f5</color>
+    <color name="subscribe_item_normal_stroke">#ffcdcdcd</color>
+    <color name="subscribe_item_focused_bg_night">#ff252525</color>
+    <color name="subscribe_item_focused_stroke_night">#ff464646</color>
+    <color name="subscribe_item_selected_bg_night">#ff252525</color>
+    <color name="subscribe_item_selected_stroke_night">#ffbc494d</color>
+    <color name="subscribe_item_disabled_bg_night">#ff2b2b2b</color>
+
+
+    <item name="subscribe_item_disabled_stroke_night" type="color">
+        @color/subscribe_item_focused_stroke_night
+    </item>
+    <item name="subscribe_item_pressed_bg_night" type="color">
+        @color/subscribe_item_disabled_bg_night
+    </item>
+    <item name="subscribe_item_pressed_stroke_night" type="color">
+        @color/subscribe_item_focused_stroke_night
+    </item>
+    <item name="subscribe_item_normal_bg_night" type="color">
+        @color/subscribe_item_focused_bg_night
+    </item>
+    <item name="subscribe_item_normal_stroke_night" type="color">
+        @color/subscribe_item_focused_stroke_night
+    </item>
+
+
+</resources>

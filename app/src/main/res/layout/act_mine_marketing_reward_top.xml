@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="215dp"
+        android:background="@drawable/mine_market_jlj_titl_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="93dp"
+            android:text="当前营销奖励金"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_13" />
+
+        <TextView
+            android:id="@+id/mine_marketing_reward_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="￥0.00"
+            android:textColor="@color/white"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/mine_marketing_reward_total_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:text="累计营销奖励金0.00元"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_13" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#f4f4f4"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="奖励金明细"
+        android:textColor="@color/color666666"
+        android:textSize="@dimen/text_size_13" />
+
+</LinearLayout>
+

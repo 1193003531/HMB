@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical">
+
+        <include layout="@layout/stub_title_bar" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:progressDrawable="@drawable/app_load_progress" />
+
+        <com.tencent.smtt.sdk.WebView
+            android:id="@+id/personal_web_details_wv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/card_details_bottom_bg"
+            android:orientation="horizontal"
+            android:paddingLeft="70dp">
+
+
+            <TextView
+                android:id="@+id/personal_web_details_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:drawableTop="@drawable/personal_web_details_card_icon"
+                android:gravity="center"
+                android:onClick="onAction"
+                android:paddingTop="18dp"
+                android:text="名片"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/text_size_10" />
+
+
+            <TextView
+                android:id="@+id/personal_web_details_clone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:drawableTop="@drawable/personal_web_details_clone_icon"
+                android:gravity="center"
+                android:onClick="onAction"
+                android:paddingTop="18dp"
+                android:text="免费克隆"
+                android:textColor="@color/color333333"
+                android:textSize="@dimen/text_size_10"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:id="@+id/personal_web_details_interest_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableTop="@drawable/personal_web_details_interest_false_icon"
+                        android:gravity="center"
+                        android:paddingTop="18dp"
+                        android:text="感兴趣"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_size_10" />
+
+                    <TextView
+                        android:id="@+id/personal_web_details_interest_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/btn_green_r6_bg"
+                        android:gravity="center"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="1dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="1dp"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_8" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/personal_web_details_interest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="onAction" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0">
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableTop="@drawable/personal_web_details_share_icon"
+                        android:gravity="center"
+                        android:paddingTop="18dp"
+                        android:text="分享"
+                        android:textColor="@color/color333333"
+                        android:textSize="@dimen/text_size_10" />
+
+                    <TextView
+                        android:id="@+id/personal_web_details_share_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/btn_green_r6_bg"
+                        android:gravity="center"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="1dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="1dp"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_8" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/personal_web_details_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="onAction" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <com.youth.xframe.widget.CircleImageView
+            android:id="@+id/personal_web_details_head"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:onClick="onAction"
+            android:src="@drawable/ic_launcher" />
+    </RelativeLayout>
+</RelativeLayout>

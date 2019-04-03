@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/FFf6f6f6"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/stub_title_bar" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="136.0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/seting_phone_icon" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="52dp"
+            android:src="@drawable/seting_phone_true_icon" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/setting_account_verify_phone_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="当前绑定手机号："
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/text_size_15" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="5dp"
+            android:text="验证码"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_15" />
+
+        <EditText
+            android:id="@+id/setting_account_verify"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:hint="输入验证码"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/color000000"
+            android:textColorHint="@color/cecccc"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/setting_account_get_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:onClick="onAction"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="获取验证码"
+            android:textColor="@color/FF274FF3"
+            android:textSize="@dimen/text_size_12" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/setting_verify_tell_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:onClick="onAction"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="若不能获取验证码，请联系客服:023-68452158"
+        android:textColor="@color/color999999"
+        android:textSize="@dimen/text_size_11" />
+
+    <TextView
+        android:id="@+id/setting_verify_next_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_blue_r5_bg"
+        android:gravity="center"
+        android:onClick="onAction"
+        android:text="@string/setting_next"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16" />
+</LinearLayout>
+

@@ -1,0 +1,30 @@
+<resources>
+    <dimen name="XFrame_spacing_small">8dp</dimen>
+    <dimen name="XFrame_spacing">10dp</dimen>
+    <dimen name="XFrame_spacing_large">16dp</dimen>
+
+    <dimen name="XFrame_text_size_small">13sp</dimen>
+    <dimen name="XFrame_text_size">15sp</dimen>
+
+    <dimen name="XFrame_adapter_icon_size">24dp</dimen>
+    <dimen name="XFrame_progressbar_size">24dp</dimen>
+    <dimen name="XFrame_radius">6dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--wheelview-->
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+
+    <!-- 顶部按钮padding -->
+    <dimen name="pickerview_topbar_padding">20dp</dimen>
+
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">17sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">18sp</dimen>
+    <!-- 选项文字大小 -->
+    <dimen name="pickerview_textsize">20sp</dimen>
+    <dimen name="btn_text_size">16sp</dimen>
+    <dimen name="view_text_size">16sp</dimen>
+</resources>

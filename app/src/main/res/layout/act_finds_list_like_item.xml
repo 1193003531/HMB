@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="8dp">
+
+        <com.youth.xframe.widget.CircleImageView
+            android:id="@+id/finds_list_like_item_head"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_launcher"
+            app:civ_border_width="0dp" />
+
+
+        <TextView
+            android:id="@+id/finds_list_like_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:text="桥东波"
+            android:textColor="@color/color666666"
+            android:textSize="@dimen/text_size_14" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_05"
+        android:background="@color/line_eaeaea" />
+
+</LinearLayout>
+

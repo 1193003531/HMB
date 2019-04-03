@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/income_item_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/f_h_i_item_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15.0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="italic"
+        android:textColor="@color/color000000"
+        android:text="NO.1"
+        android:textSize="@dimen/text_size_16" />
+
+
+    <com.youth.xframe.widget.CircleImageView
+        android:id="@+id/f_h_i_item_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_launcher"
+        app:civ_border_width="0dp" />
+
+    <TextView
+        android:id="@+id/f_h_i_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12.0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:textColor="@color/color000000"
+        android:text="大卫"
+        android:textSize="@dimen/text_size_14" />
+
+    <TextView
+        android:id="@+id/f_h_i_item_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12.0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color000000"
+        android:text="总收入￥100"
+        android:textSize="@dimen/text_size_12" />
+    <TextView
+        android:id="@+id/f_h_i_item_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dp"
+        android:ellipsize="end"
+        android:drawableRight="@drawable/ico_arrow_right_l"
+        android:drawablePadding="5dp"
+        android:maxLines="1"
+        android:textColor="@color/color555555"
+        android:text="@string/home_income_list_details"
+        android:textSize="@dimen/text_size_11" />
+</LinearLayout>

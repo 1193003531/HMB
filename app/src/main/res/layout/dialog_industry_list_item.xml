@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/dialog_industry_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1.0"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="IT|通信|互联网"
+        android:textColor="@color/FF274FF3"
+        android:textSize="@dimen/text_size_14" />
+
+    <ImageView
+        android:id="@+id/dialog_industry_item_iv"
+        android:layout_width="3.0dp"
+        android:layout_height="15dp"
+        android:background="@color/FF274FF3" />
+
+</LinearLayout>

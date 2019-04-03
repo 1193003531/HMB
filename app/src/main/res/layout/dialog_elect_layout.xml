@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:background="@drawable/btn_white_r5_bg"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:drawableLeft="@drawable/elect_dialog_left_icon"
+            android:drawableRight="@drawable/elect_dialog_right_icon"
+            android:drawablePadding="11dp"
+            android:gravity="center"
+            android:text="互推须知"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_17"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="1、新用户每天主动匹配2次，被动匹配2次；"
+            android:textColor="@color/color444444"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="2、用户累计邀请5位好友且好友参加互推，则每天主动匹配3次，被动匹配3次；"
+            android:textColor="@color/color444444"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="3、用户累计邀请10位好友且好友参加互推，则每天主动匹配4次，被动匹配4次。"
+            android:textColor="@color/color444444"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/elect_dialog_toast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/btn_blue_line_r50_bg"
+            android:paddingLeft="77dp"
+            android:paddingTop="12dp"
+            android:paddingRight="77dp"
+            android:paddingBottom="12dp"
+            android:text="我知道了"
+            android:textColor="@color/FF274FF3"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+
+
+</LinearLayout>

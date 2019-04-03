@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/stub_title_bar" />
+
+
+    <ImageView
+        android:id="@+id/withdrawal_detail_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/wallet_tx_success_icon" />
+
+    <TextView
+        android:id="@+id/withdrawal_detail_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:text="提现申请成功"
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/text_size_17" />
+
+    <TextView
+        android:id="@+id/withdrawal_detail_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:text="提现1~3个工作日之内到账，节假日除外"
+        android:textColor="@color/color666666"
+        android:textSize="@dimen/text_size_13" />
+
+    <TextView
+        android:id="@+id/waller_detail_sure"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_blue_r5_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onAction"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16" />
+
+
+</LinearLayout>
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_share_hy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_duf"
+            android:drawableTop="@drawable/wx_share_hy"
+            android:drawablePadding="11dp"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="微信好友"
+            android:textColor="@color/FF333333"
+            android:textSize="@dimen/text_size_12" />
+
+
+        <TextView
+            android:id="@+id/dialog_share_pyq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_duf"
+            android:drawableTop="@drawable/wx_share_pyq"
+            android:drawablePadding="11dp"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="微信朋友圈"
+            android:textColor="@color/FF333333"
+            android:textSize="@dimen/text_size_12" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/line_F4F4F4" />
+
+    <TextView
+        android:id="@+id/dialog_share_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/color101010"
+        android:textSize="16sp" />
+
+
+</LinearLayout>

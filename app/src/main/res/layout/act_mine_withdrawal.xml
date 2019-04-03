@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efeff4"
+    android:orientation="vertical">
+
+    <include layout="@layout/stub_title_bar" />
+
+
+    <LinearLayout
+        android:id="@+id/withdrawal_bank_card_ll"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:onClick="onAction"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/wallet_bank_2_icon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/withdrawal_bank_card_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/color000000"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/withdrawal_bank_card_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text=""
+                android:textColor="@color/color000000"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ico_arrow_right" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="提现金额(元)"
+            android:textColor="@color/color999999"
+            android:textSize="@dimen/text_size_15" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:text="￥"
+                android:textColor="@color/color000000"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/withdrawal_money"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="15dp"
+                android:text=""
+                android:textColor="@color/color000000"
+                android:textSize="36sp" />
+
+            <ImageView
+                android:id="@+id/withdrawal_money_del"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="onAction"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:src="@drawable/del_edit_icon"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/withdrawal_money_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onAction"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="全部"
+                android:textColor="@color/FF274FF3"
+                android:textSize="@dimen/text_size_14" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:layout_marginLeft="15dp"
+            android:background="#f2f2f2" />
+
+        <TextView
+            android:id="@+id/withdrawal_t_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="可提现余额 0.00元"
+            android:textColor="@color/color666666"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/withdrawal_sure"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_hui_r5_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onAction"
+        android:text="确定提现"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16" />
+
+
+</LinearLayout>
+

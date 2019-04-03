@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/elect_share_task_top"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#09cc9c"
+        android:drawableRight="@drawable/elect_share_task_del_icon"
+        android:drawablePadding="15dp"
+        android:gravity="center_vertical"
+        android:onClick="onAction"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="他人参加互推分享了您，您必须分享完，才能使用互推圈功能，才能看到他人为您带来的浏览量！"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_11" />
+
+
+</LinearLayout>
+

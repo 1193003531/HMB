@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/msg_user_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="2018-11-22  12:06"
+        android:textColor="@color/color666666"
+        android:textSize="@dimen/text_size_11" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15sp"
+        android:orientation="horizontal">
+
+        <com.youth.xframe.widget.CircleImageView
+            android:id="@+id/msg_user_item_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/msg_xt_3_bg"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/msg_user_item_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="6dp"
+                android:paddingRight="10dp"
+                android:text="朱丽娜为您带来了浏览量，快去分享任务里分享他"
+                android:textColor="@color/color000000"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:id="@+id/msg_user_item_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/msg_user_item_consent"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/btn_blue_bg"
+                    android:gravity="center"
+                    android:text="同意"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_15" />
+
+                <TextView
+                    android:id="@+id/msg_user_item_refuse"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/btn_blue_line_bg"
+                    android:gravity="center"
+                    android:text="拒绝"
+                    android:textColor="@color/main_color"
+                    android:textSize="@dimen/text_size_15" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/msg_user_item_toview"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:drawableRight="@drawable/message_item_blue_right_icon"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical|right"
+                android:maxLines="1"
+                android:paddingRight="16dp"
+                android:text="去分享"
+                android:textColor="@color/FF274FF3"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+

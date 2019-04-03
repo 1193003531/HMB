@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/generalize_release_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ico_arrow_left"
+            android:onClick="onAction"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="全民推广"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20" />
+
+        <TextView
+            android:id="@+id/generalize_release"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical|right"
+            android:onClick="onAction"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="发布"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/generalize_release_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical|right"
+            android:onClick="onAction"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="我的"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+
+</LinearLayout>

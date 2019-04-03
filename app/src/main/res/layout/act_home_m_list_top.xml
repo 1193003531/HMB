@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@drawable/marketing_list_top_bg">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="150dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/marketing_list_top_icon" />
+
+            <TextView
+                android:id="@+id/a_h_m_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="你的网页目前排名--"
+                android:textColor="@color/fffefe"
+                android:textSize="@dimen/text_size_12" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="110dp"
+            android:layout_marginRight="35dp"
+            android:src="@drawable/marketing_list_top_jp_bg" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/a_h_m_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableBottom="@drawable/fragment_home_marketing_icon"
+            android:drawablePadding="3dp"
+            android:onClick="onAction"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="周榜"
+            android:textColor="@color/colore262626"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/a_h_m_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:onClick="onAction"
+            android:paddingLeft="8dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="月榜"
+            android:textColor="@color/color999999"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/a_h_m_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:onClick="onAction"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="总榜"
+            android:textColor="@color/color999999"
+            android:textSize="@dimen/text_size_15" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

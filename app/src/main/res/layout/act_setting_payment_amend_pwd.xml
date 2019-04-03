@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/FFf6f6f6"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/stub_title_bar" />
+
+    <TextView
+        android:id="@+id/setting_amend_pwd_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:text="请输入六位支付密码，完成身份验证"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/text_size_13" />
+
+    <com.huimaibao.app.view.VerificationCodeView
+        android:id="@+id/setting_amend_pwd_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:vcv_et_bg="@drawable/et_cursor_bg"
+        app:vcv_et_cursor="@drawable/et_cursor_drawable_code"
+        app:vcv_et_number="6"
+        app:vcv_et_text_color="@android:color/black"
+        app:vcv_et_text_size="6sp" />
+
+
+    <TextView
+        android:id="@+id/setting_amend_pwd_commit_btn"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_blue_r5_bg"
+        android:gravity="center"
+        android:onClick="onAction"
+        android:text="@string/setting_commit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16" />
+
+
+</LinearLayout>
+

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical">
+
+    <include layout="@layout/stub_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="手机号"
+                    android:textColor="@color/color101010"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingRight="10dp"
+                    android:text="(默认为注册账号手机号，若换手机号，请重新输入)"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/feedback_phone"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/ed_white_r5_bg"
+                android:hint="请输入手机号"
+                android:inputType="phone"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/color101010"
+                android:textSize="@dimen/text_size_14" />
+
+
+            <EditText
+                android:id="@+id/feedback_content"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/ed_white_r5_bg"
+                android:gravity="top"
+                android:hint="请输入内容（限300字）"
+                android:maxLength="300"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/color101010"
+                android:textSize="@dimen/text_size_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_05"
+                android:layout_marginTop="15dp"
+                android:background="@color/line_d9d9d9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="上传截图"
+                    android:textColor="@color/color101010"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingRight="10dp"
+                    android:text="(最多3张，每张2M以内)"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <com.youth.xframe.widget.NoScrollGridView
+                    android:id="@+id/making_card_album"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:listSelector="@color/transparent"
+                    android:horizontalSpacing="10dp"
+                    android:numColumns="3"
+                    android:verticalSpacing="10dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <TextView
+        android:id="@+id/feedback_submit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_hui_r5_bg"
+        android:gravity="center"
+        android:onClick="onAction"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_15" />
+</LinearLayout>
+

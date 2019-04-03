@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/payV2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="payV2"
+            android:text="支付宝支付 Demo" />
+
+        <!--<Button-->
+        <!--android:id="@+id/authV2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:onClick="authV2"-->
+        <!--android:text="支付宝授权 Demo" />-->
+
+        <!--<Button-->
+        <!--android:id="@+id/h5pay"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:onClick="h5Pay"-->
+        <!--android:text="网页支付转 native 支付 Demo" />-->
+
+        <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:onClick="showSdkVersion"-->
+        <!--android:text="支付宝 SDK 版本" />-->
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:focusable="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:background="@drawable/income_num_bg_icon"
+        android:gravity="bottom"
+        android:paddingLeft="19dp"
+        android:paddingRight="18dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/income_num_2_icon" />
+
+            <LinearLayout
+                android:id="@+id/a_h_i_2_head_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="160dp"
+                android:gravity="center_horizontal"
+                android:onClick="onAction"
+                android:orientation="vertical">
+
+                <com.youth.xframe.widget.CircleImageView
+                    android:id="@+id/a_h_i_2_head_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_launcher"
+                    app:civ_border_width="0dp" />
+
+                <TextView
+                    android:id="@+id/a_h_i_2_head_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:maxLines="1"
+                    android:text="--"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/a_h_i_2_money_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:onClick="onAction"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.0dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="NO.2"
+                    android:textColor="@color/fffefe"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/a_h_i_2_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8.0dp"
+                    android:layout_marginBottom="40dp"
+                    android:drawableRight="@drawable/income_white_right"
+                    android:drawablePadding="3dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="总收入￥0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.85">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/income_num_1_icon" />
+
+            <LinearLayout
+                android:id="@+id/a_h_i_1_head_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="92dp"
+                android:gravity="center_horizontal"
+                android:onClick="onAction"
+                android:orientation="vertical">
+
+                <com.youth.xframe.widget.CircleImageView
+                    android:id="@+id/a_h_i_1_head_image"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:src="@drawable/ic_launcher"
+                    app:civ_border_width="0dp" />
+
+                <TextView
+                    android:id="@+id/a_h_i_1_head_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:maxLines="1"
+                    android:text="--"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/a_h_i_1_money_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:onClick="onAction"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.0dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="NO.1"
+                    android:textColor="@color/fffefe"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/a_h_i_1_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8.0dp"
+                    android:layout_marginBottom="90dp"
+                    android:drawableRight="@drawable/income_white_right"
+                    android:drawablePadding="3dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="总收入￥0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/income_num_3_icon" />
+
+            <LinearLayout
+                android:id="@+id/a_h_i_3_head_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="180dp"
+                android:gravity="center_horizontal"
+                android:onClick="onAction"
+                android:orientation="vertical">
+
+                <com.youth.xframe.widget.CircleImageView
+                    android:id="@+id/a_h_i_3_head_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:onClick="onAction"
+                    android:src="@drawable/ic_launcher"
+                    app:civ_border_width="0dp" />
+
+                <TextView
+                    android:id="@+id/a_h_i_3_head_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:maxLines="1"
+                    android:text="--"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/a_h_i_3_money_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:onClick="onAction"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.0dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="NO.3"
+                    android:textColor="@color/fffefe"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/a_h_i_3_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8.0dp"
+                    android:layout_marginBottom="25dp"
+                    android:drawableRight="@drawable/income_white_right"
+                    android:drawablePadding="3dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="总收入￥0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/white" />
+</LinearLayout>
+

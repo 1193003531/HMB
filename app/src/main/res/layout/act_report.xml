@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_guide"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical">
+
+    <include layout="@layout/stub_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:paddingBottom="10dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#f4f4f4"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="投诉原因"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_12" />
+
+            <com.youth.xframe.widget.NoScrollListView
+                android:id="@+id/report_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#f4f4f4"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="其他理由"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_12" />
+
+            <EditText
+                android:id="@+id/report_other_ed"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/white"
+                android:gravity="top"
+                android:hint="请输入理由"
+                android:padding="15dp"
+                android:textColor="@color/color000000"
+                android:textColorHint="@color/color666666"
+                android:textSize="@dimen/text_size_14" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/report_submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_hui_r5_bg"
+        android:gravity="center"
+        android:onClick="onAction"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_15" />
+</LinearLayout>

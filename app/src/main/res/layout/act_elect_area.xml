@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/stub_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/elect_addr_icon"
+            android:drawablePadding="17dp"
+            android:paddingLeft="16dp"
+            android:text="当前区域"
+            android:textColor="@color/color010101"
+            android:textSize="@dimen/text_size_13" />
+
+        <TextView
+            android:id="@+id/elect_area_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/btn_99_w_r4_bg"
+            android:paddingLeft="23dp"
+            android:paddingTop="7dp"
+            android:paddingRight="23dp"
+            android:paddingBottom="7dp"
+            android:text="全国"
+            android:textColor="@color/color010101"
+            android:textSize="@dimen/text_size_13" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#f4f4f4" />
+
+
+    <ListView
+        android:id="@+id/elect_area_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/transparent"
+        android:dividerHeight="0dp"
+        android:fadeScrollbars="true"
+        android:listSelector="@color/transparent"
+        android:overScrollMode="never" />
+
+
+</LinearLayout>
+

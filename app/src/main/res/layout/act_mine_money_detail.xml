@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/stub_title_bar" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/wallet_zj_details_top_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/money_detail_total_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="奖励金累计转入(元）"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#f2f2f2"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/money_detail_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableRight="@drawable/wallet_zj_detail_all_icon"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:onClick="onAction"
+                android:paddingLeft="17dp"
+                android:paddingRight="17dp"
+                android:text="全部"
+                android:textColor="@color/color000000"
+                android:textSize="@dimen/text_size_13" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_05"
+                android:background="@color/line_eaeaea" />
+        </LinearLayout>
+
+        <include layout="@layout/list_pull_data" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/money_detail_check_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="166dp"
+        android:background="@color/transparent5"
+        android:clickable="true"
+        android:onClick="onAction"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/money_detail_check_all"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:drawableRight="@drawable/wallet_true_icon"
+            android:gravity="center_vertical"
+            android:onClick="onAction"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="全部"
+            android:textColor="@color/FF274FF3"
+            android:textSize="@dimen/text_size_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:background="@color/line_eaeaea" />
+
+        <TextView
+            android:id="@+id/money_detail_check_jlj"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:onClick="onAction"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="奖励金转入"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:background="@color/line_eaeaea" />
+
+        <TextView
+            android:id="@+id/money_detail_check_clone_s"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:onClick="onAction"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="克隆收益"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_13" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:background="@color/line_eaeaea" />
+
+        <TextView
+            android:id="@+id/money_detail_check_clone_z"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:onClick="onAction"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="克隆支出"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_13" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:background="@color/line_eaeaea" />
+
+        <TextView
+            android:id="@+id/money_detail_check_top_up"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:onClick="onAction"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="会员充值"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:background="@color/line_eaeaea" />
+
+        <TextView
+            android:id="@+id/money_detail_check_withdrawal"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:onClick="onAction"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="提现"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:background="@color/line_eaeaea" />
+
+    </LinearLayout>
+</RelativeLayout>
