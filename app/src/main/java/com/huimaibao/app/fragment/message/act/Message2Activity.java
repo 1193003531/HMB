@@ -128,8 +128,7 @@ public class Message2Activity extends BaseActivity {
             }
         }
 
-        mSwipeRefreshView = findViewById(R.id.list_swipe_value);
-        mListView = findViewById(R.id.list_pull_value);
+
 
         mSwipeRefreshView.setColorSchemeResources(R.color.ff274ff3);
 

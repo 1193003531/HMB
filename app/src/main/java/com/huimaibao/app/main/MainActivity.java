@@ -16,6 +16,7 @@ import com.huimaibao.app.appload.AppDownloadManager;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.base.BaseApplication;
 import com.huimaibao.app.fragment.ElectCircleFragment;
+import com.huimaibao.app.fragment.FindsFragment;
 import com.huimaibao.app.fragment.HomeFragment;
 import com.huimaibao.app.fragment.MessageFragment;
 import com.huimaibao.app.fragment.MineFragment;
@@ -103,7 +104,8 @@ public class MainActivity extends BaseActivity {
     //private MainFragment mainFragment;
     private HomeFragment homeFragment;
     private ElectCircleFragment electCircleFragment;
-    private MessageFragment messageFragment;
+    //private MessageFragment messageFragment;
+    private FindsFragment findsFragment;
     private MineFragment mineFragment;
 
 
@@ -208,7 +210,7 @@ public class MainActivity extends BaseActivity {
             case R.id.home_buttom_home_btn:
                 //隐藏其他的Fragment
                 hideFragment(electCircleFragment, fragmentTransaction);
-                hideFragment(messageFragment, fragmentTransaction);
+                hideFragment(findsFragment, fragmentTransaction);
                 hideFragment(mineFragment, fragmentTransaction);
                 //将我们的homeFragment显示出来
                 if (homeFragment == null) {
@@ -227,7 +229,7 @@ public class MainActivity extends BaseActivity {
             case R.id.home_buttom_elect_btn:
                 //隐藏其他的Fragment
                 hideFragment(homeFragment, fragmentTransaction);
-                hideFragment(messageFragment, fragmentTransaction);
+                hideFragment(findsFragment, fragmentTransaction);
                 hideFragment(mineFragment, fragmentTransaction);
                 //XLog.d("electCircleFragment:" + electCircleFragment);
                 //将我们的twoFragment显示出来
@@ -253,18 +255,18 @@ public class MainActivity extends BaseActivity {
                 hideFragment(homeFragment, fragmentTransaction);
                 hideFragment(electCircleFragment, fragmentTransaction);
                 hideFragment(mineFragment, fragmentTransaction);
-                //XLog.d("messageFragment:" + messageFragment);
+                //XLog.d("findsFragment:" + findsFragment);
                 //将我们的ThreeFragment显示出来
-                if (messageFragment == null) {
-                    messageFragment = new MessageFragment();
-                    fragmentTransaction.add(R.id.content_layout, messageFragment);
-                    hideFragment(messageFragment, fragmentTransaction);
-                    fragmentTransaction.show(messageFragment);
+                if (findsFragment == null) {
+                    findsFragment = new FindsFragment();
+                    fragmentTransaction.add(R.id.content_layout, findsFragment);
+                    hideFragment(findsFragment, fragmentTransaction);
+                    fragmentTransaction.show(findsFragment);
                 } else {
-                    hideFragment(messageFragment, fragmentTransaction);
-                    fragmentTransaction.show(messageFragment);
+                    hideFragment(findsFragment, fragmentTransaction);
+                    fragmentTransaction.show(findsFragment);
                 }
-                //mCurrent = messageFragment;
+                //mCurrent = findsFragment;
                 changeTextColor(2);
                 break;
             //我的
@@ -272,7 +274,7 @@ public class MainActivity extends BaseActivity {
                 //隐藏其他的Fragment
                 hideFragment(homeFragment, fragmentTransaction);
                 hideFragment(electCircleFragment, fragmentTransaction);
-                hideFragment(messageFragment, fragmentTransaction);
+                hideFragment(findsFragment, fragmentTransaction);
                 //XLog.d("mineFragment:" + mineFragment);
                 //将我们的FouthFragment显示出来
                 if (mineFragment == null) {
@@ -418,7 +420,7 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         //隐藏其他的Fragment
         hideFragment(homeFragment, fragmentTransaction);
-        hideFragment(messageFragment, fragmentTransaction);
+        hideFragment(findsFragment, fragmentTransaction);
         hideFragment(mineFragment, fragmentTransaction);
 
         //将我们的twoFragment显示出来
@@ -448,7 +450,7 @@ public class MainActivity extends BaseActivity {
 //        FragmentTransaction fragmentTransaction = fm.beginTransaction();
 //        //隐藏其他的Fragment
 //        hideFragment(electCircleFragment, fragmentTransaction);
-//        hideFragment(messageFragment, fragmentTransaction);
+//        hideFragment(findsFragment, fragmentTransaction);
 //        hideFragment(mineFragment, fragmentTransaction);
 //        //将我们的homeFragment显示出来
 //        if (homeFragment == null) {
@@ -467,8 +469,6 @@ public class MainActivity extends BaseActivity {
 //        //homeFragment.setCurrentArticle();
 //
 //    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -504,7 +504,7 @@ public class MainActivity extends BaseActivity {
         fm = null;
         homeFragment = null;
         electCircleFragment = null;
-        messageFragment = null;
+        findsFragment = null;
         mineFragment = null;
     }
 

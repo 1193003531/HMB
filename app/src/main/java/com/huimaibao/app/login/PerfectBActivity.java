@@ -6,8 +6,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;
@@ -39,9 +43,13 @@ public class PerfectBActivity extends TakePhotoActivity {
     private TakePhoneHelper takePhoneHelper;
 
     //姓名，公司，职位
-    private EditText _name_et, _company_et, _jobs_et;
+    //private EditText _name_et, _company_et, _jobs_et;
     private String _head_value = "", _name_value = "", _company_value = "", _jobs_value = "";
-    private ImageView _head_iv, _ed_name_clear, _ed_company_clear, _ed_jobs_clear;
+    private ImageView _head_iv;//, _ed_name_clear, _ed_company_clear, _ed_jobs_clear;
+
+    private EditText _card_name, _card_jobs, _card_company;
+    private TextView _card_name_tv, _card_jobs_tv, _card_company_tv;
+    private ImageView _iv_name, _iv_jobs, _iv_company;
 
 
     @Override
@@ -77,14 +85,27 @@ public class PerfectBActivity extends TakePhotoActivity {
      */
     private void initView() {
         _head_iv = findViewById(R.id.login_perfect_image);
-        _name_et = findViewById(R.id.login_perfect_name);
-        _company_et = findViewById(R.id.login_perfect_company);
-        _jobs_et = findViewById(R.id.login_perfect_jobs);
 
-        _ed_name_clear = findViewById(R.id.login_perfect_name_del);
-        _ed_company_clear = findViewById(R.id.login_perfect_company_del);
-        _ed_jobs_clear = findViewById(R.id.login_perfect_jobs_del);
+//        _name_et = findViewById(R.id.login_perfect_name);
+//        _company_et = findViewById(R.id.login_perfect_company);
+//        _jobs_et = findViewById(R.id.login_perfect_jobs);
+//
+//        _ed_name_clear = findViewById(R.id.login_perfect_name_del);
+//        _ed_company_clear = findViewById(R.id.login_perfect_company_del);
+//        _ed_jobs_clear = findViewById(R.id.login_perfect_jobs_del);
 
+
+        _card_name = findViewById(R.id.making_card_name);
+        _card_jobs = findViewById(R.id.making_card_jobs);
+        _card_company = findViewById(R.id.making_card_company);
+
+        _card_name_tv = findViewById(R.id.making_card_name_tv);
+        _card_jobs_tv = findViewById(R.id.making_card_jobs_tv);
+        _card_company_tv = findViewById(R.id.making_card_company_tv);
+
+        _iv_name = findViewById(R.id.making_card_name_iv);
+        _iv_jobs = findViewById(R.id.making_card_jobs_iv);
+        _iv_company = findViewById(R.id.making_card_company_iv);
 
     }
 
@@ -100,9 +121,9 @@ public class PerfectBActivity extends TakePhotoActivity {
             //保存
             case R.id.login_perfect_save:
                 //_head_value = "";
-                _name_value = _name_et.getText().toString();
-                _company_value = _company_et.getText().toString();
-                _jobs_value = _jobs_et.getText().toString();
+                _name_value = _card_name.getText().toString();
+                _company_value = _card_company.getText().toString();
+                _jobs_value = _card_jobs.getText().toString();
 
                 if (XEmptyUtils.isSpace(_name_value)) {
                     showToast("请输入姓名");
@@ -115,7 +136,7 @@ public class PerfectBActivity extends TakePhotoActivity {
                 } else {
                     if (mType.equals("微信")) {
                         String sex;
-                        if ( XPreferencesUtils.get("sex", "1").equals("1"))
+                        if (XPreferencesUtils.get("sex", "1").equals("1"))
                             sex = "男";
                         else
                             sex = "女";
@@ -154,160 +175,340 @@ public class PerfectBActivity extends TakePhotoActivity {
 
         if (mType.equals("微信")) {
             _head_value = XPreferencesUtils.get("headimgurl", "").toString();
+            _name_value = XPreferencesUtils.get("nickname", "").toString();
             // XCache.get(this).getAsString("headimgurl");
             ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_launcher);
+            _card_name.setText(_name_value);
+            _card_name.setSelection(_name_value.length());
         }
 
-        _name_et.addTextChangedListener(nameWatcher);
-        _company_et.addTextChangedListener(companyWatcher);
-        _jobs_et.addTextChangedListener(jobsWatcher);
 
-        _ed_name_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _ed_name_clear.setVisibility(View.GONE);
-                _name_et.setText("");
-            }
-        });
-        _ed_company_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _ed_company_clear.setVisibility(View.GONE);
-                _jobs_et.setText("");
-            }
-        });
-        _ed_jobs_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _ed_jobs_clear.setVisibility(View.GONE);
-                _jobs_et.setText("");
-            }
-        });
+        setFocusChangeListener();
+        setaddTextChangedListener();
+        setAllAnimation();
 
-        _name_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (_name_et.getText().toString().length() > 0)
-                        _ed_name_clear.setVisibility(View.VISIBLE);
-                    else
-                        _ed_name_clear.setVisibility(View.GONE);
-                } else {
-                    _ed_name_clear.setVisibility(View.GONE);
-                }
-            }
-        });
-        _company_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (_company_et.getText().toString().length() > 0)
-                        _ed_company_clear.setVisibility(View.VISIBLE);
-                    else
-                        _ed_company_clear.setVisibility(View.GONE);
-                } else {
-                    _ed_company_clear.setVisibility(View.GONE);
-                }
-            }
-        });
-        _jobs_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (_jobs_et.getText().toString().length() > 0)
-                        _ed_jobs_clear.setVisibility(View.VISIBLE);
-                    else
-                        _ed_jobs_clear.setVisibility(View.GONE);
-                } else {
-                    _ed_jobs_clear.setVisibility(View.GONE);
-                }
-            }
-        });
+//        _name_et.addTextChangedListener(nameWatcher);
+//        _company_et.addTextChangedListener(companyWatcher);
+//        _jobs_et.addTextChangedListener(jobsWatcher);
+//
+//        _ed_name_clear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                _ed_name_clear.setVisibility(View.GONE);
+//                _name_et.setText("");
+//            }
+//        });
+//        _ed_company_clear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                _ed_company_clear.setVisibility(View.GONE);
+//                _jobs_et.setText("");
+//            }
+//        });
+//        _ed_jobs_clear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                _ed_jobs_clear.setVisibility(View.GONE);
+//                _jobs_et.setText("");
+//            }
+//        });
+//
+//        _name_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    if (_name_et.getText().toString().length() > 0)
+//                        _ed_name_clear.setVisibility(View.VISIBLE);
+//                    else
+//                        _ed_name_clear.setVisibility(View.GONE);
+//                } else {
+//                    _ed_name_clear.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//        _company_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    if (_company_et.getText().toString().length() > 0)
+//                        _ed_company_clear.setVisibility(View.VISIBLE);
+//                    else
+//                        _ed_company_clear.setVisibility(View.GONE);
+//                } else {
+//                    _ed_company_clear.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//        _jobs_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    if (_jobs_et.getText().toString().length() > 0)
+//                        _ed_jobs_clear.setVisibility(View.VISIBLE);
+//                    else
+//                        _ed_jobs_clear.setVisibility(View.GONE);
+//                } else {
+//                    _ed_jobs_clear.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
     }
 
-    /**
-     * 名称输入监听
-     */
-    private TextWatcher nameWatcher = new TextWatcher() {
+//    /**
+//     * 名称输入监听
+//     */
+//    private TextWatcher nameWatcher = new TextWatcher() {
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before,
+//                                  int count) {
+//            if (s.length() > 0) {
+//                _ed_name_clear.setVisibility(View.VISIBLE);
+//            } else {
+//                _ed_name_clear.setVisibility(View.GONE);
+//            }
+//        }
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count,
+//                                      int after) {
+//
+//
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//
+//        }
+//    };
+//
+//    /**
+//     * 公司输入监听
+//     */
+//    private TextWatcher companyWatcher = new TextWatcher() {
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before,
+//                                  int count) {
+//            if (s.length() > 0) {
+//                _ed_company_clear.setVisibility(View.VISIBLE);
+//            } else {
+//                _ed_company_clear.setVisibility(View.GONE);
+//            }
+//        }
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count,
+//                                      int after) {
+//
+//
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//
+//        }
+//    };
+//    /**
+//     * 职位输入监听
+//     */
+//    private TextWatcher jobsWatcher = new TextWatcher() {
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before,
+//                                  int count) {
+//            if (s.length() > 0) {
+//                _ed_jobs_clear.setVisibility(View.VISIBLE);
+//            } else {
+//                _ed_jobs_clear.setVisibility(View.GONE);
+//            }
+//        }
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count,
+//                                      int after) {
+//
+//
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//
+//        }
+//    };
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before,
-                                  int count) {
-            if (s.length() > 0) {
-                _ed_name_clear.setVisibility(View.VISIBLE);
-            } else {
-                _ed_name_clear.setVisibility(View.GONE);
+
+    private void setFocusChangeListener() {
+        _card_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    _iv_name.setBackgroundResource(R.color.main_color);
+                    setAnimationED(_card_name, _card_name_tv);
+                } else {
+                    _iv_name.setBackgroundResource(R.color.line_eaeaea);
+                }
+            }
+        });
+
+        _card_jobs.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    _iv_jobs.setBackgroundResource(R.color.main_color);
+                    setAnimationED(_card_jobs, _card_jobs_tv);
+                } else {
+                    _iv_jobs.setBackgroundResource(R.color.line_eaeaea);
+                }
+            }
+        });
+
+        _card_company.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    _iv_company.setBackgroundResource(R.color.main_color);
+                    setAnimationED(_card_company, _card_company_tv);
+                } else {
+                    _iv_company.setBackgroundResource(R.color.line_eaeaea);
+                }
+            }
+        });
+    }
+
+    private void setaddTextChangedListener() {
+
+        _card_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _name_value = _card_name.getText().toString();
+                setEdAnimation(_name_value, _card_name_tv);
+            }
+        });
+
+        _card_jobs.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _jobs_value = _card_jobs.getText().toString();
+                setEdAnimation(_jobs_value, _card_jobs_tv);
+            }
+        });
+
+        _card_company.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _company_value = _card_company.getText().toString();
+                setEdAnimation(_company_value, _card_company_tv);
+            }
+        });
+    }
+
+    /***/
+    private boolean isAnimation = false;
+
+    private void setAnimationED(EditText editText, TextView textView) {
+        if (editText.getText().toString().length() > 0) {
+            isAnimation = false;
+        } else {
+            isAnimation = true;
+        }
+    }
+
+    private void setEdAnimation(String value, final TextView textView) {
+        if (value.length() == 0) {
+            AnimationSet animationSet = new AnimationSet(true);
+            Animation translateAnimation = new TranslateAnimation(0, 0, 0, 60);//平移动画  从0,0,平移到0,60
+            translateAnimation.setDuration(100);//动画持续的时间为0.1s
+            animationSet.addAnimation(translateAnimation);
+            animationSet.setFillAfter(true);
+            translateAnimation.setAnimationListener(
+                    new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {//开始时
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {//结束时
+                            textView.setTextColor(getResources().getColor(R.color.color999999));
+                            textView.setTextSize(15);
+                            isAnimation = true;
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {//进行时
+
+                        }
+                    });
+            textView.startAnimation(animationSet);
+        } else {
+            if (isAnimation) {
+                AnimationSet animationSet = new AnimationSet(true);
+                Animation translateAnimation = new TranslateAnimation(0, 0, 60, 0);//平移动画  从0,0,平移到0,60
+                translateAnimation.setDuration(100);//动画持续的时间为0.1s
+                animationSet.addAnimation(translateAnimation);
+                animationSet.setFillAfter(true);
+                translateAnimation.setAnimationListener(
+                        new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {//开始时
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {//结束时
+                                textView.setTextColor(getResources().getColor(R.color.main_color));
+                                textView.setTextSize(11);
+                                isAnimation = false;
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {//进行时
+
+                            }
+                        });
+
+                textView.startAnimation(animationSet);
             }
         }
+    }
 
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
-
-    /**
-     * 公司输入监听
-     */
-    private TextWatcher companyWatcher = new TextWatcher() {
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before,
-                                  int count) {
-            if (s.length() > 0) {
-                _ed_company_clear.setVisibility(View.VISIBLE);
-            } else {
-                _ed_company_clear.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
-    /**
-     * 职位输入监听
-     */
-    private TextWatcher jobsWatcher = new TextWatcher() {
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before,
-                                  int count) {
-            if (s.length() > 0) {
-                _ed_jobs_clear.setVisibility(View.VISIBLE);
-            } else {
-                _ed_jobs_clear.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                                      int after) {
-
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
+    private void setAllAnimation() {
+        setEdAnimation(_name_value, _card_name_tv);
+        setEdAnimation(_jobs_value, _card_jobs_tv);
+        setEdAnimation(_company_value, _card_company_tv);
+    }
 
 
     @Override

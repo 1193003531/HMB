@@ -185,6 +185,22 @@ public class XTimeUtils {
     }
 
     /**
+     * 将yyyy-MM-dd HH:mm:ss转换成MM月dd日
+     */
+    public static String StringToMD(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
+        String data;
+        try {
+            data = sdf.format(new Date(sdf.parse(date).getTime()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            data = "";
+        }
+
+        return data;
+    }
+
+    /**
      * 返回今天、昨天、2019-10-10 三种格式
      *
      * @param date
@@ -416,32 +432,45 @@ public class XTimeUtils {
             return elapsedTime / seconds_of_1day + "天前";
         }
 
-
-//        if (elapsedTime < seconds_of_15days) {
-//
-//            return elapsedTime / seconds_of_1day + "天前";
-//        }
-//        if (elapsedTime >= seconds_of_30days) {
-//            return StringToYMD(mTime);
-//        }
-//        if (elapsedTime < seconds_of_30days) {
-//
-//            return "半个月前";
-//        }
-//        if (elapsedTime < seconds_of_6months) {
-//
-//            return elapsedTime / seconds_of_30days + "月前";
-//        }
-//        if (elapsedTime < seconds_of_1year) {
-//
-//            return "半年前";
-//        }
-//        if (elapsedTime >= seconds_of_1year) {
-//
-//            return elapsedTime / seconds_of_1year + "年前";
-//        }
-        // return "";
     }
 
+    public static String getTimeRangeS(String mTime) {
+        if (XEmptyUtils.isSpace(mTime)) {
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        /**获取当前时间*/
+        Date curDate = new Date(System.currentTimeMillis());
+        String dataStrNew = sdf.format(curDate);
+        Date startTime = null;
+        try {
+            /**将时间转化成Date*/
+            curDate = sdf.parse(dataStrNew);
+            startTime = sdf.parse(mTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //string2Millis(mTime)
+        /**除以1000是为了转换成秒*/
+        long between = (curDate.getTime() - startTime.getTime()) / 1000;
+        int elapsedTime = (int) (between);
+        if (elapsedTime < seconds_of_1minute) {
+            return "刚刚";
+        }
+        if (elapsedTime < seconds_of_30minutes) {
 
+            return elapsedTime / seconds_of_1minute + "分钟前";
+        }
+        if (elapsedTime < seconds_of_1hour) {
+
+            return "半小时前";
+        }
+        if (elapsedTime < seconds_of_1day) {
+
+            return elapsedTime / seconds_of_1hour + "小时前";
+        } else {
+            return StringToMD(mTime);
+        }
+
+    }
 }

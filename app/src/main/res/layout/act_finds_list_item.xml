@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingTop="15dp"
         android:paddingLeft="16dp">
 
         <com.youth.xframe.widget.CircleImageView
@@ -65,11 +66,10 @@
 
 
                 <ImageView
-                    android:id="@+id/finds_list_foucs_btn"
+                    android:id="@+id/finds_list_item_focus"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:onClick="onAction"
                     android:paddingLeft="15dp"
                     android:paddingRight="16dp"
                     android:src="@drawable/finds_list_top_focus" />
@@ -87,6 +87,16 @@
                 android:text="土耳其真是霸道：埃尔多安就这么决定了，俄罗斯能接受吗?"
                 android:textColor="@color/FF333333"
                 android:textSize="@dimen/text_size_16" />
+
+
+            <com.huimaibao.app.view.NineGridViewLayout
+                android:id="@+id/finds_list_item_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp"
+                app:spacing="4dp" />
 
 
             <LinearLayout

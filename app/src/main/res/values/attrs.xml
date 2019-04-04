@@ -119,4 +119,16 @@
         <attr name="enable" format="boolean" />
     </declare-styleable>
 
+    <!--发现动态-->
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="NineGridLayout">
+        <attr name="spacing" format="dimension" />
+        <attr name="oneImageWidth" format="dimension" />
+        <attr name="oneImageHeight" format="dimension" />
+        <attr name="image_ratio" format="float" />
+    </declare-styleable>
+
 </resources>

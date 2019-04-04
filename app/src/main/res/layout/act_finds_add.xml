@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:onClick="onAction"
             android:paddingLeft="16dp"
@@ -38,9 +38,9 @@
             android:background="@drawable/btn_blue_r20_bg"
             android:onClick="onAction"
             android:paddingLeft="15dp"
-            android:paddingTop="7dp"
+            android:paddingTop="5dp"
             android:paddingRight="15dp"
-            android:paddingBottom="7dp"
+            android:paddingBottom="5dp"
             android:text="发布"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
@@ -65,6 +65,7 @@
         />
 
     <TextView
+        android:id="@+id/finds_add_content_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -86,16 +87,22 @@
         android:textColor="@color/color999999"
         android:textSize="@dimen/text_size_12" />
 
-
-    <com.youth.xframe.widget.NoScrollGridView
-        android:id="@+id/finds_add_album"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:horizontalSpacing="10dp"
-        android:listSelector="@color/transparent"
-        android:numColumns="3"
-        android:verticalSpacing="10dp" />
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
+        <com.youth.xframe.widget.NoScrollGridView
+            android:id="@+id/finds_add_album"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@color/transparent"
+            android:numColumns="3"
+            android:verticalSpacing="10dp" />
+    </LinearLayout>
 </LinearLayout>
 

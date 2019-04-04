@@ -457,6 +457,31 @@
             android:label="广告标语"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.finds.act.FindsAddActivity"
+            android:label="添加动态"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.finds.act.FindsCommentsActivity"
+            android:label="评论动态"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.finds.act.FindsMSGActivity"
+            android:label="消息动态"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.finds.act.FindsMyActivity"
+            android:label="我的动态"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.finds.act.FindsPraiseActivity"
+            android:label="点赞动态"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
         <activity

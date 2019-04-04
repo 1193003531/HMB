@@ -35,22 +35,6 @@
 
 
         <TextView
-            android:id="@+id/finds_add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/btn_blue_r20_bg"
-            android:onClick="onAction"
-            android:paddingLeft="15dp"
-            android:paddingTop="7dp"
-            android:paddingRight="15dp"
-            android:paddingBottom="7dp"
-            android:text="发布"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14"
-            android:visibility="gone" />
-
-        <TextView
             android:id="@+id/finds_clear_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -74,7 +58,6 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="onAction"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:src="@drawable/mine_msg_b_icon" />

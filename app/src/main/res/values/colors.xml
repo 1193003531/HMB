@@ -52,12 +52,12 @@
     <color name="colorcccccc">#cccccc</color>
     <color name="colore6e6e6">#e6e6e6</color>
     <color name="colorefffefe">#fffefe</color>
+    <color name="fffefe">#fffefe</color>
     <color name="colored2d2d2">#d2d2d2</color>
     <color name="coloreff7e27">#ff7e27</color>
     <color name="colore262626">#262626</color>
     <color name="colored0d0d0">#d0d0d0</color>
     <color name="coloref5f5f5">#f5f5f5</color>
-    <color name="fffefe">#fffefe</color>
 
     <!--互推圈-->
     <color name="FF8aa1ff">#8aa1ff</color>
@@ -68,7 +68,6 @@
     <color name="ff274ff3">#FFf56900</color>
     <color name="FF747474">#FF747474</color>
     <color name="FF2732E1">#FF2732E1</color>
-
 
 
     <!--消息-->
