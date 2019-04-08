@@ -483,7 +483,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
+        <activity
+            android:name=".fragment.web.HomePageWebActivity"
+            android:label="主页"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".pay.PayActivity"
             android:label="支付"

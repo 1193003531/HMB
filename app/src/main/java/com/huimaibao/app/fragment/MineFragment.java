@@ -32,6 +32,7 @@ import com.huimaibao.app.fragment.mine.act.MyQRCodeActivity;
 import com.huimaibao.app.fragment.mine.act.SetActivity;
 import com.huimaibao.app.fragment.mine.act.WalletActivity;
 import com.huimaibao.app.fragment.mine.settings.VerifyPhoneActivity;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.fragment.web.MessageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.login.logic.LoginLogic;
@@ -70,13 +71,13 @@ public class MineFragment extends BaseFragment {
     private ImageView _perfect_del, _msg_btn;
     //去完善,我的,关注数量
     private TextView btn_perfect, _msg_title, _card_num;
-    //服务商，认证用户，会员，商家，互推达人
-    private ImageView _fws_iv, _rzyh_iv, _vip_iv, _shop_iv, _htdr_iv;
+    //服务商，认证用户，会员，商家，互推达人,背景图片
+    private ImageView _fws_iv, _rzyh_iv, _vip_iv, _shop_iv, _htdr_iv, _top_bg_iv;
 
 
     private CircleImageView mHeadImageView;
-    //姓名，广告语，邀请码,复制邀请码
-    private TextView _name_tv, _motto_tv, _code_tv, btn_code_copy;
+    //姓名，广告语，邀请码,复制邀请码,会员到期时间
+    private TextView _name_tv, _motto_tv, _code_tv, btn_code_copy,_member_data;
     //营销奖励,脉宝
     private TextView _reward_tv;
     private int _vip_value = 0;
@@ -133,6 +134,9 @@ public class MineFragment extends BaseFragment {
             startActivity(WalletActivity.class, "钱包");
             XPreferencesUtils.put("set_payment_pwd", false);
         }
+
+        _motto_tv.setText("" + XPreferencesUtils.get("motto", ""));
+        _member_data.setText("" + XPreferencesUtils.get("member_data", "开通会员"));
     }
 
     private void initView(View v) {
@@ -186,7 +190,7 @@ public class MineFragment extends BaseFragment {
         _yqm_ll = v.findViewById(R.id.mine_basic_code_ll);
 
         _card_num = v.findViewById(R.id.mine_card_clip_tv);
-//        _perfect_num = v.findViewById(R.id.mine_basic_progress_num);
+        _member_data= v.findViewById(R.id.mine_member_data_tv);
 //        _perfect_progress = v.findViewById(R.id.mine_basic_progressbar);
 
         mHeadImageView = v.findViewById(R.id.mine_basic_image);
@@ -195,7 +199,7 @@ public class MineFragment extends BaseFragment {
         _code_tv = v.findViewById(R.id.mine_basic_code);
         btn_code_copy = v.findViewById(R.id.mine_basic_code_copy);
         _reward_tv = v.findViewById(R.id.mine_marketing_reward_tv);
-        //_vein_treasure_tv = v.findViewById(R.id.mine_vein_treasure_tv);
+        _top_bg_iv = v.findViewById(R.id.mine_top_bg_iv);
 
 
         _fws_iv = v.findViewById(R.id.mine_basic_fws_iv);
@@ -276,14 +280,16 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //BasicActivity
-                startActivity(BasicActivity.class, "基本信息");
+               // startActivity(BasicActivity.class, "基本信息");
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
             }
         });
         btn_perfect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //BasicActivity
-                startActivity(BasicActivity.class, "基本信息");
+                //startActivity(BasicActivity.class, "基本信息");
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
             }
         });
 
@@ -447,6 +453,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
+                    ImageLoaderManager.loadImage(XPreferencesUtils.get("background", "").toString(), _top_bg_iv, R.drawable.mine_top_bg);
                     ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), mHeadImageView, R.drawable.ic_launcher);
                     String name = "" + XPreferencesUtils.get("name", "");
                     String phone = "" + XPreferencesUtils.get("phone", "");

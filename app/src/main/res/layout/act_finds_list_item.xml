@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="15dp"
-        android:paddingLeft="16dp">
+        android:paddingLeft="16dp"
+        android:paddingTop="15dp">
 
         <com.youth.xframe.widget.CircleImageView
             android:id="@+id/finds_list_item_head"
@@ -154,6 +154,17 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="16dp"
                     android:src="@drawable/finds_list_qbfk" />
+
+                <TextView
+                    android:id="@+id/finds_list_item_praise_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="16dp"
+                    android:text="删除"
+                    android:textColor="@color/main_color"
+                    android:textSize="@dimen/text_size_13" />
 
             </LinearLayout>
         </LinearLayout>

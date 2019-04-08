@@ -127,7 +127,7 @@ public class MemberActivity extends BaseActivity {
 
     /***/
     private void initData() {
-        ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(),_head_image,R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), _head_image, R.drawable.ic_launcher);
         _head_name.setText("" + XPreferencesUtils.get("name", ""));
         if (XPreferencesUtils.get("vip_level", "0").equals("0")) {
             _vip_type.setText("普通用户");
@@ -299,7 +299,13 @@ public class MemberActivity extends BaseActivity {
                                         _vip_type.setText(VipName[3]);
                                         break;
                                 }
-                                _vip_date.setText(XTimeUtils.StringToYMD(time) + "到期");
+                                if (level != 0) {
+                                    _vip_date.setText(XTimeUtils.StringToYMD(time) + "到期");
+                                    XPreferencesUtils.put("member_data", XTimeUtils.StringToYMD(time) + "到期");
+                                } else {
+                                    XPreferencesUtils.put("member_data", "开通会员");
+                                }
+
                                 if (!XEmptyUtils.isSpace(time)) {
                                     if (System.currentTimeMillis() < XTimeUtils.string2Millis(time)) {
                                         _payment_btn.setText("立即续费");
@@ -388,7 +394,6 @@ public class MemberActivity extends BaseActivity {
     private void getUserInfo() {
         LoginLogic.Instance(mActivity).getUserInfoApi("", false, null);
     }
-
 
 
 }

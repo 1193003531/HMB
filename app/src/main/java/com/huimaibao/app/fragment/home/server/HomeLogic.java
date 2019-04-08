@@ -621,5 +621,38 @@ public class HomeLogic {
         }
     }
 
+    /**
+     * 修改个人广告语
+     */
+    public void getUpdateMottoApi(String motto, final ResultBack resultBack) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("motto", motto);
+        if (XNetworkUtils.isConnected()) {
+            XHttp.obtain().post(ServerApi.UPDATE_MOTTO_URL, map, new HttpCallBack() {
+                @Override
+                public void showProgress() {
+                    mDialogUtils.showLoadingDialog("设置中...");
+                }
+
+                @Override
+                public void dismissProgress() {
+                    mDialogUtils.dismissDialog();
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                    resultBack.onSuccess(o);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    resultBack.onFailed(error);
+                }
+            });
+        } else {
+            XToast.normal(mActivity.getResources().getString(R.string.network_enable));
+        }
+    }
+
 
 }

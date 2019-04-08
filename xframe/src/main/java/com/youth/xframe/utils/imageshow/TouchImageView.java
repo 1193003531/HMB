@@ -377,6 +377,11 @@ public class TouchImageView extends AppCompatImageView {
 	}
 
 	@Override
+	public void setImageResource(int resId) {
+		super.setImageResource(resId);
+	}
+
+	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		width = MeasureSpec.getSize(widthMeasureSpec);

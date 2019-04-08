@@ -90,6 +90,10 @@ public interface ServerApi {
      * 用户互推圈网址链接
      */
     String ELECT_WEB_URL = SERVER_WEB_URL + "/#/app/match?";
+    /**
+     * 主页
+     */
+    String HOME_PAGE_WEB_URL = SERVER_WEB_URL + "/#/card/detail/"+"?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
 
     /**
      * 公共接口
@@ -113,7 +117,6 @@ public interface ServerApi {
     String RECEIVE_AWARD_URL = SERVER_URL + "/front/user_activity_amount";
 
     /**
-     *
      * app更新
      */
     String APP_VERSION_URL = SERVER_URL + "/front/version";
@@ -122,8 +125,10 @@ public interface ServerApi {
      * post
      */
     String REFRESH_TOKEN_URL = SERVER_URL + "/front/refresh";
-
-
+    /**
+     *修改个人广告语
+     */
+    String UPDATE_MOTTO_URL = SERVER_URL + "/front/profile/motto";
     /**
      * /front/share
      * 分享统计

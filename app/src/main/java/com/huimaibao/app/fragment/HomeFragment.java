@@ -42,6 +42,7 @@ import com.huimaibao.app.fragment.library.bean.LibNewsEntity;
 import com.huimaibao.app.fragment.library.server.LibLogic;
 import com.huimaibao.app.fragment.message.act.MessageCMActivity;
 import com.huimaibao.app.fragment.mine.act.MarketingTagActivity;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.fragment.web.LibDetailsWebActivity;
 import com.huimaibao.app.fragment.web.MessageWebActivity;
 import com.huimaibao.app.fragment.web.PersonalWebDetailsActivity;
@@ -402,7 +403,8 @@ public class HomeFragment extends BaseFragment {
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(PersonalActivity.class, iLData.get(v.getId()).getIncomeId());
+                            // startActivity(PersonalActivity.class, iLData.get(v.getId()).getIncomeId());
+                            startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
                         }
                     });
 
@@ -752,15 +754,17 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
+        //主页
         btn_marketing_web.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //if ((boolean) XPreferencesUtils.get("has_usertemp", false)) {
-                startActivity(MarketingWebActivity.class, "营销网页");
+                //               startActivity(MarketingWebActivity.class, "营销网页");
 //                } else {
 //                    startActivity(MessageWebActivity.class, "营销网页", "http://weixin.yuhongrocky.top/#/tools/marketing/edit/");
 //                }
 
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
             }
         });
 

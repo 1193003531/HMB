@@ -9,8 +9,13 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
+import com.huimaibao.app.fragment.home.server.HomeLogic;
+import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.utils.XEmptyUtils;
+import com.youth.xframe.utils.XPreferencesUtils;
+
+import org.json.JSONObject;
 
 /**
  * 广告标语
@@ -38,7 +43,7 @@ public class AdvertSlogansActivity extends BaseActivity {
                 if (XEmptyUtils.isSpace(_as_content_value)) {
                     ToastUtils.showCenter("请输入广告标语");
                 } else {
-                    ToastUtils.showCenter("" + _as_content.getText().toString());
+                    getMotto(_as_content_value);
                 }
             }
         });
@@ -96,59 +101,32 @@ public class AdvertSlogansActivity extends BaseActivity {
         });
     }
 
-    public void onAction(View v) {
-        switch (v.getId()) {
-            case R.id.wallet_bank_add_btn:
-                startActivity(BankCardAddActivity.class, "添加银行卡");
-                break;
-        }
-    }
-
-
     /***/
-    private void getBankCard() {
-//        WalletLogic.Instance(mActivity).getBankCardApi(true, new ResultBack() {
-//            @Override
-//            public void onSuccess(Object object) {
-//                try {
-//                    JSONObject json = new JSONObject(object.toString());
-//                    String msg = json.getString("message");
-//                    if (json.getString("status").equals("0")) {
-//                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("data"));
-//                        ListData = new ArrayList<>();
-//                        for (int i = 0; i < array.length(); i++) {
-//                            BankCardEntity entity = new BankCardEntity();
-//                            entity.setBankCardId(array.getJSONObject(i).getString("id"));
-//                            entity.setBankCardName(array.getJSONObject(i).getString("bank_name"));
-//                            entity.setBankCardNum(array.getJSONObject(i).getString("card_no"));
-//                            entity.setBankCardType("储蓄卡");
-//                            ListData.add(entity);
-//                        }
-//
-//                        mActivity.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                if (ListData.size() == 0) {
-//                                    showToast("还没有银行卡");
-//                                }
-//                                mAdapter = new BankCardAdapter(mActivity, ListData, "0");
-//                                mListView.setAdapter(mAdapter);
-//                            }
-//                        });
-//
-//                    } else {
-//                        showToast(msg);
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailed(String error) {
-//                //XLog.e("error:" + error);
-//            }
-//        });
+    private void getMotto(final String motto) {
+        HomeLogic.Instance(mActivity).getUpdateMottoApi(motto, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        showToast("设置成功");
+                        XPreferencesUtils.put("motto", motto);
+                        finish();
+                    } else {
+                        showToast(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToast("设置失败" + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                showToast("设置失败" + error);
+            }
+        });
     }
 
 }

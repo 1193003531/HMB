@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.huimaibao.app.R;
+import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseFragment;
 import com.huimaibao.app.fragment.message.act.MessageListActivity;
 import com.huimaibao.app.fragment.message.adapter.MessageDelAdapter;
@@ -19,6 +20,7 @@ import com.huimaibao.app.fragment.mine.act.CardClipDetailActivity;
 import com.huimaibao.app.fragment.mine.adapter.CardAdapter;
 import com.huimaibao.app.fragment.mine.entity.CardEntity;
 import com.huimaibao.app.fragment.mine.server.CardClipLogic;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
@@ -93,7 +95,8 @@ public class MsgListFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (text.equals("关注")) {
-                    startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
+                    //startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
+                    startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
                 } else if (text.equals("粉丝")) {
 
                 } else {

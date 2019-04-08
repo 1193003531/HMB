@@ -509,6 +509,7 @@ public class LoginLogic {
                             XPreferencesUtils.put("motto", jsonD.optString("motto", ""));//广告语
                             XPreferencesUtils.put("invitation_code", jsonD.optString("invitation_code", ""));//邀请码
                             XPreferencesUtils.put("is_perfect", jsonD.optString("is_perfect", "10"));//是否完善
+                            XPreferencesUtils.put("background", jsonD.optString("background", ""));//背景图片
                             if (resultBack != null)
                                 resultBack.onSuccess(o);
                         } else {

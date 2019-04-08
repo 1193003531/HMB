@@ -3,7 +3,6 @@ package com.huimaibao.app.fragment.library.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,26 +77,14 @@ public class ImagePagerAdapter extends PagerAdapter {
         retry = view.findViewById(R.id.retry);//加载失败
         //progress_text.setText(String.valueOf(position));
         progress.setVisibility(View.GONE);
-        ImageLoader.getInstance().displayImage(imgsUrl.get(position).trim(), full_image, options, new ImageLoadingListener() {
+        // retry.setVisibility(View.GONE);
+        // progress_text.setVisibility(View.GONE);
+        // ImageLoaderManager.loadImage(imgsUrl.get(position).trim(),full_image,R.drawable.ic_full_image_failed);
+        imageLoader.displayImage(imgsUrl.get(position).trim(), full_image, options, new ImageLoadingListener() {
 
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 // TODO Auto-generated method stub
-//                if (imgsUrl.size() > 1) {
-//                    if (position == 0) {
-//                        progress.setVisibility(View.GONE);
-//                        progress_text.setVisibility(View.GONE);
-//                        full_image.setVisibility(View.VISIBLE);
-//                    } else {
-//                        progress.setVisibility(View.VISIBLE);
-//                        progress_text.setVisibility(View.VISIBLE);
-//                        full_image.setVisibility(View.GONE);
-//                    }
-//                } else {
-//                    progress.setVisibility(View.VISIBLE);
-//                    progress_text.setVisibility(View.VISIBLE);
-//                    full_image.setVisibility(View.GONE);
-//                }
                 progress.setVisibility(View.VISIBLE);
                 progress_text.setVisibility(View.VISIBLE);
                 full_image.setVisibility(View.VISIBLE);
@@ -138,4 +125,6 @@ public class ImagePagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
+
+
 }

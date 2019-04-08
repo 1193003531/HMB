@@ -26,7 +26,7 @@
         android:layout_centerInParent="true"
         android:drawableTop="@drawable/ic_full_image_failed"
         android:gravity="center"
-        android:text="@string/retry_large_image" />
+        android:text="加载失败" />
 
     <com.youth.xframe.utils.imageshow.TouchImageView
         android:id="@+id/full_image"

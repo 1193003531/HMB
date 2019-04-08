@@ -145,10 +145,10 @@ public class FindsAddActivity extends TakePhotoActivity {
                 break;
             case R.id.finds_add_btn:
                 _finds_content_value = _finds_content.getText().toString();
-                if (XEmptyUtils.isSpace(_finds_content_value) && albumData.size() == 0) {
+                if (XEmptyUtils.isSpace(_finds_content_value) && imagePthData.size() == 0) {
                     ToastUtils.showCenter("内容不能为空");
                 } else {
-
+                    ToastUtils.showCenter(albumData.size() + "内容能为空" + _finds_content_value);
                 }
                 break;
         }

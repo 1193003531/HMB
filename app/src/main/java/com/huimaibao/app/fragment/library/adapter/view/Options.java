@@ -1,7 +1,9 @@
 package com.huimaibao.app.fragment.library.adapter.view;
 
+import com.huimaibao.app.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 public class Options {
     /**
@@ -12,9 +14,9 @@ public class Options {
 //				// 设置图片在下载期间显示的图片
 //				.showImageOnLoading(R.drawable.small_image_holder_listpage)
 //				// 设置图片Uri为空或是错误的时候显示的图片
-//				.showImageForEmptyUri(R.drawable.small_image_holder_listpage)
+//				.showImageForEmptyUri(R.drawable.ic_full_image_failed)
 //				// 设置图片加载/解码过程中错误时候显示的图片
-//				.showImageOnFail(R.drawable.small_image_holder_listpage)
+//				.showImageOnFail(R.drawable.ic_full_image_failed)
                 // 设置下载的图片是否缓存在内存中
                 .cacheInMemory(true)
                 // 设置下载的图片是否缓存在SD卡中
@@ -32,6 +34,7 @@ public class Options {
                 // 。preProcessor(BitmapProcessor preProcessor)
                 //.resetViewBeforeLoading(true)// 设置图片在下载前是否重置，复位
                 // .displayer(new RoundedBitmapDisplayer(20))//是否设置为圆角，弧度为多少
+
                 .displayer(new FadeInBitmapDisplayer(100))// 淡入
                 .build();
         return options;

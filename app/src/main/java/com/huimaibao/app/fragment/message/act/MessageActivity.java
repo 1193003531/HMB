@@ -32,6 +32,7 @@ import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
+import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
 import com.youth.xframe.widget.XToast;
@@ -86,7 +87,7 @@ public class MessageActivity extends BaseActivity {
             _top_titel_2.setText("通知");
             _top_sreach.setVisibility(View.INVISIBLE);
         } else {
-            _top_titel_1.setText("关注(" + 0 + ")");
+            _top_titel_1.setText("关注(" +  XPreferencesUtils.get("card_num", "0") + ")");
             _top_titel_2.setText("粉丝");
             _top_sreach.setVisibility(View.VISIBLE);
         }
@@ -197,7 +198,7 @@ public class MessageActivity extends BaseActivity {
         switch (position) {
             case 0:
                 if (mType.equals("关注")) {
-                    _top_titel_1.setText("关注(" + 0 + ")");
+                    _top_titel_1.setText("关注(" +  XPreferencesUtils.get("card_num", "0") + ")");
                     _top_titel_2.setText("粉丝");
                 }
                 _top_titel_1.setTextColor(getResources().getColor(R.color.FF333333));

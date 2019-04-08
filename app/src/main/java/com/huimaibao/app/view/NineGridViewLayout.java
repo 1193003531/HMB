@@ -1,15 +1,19 @@
 package com.huimaibao.app.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Toast;
 
+import com.huimaibao.app.R;
+import com.huimaibao.app.fragment.library.act.ImageShowActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +21,7 @@ import java.util.List;
  */
 public class NineGridViewLayout extends NineGridLayout {
     protected static final int MAX_W_H_RATIO = 3;
+    private Context mContext;
 
     public NineGridViewLayout(Context context) {
         super(context);
@@ -24,6 +29,7 @@ public class NineGridViewLayout extends NineGridLayout {
 
     public NineGridViewLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.mContext = context;
     }
 
     @Override
@@ -74,8 +80,14 @@ public class NineGridViewLayout extends NineGridLayout {
     }
 
     @Override
-    protected void onClickImage(int i, String url, List<String> urlList) {
-        Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
+    protected void onClickImage(int i, String url, ArrayList<String> urlList) {
+       // Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setClass(mContext, ImageShowActivity.class);
+        intent.putStringArrayListExtra("infos", urlList);
+        intent.putExtra("position", i);
+        mContext.startActivity(intent);
+        // mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 

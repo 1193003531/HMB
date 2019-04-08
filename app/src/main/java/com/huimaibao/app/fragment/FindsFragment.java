@@ -19,6 +19,7 @@ import com.huimaibao.app.fragment.finds.act.FindsMSGActivity;
 import com.huimaibao.app.fragment.finds.act.FindsMyActivity;
 import com.huimaibao.app.fragment.finds.adapter.FindsAdapter;
 import com.huimaibao.app.fragment.finds.entity.FindsEntity;
+import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.CircleImageView;
@@ -38,6 +39,7 @@ public class FindsFragment extends BaseFragment {
     //我的动态
     private TextView _finds_my_btn;
     //新消息
+    private View _view_top;
     private LinearLayout _finds_msg_ll;
     private CircleImageView _finds_msg_head;
     private TextView _finds_msg_content;
@@ -52,7 +54,29 @@ public class FindsFragment extends BaseFragment {
     private List<FindsEntity> listData;
     private List<String> listImage;
 
-    private int countPage = 1;
+    private int countPage = 1, praise_num = 0;
+
+
+    private XFrameAnimation xFAFocus, xFAPraise;
+
+    private int[] focusRes = {R.drawable.finds_list_top_focus, R.drawable.finds_list_top_focus_1, R.drawable.finds_list_top_focus_2,
+            R.drawable.finds_list_top_focus_3, R.drawable.finds_list_top_focus_4, R.drawable.finds_list_top_focus_5
+            , R.drawable.finds_list_top_focus_6, R.drawable.finds_list_top_focus_7, R.drawable.finds_list_top_focus_8
+            , R.drawable.finds_list_top_focus_9, R.drawable.finds_list_top_focus_10, R.drawable.finds_list_top_focus_11, R.drawable.finds_list_top_focus_12
+            , R.drawable.finds_list_top_focus_13, R.drawable.finds_list_top_focus_14, R.drawable.finds_list_top_focus_15
+            , R.drawable.finds_list_top_focus_16, R.drawable.finds_list_top_focus_17, R.drawable.finds_list_top_focus_18
+            , R.drawable.finds_list_top_focus_19, R.drawable.finds_list_top_focus_20, R.drawable.finds_list_top_focus_22, R.drawable.finds_list_top_focus_23
+            , R.drawable.finds_list_top_focus_24, R.drawable.finds_list_top_focus_25, R.drawable.finds_list_top_focus_26};
+
+    private int[] praiseRes = {R.drawable.finds_list_praise, R.drawable.finds_list_praise_1, R.drawable.finds_list_praise_2, R.drawable.finds_list_praise_3
+            , R.drawable.finds_list_praise_4, R.drawable.finds_list_praise_5, R.drawable.finds_list_praise_6, R.drawable.finds_list_praise_7
+            , R.drawable.finds_list_praise_8, R.drawable.finds_list_praise_9, R.drawable.finds_list_praise_10, R.drawable.finds_list_praise_11
+            , R.drawable.finds_list_praise_12, R.drawable.finds_list_praise_13, R.drawable.finds_list_praise_14, R.drawable.finds_list_praise_15
+            , R.drawable.finds_list_praise_16, R.drawable.finds_list_praise_17, R.drawable.finds_list_praise_18, R.drawable.finds_list_praise_19
+            , R.drawable.finds_list_praise_20, R.drawable.finds_list_praise_21, R.drawable.finds_list_praise_22, R.drawable.finds_list_praise_23
+            , R.drawable.finds_list_praise_24, R.drawable.finds_list_praise_25, R.drawable.finds_list_praise_26, R.drawable.finds_list_praise_27
+            , R.drawable.finds_list_praise_28, R.drawable.finds_list_praise_29};
+
 
     private String[] mUrls = new String[]{
             "http://d.hiphotos.baidu.com/image/h%3D200/sign=201258cbcd80653864eaa313a7dca115/ca1349540923dd54e54f7aedd609b3de9c824873.jpg",
@@ -84,10 +108,13 @@ public class FindsFragment extends BaseFragment {
 
         //我的动态
         _finds_my_btn = v.findViewById(R.id.finds_my_btn);
+
         //新消息
-        _finds_msg_ll = v.findViewById(R.id.finds_msg_ll);
-        _finds_msg_head = v.findViewById(R.id.finds_msg_head);
-        _finds_msg_content = v.findViewById(R.id.finds_msg_content);
+        _view_top = View.inflate(mActivity, R.layout.fragment_finds_top, null);
+        _finds_msg_ll = _view_top.findViewById(R.id.finds_msg_ll);
+        _finds_msg_head = _view_top.findViewById(R.id.finds_msg_head);
+        _finds_msg_content = _view_top.findViewById(R.id.finds_msg_content);
+
         //添加动态
         _finds_add_btn = v.findViewById(R.id.finds_add_btn);
 
@@ -101,11 +128,16 @@ public class FindsFragment extends BaseFragment {
         mSwipeRefreshView.setColorSchemeResources(R.color.ff274ff3);
 
         // 手动调用,通知系统去测量
-       // mSwipeRefreshView.measure(0, 0);
-       // mSwipeRefreshView.setRefreshing(true);
-       // mSwipeRefreshView.setItemCount(5);
+        // mSwipeRefreshView.measure(0, 0);
+        // mSwipeRefreshView.setRefreshing(true);
+        // mSwipeRefreshView.setItemCount(5);
 
         initEvent();
+
+        //添加新消息
+        mListView.addHeaderView(_view_top);
+
+
     }
 
 
@@ -153,10 +185,37 @@ public class FindsFragment extends BaseFragment {
 
             listData.add(entity);
         }
-        mAdapter = new FindsAdapter(mActivity, listData);
+        mAdapter = new FindsAdapter(mActivity,"发现", listData);
         mListView.setAdapter(mAdapter);
         // 加载完数据设置为不加载状态，将加载进度收起来
         //mSwipeRefreshView.setLoading(false);
+        mAdapter.setOnItemFocusClickListener(new FindsAdapter.onItemFocusClickListener() {
+            @Override
+            public void onItemFocusClick(int position) {
+                listData.get(position).setFindsIsFocus("1");
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mAdapter.setOnItemPraiseClickListener(new FindsAdapter.onItemPraiseClickListener() {
+            @Override
+            public void onItemPraiseClick(int position) {
+//                FindsEntity entity = new FindsEntity();
+//                entity.setFindsIsPraise("1");
+                if (listData.get(position).getFindsIsPraise().equals("0")) {
+                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
+                    listData.get(position).setFindsIsPraise("1");
+                    listData.get(position).setFindsPraiseNum(praise_num + "");
+                } else {
+                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) - 1;
+                    listData.get(position).setFindsIsPraise("0");
+                    listData.get(position).setFindsPraiseNum(praise_num + "");
+                }
+
+
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void loadMoreData() {
@@ -182,10 +241,10 @@ public class FindsFragment extends BaseFragment {
 
             listData.add(entity);
         }
-        mAdapter = new FindsAdapter(mActivity, listData);
+        mAdapter = new FindsAdapter(mActivity,"发现", listData);
         mListView.setAdapter(mAdapter);
         // 加载完数据设置为不加载状态，将加载进度收起来
-       // mSwipeRefreshView.setLoading(false);
+        // mSwipeRefreshView.setLoading(false);
     }
 
 
