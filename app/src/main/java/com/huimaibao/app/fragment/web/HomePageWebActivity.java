@@ -1,8 +1,11 @@
 package com.huimaibao.app.fragment.web;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ProgressBar;
@@ -31,6 +35,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.permission.XPermission;
 import com.youth.xframe.widget.XToast;
 
 import org.json.JSONObject;
@@ -279,6 +284,38 @@ public class HomePageWebActivity extends BaseActivity {
             finish();
         }
 
+        //个人微网(去制作)
+        @JavascriptInterface
+        public void toAddPhoneView(final String name, final String phone) {   //提供给js调用的方法
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
+
+                        XPermission.requestPermissions(mActivity, 1008, new String[]{
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.WRITE_CONTACTS
+                        }, new XPermission.OnPermissionListener() {
+                            //权限申请成功时调用
+                            @Override
+                            public void onPermissionGranted() {
+                                addContact(name, phone);
+                            }
+
+                            //权限被用户禁止时调用
+                            @Override
+                            public void onPermissionDenied() {
+                                //给出友好提示，并且提示启动当前应用设置页面打开权限
+                                XPermission.showTipsDialog(mActivity);
+                            }
+                        });
+                    } else {
+                        addContact(name, phone);
+                    }
+                }
+            });
+        }
+
     }
 
     /**
@@ -415,5 +452,51 @@ public class HomePageWebActivity extends BaseActivity {
 //            }
 //        }
 //    }
+
+    //一步一步添加数据
+    // 一个添加联系人信息的例子
+    public void addContact(String name, String phoneNumber) {
+        // mDialogUtils.showLoadingDialog("添加中...");
+        // 创建一个空的ContentValues
+        ContentValues values = new ContentValues();
+
+        // 向RawContacts.CONTENT_URI空值插入，
+        // 先获取Android系统返回的rawContactId
+        // 后面要基于此id插入值
+        Uri rawContactUri = mActivity.getContentResolver().insert(ContactsContract.RawContacts.CONTENT_URI, values);
+        long rawContactId = ContentUris.parseId(rawContactUri);
+        values.clear();
+
+        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId);
+        // 内容类型
+        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE);
+        // 联系人名字
+        values.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, name);
+        // 向联系人URI添加联系人名字
+        mActivity.getContentResolver().insert(ContactsContract.Data.CONTENT_URI, values);
+        values.clear();
+
+        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId);
+        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+        // 联系人的电话号码
+        values.put(ContactsContract.CommonDataKinds.Phone.NUMBER, phoneNumber);
+        // 电话类型
+        values.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+        // 向联系人电话号码URI添加电话号码
+        mActivity.getContentResolver().insert(ContactsContract.Data.CONTENT_URI, values);
+        values.clear();
+
+//        values.put(Data.RAW_CONTACT_ID, rawContactId);
+//        values.put(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
+//        // 联系人的Email地址
+//        values.put(Email.DATA, "zhangphil@xxx.com");
+//        // 电子邮件的类型
+//        values.put(Email.TYPE, Email.TYPE_WORK);
+//        // 向联系人Email URI添加Email数据
+//        getContentResolver().insert(Data.CONTENT_URI, values);
+
+        XToast.normal("联系人数据添加成功");
+        //  mDialogUtils.dismissDialog();
+    }
 
 }

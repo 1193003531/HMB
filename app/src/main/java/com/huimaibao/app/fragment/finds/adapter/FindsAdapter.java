@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.fragment.finds.act.FindsCommentsActivity;
+import com.huimaibao.app.fragment.finds.act.FindsPraiseActivity;
 import com.huimaibao.app.fragment.finds.entity.FindsEntity;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
@@ -117,7 +118,7 @@ public class FindsAdapter extends BaseAdapter {
 
         mHolder._item_name.setText(item.getFindsUserName());
         mHolder._item_content.setText(item.getFindsContent());
-        mHolder._item_time.setText(XTimeUtils.getTimeRange(item.getFindsTime()));
+        mHolder._item_time.setText(XTimeUtils.getTimeRangeS(item.getFindsTime()));
         mHolder._item_praise_num.setText(item.getFindsPraiseNum());
         mHolder._item_comments_num.setText(item.getFindsCommentsNum());
         mHolder._item_images.setUrlList(item.FindsImageList);
@@ -164,7 +165,8 @@ public class FindsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
-                startActivity(FindsCommentsActivity.class, "动态");
+                // startActivity(FindsCommentsActivity.class, "动态");
+                startActivity(FindsPraiseActivity.class, "点赞的人");
             }
         });
 
