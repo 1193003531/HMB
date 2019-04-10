@@ -93,7 +93,7 @@ public interface ServerApi {
     /**
      * 主页
      */
-    String HOME_PAGE_WEB_URL = SERVER_WEB_URL + "/#/card/detail/"+"?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
+    String HOME_PAGE_WEB_URL = SERVER_WEB_URL + "/#/card/detail/" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
 
     /**
      * 公共接口
@@ -126,7 +126,7 @@ public interface ServerApi {
      */
     String REFRESH_TOKEN_URL = SERVER_URL + "/front/refresh";
     /**
-     *修改个人广告语
+     * 修改个人广告语
      */
     String UPDATE_MOTTO_URL = SERVER_URL + "/front/profile/motto";
     /**
@@ -596,4 +596,80 @@ public interface ServerApi {
      * 浏览次数的增加get
      */
     String ELECT_MATERIAL_SHARE_URL = SERVER_URL + "/front/material/share";
+
+    /**
+     * 某条评论的全部子评论
+     * get
+     */
+    String FINDS_COMMENT_CHILD_ALL_URL = SERVER_URL + "/front/finds/dynamic_comment_all";
+    /**
+     * 我发布的动态列表
+     * get
+     */
+    String FINDS_MY_DY_LIST_URL = SERVER_URL + "/front/finds/my_dynamic_list";
+    /**
+     * 点赞用户列表
+     * get
+     */
+    String FINDS_PRAISE_USER_LIST_URL = SERVER_URL + "/front/finds/praise_user_list";
+    /**
+     * 保存动态(添加)
+     * post
+     */
+    String FINDS_ADD_DY_URL = SERVER_URL + "/front/finds/dynamic_save";
+    /**
+     * 某条动态的评论
+     * get
+     */
+    String FINDS_COMMENT_DY_URL = SERVER_URL + "/front/finds/dynamic_comment";
+    /**
+     * 删除动态
+     * delete
+     */
+    String FINDS_DEL_DY_URL = SERVER_URL + "/front/finds/dynamic_delete";
+    /**
+     * 我的新消息列表
+     * get
+     */
+    String FINDS_MY_MSG_LIST_URL = SERVER_URL + "/front/finds/new_massage_list";
+    /**
+     * （动态列表）我的新消息
+     * get
+     */
+    String FINDS_NEW_MSG_URL = SERVER_URL + "/front/finds/new_massage";
+    /**
+     * 清空新消息
+     * delete
+     */
+    String FINDS_CLEAR_MSG_URL = SERVER_URL + "/front/finds/clear_new_massage";
+    /**
+     * 删除评论
+     * delete
+     */
+    String FINDS_COMMENT_DEL_URL = SERVER_URL + "/front/finds/comment_delete";
+    /**
+     * 添加评论
+     * post
+     */
+    String FINDS_COMMENT_ADD_URL = SERVER_URL + "/front/finds/dynamic_comment_save";
+    /**
+     * 添加评论点赞
+     * post
+     */
+    String FINDS_COMMENT_PRAISE_URL = SERVER_URL + "/front/finds/comment_praises";
+    /**
+     * 添加动态点赞
+     * post
+     */
+    String FINDS_DY_PRAISE_URL = SERVER_URL + "/front/finds/dynamic_praises";
+    /**
+     * 动态详情
+     * get
+     */
+    String FINDS_DY_DETAILS_URL = SERVER_URL + "/front/finds/dynamic_details";
+    /**
+     * 动态列表
+     * get
+     */
+    String FINDS_DY_LIST_URL = SERVER_URL + "/front/finds/dynamic_list";
 }

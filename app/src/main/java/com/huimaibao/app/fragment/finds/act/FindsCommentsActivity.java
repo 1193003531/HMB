@@ -1,9 +1,12 @@
 package com.huimaibao.app.fragment.finds.act;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -13,10 +16,8 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.finds.adapter.FindsCommentsAdapter;
-import com.huimaibao.app.fragment.finds.adapter.FindsPraiseAdapter;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentEntity;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
-import com.huimaibao.app.fragment.finds.entity.FindsPraiseEntity;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
 import com.huimaibao.app.utils.DialogUtils;
@@ -25,15 +26,14 @@ import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.view.NineGridViewLayout;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XDensityUtils;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XFrameAnimation;
+import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XTimeUtils;
-import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.GifView;
-import com.youth.xframe.widget.NoScrollListView;
 import com.youth.xframe.widget.XScrollView;
-import com.youth.xframe.widget.XSwipeRefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,20 +49,27 @@ public class FindsCommentsActivity extends BaseActivity {
     private CircleImageView _top_head;
     private TextView _top_name, _top_title, _top_comment_num;
 
+    //button 添加评论
+    private EditText _add_comment;
+    private TextView _add_comment_btn;
+
+
     //dy
     private CircleImageView _item_head;
     private TextView _item_name, _item_content, _item_time, _item_praise_num, _item_comments_num;
     private ImageView _item_focus_iv, _item_praise_iv;
     private NineGridViewLayout _item_images;
-    private LinearLayout _item_ll, _item_praise_ll;
+    private LinearLayout _item_ll;
     private RelativeLayout _item_comment_ll;
-    private ImageView _item_comment_iv_1, _item_comment_iv_2, _item_comment_iv_3, _item_comment_iv_4, _item_comment_iv_more;
+    private CircleImageView _item_comment_iv_1, _item_comment_iv_2, _item_comment_iv_3, _item_comment_iv_4, _item_comment_iv_more;
 
-    private String _dy_userid_value = "", _dy_head_value = "", _dy_name_value = "";
+    private String _dy_userid_value = "", _dy_head_value = "", _dy_name_value = "", _dy_isfocus_value = "0", _dy_ispraise_value = "0", _dy_praisenum_value = "0", _dy_comment_head_value = "";
+    //评论头像
+    private List<String> commentHeadList;
+
 
     private XScrollView mScrollView;
-    private NoScrollListView mListView;
-
+    private ListView mListView;
     private FindsCommentsAdapter mAdapter;
     private List<FindsCommentsEntity> listData;
     private List<String> listImage;
@@ -71,12 +78,13 @@ public class FindsCommentsActivity extends BaseActivity {
     private View mFooterView;
     private GifView _footer_gif;
     private boolean isLoading = false;
-    private int countPage = 1;
+    private int countPage = 1, praise_num = 0;
 
 
     private DialogUtils mDialogUtils;
 
     private XFrameAnimation xFAFocus, xFAPraise;
+
     private int[] focusRes = {R.drawable.finds_list_top_focus, R.drawable.finds_list_top_focus_1, R.drawable.finds_list_top_focus_2,
             R.drawable.finds_list_top_focus_3, R.drawable.finds_list_top_focus_4, R.drawable.finds_list_top_focus_5
             , R.drawable.finds_list_top_focus_6, R.drawable.finds_list_top_focus_7, R.drawable.finds_list_top_focus_8
@@ -134,6 +142,22 @@ public class FindsCommentsActivity extends BaseActivity {
         _top_title = findViewById(R.id.finds_list_title);
         _top_comment_num = findViewById(R.id.finds_list_comments_num);
 
+        _add_comment = findViewById(R.id.finds_add_comments);
+        _add_comment_btn = findViewById(R.id.finds_add_comments_btn);
+        _add_comment.addTextChangedListener(addCommentWatcher);
+
+        _add_comment.setFocusable(false);
+        _add_comment.setFocusableInTouchMode(false);
+        _add_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _add_comment.setFocusable(true);
+                _add_comment.setFocusableInTouchMode(true);
+                XKeyboardUtils.openKeyboard(mActivity,_add_comment);
+            }
+        });
+
+
         _item_ll = findViewById(R.id.finds_list_top_ll);
         _item_head = findViewById(R.id.finds_list_top_head);
         _item_name = findViewById(R.id.finds_list_top_name);
@@ -143,7 +167,6 @@ public class FindsCommentsActivity extends BaseActivity {
         _item_focus_iv = findViewById(R.id.finds_list_top_foucs_btn);
         _item_praise_num = findViewById(R.id.finds_list_top_praise_num);
         _item_praise_iv = findViewById(R.id.finds_list_top_praise_iv);
-        _item_praise_ll = findViewById(R.id.finds_list_top_praise_ll);
         _item_images = findViewById(R.id.finds_list_item_comments_grid);
         _item_comment_ll = findViewById(R.id.finds_list_top_iv_ll);
         _item_comment_iv_1 = findViewById(R.id.finds_list_top_iv_1);
@@ -157,6 +180,7 @@ public class FindsCommentsActivity extends BaseActivity {
         mListView = findViewById(R.id.finds_comments_list);
         mListView.setFocusable(false);
 
+
         mFooterView = View.inflate(mActivity, R.layout.view_footer, null);
         _footer_gif = mFooterView.findViewById(R.id.load_gif);
         _footer_gif.setMovieResource(com.youth.xframe.R.raw.load_gif_icon);
@@ -167,8 +191,12 @@ public class FindsCommentsActivity extends BaseActivity {
             public void onScroll(int scrollY) {
                 LogUtils.debug("scrollY:" + scrollY);
                 if (scrollY > 166) {
+                    if (_dy_isfocus_value.equals("0")) {
+                        _top_focus_iv.setVisibility(View.VISIBLE);
+                    } else {
+                        _top_focus_iv.setVisibility(View.GONE);
+                    }
                     _top_user_ll.setVisibility(View.VISIBLE);
-                    _top_focus_iv.setVisibility(View.VISIBLE);
                     _top_title.setVisibility(View.INVISIBLE);
                 } else {
                     _top_user_ll.setVisibility(View.GONE);
@@ -182,9 +210,6 @@ public class FindsCommentsActivity extends BaseActivity {
                     _top_comment_num.setVisibility(View.GONE);
                 }
 
-//                params = _top_layout.getLayoutParams();
-//                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-//                params.height = XDensityUtils.dp2px(45) + XDensityUtils.getStatusBarHeight();
             }
         });
 
@@ -210,7 +235,9 @@ public class FindsCommentsActivity extends BaseActivity {
     }
 
 
-    /***/
+    /**
+     * 显示动态数据
+     */
     private void setDynamicData() {
         _dy_userid_value = XPreferencesUtils.get("user_id", "").toString();
         _dy_head_value = XPreferencesUtils.get("portrait", "").toString();
@@ -232,17 +259,94 @@ public class FindsCommentsActivity extends BaseActivity {
         _item_time.setText(XTimeUtils.getTimeRangeS("2019-04-03 16:30:00"));
         _item_comments_num.setText("10条评论");
         _top_comment_num.setText("10条评论");
-        _item_praise_num.setText("0");
+        _item_praise_num.setText(_dy_praisenum_value);
         _item_images.setUrlList(listImage);
 
+        if (_dy_ispraise_value.equals("0")) {
+            _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
+        } else {
+            _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
+        }
 
-//        _item_comment_ll = findViewById(R.id.finds_list_top_iv_ll);
-//        _item_comment_iv_1 = findViewById(R.id.finds_list_top_iv_1);
-//        _item_comment_iv_2 = findViewById(R.id.finds_list_top_iv_2);
-//        _item_comment_iv_3 = findViewById(R.id.finds_list_top_iv_3);
-//        _item_comment_iv_4 = findViewById(R.id.finds_list_top_iv_4);
-//        _item_comment_iv_more = findViewById(R.id.finds_list_top_iv_more);
-//        _item_focus_iv = findViewById(R.id.finds_list_top_foucs_btn);
+        if (_dy_isfocus_value.equals("0")) {
+            _item_focus_iv.setVisibility(View.VISIBLE);
+        } else {
+            _item_focus_iv.setVisibility(View.GONE);
+        }
+
+        commentHeadList = new ArrayList<>();
+        if (!XEmptyUtils.isSpace(_dy_comment_head_value)) {
+            String[] head = _dy_comment_head_value.split(",");
+            for (int i = 0; i < head.length; i++) {
+                commentHeadList.add(head[i]);
+            }
+        }
+
+
+        setShowCommentHead();
+    }
+
+
+    /**
+     * 评论头像显示
+     */
+    private void setShowCommentHead() {
+        if (commentHeadList.size() == 0) {
+            _item_comment_ll.setVisibility(View.INVISIBLE);
+        } else {
+            _item_comment_ll.setVisibility(View.VISIBLE);
+            switch (commentHeadList.size()) {
+                case 1:
+                    _item_comment_iv_1.setVisibility(View.VISIBLE);
+                    _item_comment_iv_2.setVisibility(View.GONE);
+                    _item_comment_iv_3.setVisibility(View.GONE);
+                    _item_comment_iv_4.setVisibility(View.GONE);
+                    _item_comment_iv_more.setVisibility(View.GONE);
+                    ImageLoaderManager.loadImage(commentHeadList.get(0), _item_comment_iv_1, R.drawable.finds_comments_more_n_icon);
+                    break;
+                case 2:
+                    _item_comment_iv_1.setVisibility(View.VISIBLE);
+                    _item_comment_iv_2.setVisibility(View.VISIBLE);
+                    _item_comment_iv_3.setVisibility(View.GONE);
+                    _item_comment_iv_4.setVisibility(View.GONE);
+                    _item_comment_iv_more.setVisibility(View.GONE);
+                    ImageLoaderManager.loadImage(commentHeadList.get(0), _item_comment_iv_1, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(1), _item_comment_iv_2, R.drawable.finds_comments_more_n_icon);
+                    break;
+                case 3:
+                    _item_comment_iv_1.setVisibility(View.VISIBLE);
+                    _item_comment_iv_2.setVisibility(View.VISIBLE);
+                    _item_comment_iv_3.setVisibility(View.VISIBLE);
+                    _item_comment_iv_4.setVisibility(View.GONE);
+                    _item_comment_iv_more.setVisibility(View.GONE);
+                    ImageLoaderManager.loadImage(commentHeadList.get(0), _item_comment_iv_1, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(1), _item_comment_iv_2, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(2), _item_comment_iv_3, R.drawable.finds_comments_more_n_icon);
+                    break;
+                case 4:
+                    _item_comment_iv_1.setVisibility(View.VISIBLE);
+                    _item_comment_iv_2.setVisibility(View.VISIBLE);
+                    _item_comment_iv_3.setVisibility(View.VISIBLE);
+                    _item_comment_iv_4.setVisibility(View.VISIBLE);
+                    _item_comment_iv_more.setVisibility(View.GONE);
+                    ImageLoaderManager.loadImage(commentHeadList.get(0), _item_comment_iv_1, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(1), _item_comment_iv_2, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(2), _item_comment_iv_3, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(3), _item_comment_iv_3, R.drawable.finds_comments_more_n_icon);
+                    break;
+                case 5:
+                    _item_comment_iv_1.setVisibility(View.VISIBLE);
+                    _item_comment_iv_2.setVisibility(View.VISIBLE);
+                    _item_comment_iv_3.setVisibility(View.VISIBLE);
+                    _item_comment_iv_4.setVisibility(View.VISIBLE);
+                    _item_comment_iv_more.setVisibility(View.VISIBLE);
+                    ImageLoaderManager.loadImage(commentHeadList.get(0), _item_comment_iv_1, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(1), _item_comment_iv_2, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(2), _item_comment_iv_3, R.drawable.finds_comments_more_n_icon);
+                    ImageLoaderManager.loadImage(commentHeadList.get(3), _item_comment_iv_3, R.drawable.finds_comments_more_n_icon);
+                    break;
+            }
+        }
     }
 
 
@@ -261,9 +365,9 @@ public class FindsCommentsActivity extends BaseActivity {
             entity.setFindsPraiseNum("" + i);
             entity.setFindsTime("2019-04-03 1" + i + ":30:00");
 
+            //子评论
             List<FindsCommentEntity> list = new ArrayList<>();
-
-            if (i % 4 == 0) {
+            if (i % 3 == 0) {
                 FindsCommentEntity entity2 = new FindsCommentEntity();
                 entity2.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
                 entity2.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
@@ -276,12 +380,49 @@ public class FindsCommentsActivity extends BaseActivity {
                 list.add(entity2);
             }
 
+            entity.setFindsChildCommentNum(list.size() + "");
             entity.setList(list);
 
             listData.add(entity);
         }
         mAdapter = new FindsCommentsAdapter(mActivity, listData);
         mListView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemPraiseClickListener(new FindsCommentsAdapter.onItemPraiseClickListener() {
+            @Override
+            public void onItemPraiseClick(int position) {
+//                FindsEntity entity = new FindsEntity();
+//                entity.setFindsIsPraise("1");
+                if (listData.get(position).getFindsIsPraise().equals("0")) {
+                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
+                    listData.get(position).setFindsIsPraise("1");
+                    listData.get(position).setFindsPraiseNum(praise_num + "");
+                } else {
+                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) - 1;
+                    listData.get(position).setFindsIsPraise("0");
+                    listData.get(position).setFindsPraiseNum(praise_num + "");
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mAdapter.setOnChildItemPraiseClickListener(new FindsCommentsAdapter.onChildItemPraiseClickListener() {
+            @Override
+            public void onChildItemPraiseClick(int groupPosition, int childPosition) {
+                if (listData.get(groupPosition).getList().get(childPosition).getFindsIsPraise().equals("0")) {
+                    praise_num = Integer.parseInt(listData.get(groupPosition).getList().get(childPosition).getFindsPraiseNum()) + 1;
+                    listData.get(groupPosition).getList().get(childPosition).setFindsIsPraise("1");
+                    listData.get(groupPosition).getList().get(childPosition).setFindsPraiseNum(praise_num + "");
+                } else {
+                    praise_num = Integer.parseInt(listData.get(groupPosition).getList().get(childPosition).getFindsPraiseNum()) - 1;
+                    listData.get(groupPosition).getList().get(childPosition).setFindsIsPraise("0");
+                    listData.get(groupPosition).getList().get(childPosition).setFindsPraiseNum(praise_num + "");
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 
@@ -300,9 +441,9 @@ public class FindsCommentsActivity extends BaseActivity {
             entity.setFindsPraiseNum("" + i);
             entity.setFindsTime("2019-04-03 1" + i + ":30:00");
 
+            //子评论
             List<FindsCommentEntity> list = new ArrayList<>();
-
-            if (i % 4 == 0) {
+            if (i % 3 == 0) {
                 FindsCommentEntity entity2 = new FindsCommentEntity();
                 entity2.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
                 entity2.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
@@ -317,6 +458,7 @@ public class FindsCommentsActivity extends BaseActivity {
 
             entity.setList(list);
 
+            entity.setFindsChildCommentNum(list.size() + "");
             listData.add(entity);
         }
 
@@ -369,11 +511,83 @@ public class FindsCommentsActivity extends BaseActivity {
             case R.id.finds_list_top_foucs:
             case R.id.finds_list_top_foucs_btn:
                 xFAFocus = new XFrameAnimation(_top_focus_iv, focusRes, 30, false);
+                xFAFocus = new XFrameAnimation(_item_focus_iv, focusRes, 30, false);
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        _item_focus_iv.setVisibility(View.GONE);
+                        _top_focus_iv.setVisibility(View.GONE);
+                        _dy_isfocus_value = "1";
+                    }
+                }, 810);
                 break;
             case R.id.finds_list_top_praise_ll:
-                xFAPraise = new XFrameAnimation(_item_praise_iv, praiseRes, 30, false);
+                if (_dy_ispraise_value.equals("0")) {
+                    xFAPraise = new XFrameAnimation(_item_praise_iv, praiseRes, 30, false);
+                    _dy_ispraise_value = "1";
+                    _dy_praisenum_value = "" + (Integer.parseInt(_dy_praisenum_value) + 1);
+                    _item_praise_num.setText(_dy_praisenum_value);
+                    if (commentHeadList.size() < 5) {
+                        commentHeadList.add(_dy_head_value);
+                        setShowCommentHead();
+                    }
+                } else {
+                    _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
+                    _dy_ispraise_value = "0";
+                    _dy_praisenum_value = "" + (Integer.parseInt(_dy_praisenum_value) - 1);
+                    _item_praise_num.setText(_dy_praisenum_value);
+
+                    for (int i = 0; i < commentHeadList.size(); i++) {
+                        if (commentHeadList.get(i).equals(_dy_head_value)) {
+                            commentHeadList.remove(i);
+                            break;
+                        }
+                    }
+                    setShowCommentHead();
+                }
+
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        if (_dy_ispraise_value.equals("0")) {
+                            _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
+                        } else {
+                            _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
+                        }
+                    }
+                }, 900);
+                break;
+            case R.id.finds_list_top_iv_ll:
+                startActivity(FindsPraiseActivity.class, "点赞的人");
                 break;
         }
     }
+
+
+    /**
+     * 添加评论输入监听
+     */
+    private TextWatcher addCommentWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+            if (s.length() > 0) {
+                _add_comment_btn.setBackgroundResource(R.drawable.btn_blue_r20_bg);
+            } else {
+                _add_comment_btn.setBackgroundResource(R.drawable.btn_blue_r20_q_bg);
+            }
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 }

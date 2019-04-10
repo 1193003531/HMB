@@ -21,6 +21,7 @@
 
             <include layout="@layout/act_finds_top" />
 
+
             <com.youth.xframe.widget.NoScrollListView
                 android:id="@+id/finds_comments_list"
                 android:layout_width="match_parent"
@@ -172,7 +173,7 @@
                 />
 
             <TextView
-                android:id="@+id/finds_add_btn"
+                android:id="@+id/finds_add_comments_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

@@ -165,8 +165,7 @@ public class FindsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
-                // startActivity(FindsCommentsActivity.class, "动态");
-                startActivity(FindsPraiseActivity.class, "点赞的人");
+                startActivity(FindsCommentsActivity.class, "动态");
             }
         });
 
@@ -175,9 +174,18 @@ public class FindsAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (item.getFindsIsPraise().equals("0")) {
                     xFAPraise = new XFrameAnimation(mHolder._item_praise_iv, praiseRes, 30, false);
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            if (item.getFindsIsPraise().equals("0")) {
+                                mOnItemPraiseClickListener.onItemPraiseClick(position);
+                            }
+                        }
+                    }, 900);
+                } else {
+                    mOnItemPraiseClickListener.onItemPraiseClick(position);
                 }
 
-                mOnItemPraiseClickListener.onItemPraiseClick(position);
+
             }
         });
 

@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:ellipsize="end"
+                android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:maxLines="1"
                 android:text="桥东波"

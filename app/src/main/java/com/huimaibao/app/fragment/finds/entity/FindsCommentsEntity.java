@@ -16,7 +16,17 @@ public class FindsCommentsEntity implements Serializable {
     public String FindsPraiseNum;
     public String FindsIsPraise;
     public String FindsTime;
+    public String FindsChildCommentNum;
     public List<FindsCommentEntity> list;
+
+    public String getFindsChildCommentNum() {
+        return FindsChildCommentNum;
+    }
+
+    public void setFindsChildCommentNum(String findsChildCommentNum) {
+        this.FindsChildCommentNum = findsChildCommentNum;
+    }
+
 
     public List<FindsCommentEntity> getList() {
         return list;
@@ -90,7 +100,6 @@ public class FindsCommentsEntity implements Serializable {
     public void setFindsUserHead(String findsUserHead) {
         this.FindsUserHead = findsUserHead;
     }
-
 
 
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -21,28 +20,25 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
+import com.huimaibao.app.fragment.finds.entity.FindsCommentEntity;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
-import com.huimaibao.app.fragment.finds.entity.FindsPraiseEntity;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
-import com.youth.xframe.widget.NoScrollListView;
 
 import java.util.List;
 
 /**
  * 动态适配器
  */
-public class FindsCommentsAdapter extends BaseAdapter {
+public class FindsCommentAdapter extends BaseAdapter {
     private Activity mActivity;
-    public List<FindsCommentsEntity> list;
-
-    FindsCommentAdapter commentAdapter;
-
+    public List<FindsCommentEntity> list;
     private CharSequence charSequence;
     private String content_v = "";
+
 
     private XFrameAnimation xFAPraise;
 
@@ -56,7 +52,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
             , R.drawable.finds_list_praise_28, R.drawable.finds_list_praise_29};
 
 
-    public FindsCommentsAdapter(Activity activity, List<FindsCommentsEntity> list) {
+    public FindsCommentAdapter(Activity activity, List<FindsCommentEntity> list) {
         this.mActivity = activity;
         this.list = list;
     }
@@ -67,7 +63,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
     }
 
     @Override
-    public FindsCommentsEntity getItem(int position) {
+    public FindsCommentEntity getItem(int position) {
         if (list != null && list.size() != 0) {
             return list.get(position);
         }
@@ -83,22 +79,20 @@ public class FindsCommentsAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder mHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mActivity).inflate(R.layout.act_finds_list_comments_item, null);
+            convertView = LayoutInflater.from(mActivity).inflate(R.layout.act_finds_list_comment_item, null);
             mHolder = new ViewHolder();
-            mHolder._item_head = convertView.findViewById(R.id.finds_list_comments_item_head);
-            mHolder._item_name = convertView.findViewById(R.id.finds_list_comments_item_name);
-            mHolder._item_content = convertView.findViewById(R.id.finds_list_comments_item_content);
-            mHolder._item_praise_num = convertView.findViewById(R.id.finds_list_comments_item_praise_num);
-            mHolder._item_more = convertView.findViewById(R.id.finds_list_comments_item_more);
-            mHolder._item_praise_iv = convertView.findViewById(R.id.finds_list_comments_item_praise_iv);
-            mHolder._item_praise_ll = convertView.findViewById(R.id.finds_list_comments_item_praise_ll);
-            mHolder._item_list = convertView.findViewById(R.id.finds_list_comments_item_list);
+            mHolder._item_head = convertView.findViewById(R.id.finds_list_comment_item_head);
+            mHolder._item_name = convertView.findViewById(R.id.finds_list_comment_item_name);
+            mHolder._item_content = convertView.findViewById(R.id.finds_list_comment_item_content);
+            mHolder._item_praise_num = convertView.findViewById(R.id.finds_list_comment_item_praise_num);
+            mHolder._item_praise_iv = convertView.findViewById(R.id.finds_list_comment_item_praise_iv);
+            mHolder._item_praise_ll = convertView.findViewById(R.id.finds_list_comment_item_praise_ll);
 
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder) convertView.getTag();
         }
-        final FindsCommentsEntity item = getItem(position);
+        final FindsCommentEntity item = getItem(position);
 
         if (!item.getFindsUserHead().equals(mHolder._item_head.getTag())) {
             ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head);
@@ -122,36 +116,6 @@ public class FindsCommentsAdapter extends BaseAdapter {
         multiWord.append(ssTime);
 
         mHolder._item_content.setText(multiWord);
-
-        if (item.getList().size() == 0) {
-            mHolder._item_list.setVisibility(View.GONE);
-            mHolder._item_more.setVisibility(View.GONE);
-        } else {
-            if (Integer.parseInt(item.getFindsChildCommentNum()) > 1) {
-                mHolder._item_more.setVisibility(View.VISIBLE);
-            } else {
-                mHolder._item_more.setVisibility(View.GONE);
-            }
-            mHolder._item_list.setVisibility(View.VISIBLE);
-            commentAdapter = new FindsCommentAdapter(mActivity, item.getList());
-            mHolder._item_list.setAdapter(commentAdapter);
-            commentAdapter.setOnItemPraiseClickListener(new FindsCommentAdapter.onItemPraiseClickListener() {
-                @Override
-                public void onItemPraiseClick(int childPosition) {
-                    mOnChildItemPraiseClickListener.onChildItemPraiseClick(position, childPosition);
-//                    if (item.getList().get(position).getFindsIsPraise().equals("0")) {
-//                        int praise_num = Integer.parseInt(item.getList().get(position).getFindsPraiseNum()) + 1;
-//                        item.getList().get(position).setFindsIsPraise("1");
-//                        item.getList().get(position).setFindsPraiseNum(praise_num + "");
-//                    } else {
-//                        int praise_num = Integer.parseInt(item.getList().get(position).getFindsPraiseNum()) - 1;
-//                        item.getList().get(position).setFindsIsPraise("0");
-//                        item.getList().get(position).setFindsPraiseNum(praise_num + "");
-//                    }
-                }
-            });
-        }
-
 
         if (item.getFindsIsPraise().equals("0")) {
             mHolder._item_praise_iv.setImageResource(R.drawable.finds_list_praise);
@@ -180,7 +144,6 @@ public class FindsCommentsAdapter extends BaseAdapter {
                 } else {
                     mOnItemPraiseClickListener.onItemPraiseClick(position);
                 }
-
             }
         });
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -196,10 +159,9 @@ public class FindsCommentsAdapter extends BaseAdapter {
 
     static class ViewHolder {
         CircleImageView _item_head;
-        TextView _item_name, _item_content, _item_praise_num, _item_more;
+        TextView _item_name, _item_content, _item_praise_num;
         ImageView _item_praise_iv;
         LinearLayout _item_praise_ll;
-        NoScrollListView _item_list;
     }
 
 
@@ -220,24 +182,11 @@ public class FindsCommentsAdapter extends BaseAdapter {
      * 赞点击监听接口
      */
     public interface onItemPraiseClickListener {
-        void onItemPraiseClick(int position);
+        void onItemPraiseClick(int childPosition);
     }
 
     public void setOnItemPraiseClickListener(onItemPraiseClickListener mOnItemPraiseClickListener) {
         this.mOnItemPraiseClickListener = mOnItemPraiseClickListener;
-    }
-
-    private onChildItemPraiseClickListener mOnChildItemPraiseClickListener;
-
-    /**
-     * 赞点击监听接口
-     */
-    public interface onChildItemPraiseClickListener {
-        void onChildItemPraiseClick(int groupPosition, int childPosition);
-    }
-
-    public void setOnChildItemPraiseClickListener(onChildItemPraiseClickListener mOnChildItemPraiseClickListener) {
-        this.mOnChildItemPraiseClickListener = mOnChildItemPraiseClickListener;
     }
 
 }

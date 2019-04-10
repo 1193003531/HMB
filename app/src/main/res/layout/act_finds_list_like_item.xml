@@ -12,9 +12,9 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
-        android:paddingTop="8dp"
+        android:paddingTop="15dp"
         android:paddingRight="15dp"
-        android:paddingBottom="8dp">
+        android:paddingBottom="10dp">
 
         <com.youth.xframe.widget.CircleImageView
             android:id="@+id/finds_list_like_item_head"
@@ -28,6 +28,7 @@
             android:id="@+id/finds_list_like_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_marginLeft="15dp"
             android:ellipsize="end"
             android:gravity="center_horizontal"
