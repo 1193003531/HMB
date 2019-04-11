@@ -110,7 +110,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
 
         SpannableString ssContent, ssTime;
 
-        ssContent = new SpannableString(item.getFindsContent());
+        ssContent = new SpannableString(item.getFindsContent() + "  ");
         ssContent.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, ssContent.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ssContent.setSpan(new AbsoluteSizeSpan(15, true), 0, ssContent.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ssTime = new SpannableString(XTimeUtils.getTimeRangeS(item.getFindsTime()));
@@ -139,15 +139,12 @@ public class FindsCommentsAdapter extends BaseAdapter {
                 @Override
                 public void onItemPraiseClick(int childPosition) {
                     mOnChildItemPraiseClickListener.onChildItemPraiseClick(position, childPosition);
-//                    if (item.getList().get(position).getFindsIsPraise().equals("0")) {
-//                        int praise_num = Integer.parseInt(item.getList().get(position).getFindsPraiseNum()) + 1;
-//                        item.getList().get(position).setFindsIsPraise("1");
-//                        item.getList().get(position).setFindsPraiseNum(praise_num + "");
-//                    } else {
-//                        int praise_num = Integer.parseInt(item.getList().get(position).getFindsPraiseNum()) - 1;
-//                        item.getList().get(position).setFindsIsPraise("0");
-//                        item.getList().get(position).setFindsPraiseNum(praise_num + "");
-//                    }
+                }
+            });
+            commentAdapter.setOnItemReplyClickListener(new FindsCommentAdapter.onItemReplyClickListener() {
+                @Override
+                public void onItemReplyClick(int childPosition) {
+                    mOnChildItemReplyClickListener.onChildItemReplyClick(position, childPosition);
                 }
             });
         }
@@ -183,10 +180,10 @@ public class FindsCommentsAdapter extends BaseAdapter {
 
             }
         });
-        convertView.setOnClickListener(new View.OnClickListener() {
+        mHolder._item_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                mOnItemReplyClickListener.onItemReplyClick(position);
             }
         });
 
@@ -214,11 +211,11 @@ public class FindsCommentsAdapter extends BaseAdapter {
     }
 
 
-    private onItemPraiseClickListener mOnItemPraiseClickListener;
-
     /**
      * 赞点击监听接口
      */
+    private onItemPraiseClickListener mOnItemPraiseClickListener;
+
     public interface onItemPraiseClickListener {
         void onItemPraiseClick(int position);
     }
@@ -227,17 +224,44 @@ public class FindsCommentsAdapter extends BaseAdapter {
         this.mOnItemPraiseClickListener = mOnItemPraiseClickListener;
     }
 
-    private onChildItemPraiseClickListener mOnChildItemPraiseClickListener;
 
     /**
-     * 赞点击监听接口
+     * 子赞点击监听接口
      */
+    private onChildItemPraiseClickListener mOnChildItemPraiseClickListener;
+
     public interface onChildItemPraiseClickListener {
         void onChildItemPraiseClick(int groupPosition, int childPosition);
     }
 
     public void setOnChildItemPraiseClickListener(onChildItemPraiseClickListener mOnChildItemPraiseClickListener) {
         this.mOnChildItemPraiseClickListener = mOnChildItemPraiseClickListener;
+    }
+
+    /**
+     * 回复点击监听接口
+     */
+    private onItemReplyClickListener mOnItemReplyClickListener;
+
+    public interface onItemReplyClickListener {
+        void onItemReplyClick(int position);
+    }
+
+    public void setOnItemReplyClickListener(onItemReplyClickListener mOnItemReplyClickListener) {
+        this.mOnItemReplyClickListener = mOnItemReplyClickListener;
+    }
+
+    /**
+     * 子回复点击监听接口
+     */
+    private onChildItemReplyClickListener mOnChildItemReplyClickListener;
+
+    public interface onChildItemReplyClickListener {
+        void onChildItemReplyClick(int groupPosition, int childPosition);
+    }
+
+    public void setOnChildItemReplyClickListener(onChildItemReplyClickListener mOnChildItemReplyClickListener) {
+        this.mOnChildItemReplyClickListener = mOnChildItemReplyClickListener;
     }
 
 }

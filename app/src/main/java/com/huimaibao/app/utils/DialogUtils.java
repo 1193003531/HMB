@@ -579,6 +579,42 @@ public class DialogUtils {
     }
 
 
+    /**
+     * 发现动态评论弹出框
+     */
+    public void showFindsDYCommentDialog(String type, View.OnClickListener replyListener, View.OnClickListener copyListener, View.OnClickListener delListener) {
+
+        //1、使用Dialog、设置style
+        dialog = new Dialog(mActivity, R.style.DialogTheme);
+        //2、设置布局
+        View view = View.inflate(mActivity, R.layout.dialog_comment_layout, null);
+        dialog.setContentView(view);
+
+        Window window = dialog.getWindow();
+        //设置弹出位置
+        //window.setGravity(Gravity.BOTTOM);
+        //设置弹出动画
+        // window.setWindowAnimations(R.style.main_menu_animStyle);
+        //设置对话框大小
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.show();
+
+        TextView _dialog_copy, _dialog_del;
+
+        _dialog_copy = dialog.findViewById(R.id.dialog_comment_copy);
+        _dialog_del = dialog.findViewById(R.id.dialog_comment_del);
+
+        if (type.equals("0")) {
+            _dialog_copy.setBackgroundResource(R.drawable.btn_duf_button);
+            _dialog_del.setVisibility(View.GONE);
+        }
+
+        dialog.findViewById(R.id.dialog_comment_reply).setOnClickListener(replyListener);
+        _dialog_copy.setOnClickListener(copyListener);
+        _dialog_del.setOnClickListener(delListener);
+    }
+
+
     public void dismissDialog() {
         if (dialog != null) {
             if (dialog.isShowing()) {

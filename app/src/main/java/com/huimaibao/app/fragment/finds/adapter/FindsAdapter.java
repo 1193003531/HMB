@@ -114,7 +114,13 @@ public class FindsAdapter extends BaseAdapter {
         }
         final FindsEntity item = getItem(position);
 
-        ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head, R.drawable.ic_launcher);
+        if (item.getFindsUserHead().equals(mHolder._item_head.getTag())) {
+
+        } else {
+            ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head);
+            mHolder._item_head.setTag(item.getFindsUserHead());
+        }
+
 
         mHolder._item_name.setText(item.getFindsUserName());
         mHolder._item_content.setText(item.getFindsContent());
@@ -165,7 +171,7 @@ public class FindsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
-                startActivity(FindsCommentsActivity.class, "动态");
+                startActivity(FindsCommentsActivity.class, "评论");
             }
         });
 
@@ -195,13 +201,13 @@ public class FindsAdapter extends BaseAdapter {
                 mDialogUtils.showGeneralDialog(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(FeedbackActivity.class, "意见反馈", item.FindsUserId);
+                        startActivity(FeedbackActivity.class, "意见反馈", item.getFindsUserId());
                         mDialogUtils.dismissDialog();
                     }
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(ReportActivity.class, "名片", item.FindsUserId);
+                        startActivity(ReportActivity.class, "动态", item.getFindsUserId());
                         mDialogUtils.dismissDialog();
                     }
                 });
@@ -211,13 +217,7 @@ public class FindsAdapter extends BaseAdapter {
         mHolder._item_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDialogUtils.showNoTitleDialog("是否删除该动态?", "取消", "删除", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mDialogUtils.dismissDialog();
-                        ToastUtils.showCenter("删除");
-                    }
-                });
+                mOnItemDeleteListener.onDeleteClick(position);
             }
         });
 

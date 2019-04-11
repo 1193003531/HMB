@@ -19,13 +19,23 @@ import com.huimaibao.app.fragment.finds.act.FindsMSGActivity;
 import com.huimaibao.app.fragment.finds.act.FindsMyActivity;
 import com.huimaibao.app.fragment.finds.adapter.FindsAdapter;
 import com.huimaibao.app.fragment.finds.entity.FindsEntity;
+import com.huimaibao.app.fragment.finds.server.FindsLogic;
+import com.huimaibao.app.fragment.mine.server.CardClipLogic;
+import com.huimaibao.app.http.ResultBack;
+import com.huimaibao.app.utils.ImageLoaderManager;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.XSwipeRefreshView;
+import com.youth.xframe.widget.XToast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -128,14 +138,11 @@ public class FindsFragment extends BaseFragment {
         mSwipeRefreshView.setColorSchemeResources(R.color.ff274ff3);
 
         // 手动调用,通知系统去测量
-        // mSwipeRefreshView.measure(0, 0);
-        // mSwipeRefreshView.setRefreshing(true);
-        // mSwipeRefreshView.setItemCount(5);
+         mSwipeRefreshView.measure(0, 0);
+         mSwipeRefreshView.setRefreshing(true);
+         mSwipeRefreshView.setItemCount(5);
 
         initEvent();
-
-        //添加新消息
-        mListView.addHeaderView(_view_top);
 
 
     }
@@ -162,89 +169,14 @@ public class FindsFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        getNewMSGData();
         countPage = 1;
-        listData = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            FindsEntity entity = new FindsEntity();
-            entity.setFindsId(i + "");
-            entity.setFindsCommentsNum("" + i);
-            entity.setFindsContent("土耳其真是霸道：埃尔多安就这么决定了，俄罗斯能接受吗?" + i);
-            entity.setFindsIsFocus("0");
-            entity.setFindsIsPraise("0");
-            entity.setFindsPraiseNum("10" + i);
-            entity.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-            entity.setFindsTime("2019-04-03 1" + i + ":30:00");
-            entity.setFindsUserId("2" + i);
-            entity.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-
-            listImage = new ArrayList<>();
-            for (int j = 0; j < i; j++) {
-                listImage.add(mUrls[j]);
-            }
-            entity.setFindsImageList(listImage);
-
-            listData.add(entity);
-        }
-        mAdapter = new FindsAdapter(mActivity,"发现", listData);
-        mListView.setAdapter(mAdapter);
-        // 加载完数据设置为不加载状态，将加载进度收起来
-        //mSwipeRefreshView.setLoading(false);
-        mAdapter.setOnItemFocusClickListener(new FindsAdapter.onItemFocusClickListener() {
-            @Override
-            public void onItemFocusClick(int position) {
-                listData.get(position).setFindsIsFocus("1");
-                mAdapter.notifyDataSetChanged();
-            }
-        });
-
-        mAdapter.setOnItemPraiseClickListener(new FindsAdapter.onItemPraiseClickListener() {
-            @Override
-            public void onItemPraiseClick(int position) {
-//                FindsEntity entity = new FindsEntity();
-//                entity.setFindsIsPraise("1");
-                if (listData.get(position).getFindsIsPraise().equals("0")) {
-                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
-                    listData.get(position).setFindsIsPraise("1");
-                    listData.get(position).setFindsPraiseNum(praise_num + "");
-                } else {
-                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) - 1;
-                    listData.get(position).setFindsIsPraise("0");
-                    listData.get(position).setFindsPraiseNum(praise_num + "");
-                }
-
-
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+        getDYListData(countPage, false);
     }
 
     private void loadMoreData() {
         countPage++;
-        for (int i = 1; i < 10; i++) {
-            FindsEntity entity = new FindsEntity();
-            entity.setFindsId(i + "");
-            entity.setFindsCommentsNum("" + i);
-            entity.setFindsContent("土耳其真是霸道：埃尔多安就这么决定了，俄罗斯能接受吗?" + i);
-            entity.setFindsIsFocus("0");
-            entity.setFindsIsPraise("0");
-            entity.setFindsPraiseNum("10" + i);
-            entity.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-            entity.setFindsTime("2019-04-03 1" + i + ":30:00");
-            entity.setFindsUserId("2" + i);
-            entity.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-
-            listImage = new ArrayList<>();
-            for (int j = 0; j < i; j++) {
-                listImage.add(mUrls[j]);
-            }
-            entity.setFindsImageList(listImage);
-
-            listData.add(entity);
-        }
-        mAdapter = new FindsAdapter(mActivity,"发现", listData);
-        mListView.setAdapter(mAdapter);
-        // 加载完数据设置为不加载状态，将加载进度收起来
-        // mSwipeRefreshView.setLoading(false);
+        getDYListData(countPage, false);
     }
 
 
@@ -282,6 +214,267 @@ public class FindsFragment extends BaseFragment {
             }
         });
 
+    }
+
+
+    /**
+     * 获取动态
+     */
+    private void getDYListData(final int page, boolean isShow) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        map.put("myConcern", "1");
+        map.put("page", page);
+        map.put("pageSize", "10");
+        FindsLogic.Instance(mActivity).getDYListApi(map, isShow, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("finds:" + json.toString());
+                    String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
+                        if (page == 1) {
+                            listData = new ArrayList<>();
+                        } else {
+                            if (array.length() == 0) {
+                                showToast("没有数据了");
+                            }
+                        }
+
+                        for (int i = 0; i < array.length(); i++) {
+                            FindsEntity entity = new FindsEntity();
+                            entity.setFindsId(array.getJSONObject(i).optString("dynamic_id"));
+                            entity.setFindsCommentsNum(array.getJSONObject(i).optString("comment_times"));
+                            entity.setFindsContent(array.getJSONObject(i).optString("content"));
+                            entity.setFindsIsFocus(array.getJSONObject(i).optString("concern"));
+                            entity.setFindsCardId(array.getJSONObject(i).optString("concern"));
+                            entity.setFindsIsPraise(array.getJSONObject(i).optString("praise"));
+                            entity.setFindsPraiseNum(array.getJSONObject(i).optString("praise_number"));
+                            entity.setFindsTime(array.getJSONObject(i).optString("created_at"));
+                            entity.setFindsUserId(array.getJSONObject(i).optString("user_id"));
+                            entity.setFindsUserHead(array.getJSONObject(i).optString("head_picture"));
+                            entity.setFindsUserName(array.getJSONObject(i).optString("user_name"));
+
+                            mUrls = new String[]{};
+                            try {
+                                mUrls = array.getJSONObject(i).optString("image_path").split(",");
+                            } catch (Exception e) {
+
+                            }
+
+                            listImage = new ArrayList<>();
+                            for (int j = 0; j < mUrls.length; j++) {
+                                listImage.add(mUrls[j]);
+                            }
+                            entity.setFindsImageList(listImage);
+
+                            listData.add(entity);
+                        }
+
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (page == 1) {
+                                    if (listData.size() == 0) {
+                                        _no_data.setVisibility(View.VISIBLE);
+                                    } else {
+                                        _no_data.setVisibility(View.GONE);
+                                    }
+                                    mAdapter = new FindsAdapter(mActivity, "发现", listData);
+                                    mListView.setAdapter(mAdapter);
+
+                                    // 加载完数据设置为不刷新状态，将下拉进度收起来
+                                    if (mSwipeRefreshView.isRefreshing()) {
+                                        mSwipeRefreshView.setRefreshing(false);
+                                    }
+
+
+                                    mAdapter.setOnItemFocusClickListener(new FindsAdapter.onItemFocusClickListener() {
+                                        @Override
+                                        public void onItemFocusClick(int position) {
+                                            listData.get(position).setFindsIsFocus("1");
+                                            mAdapter.notifyDataSetChanged();
+                                            getCardAdd(listData.get(position).getFindsCardId());
+                                        }
+                                    });
+
+                                    mAdapter.setOnItemPraiseClickListener(new FindsAdapter.onItemPraiseClickListener() {
+                                        @Override
+                                        public void onItemPraiseClick(int position) {
+                                            if (listData.get(position).getFindsIsPraise().equals("0")) {
+                                                praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
+                                                listData.get(position).setFindsIsPraise("1");
+                                                listData.get(position).setFindsPraiseNum(praise_num + "");
+                                            } else {
+                                                praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) - 1;
+                                                listData.get(position).setFindsIsPraise("0");
+                                                listData.get(position).setFindsPraiseNum(praise_num + "");
+                                            }
+
+                                            mAdapter.notifyDataSetChanged();
+                                            getDYPraiseData(listData.get(position).getFindsId(), "");
+                                        }
+                                    });
+
+                                } else {
+
+                                    if (mAdapter != null) {
+                                        mAdapter.notifyDataSetChanged();
+                                    } else {
+                                        mAdapter = new FindsAdapter(mActivity, "发现", listData);
+                                        mListView.setAdapter(mAdapter);
+                                    }
+                                    // 加载完数据设置为不刷新状态，将下拉进度收起来
+                                    if (mSwipeRefreshView.isRefreshing()) {
+                                        mSwipeRefreshView.setRefreshing(false);
+                                    }
+                                }
+                            }
+                        });
+
+                    } else {
+                        showToast(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+            }
+        });
+    }
+
+    /**
+     * 获取新消息
+     */
+    private void getNewMSGData() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        FindsLogic.Instance(mActivity).getNewMSGApi(map, false, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("finds:" + json);
+                    if (json.getString("status").equals("0")) {
+                        final JSONObject data = new JSONObject(json.getString("data"));
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!data.optString("count", "0").equals("0")) {
+                                    ImageLoaderManager.loadImage(data.optString("head_picture"), _finds_msg_head);
+                                    _finds_msg_content.setText(data.optString("user_name") + "等" + data.optString("count", "0") + "人回复了你");
+                                    //添加新消息
+                                    mListView.addHeaderView(_view_top);
+                                }
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+            }
+        });
+    }
+
+
+    /**
+     * 点赞动态
+     */
+    private void getDYPraiseData(String dynamic_id, final String position) {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("dynamic_id", dynamic_id);
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        FindsLogic.Instance(mActivity).getDYPraiseApi(map, false, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+//                        mActivity.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                showToast("删除成功");
+//                                if (listData.size() > 0) {
+//                                    listData.remove(position);
+//                                    mAdapter.notifyDataSetChanged();
+//                                }
+//
+//                            }
+//                        });
+
+                    } else {
+                        //showToast(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    //showToast("删除失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+                //showToast("删除失败");
+            }
+        });
+    }
+
+    /**
+     * 添加收藏
+     */
+    private void getCardAdd(String card_id_value) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("card_id", card_id_value);
+        CardClipLogic.Instance(mActivity).getCardClipAddApi(map, true, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new org.json.JSONObject(object.toString());
+                    //XLog.d("card:" + json);
+                    if (json.getString("status").equals("0")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // showToast("收藏成功");
+
+                            }
+                        });
+                    } else {
+                        //showToast("收藏失败");
+                    }
+                } catch (Exception e) {
+                    // showToast("收藏失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //showToast("收藏失败");
+            }
+        });
+    }
+
+
+    /***/
+    public void showToast(final String msg) {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                XToast.normal(msg);
+            }
+        });
     }
 
 

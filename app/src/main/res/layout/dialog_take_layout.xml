@@ -12,12 +12,12 @@
         android:text="拍照"
         android:gravity="center"
         android:textSize="16sp"
-        android:textColor="@android:color/background_dark"/>
+        android:textColor="@color/FF333333"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_height="@dimen/line_05"
+        android:background="@color/line_eaeaea"/>
 
     <TextView
         android:id="@+id/tv_take_pic"
@@ -26,12 +26,12 @@
         android:text="相册选择"
         android:gravity="center"
         android:textSize="16sp"
-        android:textColor="@android:color/background_dark"/>
+        android:textColor="@color/FF333333"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/line_eaeaea"/>
 
     <TextView
         android:id="@+id/tv_cancel"
@@ -40,6 +40,6 @@
         android:text="取消"
         android:gravity="center"
         android:textSize="16sp"
-        android:textColor="@android:color/background_dark"/>
+        android:textColor="@color/FF333333"/>
 
 </LinearLayout>

@@ -12,10 +12,21 @@ import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.finds.adapter.FindsPraiseAdapter;
 import com.huimaibao.app.fragment.finds.entity.FindsPraiseEntity;
+import com.huimaibao.app.fragment.finds.server.FindsLogic;
+import com.huimaibao.app.fragment.message.adapter.MessageAdapter;
+import com.huimaibao.app.fragment.message.entity.MessageEntity;
+import com.huimaibao.app.fragment.message.server.MessageLogic;
+import com.huimaibao.app.http.ResultBack;
+import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -99,49 +110,12 @@ public class FindsPraiseActivity extends BaseActivity {
 
     private void initData() {
         countPage = 1;
-        listData = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            FindsPraiseEntity entity = new FindsPraiseEntity();
-
-            entity.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-            entity.setFindsUserId("2" + i);
-            entity.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-
-
-            listData.add(entity);
-        }
-        mAdapter = new FindsPraiseAdapter(mActivity, listData);
-        mListView.setAdapter(mAdapter);
-        // 加载完数据设置为不加载状态，将加载进度收起来
-        if (mSwipeRefreshView.isRefreshing()) {
-            mSwipeRefreshView.setRefreshing(false);
-        }
-
+        getPopularityData(countPage, false);
     }
 
     private void loadMoreData() {
         countPage++;
-        for (int i = 1; i < 10; i++) {
-            FindsPraiseEntity entity = new FindsPraiseEntity();
-
-            entity.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-            entity.setFindsUserId("2" + i);
-            entity.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-
-
-            listData.add(entity);
-        }
-
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        } else {
-            mAdapter = new FindsPraiseAdapter(mActivity, listData);
-            mListView.setAdapter(mAdapter);
-        }
-        // 加载完数据设置为不加载状态，将加载进度收起来
-        if (mSwipeRefreshView.isRefreshing()) {
-            mSwipeRefreshView.setRefreshing(false);
-        }
+        getPopularityData(countPage, false);
     }
 
 
@@ -154,6 +128,87 @@ public class FindsPraiseActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+
+    /**
+     * 获取点赞的人
+     */
+    private void getPopularityData(final int page, boolean isShow) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("dynamic_id", XPreferencesUtils.get("dynamic_id", ""));
+        map.put("page", page);
+        map.put("pageSize", "10");
+        FindsLogic.Instance(mActivity).getCommentPraiseApi(map, isShow, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        JSONArray array = new JSONArray(json.getString("data"));
+                        if (page == 1) {
+                            listData = new ArrayList<>();
+                        } else {
+                            if (array.length() == 0) {
+                                showToast("没有数据了");
+                            }
+                        }
+
+                        for (int i = 0; i < array.length(); i++) {
+                            FindsPraiseEntity entity = new FindsPraiseEntity();
+                            entity.setFindsUserId(array.getJSONObject(i).optString("user_id"));
+                            entity.setFindsUserHead(array.getJSONObject(i).optString("head_picture"));
+                            entity.setFindsUserName(array.getJSONObject(i).optString("user_name"));
+                            listData.add(entity);
+                        }
+
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (page == 1) {
+                                    if (listData.size() == 0) {
+                                        _no_data.setVisibility(View.VISIBLE);
+                                    } else {
+                                        _no_data.setVisibility(View.GONE);
+                                    }
+                                    mAdapter = new FindsPraiseAdapter(mActivity, listData);
+                                    mListView.setAdapter(mAdapter);
+
+                                    // 加载完数据设置为不刷新状态，将下拉进度收起来
+                                    if (mSwipeRefreshView.isRefreshing()) {
+                                        mSwipeRefreshView.setRefreshing(false);
+                                    }
+                                } else {
+
+                                    if (mAdapter != null) {
+                                        mAdapter.notifyDataSetChanged();
+                                    } else {
+                                        mAdapter = new FindsPraiseAdapter(mActivity, listData);
+                                        mListView.setAdapter(mAdapter);
+                                    }
+                                    // 加载完数据设置为不刷新状态，将下拉进度收起来
+                                    if (mSwipeRefreshView.isRefreshing()) {
+                                        mSwipeRefreshView.setRefreshing(false);
+                                    }
+                                }
+                            }
+                        });
+
+                    } else {
+                        showToast(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+            }
+        });
     }
 
 }

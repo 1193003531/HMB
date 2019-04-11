@@ -104,7 +104,7 @@ public class FindsCommentAdapter extends BaseAdapter {
 
         SpannableString ssContent, ssTime;
 
-        ssContent = new SpannableString(item.getFindsContent());
+        ssContent = new SpannableString(item.getFindsContent() + "  ");
         ssContent.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, ssContent.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ssContent.setSpan(new AbsoluteSizeSpan(15, true), 0, ssContent.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ssTime = new SpannableString(XTimeUtils.getTimeRangeS(item.getFindsTime()));
@@ -146,10 +146,10 @@ public class FindsCommentAdapter extends BaseAdapter {
                 }
             }
         });
-        convertView.setOnClickListener(new View.OnClickListener() {
+        mHolder._item_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                mOnItemReplyClickListener.onItemReplyClick(position);
             }
         });
 
@@ -176,11 +176,11 @@ public class FindsCommentAdapter extends BaseAdapter {
     }
 
 
-    private onItemPraiseClickListener mOnItemPraiseClickListener;
-
     /**
      * 赞点击监听接口
      */
+    private onItemPraiseClickListener mOnItemPraiseClickListener;
+
     public interface onItemPraiseClickListener {
         void onItemPraiseClick(int childPosition);
     }
@@ -188,5 +188,20 @@ public class FindsCommentAdapter extends BaseAdapter {
     public void setOnItemPraiseClickListener(onItemPraiseClickListener mOnItemPraiseClickListener) {
         this.mOnItemPraiseClickListener = mOnItemPraiseClickListener;
     }
+
+
+    /**
+     * 回复点击监听接口
+     */
+    private onItemReplyClickListener mOnItemReplyClickListener;
+
+    public interface onItemReplyClickListener {
+        void onItemReplyClick(int childPosition);
+    }
+
+    public void setOnItemReplyClickListener(onItemReplyClickListener mOnItemReplyClickListener) {
+        this.mOnItemReplyClickListener = mOnItemReplyClickListener;
+    }
+
 
 }

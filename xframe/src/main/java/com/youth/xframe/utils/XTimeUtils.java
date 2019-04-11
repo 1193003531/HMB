@@ -17,8 +17,8 @@ import java.util.Date;
 public class XTimeUtils {
 
     @SuppressLint("SimpleDateFormat")
-    private static final DateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static final DateFormat DEFAULT_FORMAT2 = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+    private static final DateFormat DEFAULT_FORMAT2 = new SimpleDateFormat("yyyy-M-dd");
 
     private XTimeUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -47,7 +47,7 @@ public class XTimeUtils {
      * @return
      */
     public static String getCurDate() {
-        DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        DateFormat sdf = new SimpleDateFormat("yyyyMdd");
         String date = sdf.format(System.currentTimeMillis());
         return date;
     }
@@ -172,10 +172,10 @@ public class XTimeUtils {
      * 将yyyy-MM-dd HH:mm:ss转换成yyyy-MM-dd
      */
     public static String StringToYMD(String date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
         String data;
         try {
-            data = sdf.format(new Date(sdf.parse(date).getTime()));
+            data = sdf.format(DEFAULT_FORMAT.parse(date));
         } catch (Exception e) {
             e.printStackTrace();
             data = "";
@@ -188,10 +188,10 @@ public class XTimeUtils {
      * 将yyyy-MM-dd HH:mm:ss转换成MM月dd日
      */
     public static String StringToMD(String date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
+        SimpleDateFormat sdf = new SimpleDateFormat("M月d日");
         String data;
         try {
-            data = sdf.format(new Date(sdf.parse(date).getTime()));
+            data = sdf.format(DEFAULT_FORMAT.parse(date));
         } catch (Exception e) {
             e.printStackTrace();
             data = "";
@@ -380,6 +380,10 @@ public class XTimeUtils {
 
     private static final int seconds_of_1day = 24 * 60 * 60;
 
+    private static final int seconds_of_2day = 2 * 24 * 60 * 60;
+
+    private static final int seconds_of_3day = 3 * 24 * 60 * 60;
+
     private static final int seconds_of_15days = seconds_of_1day * 15;
 
     private static final int seconds_of_30days = seconds_of_1day * 30;
@@ -438,7 +442,7 @@ public class XTimeUtils {
         if (XEmptyUtils.isSpace(mTime)) {
             return "";
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
         /**获取当前时间*/
         Date curDate = new Date(System.currentTimeMillis());
         String dataStrNew = sdf.format(curDate);
@@ -466,10 +470,21 @@ public class XTimeUtils {
             return "半小时前";
         }
         if (elapsedTime < seconds_of_1day) {
-
             return elapsedTime / seconds_of_1hour + "小时前";
-        } else {
+        }
+
+        if (elapsedTime < seconds_of_2day) {
+            return "昨天";
+        }
+
+        if (elapsedTime < seconds_of_3day) {
+            return "前天";
+        }
+
+        if (elapsedTime > seconds_of_3day && elapsedTime < seconds_of_1year) {
             return StringToMD(mTime);
+        } else {
+            return StringToYMD(mTime);
         }
 
     }

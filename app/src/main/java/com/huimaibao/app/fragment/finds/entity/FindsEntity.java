@@ -10,6 +10,7 @@ import java.util.List;
 public class FindsEntity implements Serializable {
 
     public String FindsId;
+    public String FindsCardId;
     public String FindsUserId;
     public String FindsUserName;
     public String FindsUserHead;
@@ -21,6 +22,14 @@ public class FindsEntity implements Serializable {
     public String FindsTime;
     public List<String> FindsImageList = new ArrayList<>();
 
+
+    public String getFindsCardId() {
+        return FindsCardId;
+    }
+
+    public void setFindsCardId(String findsCardId) {
+        this.FindsCardId = findsCardId;
+    }
 
     public String getFindsId() {
         return FindsId;

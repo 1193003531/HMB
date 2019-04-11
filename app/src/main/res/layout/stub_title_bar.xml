@@ -86,7 +86,7 @@
             android:maxLines="1"
             android:text="title"
             android:textColor="@color/color000000"
-            android:textSize="@dimen/text_size_17"
+            android:textSize="@dimen/text_size_16"
             android:textStyle="bold" />
 
     </RelativeLayout>

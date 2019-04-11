@@ -1,5 +1,8 @@
 package com.huimaibao.app.fragment.finds.act;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -43,6 +46,8 @@ import java.util.List;
  */
 public class FindsCommentsActivity extends BaseActivity {
 
+    private String mType = "动态";
+
     //top
     private ImageView _top_focus_iv;
     private LinearLayout _top_user_ll;
@@ -52,7 +57,11 @@ public class FindsCommentsActivity extends BaseActivity {
     //button 添加评论
     private EditText _add_comment;
     private TextView _add_comment_btn;
-
+    private String _add_comment_value = "", _comment_id_value = "";
+    //评论类型(主-0，子-1)
+    private String _comment_type = "0";
+    //
+    private int _group_position = 0, _child_position = 0;
 
     //dy
     private CircleImageView _item_head;
@@ -82,6 +91,9 @@ public class FindsCommentsActivity extends BaseActivity {
 
 
     private DialogUtils mDialogUtils;
+    //复制
+    private ClipboardManager myClipboard;
+    private ClipData myClip;
 
     private XFrameAnimation xFAFocus, xFAPraise;
 
@@ -126,8 +138,14 @@ public class FindsCommentsActivity extends BaseActivity {
         setContentView(R.layout.act_finds_comments);
         setNeedBackGesture(true);
 
-        mDialogUtils = new DialogUtils(mActivity);
+        Intent intent = getIntent();
+        if (intent != null) {
+            mType = intent.getStringExtra("vType");
+        }
 
+
+        mDialogUtils = new DialogUtils(mActivity);
+        myClipboard = (ClipboardManager) mActivity.getSystemService(mActivity.CLIPBOARD_SERVICE);
         initView();
         setDynamicData();
         initData();
@@ -145,15 +163,25 @@ public class FindsCommentsActivity extends BaseActivity {
         _add_comment = findViewById(R.id.finds_add_comments);
         _add_comment_btn = findViewById(R.id.finds_add_comments_btn);
         _add_comment.addTextChangedListener(addCommentWatcher);
+        _add_comment_btn.setEnabled(false);
+        if (mType.equals("动态")) {
+            _add_comment.setFocusable(false);
+            _add_comment.setFocusableInTouchMode(false);
+        } else {
+            _comment_type = "0";
+            _add_comment.setFocusable(true);
+            _add_comment.setFocusableInTouchMode(true);
+            XKeyboardUtils.openKeyboard(mActivity, _add_comment);
+        }
 
-        _add_comment.setFocusable(false);
-        _add_comment.setFocusableInTouchMode(false);
+
         _add_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                _comment_type = "0";
                 _add_comment.setFocusable(true);
                 _add_comment.setFocusableInTouchMode(true);
-                XKeyboardUtils.openKeyboard(mActivity,_add_comment);
+                XKeyboardUtils.openKeyboard(mActivity, _add_comment);
             }
         });
 
@@ -363,7 +391,7 @@ public class FindsCommentsActivity extends BaseActivity {
             entity.setFindsContent("这是真的吗?这是真的吗?" + i);
             entity.setFindsIsPraise("0");
             entity.setFindsPraiseNum("" + i);
-            entity.setFindsTime("2019-04-03 1" + i + ":30:00");
+            entity.setFindsTime("2018-11-15 11:01:00");
 
             //子评论
             List<FindsCommentEntity> list = new ArrayList<>();
@@ -388,11 +416,10 @@ public class FindsCommentsActivity extends BaseActivity {
         mAdapter = new FindsCommentsAdapter(mActivity, listData);
         mListView.setAdapter(mAdapter);
 
+        //点赞
         mAdapter.setOnItemPraiseClickListener(new FindsCommentsAdapter.onItemPraiseClickListener() {
             @Override
             public void onItemPraiseClick(int position) {
-//                FindsEntity entity = new FindsEntity();
-//                entity.setFindsIsPraise("1");
                 if (listData.get(position).getFindsIsPraise().equals("0")) {
                     praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
                     listData.get(position).setFindsIsPraise("1");
@@ -406,7 +433,7 @@ public class FindsCommentsActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
-
+        //子点赞
         mAdapter.setOnChildItemPraiseClickListener(new FindsCommentsAdapter.onChildItemPraiseClickListener() {
             @Override
             public void onChildItemPraiseClick(int groupPosition, int childPosition) {
@@ -423,6 +450,31 @@ public class FindsCommentsActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
+
+        //评论
+        mAdapter.setOnItemReplyClickListener(new FindsCommentsAdapter.onItemReplyClickListener() {
+            @Override
+            public void onItemReplyClick(final int position) {
+                if (listData.get(position).getFindsUserId().equals(_dy_userid_value)) {
+                    setCommentReply("0", position);
+                } else {
+                    setCommentReply("", position);
+                }
+            }
+        });
+
+        //子评论
+        mAdapter.setOnChildItemReplyClickListener(new FindsCommentsAdapter.onChildItemReplyClickListener() {
+            @Override
+            public void onChildItemReplyClick(int groupPosition, int childPosition) {
+                if (listData.get(groupPosition).getList().get(childPosition).getFindsUserId().equals(_dy_userid_value)) {
+                    setChildCommentReply("0", groupPosition, childPosition);
+                } else {
+                    setChildCommentReply("", groupPosition, childPosition);
+                }
+            }
+        });
+
     }
 
 
@@ -558,6 +610,18 @@ public class FindsCommentsActivity extends BaseActivity {
             case R.id.finds_list_top_iv_ll:
                 startActivity(FindsPraiseActivity.class, "点赞的人");
                 break;
+            case R.id.finds_add_comments_btn:
+                _add_comment_value = _add_comment.getText().toString().trim();
+                if (XEmptyUtils.isSpace(_add_comment_value)) {
+                    ToastUtils.showCenter("请输入评论内容");
+                } else {
+                    if (_comment_type.equals("0")) {
+                        setComment();
+                    } else {
+                        setChildComment();
+                    }
+                }
+                break;
         }
     }
 
@@ -571,8 +635,10 @@ public class FindsCommentsActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
             if (s.length() > 0) {
+                _add_comment_btn.setEnabled(true);
                 _add_comment_btn.setBackgroundResource(R.drawable.btn_blue_r20_bg);
             } else {
+                _add_comment_btn.setEnabled(false);
                 _add_comment_btn.setBackgroundResource(R.drawable.btn_blue_r20_q_bg);
             }
         }
@@ -589,5 +655,155 @@ public class FindsCommentsActivity extends BaseActivity {
 
         }
     };
+
+
+    /**
+     * 主评论添加删除回复
+     */
+    private void setCommentReply(String type, final int position) {
+        mDialogUtils.showFindsDYCommentDialog(type,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //回复
+                        _add_comment.setHint("回复" + listData.get(position).getFindsUserName() + ":");
+                        mDialogUtils.dismissDialog();
+                        _group_position = position;
+                        _comment_type = "1";
+
+                        _add_comment.setFocusable(true);
+                        _add_comment.setFocusableInTouchMode(true);
+                        XKeyboardUtils.openKeyboard(mActivity, _add_comment);
+                        // _add_comment.requestFocus();
+                        // _add_comment.setSelection(_add_comment.getText().toString().length());
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //复制
+                        myClip = ClipData.newPlainText("text", "" + listData.get(position).getFindsContent());
+                        myClipboard.setPrimaryClip(myClip);
+                        mDialogUtils.dismissDialog();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //删除
+                        mDialogUtils.dismissDialog();
+                        if (listData.size() > 0) {
+                            listData.remove(position);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 子评论添加删除回复
+     */
+    private void setChildCommentReply(String type, final int groupPosition, final int childPosition) {
+        mDialogUtils.showFindsDYCommentDialog(type,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //回复
+                        _add_comment.setHint("回复" + listData.get(groupPosition).getList().get(childPosition).getFindsUserName() + ":");
+                        mDialogUtils.dismissDialog();
+                        _comment_type = "1";
+                        _group_position = groupPosition;
+                        _child_position = childPosition;
+
+                        _add_comment.setFocusable(true);
+                        _add_comment.setFocusableInTouchMode(true);
+                        XKeyboardUtils.openKeyboard(mActivity, _add_comment);
+                        // _add_comment.requestFocus();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //复制
+                        myClip = ClipData.newPlainText("text", "" + listData.get(groupPosition).getList().get(childPosition).getFindsContent());
+                        myClipboard.setPrimaryClip(myClip);
+                        mDialogUtils.dismissDialog();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //删除
+                        //删除
+                        mDialogUtils.dismissDialog();
+                        if (listData.size() > 0 && listData.get(groupPosition).getList().size() > 0) {
+                            listData.get(groupPosition).getList().remove(childPosition);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 主评论
+     */
+    private void setComment() {
+        if (listData == null) {
+            listData = new ArrayList<>();
+        }
+        List<FindsCommentsEntity> listS = new ArrayList<>();
+        FindsCommentsEntity entity = new FindsCommentsEntity();
+        entity.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
+        entity.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
+        entity.setFindsUserName(XPreferencesUtils.get("name", "") + "");
+        entity.setFindsCommentId(_comment_id_value);
+        entity.setFindsContent(_add_comment_value);
+        entity.setFindsIsPraise("0");
+        entity.setFindsPraiseNum("0");
+        entity.setFindsTime(XTimeUtils.getTimes());
+
+        //子评论
+        List<FindsCommentEntity> list = new ArrayList<>();
+        entity.setFindsChildCommentNum(list.size() + "");
+        entity.setList(list);
+
+        listS.add(entity);
+        listS.addAll(listData);
+
+        listData.clear();
+        listData.addAll(listS);
+
+        XKeyboardUtils.closeKeyboard(mActivity);
+        _add_comment.setText("");
+        _add_comment.setHint("发表一下看法");
+    }
+
+    /**
+     * 子评论
+     */
+    private void setChildComment() {
+        if (listData == null) {
+            listData = new ArrayList<>();
+        }
+
+        //子评论
+        List<FindsCommentEntity> list = new ArrayList<>();
+        FindsCommentEntity entity2 = new FindsCommentEntity();
+        entity2.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
+        entity2.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
+        entity2.setFindsUserName(XPreferencesUtils.get("name", "") + "");
+        entity2.setFindsCommentId(_comment_id_value);
+        entity2.setFindsContent(_add_comment_value);
+        entity2.setFindsIsPraise("0");
+        entity2.setFindsPraiseNum("0");
+        entity2.setFindsTime(XTimeUtils.getTimes());
+        list.add(entity2);
+        list.addAll(listData.get(_group_position).getList());
+
+        listData.get(_group_position).setFindsChildCommentNum(list.size() + "");
+        listData.get(_group_position).setList(list);
+
+
+        XKeyboardUtils.closeKeyboard(mActivity);
+        _add_comment.setText("");
+        _add_comment.setHint("发表一下看法");
+    }
+
 
 }

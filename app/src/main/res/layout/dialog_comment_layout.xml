@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_comment_reply"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/btn_duf_top"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="回复"
+        android:textColor="@color/FF333333"
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/dialog_comment_copy"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/btn_duf"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="复制"
+        android:textColor="@color/FF333333"
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/dialog_comment_del"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/btn_duf_button"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="删除"
+        android:textColor="@color/FF333333"
+        android:textSize="15sp" />
+
+</LinearLayout>

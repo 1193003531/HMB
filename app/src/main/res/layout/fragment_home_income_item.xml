@@ -14,10 +14,10 @@
         android:layout_marginTop="15.0dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textStyle="italic"
-        android:textColor="@color/color000000"
         android:text="NO.1"
-        android:textSize="@dimen/text_size_16" />
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/text_size_16"
+        android:textStyle="italic" />
 
 
     <com.youth.xframe.widget.CircleImageView
@@ -34,11 +34,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12.0dp"
         android:ellipsize="end"
+        android:maxLength="8"
         android:maxLines="1"
-        android:textStyle="bold"
-        android:textColor="@color/color000000"
         android:text="大卫"
-        android:textSize="@dimen/text_size_14" />
+        android:textColor="@color/color000000"
+        android:textSize="@dimen/text_size_14"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/f_h_i_item_money"
@@ -47,19 +48,20 @@
         android:layout_marginTop="12.0dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/color000000"
         android:text="总收入￥100"
+        android:textColor="@color/color000000"
         android:textSize="@dimen/text_size_12" />
+
     <TextView
         android:id="@+id/f_h_i_item_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10.0dp"
-        android:ellipsize="end"
         android:drawableRight="@drawable/ico_arrow_right_l"
         android:drawablePadding="5dp"
+        android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/color555555"
         android:text="@string/home_income_list_details"
+        android:textColor="@color/color555555"
         android:textSize="@dimen/text_size_11" />
 </LinearLayout>
