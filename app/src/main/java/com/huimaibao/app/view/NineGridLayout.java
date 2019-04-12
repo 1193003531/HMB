@@ -125,24 +125,39 @@ public abstract class NineGridLayout extends ViewGroup {
             setVisibility(GONE);
         }
 
+//        if (size == 1) {
+//            String url = mUrlList.get(0);
+//            RatioImageView imageView = createImageView(0, url);
+//
+//            //避免在ListView中一张图未加载成功时，布局高度受其他item影响
+//            LayoutParams params = getLayoutParams();
+//            params.height = mSingleWidth;
+//            setLayoutParams(params);
+//            imageView.layout(0, 0, mSingleWidth, mSingleWidth);
+//
+//            boolean isShowDefualt = displayOneImage(imageView, url, mTotalWidth);
+//            if (isShowDefualt) {
+//                layoutImageView(imageView, 0, url, false);
+//            } else {
+//                addView(imageView);
+//            }
+//            return;
+//        }
+
+
         if (size == 1) {
             String url = mUrlList.get(0);
             RatioImageView imageView = createImageView(0, url);
 
-            //避免在ListView中一张图未加载成功时，布局高度受其他item影响
+            imageView.layout(0, 0, mSingleWidth, mSingleWidth);
             LayoutParams params = getLayoutParams();
             params.height = mSingleWidth;
             setLayoutParams(params);
-            imageView.layout(0, 0, mSingleWidth, mSingleWidth);
-
-            boolean isShowDefualt = displayOneImage(imageView, url, mTotalWidth);
-            if (isShowDefualt) {
-                layoutImageView(imageView, 0, url, false);
-            } else {
-                addView(imageView);
-            }
+            addView(imageView);
+            displayOneImage(imageView, url, mTotalWidth);
             return;
         }
+
 
         generateChildrenLayout(size);
         layoutParams();

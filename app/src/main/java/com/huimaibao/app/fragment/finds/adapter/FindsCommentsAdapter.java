@@ -180,7 +180,15 @@ public class FindsCommentsAdapter extends BaseAdapter {
 
             }
         });
-        mHolder._item_content.setOnClickListener(new View.OnClickListener() {
+
+        mHolder._item_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemReplyMoreClickListener.onItemReplyMoreClick(position);
+            }
+        });
+
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnItemReplyClickListener.onItemReplyClick(position);
@@ -262,6 +270,19 @@ public class FindsCommentsAdapter extends BaseAdapter {
 
     public void setOnChildItemReplyClickListener(onChildItemReplyClickListener mOnChildItemReplyClickListener) {
         this.mOnChildItemReplyClickListener = mOnChildItemReplyClickListener;
+    }
+
+    /**
+     * 点击显示更多回复监听接口
+     */
+    private onItemReplyMoreClickListener mOnItemReplyMoreClickListener;
+
+    public interface onItemReplyMoreClickListener {
+        void onItemReplyMoreClick(int position);
+    }
+
+    public void setOnItemReplyMoreClickListener(onItemReplyMoreClickListener mOnItemReplyMoreClickListener) {
+        this.mOnItemReplyMoreClickListener = mOnItemReplyMoreClickListener;
     }
 
 }

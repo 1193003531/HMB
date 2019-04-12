@@ -16,6 +16,7 @@ import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
 
@@ -43,7 +44,7 @@ public class FindsMyActivity extends BaseActivity {
     private List<FindsEntity> listData;
     private List<String> listImage;
 
-    private int countPage = 1, praise_num = 0;
+    private int countPage = 1, totalPage = 1, praise_num = 0;
 
     private String[] mUrls;
 
@@ -64,6 +65,12 @@ public class FindsMyActivity extends BaseActivity {
      */
     private void initView() {
         _top_msg_dian = findViewById(R.id.finds_list_top_msg_dian);
+
+        if ((boolean) XPreferencesUtils.get("finds_new_msg", false)) {
+            _top_msg_dian.setVisibility(View.VISIBLE);
+        } else {
+            _top_msg_dian.setVisibility(View.INVISIBLE);
+        }
 
         //数据集合
         mSwipeRefreshView = findViewById(R.id.list_swipe_value);
@@ -108,6 +115,11 @@ public class FindsMyActivity extends BaseActivity {
     }
 
     private void loadMoreData() {
+        if (countPage >= totalPage) {
+            mSwipeRefreshView.setLoading(false);
+            showToast("没有数据了");
+            return;
+        }
         countPage++;
         getMyDYListData(countPage, false);
     }
@@ -123,6 +135,8 @@ public class FindsMyActivity extends BaseActivity {
                 break;
             case R.id.finds_list_top_msg_rl:
                 startActivity(FindsMSGActivity.class, "消息记录");
+                _top_msg_dian.setVisibility(View.INVISIBLE);
+                XPreferencesUtils.put("finds_new_msg", false);
                 break;
         }
     }
@@ -143,7 +157,8 @@ public class FindsMyActivity extends BaseActivity {
                     LogUtils.debug("json:" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
-                        JSONArray array = new JSONArray(json.getString("data"));
+                        totalPage = json.getJSONObject("data").optInt("total", 0);
+                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
                         if (page == 1) {
                             listData = new ArrayList<>();
                         } else {
@@ -167,7 +182,12 @@ public class FindsMyActivity extends BaseActivity {
 
                             mUrls = new String[]{};
                             try {
-                                mUrls = array.getJSONObject(i).optString("image_path").split(",");
+                                if (!XEmptyUtils.isSpace(array.getJSONObject(i).optString("image_path"))) {
+                                    mUrls = array.getJSONObject(i).optString("image_path").split(",");
+                                    for (int j = 0; j < mUrls.length; j++) {
+                                        listImage.add(mUrls[j]);
+                                    }
+                                }
                             } catch (Exception e) {
 
                             }
@@ -206,7 +226,7 @@ public class FindsMyActivity extends BaseActivity {
                                                 @Override
                                                 public void onClick(View v) {
                                                     mDialogUtils.dismissDialog();
-                                                    getDelData(listData.get(position).getFindsId(), position + "");
+                                                    getDelData(listData.get(position).getFindsId(), position);
                                                 }
                                             });
                                         }
@@ -223,18 +243,7 @@ public class FindsMyActivity extends BaseActivity {
                                     mAdapter.setOnItemPraiseClickListener(new FindsAdapter.onItemPraiseClickListener() {
                                         @Override
                                         public void onItemPraiseClick(int position) {
-                                            if (listData.get(position).getFindsIsPraise().equals("0")) {
-                                                praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
-                                                listData.get(position).setFindsIsPraise("1");
-                                                listData.get(position).setFindsPraiseNum(praise_num + "");
-                                            } else {
-                                                praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) - 1;
-                                                listData.get(position).setFindsIsPraise("0");
-                                                listData.get(position).setFindsPraiseNum(praise_num + "");
-                                            }
-
-                                            mAdapter.notifyDataSetChanged();
-                                            getDYPraiseData(listData.get(position).getFindsId(), "");
+                                            getDYPraiseData(listData.get(position).getFindsId(), position);
                                         }
                                     });
 
@@ -246,25 +255,25 @@ public class FindsMyActivity extends BaseActivity {
                                         mAdapter = new FindsAdapter(mActivity, "我的", listData);
                                         mListView.setAdapter(mAdapter);
                                     }
-                                    // 加载完数据设置为不刷新状态，将下拉进度收起来
-                                    if (mSwipeRefreshView.isRefreshing()) {
-                                        mSwipeRefreshView.setRefreshing(false);
-                                    }
+                                    // 加载完数据设置为不加载状态，将加载进度收起来
+                                    mSwipeRefreshView.setLoading(false);
                                 }
                             }
                         });
 
                     } else {
                         showToast(msg);
+                        showToast();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    showToast();
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                //XLog.e("error:" + error);
+                showToast();
             }
         });
     }
@@ -272,7 +281,7 @@ public class FindsMyActivity extends BaseActivity {
     /**
      * 删除动态
      */
-    private void getDelData(String dynamic_id, final String position) {
+    private void getDelData(String dynamic_id, final int position) {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("dynamic_id", dynamic_id);
@@ -281,7 +290,7 @@ public class FindsMyActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    LogUtils.debug("json:" + json);
+                    LogUtils.debug("finds" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
                         mActivity.runOnUiThread(new Runnable() {
@@ -290,9 +299,11 @@ public class FindsMyActivity extends BaseActivity {
                                 showToast("删除成功");
                                 if (listData.size() > 0) {
                                     listData.remove(position);
+                                    if (listData.size() == 0) {
+                                        _no_data.setVisibility(View.VISIBLE);
+                                    }
                                     mAdapter.notifyDataSetChanged();
                                 }
-
                             }
                         });
 
@@ -316,7 +327,7 @@ public class FindsMyActivity extends BaseActivity {
     /**
      * 点赞动态
      */
-    private void getDYPraiseData(String dynamic_id, final String position) {
+    private void getDYPraiseData(String dynamic_id, final int position) {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("dynamic_id", dynamic_id);
@@ -327,33 +338,68 @@ public class FindsMyActivity extends BaseActivity {
                 try {
                     JSONObject json = new JSONObject(object.toString());
                     LogUtils.debug("json:" + json);
-                    String msg = json.getString("message");
+                    // String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
-//                        mActivity.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                showToast("删除成功");
-//                                if (listData.size() > 0) {
-//                                    listData.remove(position);
-//                                    mAdapter.notifyDataSetChanged();
-//                                }
-//
-//                            }
-//                        });
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (listData.get(position).getFindsIsPraise().equals("0")) {
+                                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
+                                    listData.get(position).setFindsIsPraise("1");
+                                    listData.get(position).setFindsPraiseNum(praise_num + "");
+                                } else {
+                                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) - 1;
+                                    listData.get(position).setFindsIsPraise("0");
+                                    listData.get(position).setFindsPraiseNum(praise_num < 0 ? "0" : praise_num + "");
+                                }
 
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
                     } else {
-                        //showToast(msg);
+                        setPraiseError(position);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    //showToast("删除失败");
+                    setPraiseError(position);
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
-                //showToast("删除失败");
+                setPraiseError(position);
+            }
+        });
+    }
+
+
+    /**
+     * 点赞失败
+     */
+    private void setPraiseError(final int position) {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (listData.get(position).getFindsIsPraise().equals("0")) {
+                    listData.get(position).setFindsIsPraise("1");
+                } else {
+                    listData.get(position).setFindsIsPraise("0");
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /***/
+    public void showToast() {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 加载完数据设置为不刷新状态，将下拉进度收起来
+                if (mSwipeRefreshView.isRefreshing()) {
+                    mSwipeRefreshView.setRefreshing(false);
+                }
             }
         });
     }

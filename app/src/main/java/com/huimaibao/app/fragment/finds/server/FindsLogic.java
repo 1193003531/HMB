@@ -404,7 +404,7 @@ public class FindsLogic {
                 @Override
                 public void showProgress() {
                     if (isShow)
-                        mDialogUtils.showLoadingDialog("加载中...");
+                        mDialogUtils.showLoadingDialog("发送中...");
                 }
 
                 @Override

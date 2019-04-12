@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseFragment;
+import com.huimaibao.app.fragment.message.act.MessageActivity;
 import com.huimaibao.app.fragment.message.act.MessageListActivity;
 import com.huimaibao.app.fragment.message.adapter.MessageDelAdapter;
 import com.huimaibao.app.fragment.message.entity.MessageEntity;
@@ -23,6 +24,7 @@ import com.huimaibao.app.fragment.mine.server.CardClipLogic;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
 import com.youth.xframe.widget.XToast;
 
@@ -55,6 +57,8 @@ public class MsgListFragment extends BaseFragment {
     //关注
     private CardAdapter mCardAdapter;
     private List<CardEntity> ListCardData;
+
+    private MessageActivity messageActivity;
 
 
     @Override
@@ -94,11 +98,9 @@ public class MsgListFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (text.equals("关注")) {
+                if (text.equals("关注") || text.equals("粉丝")) {
                     //startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
                     startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
-                } else if (text.equals("粉丝")) {
-
                 } else {
                 }
             }
@@ -145,9 +147,9 @@ public class MsgListFragment extends BaseFragment {
     private void loadMoreData() {
         countPage++;
         if (text.equals("关注")) {
-            getCardClip(countPage, false);
+            getCardClip("", countPage, false);
         } else if (text.equals("粉丝")) {
-
+            getCardClip("fans", countPage, false);
         } else {
             getOtherData(countPage, false);
         }
@@ -157,9 +159,9 @@ public class MsgListFragment extends BaseFragment {
     private void getData() {
         countPage = 1;
         if (text.equals("关注")) {
-            getCardClip(countPage, true);
+            getCardClip("", countPage, true);
         } else if (text.equals("粉丝")) {
-
+            getCardClip("fans", countPage, false);
         } else {
             getOtherData(countPage, true);
         }
@@ -181,6 +183,7 @@ public class MsgListFragment extends BaseFragment {
                     LogUtils.debug("json:" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
+
                         JSONArray array = new JSONArray(json.getJSONObject("data").getJSONObject("list").getString("data"));
                         if (page == 1) {
                             ListOtherData = new ArrayList<>();
@@ -305,12 +308,13 @@ public class MsgListFragment extends BaseFragment {
     /**
      * 获取用户收藏名片
      */
-    private void getCardClip(final int page, boolean isShow) {
+    private void getCardClip(final String type, final int page, boolean isShow) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("limit", 5);
         map.put("page", page);
         map.put("keyword", "");
-
+        map.put("type", type);
+        LogUtils.debug("lib=s=" + map);
         CardClipLogic.Instance(mActivity).getCardClipApi(map, isShow, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
@@ -321,7 +325,20 @@ public class MsgListFragment extends BaseFragment {
                     String message = json.getString("message");
                     //String data = json.getString("data");
                     if (status.equals("0")) {
-                        JSONArray array = new JSONArray(json.getString("data"));
+                        if (type.equals("fans")) {
+                            //json.getJSONObject("data").getString("count")
+                            XPreferencesUtils.put("fans_num", json.getJSONObject("data").optString("count", "0"));
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messageActivity = new MessageActivity();
+                                    messageActivity.setFansNum();
+                                }
+                            });
+
+                        }
+
+                        JSONArray array = new JSONArray(json.getJSONObject("data").optString("list", "[]"));
                         if (page == 1) {
                             ListCardData = new ArrayList<>();
                         } else {

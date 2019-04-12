@@ -146,7 +146,7 @@ public class FindsCommentAdapter extends BaseAdapter {
                 }
             }
         });
-        mHolder._item_content.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnItemReplyClickListener.onItemReplyClick(position);

@@ -62,11 +62,12 @@ public class RatioImageView extends AppCompatImageView {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Drawable drawable = getDrawable();
-                if (drawable != null) {
-                    drawable.mutate().setColorFilter(Color.GRAY,
-                            PorterDuff.Mode.MULTIPLY);
-                }
+                //图片点击效果
+//                Drawable drawable = getDrawable();
+//                if (drawable != null) {
+//                    drawable.mutate().setColorFilter(Color.GRAY,
+//                            PorterDuff.Mode.MULTIPLY);
+//                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;

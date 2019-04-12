@@ -467,9 +467,13 @@ public interface ServerApi {
     String LIB_COLLECT_URL = SERVER_URL + "/front/articles/favorite";
 
     /**
-     * 用户收藏名片列表or删除收藏名片or+添加名片(收藏 post)
+     * 删除收藏名片or+添加名片(收藏 post)
      */
     String CARD_CLIP_URL = SERVER_URL + "/front/card/holder";
+    /**
+     * 用户收藏名片列表
+     */
+    //String CARD_CLIP_PAGE_URL = SERVER_URL + "/front/card/holder/page";
 
     /**
      * 通用举报

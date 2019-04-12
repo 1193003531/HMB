@@ -234,10 +234,8 @@ public class FindsMSGActivity extends BaseActivity {
                                         mAdapter = new FindsMSGAdapter(mActivity, listData);
                                         mListView.setAdapter(mAdapter);
                                     }
-                                    // 加载完数据设置为不刷新状态，将下拉进度收起来
-                                    if (mSwipeRefreshView.isRefreshing()) {
-                                        mSwipeRefreshView.setRefreshing(false);
-                                    }
+                                    // 加载完数据设置为不加载状态，将加载进度收起来
+                                    mSwipeRefreshView.setLoading(false);
                                 }
                             }
                         });

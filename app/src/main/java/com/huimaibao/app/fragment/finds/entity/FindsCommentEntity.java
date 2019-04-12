@@ -15,6 +15,24 @@ public class FindsCommentEntity implements Serializable {
     public String FindsPraiseNum;
     public String FindsIsPraise;
     public String FindsTime;
+    public String FindsToUserName;
+    public String FindsType;
+
+    public String getFindsToUserName() {
+        return FindsToUserName;
+    }
+
+    public void setFindsToUserName(String findsToUserName) {
+        this.FindsToUserName = findsToUserName;
+    }
+
+    public String getFindsType() {
+        return FindsType;
+    }
+
+    public void setFindsType(String findsType) {
+        this.FindsType = findsType;
+    }
 
     public String getFindsCommentId() {
         return FindsCommentId;

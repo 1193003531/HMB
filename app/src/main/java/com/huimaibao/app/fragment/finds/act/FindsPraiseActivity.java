@@ -47,7 +47,7 @@ public class FindsPraiseActivity extends BaseActivity {
     private FindsPraiseAdapter mAdapter;
     private List<FindsPraiseEntity> listData;
 
-    private int countPage = 1;
+    private int countPage = 1, totalPage = 1;
 
 
     @Override
@@ -110,12 +110,17 @@ public class FindsPraiseActivity extends BaseActivity {
 
     private void initData() {
         countPage = 1;
-        getPopularityData(countPage, false);
+        getPraiseUserListData(countPage, false);
     }
 
     private void loadMoreData() {
+        if (countPage >= totalPage) {
+            mSwipeRefreshView.setLoading(false);
+            showToast("没有数据了");
+            return;
+        }
         countPage++;
-        getPopularityData(countPage, false);
+        getPraiseUserListData(countPage, false);
     }
 
 
@@ -134,12 +139,12 @@ public class FindsPraiseActivity extends BaseActivity {
     /**
      * 获取点赞的人
      */
-    private void getPopularityData(final int page, boolean isShow) {
+    private void getPraiseUserListData(final int page, boolean isShow) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("dynamic_id", XPreferencesUtils.get("dynamic_id", ""));
         map.put("page", page);
         map.put("pageSize", "10");
-        FindsLogic.Instance(mActivity).getCommentPraiseApi(map, isShow, new ResultBack() {
+        FindsLogic.Instance(mActivity).getPraiseUserListApi(map, isShow, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {
@@ -147,7 +152,8 @@ public class FindsPraiseActivity extends BaseActivity {
                     LogUtils.debug("json:" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
-                        JSONArray array = new JSONArray(json.getString("data"));
+                        totalPage = json.getJSONObject("data").optInt("total", 0);
+                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
                         if (page == 1) {
                             listData = new ArrayList<>();
                         } else {
@@ -188,25 +194,39 @@ public class FindsPraiseActivity extends BaseActivity {
                                         mAdapter = new FindsPraiseAdapter(mActivity, listData);
                                         mListView.setAdapter(mAdapter);
                                     }
-                                    // 加载完数据设置为不刷新状态，将下拉进度收起来
-                                    if (mSwipeRefreshView.isRefreshing()) {
-                                        mSwipeRefreshView.setRefreshing(false);
-                                    }
+                                    // 加载完数据设置为不加载状态，将加载进度收起来
+                                    mSwipeRefreshView.setLoading(false);
                                 }
                             }
                         });
 
                     } else {
                         showToast(msg);
+                        showToast();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    showToast();
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
+                showToast();
+            }
+        });
+    }
+
+    /***/
+    public void showToast() {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 加载完数据设置为不刷新状态，将下拉进度收起来
+                if (mSwipeRefreshView.isRefreshing()) {
+                    mSwipeRefreshView.setRefreshing(false);
+                }
             }
         });
     }

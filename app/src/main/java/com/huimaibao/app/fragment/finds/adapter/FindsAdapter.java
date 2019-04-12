@@ -24,6 +24,7 @@ import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.view.NineGridViewLayout;
 import com.youth.xframe.utils.XFrameAnimation;
+import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
 
@@ -154,8 +155,6 @@ public class FindsAdapter extends BaseAdapter {
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
                 xFAFocus = new XFrameAnimation(mHolder._item_focus_iv, focusRes, 30, false);
-                //list.get(position).setFindsIsFocus("1");
-                //notifyDataSetChanged();
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         //execute the task
@@ -171,6 +170,8 @@ public class FindsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
+                XPreferencesUtils.put("concern", item.getFindsIsFocus());
+                XPreferencesUtils.put("dynamic_id", item.getFindsId());
                 startActivity(FindsCommentsActivity.class, "评论");
             }
         });
@@ -201,7 +202,7 @@ public class FindsAdapter extends BaseAdapter {
                 mDialogUtils.showGeneralDialog(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(FeedbackActivity.class, "意见反馈", item.getFindsUserId());
+                        startActivity(FeedbackActivity.class, "意见反馈");
                         mDialogUtils.dismissDialog();
                     }
                 }, new View.OnClickListener() {
@@ -225,6 +226,8 @@ public class FindsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
+                XPreferencesUtils.put("concern", item.getFindsIsFocus());
+                XPreferencesUtils.put("dynamic_id", item.getFindsId());
                 startActivity(FindsCommentsActivity.class, "动态");
             }
         });

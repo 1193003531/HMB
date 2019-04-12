@@ -87,7 +87,7 @@ public class MessageActivity extends BaseActivity {
             _top_titel_2.setText("通知");
             _top_sreach.setVisibility(View.INVISIBLE);
         } else {
-            _top_titel_1.setText("关注(" +  XPreferencesUtils.get("card_num", "0") + ")");
+            _top_titel_1.setText("关注(" + XPreferencesUtils.get("card_num", "0") + ")");
             _top_titel_2.setText("粉丝");
             _top_sreach.setVisibility(View.VISIBLE);
         }
@@ -198,7 +198,7 @@ public class MessageActivity extends BaseActivity {
         switch (position) {
             case 0:
                 if (mType.equals("关注")) {
-                    _top_titel_1.setText("关注(" +  XPreferencesUtils.get("card_num", "0") + ")");
+                    _top_titel_1.setText("关注(" + XPreferencesUtils.get("card_num", "0") + ")");
                     _top_titel_2.setText("粉丝");
                 }
                 _top_titel_1.setTextColor(getResources().getColor(R.color.FF333333));
@@ -211,7 +211,7 @@ public class MessageActivity extends BaseActivity {
             case 1:
                 if (mType.equals("关注")) {
                     _top_titel_1.setText("关注");
-                    _top_titel_2.setText("粉丝(" + 0 + ")");
+                    _top_titel_2.setText("粉丝(" + XPreferencesUtils.get("fans_num", "0") + ")");
                 }
                 _top_titel_2.setTextColor(getResources().getColor(R.color.FF333333));
                 _top_titel_1.setTextColor(getResources().getColor(R.color.color666666));
@@ -220,6 +220,15 @@ public class MessageActivity extends BaseActivity {
                 _top_titel_2.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, getResources().getDrawable(R.drawable.msg_line));
                 _top_titel_1.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null);
                 break;
+        }
+
+    }
+
+    public void setFansNum() {
+        if (mType.equals("关注")) {
+            if (_top_titel_2 != null) {
+                _top_titel_2.setText("粉丝(" + XPreferencesUtils.get("fans_num", "0") + ")");
+            }
         }
 
     }

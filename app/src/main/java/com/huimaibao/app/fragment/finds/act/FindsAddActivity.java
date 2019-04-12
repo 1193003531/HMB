@@ -12,17 +12,25 @@ import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
+import com.huimaibao.app.fragment.finds.server.FindsLogic;
 import com.huimaibao.app.fragment.home.adapter.CardAlbumAdapter;
+import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.takePhone.LoadCallback;
 import com.huimaibao.app.takePhone.TakePhoneHelper;
 import com.huimaibao.app.takePhone.TakePhotoActivity;
+import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.utils.XEmptyUtils;
+import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.NoScrollGridView;
 import com.youth.xframe.widget.XToast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 发布动态
@@ -40,6 +48,7 @@ public class FindsAddActivity extends TakePhotoActivity {
     private NoScrollGridView _album_gv;
     private CardAlbumAdapter albumAdapter;
     private ArrayList<String> albumData, imagePthData;
+    private String imagePthData_value = "";
 
 
     @Override
@@ -73,7 +82,7 @@ public class FindsAddActivity extends TakePhotoActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (albumData.get(position).equals("添加")) {
-                    takePhoneHelper.setTakePhone(1, true, true, 800, 800, true, 512000, 0, 0);
+                    takePhoneHelper.setTakePhone(9, false, false, 800, 800, true, 512000, 0, 0);
                     takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                 } else {
                     imagePthData.remove(position);
@@ -148,7 +157,8 @@ public class FindsAddActivity extends TakePhotoActivity {
                 if (XEmptyUtils.isSpace(_finds_content_value) && imagePthData.size() == 0) {
                     ToastUtils.showCenter("内容不能为空");
                 } else {
-                    ToastUtils.showCenter(albumData.size() + "内容能为空" + _finds_content_value);
+                    imagePthData_value = imagePthData.toString().replace("[", "").replace("]", "").trim();
+                    getAddData(imagePthData_value);
                 }
                 break;
         }
@@ -201,6 +211,46 @@ public class FindsAddActivity extends TakePhotoActivity {
             @Override
             public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
 
+            }
+        });
+    }
+
+
+    /**
+     * 获取新消息
+     */
+    private void getAddData(String image_path) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        map.put("content", _finds_content_value);
+        map.put("image_path", image_path);
+        FindsLogic.Instance(mActivity).getDYAddApi(map, true, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("finds:" + json);
+                    String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.showCenter("发布成功");
+                                XPreferencesUtils.put("add_dynamic", true);
+                                finish();
+                            }
+                        });
+                    } else {
+                        showToast(msg);
+                    }
+                } catch (Exception e) {
+                    showToast("发布失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                showToast("发布失败");
             }
         });
     }

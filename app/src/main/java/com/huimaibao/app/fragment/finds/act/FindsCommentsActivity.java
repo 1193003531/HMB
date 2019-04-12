@@ -18,11 +18,16 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
+import com.huimaibao.app.fragment.finds.adapter.FindsAdapter;
 import com.huimaibao.app.fragment.finds.adapter.FindsCommentsAdapter;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentEntity;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
+import com.huimaibao.app.fragment.finds.entity.FindsEntity;
+import com.huimaibao.app.fragment.finds.server.FindsLogic;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
+import com.huimaibao.app.fragment.mine.server.CardClipLogic;
+import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
@@ -33,12 +38,18 @@ import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.XScrollViewUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.GifView;
+import com.youth.xframe.widget.NoScrollListView;
 import com.youth.xframe.widget.XScrollView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -60,6 +71,9 @@ public class FindsCommentsActivity extends BaseActivity {
     private String _add_comment_value = "", _comment_id_value = "";
     //评论类型(主-0，子-1)
     private String _comment_type = "0";
+    //评论上级id;0-评论动态
+    private String _superior_id_value = "0";
+
     //
     private int _group_position = 0, _child_position = 0;
 
@@ -72,13 +86,13 @@ public class FindsCommentsActivity extends BaseActivity {
     private RelativeLayout _item_comment_ll;
     private CircleImageView _item_comment_iv_1, _item_comment_iv_2, _item_comment_iv_3, _item_comment_iv_4, _item_comment_iv_more;
 
-    private String _dy_userid_value = "", _dy_head_value = "", _dy_name_value = "", _dy_isfocus_value = "0", _dy_ispraise_value = "0", _dy_praisenum_value = "0", _dy_comment_head_value = "";
+    private String _dynamic_id_value = "", _dy_cardid_value = "", _dy_userid_value = "", _dy_head_value = "", _dy_name_value = "", _dy_content_value = "", _dy_images_value = "", _dy_time_value = "", _dy_comments_num_value = "0", _dy_isfocus_value = "0", _dy_ispraise_value = "0", _dy_praisenum_value = "0", _dy_comment_head_value = "";
     //评论头像
     private List<String> commentHeadList;
 
 
     private XScrollView mScrollView;
-    private ListView mListView;
+    private NoScrollListView mListView;
     private FindsCommentsAdapter mAdapter;
     private List<FindsCommentsEntity> listData;
     private List<String> listImage;
@@ -87,7 +101,7 @@ public class FindsCommentsActivity extends BaseActivity {
     private View mFooterView;
     private GifView _footer_gif;
     private boolean isLoading = false;
-    private int countPage = 1, praise_num = 0;
+    private int countPage = 1, totalPage = 1, praise_num = 0;
 
 
     private DialogUtils mDialogUtils;
@@ -115,21 +129,8 @@ public class FindsCommentsActivity extends BaseActivity {
             , R.drawable.finds_list_praise_24, R.drawable.finds_list_praise_25, R.drawable.finds_list_praise_26, R.drawable.finds_list_praise_27
             , R.drawable.finds_list_praise_28, R.drawable.finds_list_praise_29};
 
-
-    private String[] mUrls = new String[]{
-            "http://d.hiphotos.baidu.com/image/h%3D200/sign=201258cbcd80653864eaa313a7dca115/ca1349540923dd54e54f7aedd609b3de9c824873.jpg",
-            "http://img3.fengniao.com/forum/attachpics/537/165/21472986.jpg",
-            "http://d.hiphotos.baidu.com/image/h%3D200/sign=ea218b2c5566d01661199928a729d498/a08b87d6277f9e2fd4f215e91830e924b999f308.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=3445377427,2645691367&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=2644422079,4250545639&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=1444023808,3753293381&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=882039601,2636712663&fm=21&gp=0.jpg",
-            "http://img4.imgtn.bdimg.com/it/u=4119861953,350096499&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=2437456944,1135705439&fm=21&gp=0.jpg",
-            "http://img2.imgtn.bdimg.com/it/u=3251359643,4211266111&fm=21&gp=0.jpg",
-            "http://img4.duitang.com/uploads/item/201506/11/20150611000809_yFe5Z.jpeg",
-            "http://img5.imgtn.bdimg.com/it/u=1717647885,4193212272&fm=21&gp=0.jpg",
-            "http://img5.imgtn.bdimg.com/it/u=2024625579,507531332&fm=21&gp=0.jpg"};
+    //动态图片集合
+    private String[] mUrls;
 
 
     @Override
@@ -144,15 +145,18 @@ public class FindsCommentsActivity extends BaseActivity {
         }
 
 
-        mDialogUtils = new DialogUtils(mActivity);
-        myClipboard = (ClipboardManager) mActivity.getSystemService(mActivity.CLIPBOARD_SERVICE);
         initView();
-        setDynamicData();
         initData();
     }
 
     /***/
     private void initView() {
+        mDialogUtils = new DialogUtils(mActivity);
+        myClipboard = (ClipboardManager) mActivity.getSystemService(mActivity.CLIPBOARD_SERVICE);
+        _dy_isfocus_value = XPreferencesUtils.get("concern", "0").toString();
+        _dynamic_id_value = XPreferencesUtils.get("dynamic_id", "").toString();
+
+
         _top_focus_iv = findViewById(R.id.finds_list_top_foucs);
         _top_user_ll = findViewById(R.id.finds_list_top_user_ll);
         _top_head = findViewById(R.id.finds_list_top_user_head);
@@ -206,7 +210,7 @@ public class FindsCommentsActivity extends BaseActivity {
 
         mScrollView = findViewById(R.id.scrollView);
         mListView = findViewById(R.id.finds_comments_list);
-        mListView.setFocusable(false);
+        //mListView.setFocusable(false);
 
 
         mFooterView = View.inflate(mActivity, R.layout.view_footer, null);
@@ -245,6 +249,10 @@ public class FindsCommentsActivity extends BaseActivity {
         mScrollView.setScanScrollChangedListener(new XScrollView.ISmartScrollChangedListener() {
             @Override
             public void onScrolledToBottom() {
+                if (countPage >= totalPage) {
+                    showToast("没有数据了");
+                    return;
+                }
                 if (!isLoading) {
                     isLoading = true;
                     mListView.removeFooterView(mFooterView);
@@ -267,13 +275,20 @@ public class FindsCommentsActivity extends BaseActivity {
      * 显示动态数据
      */
     private void setDynamicData() {
-        _dy_userid_value = XPreferencesUtils.get("user_id", "").toString();
-        _dy_head_value = XPreferencesUtils.get("portrait", "").toString();
-        _dy_name_value = XPreferencesUtils.get("name", "").toString();
 
+        //动态图片
         listImage = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            listImage.add(mUrls[i]);
+        try {
+            if (!XEmptyUtils.isSpace(_dy_images_value)) {
+                mUrls = new String[]{};
+                mUrls = _dy_images_value.split(",");
+                for (int j = 0; j < mUrls.length; j++) {
+                    listImage.add(mUrls[j]);
+                }
+            }
+
+        } catch (Exception e) {
+
         }
 
 
@@ -283,10 +298,10 @@ public class FindsCommentsActivity extends BaseActivity {
 
         _top_name.setText(_dy_name_value.length() > 5 ? _dy_name_value.substring(0, 5) : _dy_name_value);
         _item_name.setText(_dy_name_value);
-        _item_content.setText("土耳其真是霸道：埃尔多安就这么决定了，俄罗斯能接受吗?");
-        _item_time.setText(XTimeUtils.getTimeRangeS("2019-04-03 16:30:00"));
-        _item_comments_num.setText("10条评论");
-        _top_comment_num.setText("10条评论");
+        _item_content.setText(_dy_content_value);
+        _item_time.setText(XTimeUtils.getTimeRangeS(_dy_time_value));
+        _item_comments_num.setText(_dy_comments_num_value + "条评论");
+        _top_comment_num.setText(_dy_comments_num_value + "条评论");
         _item_praise_num.setText(_dy_praisenum_value);
         _item_images.setUrlList(listImage);
 
@@ -303,7 +318,7 @@ public class FindsCommentsActivity extends BaseActivity {
         }
 
         commentHeadList = new ArrayList<>();
-        if (!XEmptyUtils.isSpace(_dy_comment_head_value)) {
+        if (!XEmptyUtils.isSpace(_dy_comment_head_value) && _dy_comment_head_value.length() > 5) {
             String[] head = _dy_comment_head_value.split(",");
             for (int i = 0; i < head.length; i++) {
                 commentHeadList.add(head[i]);
@@ -312,6 +327,7 @@ public class FindsCommentsActivity extends BaseActivity {
 
 
         setShowCommentHead();
+        mScrollView.scrollTo(0, 0);
     }
 
 
@@ -380,147 +396,17 @@ public class FindsCommentsActivity extends BaseActivity {
 
     /***/
     private void initData() {
+        getDetailsData();
         countPage = 1;
-        listData = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            FindsCommentsEntity entity = new FindsCommentsEntity();
-            entity.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
-            entity.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-            entity.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-            entity.setFindsCommentId("" + i);
-            entity.setFindsContent("这是真的吗?这是真的吗?" + i);
-            entity.setFindsIsPraise("0");
-            entity.setFindsPraiseNum("" + i);
-            entity.setFindsTime("2018-11-15 11:01:00");
+        getDYCommentData(countPage, true);
 
-            //子评论
-            List<FindsCommentEntity> list = new ArrayList<>();
-            if (i % 3 == 0) {
-                FindsCommentEntity entity2 = new FindsCommentEntity();
-                entity2.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
-                entity2.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-                entity2.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-                entity2.setFindsCommentId("" + i);
-                entity2.setFindsContent("这是真的吗?这是真的吗?" + i);
-                entity2.setFindsIsPraise("0");
-                entity2.setFindsPraiseNum("" + i);
-                entity2.setFindsTime("2019-04-03 1" + i + ":30:00");
-                list.add(entity2);
-            }
-
-            entity.setFindsChildCommentNum(list.size() + "");
-            entity.setList(list);
-
-            listData.add(entity);
-        }
-        mAdapter = new FindsCommentsAdapter(mActivity, listData);
-        mListView.setAdapter(mAdapter);
-
-        //点赞
-        mAdapter.setOnItemPraiseClickListener(new FindsCommentsAdapter.onItemPraiseClickListener() {
-            @Override
-            public void onItemPraiseClick(int position) {
-                if (listData.get(position).getFindsIsPraise().equals("0")) {
-                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
-                    listData.get(position).setFindsIsPraise("1");
-                    listData.get(position).setFindsPraiseNum(praise_num + "");
-                } else {
-                    praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) - 1;
-                    listData.get(position).setFindsIsPraise("0");
-                    listData.get(position).setFindsPraiseNum(praise_num + "");
-                }
-
-                mAdapter.notifyDataSetChanged();
-            }
-        });
-        //子点赞
-        mAdapter.setOnChildItemPraiseClickListener(new FindsCommentsAdapter.onChildItemPraiseClickListener() {
-            @Override
-            public void onChildItemPraiseClick(int groupPosition, int childPosition) {
-                if (listData.get(groupPosition).getList().get(childPosition).getFindsIsPraise().equals("0")) {
-                    praise_num = Integer.parseInt(listData.get(groupPosition).getList().get(childPosition).getFindsPraiseNum()) + 1;
-                    listData.get(groupPosition).getList().get(childPosition).setFindsIsPraise("1");
-                    listData.get(groupPosition).getList().get(childPosition).setFindsPraiseNum(praise_num + "");
-                } else {
-                    praise_num = Integer.parseInt(listData.get(groupPosition).getList().get(childPosition).getFindsPraiseNum()) - 1;
-                    listData.get(groupPosition).getList().get(childPosition).setFindsIsPraise("0");
-                    listData.get(groupPosition).getList().get(childPosition).setFindsPraiseNum(praise_num + "");
-                }
-
-                mAdapter.notifyDataSetChanged();
-            }
-        });
-
-        //评论
-        mAdapter.setOnItemReplyClickListener(new FindsCommentsAdapter.onItemReplyClickListener() {
-            @Override
-            public void onItemReplyClick(final int position) {
-                if (listData.get(position).getFindsUserId().equals(_dy_userid_value)) {
-                    setCommentReply("0", position);
-                } else {
-                    setCommentReply("", position);
-                }
-            }
-        });
-
-        //子评论
-        mAdapter.setOnChildItemReplyClickListener(new FindsCommentsAdapter.onChildItemReplyClickListener() {
-            @Override
-            public void onChildItemReplyClick(int groupPosition, int childPosition) {
-                if (listData.get(groupPosition).getList().get(childPosition).getFindsUserId().equals(_dy_userid_value)) {
-                    setChildCommentReply("0", groupPosition, childPosition);
-                } else {
-                    setChildCommentReply("", groupPosition, childPosition);
-                }
-            }
-        });
 
     }
 
 
     private void loadMoreData() {
-        //_footer_pro.setVisibility(View.VISIBLE);
-        // _footer_tv.setText("正在加载中...");
         countPage++;
-        for (int i = 1; i < 10; i++) {
-            FindsCommentsEntity entity = new FindsCommentsEntity();
-            entity.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
-            entity.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-            entity.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-            entity.setFindsCommentId("" + i);
-            entity.setFindsContent("这是真的吗?这是真的吗?" + i);
-            entity.setFindsIsPraise("0");
-            entity.setFindsPraiseNum("" + i);
-            entity.setFindsTime("2019-04-03 1" + i + ":30:00");
-
-            //子评论
-            List<FindsCommentEntity> list = new ArrayList<>();
-            if (i % 3 == 0) {
-                FindsCommentEntity entity2 = new FindsCommentEntity();
-                entity2.setFindsUserId(XPreferencesUtils.get("user_id", "") + "");
-                entity2.setFindsUserHead(XPreferencesUtils.get("portrait", "") + "");
-                entity2.setFindsUserName(XPreferencesUtils.get("name", "") + "");
-                entity2.setFindsCommentId("" + i);
-                entity2.setFindsContent("这是真的吗?这是真的吗?" + i);
-                entity2.setFindsIsPraise("0");
-                entity2.setFindsPraiseNum("" + i);
-                entity2.setFindsTime("2019-04-03 1" + i + ":30:00");
-                list.add(entity2);
-            }
-
-            entity.setList(list);
-
-            entity.setFindsChildCommentNum(list.size() + "");
-            listData.add(entity);
-        }
-
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        } else {
-            mAdapter = new FindsCommentsAdapter(mActivity, listData);
-            mListView.setAdapter(mAdapter);
-        }
-        loadOver();
+        getDYCommentData(countPage, false);
     }
 
 
@@ -549,78 +435,57 @@ public class FindsCommentsActivity extends BaseActivity {
                 mDialogUtils.showGeneralDialog(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(FeedbackActivity.class, "意见反馈", _dy_userid_value);
+                        startActivity(FeedbackActivity.class, "意见反馈");
                         mDialogUtils.dismissDialog();
                     }
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(ReportActivity.class, "名片", _dy_userid_value);
+                        startActivity(ReportActivity.class, "动态", _dy_userid_value);
                         mDialogUtils.dismissDialog();
                     }
                 });
                 break;
+            //关注
             case R.id.finds_list_top_foucs:
             case R.id.finds_list_top_foucs_btn:
                 xFAFocus = new XFrameAnimation(_top_focus_iv, focusRes, 30, false);
                 xFAFocus = new XFrameAnimation(_item_focus_iv, focusRes, 30, false);
+
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        _item_focus_iv.setVisibility(View.GONE);
-                        _top_focus_iv.setVisibility(View.GONE);
-                        _dy_isfocus_value = "1";
+
+                        getCardAdd();
                     }
                 }, 810);
+
                 break;
+            //点赞
             case R.id.finds_list_top_praise_ll:
                 if (_dy_ispraise_value.equals("0")) {
                     xFAPraise = new XFrameAnimation(_item_praise_iv, praiseRes, 30, false);
-                    _dy_ispraise_value = "1";
-                    _dy_praisenum_value = "" + (Integer.parseInt(_dy_praisenum_value) + 1);
-                    _item_praise_num.setText(_dy_praisenum_value);
-                    if (commentHeadList.size() < 5) {
-                        commentHeadList.add(_dy_head_value);
-                        setShowCommentHead();
-                    }
-                } else {
-                    _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
-                    _dy_ispraise_value = "0";
-                    _dy_praisenum_value = "" + (Integer.parseInt(_dy_praisenum_value) - 1);
-                    _item_praise_num.setText(_dy_praisenum_value);
-
-                    for (int i = 0; i < commentHeadList.size(); i++) {
-                        if (commentHeadList.get(i).equals(_dy_head_value)) {
-                            commentHeadList.remove(i);
-                            break;
-                        }
-                    }
-                    setShowCommentHead();
                 }
-
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        if (_dy_ispraise_value.equals("0")) {
-                            _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
-                        } else {
-                            _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
-                        }
-                    }
-                }, 900);
+                getDYPraiseData();
                 break;
+            //
             case R.id.finds_list_top_iv_ll:
                 startActivity(FindsPraiseActivity.class, "点赞的人");
                 break;
+            //评论
             case R.id.finds_add_comments_btn:
                 _add_comment_value = _add_comment.getText().toString().trim();
                 if (XEmptyUtils.isSpace(_add_comment_value)) {
                     ToastUtils.showCenter("请输入评论内容");
                 } else {
+                    XKeyboardUtils.closeKeyboard(mActivity);
                     if (_comment_type.equals("0")) {
-                        setComment();
+                        getCommentAddData("");
                     } else {
-                        setChildComment();
+                        getCommentAddData("child");
                     }
                 }
+                _superior_id_value = "0";
+                _comment_type = "0";
                 break;
         }
     }
@@ -690,10 +555,7 @@ public class FindsCommentsActivity extends BaseActivity {
                     public void onClick(View v) {
                         //删除
                         mDialogUtils.dismissDialog();
-                        if (listData.size() > 0) {
-                            listData.remove(position);
-                            mAdapter.notifyDataSetChanged();
-                        }
+                        getCommentDelData(listData.get(position).getFindsCommentId(), "", position, -1);
                     }
                 });
     }
@@ -730,12 +592,8 @@ public class FindsCommentsActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         //删除
-                        //删除
                         mDialogUtils.dismissDialog();
-                        if (listData.size() > 0 && listData.get(groupPosition).getList().size() > 0) {
-                            listData.get(groupPosition).getList().remove(childPosition);
-                            mAdapter.notifyDataSetChanged();
-                        }
+                        getCommentDelData(listData.get(groupPosition).getList().get(childPosition).getFindsCommentId(), "child", groupPosition, childPosition);
                     }
                 });
     }
@@ -770,6 +628,7 @@ public class FindsCommentsActivity extends BaseActivity {
         listData.addAll(listS);
 
         XKeyboardUtils.closeKeyboard(mActivity);
+        _superior_id_value = "0";
         _add_comment.setText("");
         _add_comment.setHint("发表一下看法");
     }
@@ -801,8 +660,626 @@ public class FindsCommentsActivity extends BaseActivity {
 
 
         XKeyboardUtils.closeKeyboard(mActivity);
+        _superior_id_value = "0";
+        _comment_type = "0";
         _add_comment.setText("");
         _add_comment.setHint("发表一下看法");
+    }
+
+
+    /**
+     * 动态详情
+     */
+    private void getDetailsData() {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("dynamic_id", _dynamic_id_value);
+        map.put("concern", _dy_isfocus_value);
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        FindsLogic.Instance(mActivity).getDYDetailsApi(map, false, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("finds" + json);
+                    String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        JSONObject data = new JSONObject(json.getString("data"));
+                        _dynamic_id_value = data.optString("dynamic_id");
+                        _dy_cardid_value = data.optString("cards_id");
+                        _dy_userid_value = data.optString("user_id");
+                        _dy_head_value = data.optString("head_picture");
+                        _dy_name_value = data.optString("user_name");
+                        _dy_content_value = data.optString("content");
+                        _dy_images_value = data.optString("image_path");
+                        _dy_time_value = data.optString("created_at");
+                        _dy_comments_num_value = data.optString("comment_times");
+                        _dy_isfocus_value = data.optString("concern");
+                        _dy_ispraise_value = data.optString("praise");
+                        _dy_praisenum_value = data.optString("praise_number");
+                        _dy_comment_head_value = data.optString("userHeadPraise");
+
+
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setDynamicData();
+                            }
+                        });
+
+                    } else {
+                        showToast(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+            }
+        });
+    }
+
+    /**
+     * 添加关注
+     */
+    private void getCardAdd() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("card_id", _dy_cardid_value);
+        CardClipLogic.Instance(mActivity).getCardClipAddApi(map, false, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new org.json.JSONObject(object.toString());
+                    String msg = json.getString("message");
+                    LogUtils.debug("finds:" + json);
+                    if (json.getString("status").equals("0")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                showToast("关注成功");
+                                _item_focus_iv.setVisibility(View.GONE);
+                                _top_focus_iv.setVisibility(View.GONE);
+                                _dy_isfocus_value = "1";
+                            }
+                        });
+                    } else {
+                        setFocusError("关注失败," + msg);
+                    }
+                } catch (Exception e) {
+                    setFocusError("关注失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                // showToast("关注失败");
+                LogUtils.debug("finds:" + error);
+                setFocusError("关注失败");
+            }
+        });
+    }
+
+
+    /**
+     * 点赞动态
+     */
+    private void getDYPraiseData() {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("dynamic_id", _dynamic_id_value);
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        FindsLogic.Instance(mActivity).getDYPraiseApi(map, false, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    // String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (_dy_ispraise_value.equals("0")) {
+                                    _dy_ispraise_value = "1";
+                                    _dy_praisenum_value = "" + (Integer.parseInt(_dy_praisenum_value) + 1);
+                                    _item_praise_num.setText(_dy_praisenum_value);
+                                    if (commentHeadList.size() < 5) {
+                                        List<String> list = new ArrayList<>();
+                                        list.add(XPreferencesUtils.get("portrait", "") + "");
+                                        list.addAll(commentHeadList);
+                                        commentHeadList.clear();
+                                        commentHeadList.addAll(list);
+                                        setShowCommentHead();
+                                    }
+                                } else {
+                                    _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
+                                    _dy_ispraise_value = "0";
+                                    _dy_praisenum_value = (Integer.parseInt(_dy_praisenum_value) - 1) < 0 ? "0" : (Integer.parseInt(_dy_praisenum_value) - 1) + "";
+                                    _item_praise_num.setText(_dy_praisenum_value);
+
+                                    for (int i = 0; i < commentHeadList.size(); i++) {
+                                        if (commentHeadList.get(i).equals(XPreferencesUtils.get("portrait", "") + "")) {
+                                            commentHeadList.remove(i);
+                                            break;
+                                        }
+                                    }
+                                    setShowCommentHead();
+                                }
+
+                                if (_dy_ispraise_value.equals("0")) {
+                                    _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
+                                } else {
+                                    _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
+                                }
+                            }
+                        });
+
+                    } else {
+                        setPraiseError();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    setPraiseError();
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+                setPraiseError();
+            }
+        });
+    }
+
+
+    /**
+     * 关注失败
+     */
+    private void setFocusError(final String msg) {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast(msg);
+                _item_focus_iv.setVisibility(View.VISIBLE);
+                _top_focus_iv.setVisibility(View.VISIBLE);
+                _dy_isfocus_value = "0";
+            }
+        });
+    }
+
+    /**
+     * 点赞失败
+     */
+    private void setPraiseError() {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (_dy_ispraise_value.equals("0")) {
+                    _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
+                } else {
+                    _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 获取动态评论
+     */
+    private void getDYCommentData(final int page, boolean isShow) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("dynamic_id", XPreferencesUtils.get("dynamic_id", ""));
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        map.put("page", page);
+        map.put("pageSize", "10");
+        FindsLogic.Instance(mActivity).getDYCommentApi(map, isShow, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("finds:" + json);
+                    String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        totalPage = json.getJSONObject("data").optInt("total", 0);
+                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
+                        if (page == 1) {
+                            listData = new ArrayList<>();
+                        } else {
+                            if (array.length() == 0) {
+                                showToast("没有数据了");
+                            }
+                        }
+
+                        String children = "";
+
+                        for (int i = 0; i < array.length(); i++) {
+                            FindsCommentsEntity entity = new FindsCommentsEntity();
+                            entity.setFindsTime(array.getJSONObject(i).optString("created_at"));
+                            entity.setFindsUserId(array.getJSONObject(i).optString("user_id"));
+                            entity.setFindsUserHead(array.getJSONObject(i).optString("head_picture"));
+                            entity.setFindsUserName(array.getJSONObject(i).optString("user_name"));
+                            entity.setFindsCommentId(array.getJSONObject(i).optString("comment_id"));
+                            entity.setFindsContent(array.getJSONObject(i).optString("content"));
+                            entity.setFindsIsPraise(array.getJSONObject(i).optString("praise"));
+                            entity.setFindsPraiseNum(array.getJSONObject(i).optString("praise_number"));
+                            entity.setFindsChildCommentNum(array.getJSONObject(i).optString("childrenCount", "0"));
+
+                            //子评论
+                            List<FindsCommentEntity> list = new ArrayList<>();
+                            children = array.getJSONObject(i).optString("children");
+                            if (!XEmptyUtils.isSpace(children) && children.length() > 5) {
+                                JSONArray childArray = new JSONArray(children);
+                                for (int j = 0; j < childArray.length(); j++) {
+                                    FindsCommentEntity entity2 = new FindsCommentEntity();
+                                    entity2.setFindsUserId(childArray.getJSONObject(j).optString("user_id"));
+                                    entity2.setFindsUserHead(childArray.getJSONObject(j).optString("head_picture"));
+                                    entity2.setFindsUserName(childArray.getJSONObject(j).optString("user_name"));
+                                    entity2.setFindsCommentId(childArray.getJSONObject(j).optString("comment_id"));
+                                    entity2.setFindsContent(childArray.getJSONObject(j).optString("content"));
+                                    entity2.setFindsIsPraise(childArray.getJSONObject(j).optString("praise"));
+                                    entity2.setFindsPraiseNum(childArray.getJSONObject(j).optString("praise_number"));
+                                    entity2.setFindsTime(childArray.getJSONObject(j).optString("created_at"));
+                                    entity2.setFindsToUserName(childArray.getJSONObject(j).optString("to_user_name"));
+                                    entity2.setFindsType(childArray.getJSONObject(j).optString("type"));
+                                    list.add(entity2);
+                                }
+                            }
+
+                            entity.setList(list);
+
+                            listData.add(entity);
+                        }
+
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (page == 1) {
+                                    mAdapter = new FindsCommentsAdapter(mActivity, listData);
+                                    mListView.setAdapter(mAdapter);
+                                    //点赞
+                                    mAdapter.setOnItemPraiseClickListener(new FindsCommentsAdapter.onItemPraiseClickListener() {
+                                        @Override
+                                        public void onItemPraiseClick(int position) {
+                                            getCommentPraiseData(listData.get(position).getFindsCommentId(), "", position, -1);
+                                        }
+                                    });
+                                    //子点赞
+                                    mAdapter.setOnChildItemPraiseClickListener(new FindsCommentsAdapter.onChildItemPraiseClickListener() {
+                                        @Override
+                                        public void onChildItemPraiseClick(int groupPosition, int childPosition) {
+                                            getCommentPraiseData(listData.get(groupPosition).getList().get(childPosition).getFindsCommentId(), "child", groupPosition, childPosition);
+                                        }
+                                    });
+
+                                    //评论
+                                    mAdapter.setOnItemReplyClickListener(new FindsCommentsAdapter.onItemReplyClickListener() {
+                                        @Override
+                                        public void onItemReplyClick(final int position) {
+                                            _superior_id_value = listData.get(position).getFindsCommentId();
+                                            if (listData.get(position).getFindsUserId().equals(_dy_userid_value)) {
+                                                setCommentReply("0", position);
+                                            } else {
+                                                setCommentReply("", position);
+                                            }
+                                        }
+                                    });
+
+                                    //子评论
+                                    mAdapter.setOnChildItemReplyClickListener(new FindsCommentsAdapter.onChildItemReplyClickListener() {
+                                        @Override
+                                        public void onChildItemReplyClick(int groupPosition, int childPosition) {
+                                            _superior_id_value = listData.get(groupPosition).getList().get(childPosition).getFindsCommentId();
+                                            if (listData.get(groupPosition).getList().get(childPosition).getFindsUserId().equals(_dy_userid_value)) {
+                                                setChildCommentReply("0", groupPosition, childPosition);
+                                            } else {
+                                                setChildCommentReply("", groupPosition, childPosition);
+                                            }
+                                        }
+                                    });
+                                    //更多子评论
+                                    mAdapter.setOnItemReplyMoreClickListener(new FindsCommentsAdapter.onItemReplyMoreClickListener() {
+                                        @Override
+                                        public void onItemReplyMoreClick(int position) {
+                                            _superior_id_value = listData.get(position).getFindsCommentId();
+
+                                        }
+                                    });
+                                    loadOver();
+                                } else {
+
+                                    if (mAdapter != null) {
+                                        mAdapter.notifyDataSetChanged();
+                                    } else {
+                                        mAdapter = new FindsCommentsAdapter(mActivity, listData);
+                                        mListView.setAdapter(mAdapter);
+                                    }
+                                    loadOver();
+                                }
+                            }
+                        });
+
+                    } else {
+                        showToast(msg);
+                        loadOver();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    loadOver();
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                loadOver();
+            }
+        });
+    }
+
+
+    /**
+     * 点赞评论
+     */
+    private void getCommentPraiseData(String comment_id, final String type, final int gposition, final int cposition) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("comment_id", comment_id);
+        map.put("dynamic_id", XPreferencesUtils.get("dynamic_id", ""));
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        FindsLogic.Instance(mActivity).getCommentPraiseApi(map, false, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    //String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (type.equals("child")) {
+                                    if (listData.get(gposition).getList().get(cposition).getFindsIsPraise().equals("0")) {
+                                        praise_num = Integer.parseInt(listData.get(gposition).getList().get(cposition).getFindsPraiseNum()) + 1;
+                                        listData.get(gposition).getList().get(cposition).setFindsIsPraise("1");
+                                        listData.get(gposition).getList().get(cposition).setFindsPraiseNum(praise_num + "");
+                                    } else {
+                                        praise_num = Integer.parseInt(listData.get(gposition).getList().get(cposition).getFindsPraiseNum()) - 1;
+                                        listData.get(gposition).getList().get(cposition).setFindsIsPraise("0");
+                                        listData.get(gposition).getList().get(cposition).setFindsPraiseNum(praise_num < 0 ? "0" : praise_num + "");
+                                    }
+                                } else {
+                                    if (listData.get(gposition).getFindsIsPraise().equals("0")) {
+                                        praise_num = Integer.parseInt(listData.get(gposition).getFindsPraiseNum()) + 1;
+                                        listData.get(gposition).setFindsIsPraise("1");
+                                        listData.get(gposition).setFindsPraiseNum(praise_num + "");
+                                    } else {
+                                        praise_num = Integer.parseInt(listData.get(gposition).getFindsPraiseNum()) - 1;
+                                        listData.get(gposition).setFindsIsPraise("0");
+                                        listData.get(gposition).setFindsPraiseNum(praise_num < 0 ? "0" : praise_num + "");
+                                    }
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    } else {
+                        setPraiseError(type, gposition, cposition);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    setPraiseError(type, gposition, cposition);
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+                setPraiseError(type, gposition, cposition);
+            }
+        });
+    }
+
+    /**
+     * 点赞失败
+     */
+    private void setPraiseError(final String type, final int position, final int cposition) {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (type.equals("child")) {
+                    if (listData.get(position).getList().get(cposition).getFindsIsPraise().equals("0")) {
+                        listData.get(position).getList().get(cposition).setFindsIsPraise("1");
+                    } else {
+                        listData.get(position).getList().get(cposition).setFindsIsPraise("0");
+                    }
+                } else {
+                    if (listData.get(position).getFindsIsPraise().equals("0")) {
+                        listData.get(position).setFindsIsPraise("1");
+                    } else {
+                        listData.get(position).setFindsIsPraise("0");
+                    }
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+
+    /**
+     * 添加评论
+     */
+    private void getCommentAddData(final String type) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("content", _add_comment_value);
+        map.put("superior_id", _superior_id_value);
+        map.put("dynamic_id", XPreferencesUtils.get("dynamic_id", ""));
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        FindsLogic.Instance(mActivity).getCommentAddApi(map, true, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    //String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        JSONObject data = new JSONObject(json.getString("data"));
+                        _comment_id_value = data.optString("commentId", "");
+                        _dy_comments_num_value = data.optString("commentCount", "");
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                _item_comments_num.setText(_dy_comments_num_value + "条评论");
+                                _top_comment_num.setText(_dy_comments_num_value + "条评论");
+
+                                if (type.equals("child")) {
+                                    setChildComment();
+                                } else {
+                                    setComment();
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    } else {
+                        showToast("评论失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToast("评论失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+                showToast("评论失败");
+            }
+        });
+    }
+
+    /**
+     * 删除评论
+     */
+    private void getCommentDelData(String comment_id, final String type, final int groupPosition, final int childPosition) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("comment_id", comment_id);
+        FindsLogic.Instance(mActivity).getCommentDelApi(map, true, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    //String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (type.equals("child")) {
+                                    if (listData.size() > 0 && listData.get(groupPosition).getList().size() > 0) {
+                                        listData.get(groupPosition).getList().remove(childPosition);
+                                    }
+                                } else {
+                                    if (listData.size() > 0) {
+                                        listData.remove(groupPosition);
+                                    }
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    } else {
+                        showToast("评论失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToast("评论失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+                showToast("评论失败");
+            }
+        });
+    }
+
+
+    /**
+     * 更多评论
+     */
+    private void getCommentMoreData(final int page, String superior_id, final int position) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("dynamic_id", _dynamic_id_value);
+        map.put("page", page);
+        map.put("pageSize", 10);
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        map.put("superior_id", superior_id);
+        map.put("comment_id", "");
+
+        FindsLogic.Instance(mActivity).getCommentDelApi(map, true, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    //String msg = json.getString("message");
+                    if (json.getString("status").equals("0")) {
+                        totalPage = json.getJSONObject("data").optInt("total", 0);
+                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
+                        List<FindsCommentEntity> list = new ArrayList<>();
+                        for (int i = 0; i < array.length(); i++) {
+                            FindsCommentEntity entity = new FindsCommentEntity();
+                            entity.setFindsTime(array.getJSONObject(i).optString("created_at"));
+                            entity.setFindsUserId(array.getJSONObject(i).optString("user_id"));
+                            entity.setFindsUserHead(array.getJSONObject(i).optString("head_picture"));
+                            entity.setFindsUserName(array.getJSONObject(i).optString("user_name"));
+                            entity.setFindsCommentId(array.getJSONObject(i).optString("comment_id"));
+                            entity.setFindsContent(array.getJSONObject(i).optString("content"));
+                            entity.setFindsIsPraise(array.getJSONObject(i).optString("praise"));
+                            entity.setFindsPraiseNum(array.getJSONObject(i).optString("praise_number"));
+                            entity.setFindsType(array.getJSONObject(i).optString("to_user_name"));
+                            entity.setFindsToUserName(array.getJSONObject(i).optString("type"));
+                            list.add(entity);
+                        }
+
+                        if (page == 1) {
+                            listData.get(position).getList().clear();
+                            listData.get(position).setList(list);
+                        } else {
+                            listData.get(position).getList().addAll(list);
+                        }
+
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mAdapter != null) {
+                                    mAdapter.notifyDataSetChanged();
+                                } else {
+                                    mAdapter = new FindsCommentsAdapter(mActivity, listData);
+                                    mListView.setAdapter(mAdapter);
+                                }
+                            }
+                        });
+
+                    } else {
+                        showToast("评论失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showToast("评论失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+                showToast("评论失败");
+            }
+        });
     }
 
 

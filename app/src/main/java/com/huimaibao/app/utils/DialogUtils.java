@@ -589,7 +589,7 @@ public class DialogUtils {
         //2、设置布局
         View view = View.inflate(mActivity, R.layout.dialog_comment_layout, null);
         dialog.setContentView(view);
-
+        //dialog.setCanceledOnTouchOutside(true);
         Window window = dialog.getWindow();
         //设置弹出位置
         //window.setGravity(Gravity.BOTTOM);
@@ -612,6 +612,12 @@ public class DialogUtils {
         dialog.findViewById(R.id.dialog_comment_reply).setOnClickListener(replyListener);
         _dialog_copy.setOnClickListener(copyListener);
         _dialog_del.setOnClickListener(delListener);
+        dialog.findViewById(R.id.dialog_comment_ll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 

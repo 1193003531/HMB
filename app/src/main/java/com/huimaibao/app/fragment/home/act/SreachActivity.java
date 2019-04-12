@@ -170,13 +170,13 @@ public class SreachActivity extends BaseActivity {
 
     private void loadMoreData() {
         countPage++;
-        getCardClip(countPage, false, sreach_value);
+        getCardClip("",countPage, false, sreach_value);
     }
 
 
     private void getData() {
         countPage = 1;
-        getCardClip(countPage, true, sreach_value);
+        getCardClip("",countPage, true, sreach_value);
 
     }
 
@@ -214,7 +214,7 @@ public class SreachActivity extends BaseActivity {
         } else {
             XKeyboardUtils.closeKeyboard(this);
             countPage = 1;
-            getCardClip(countPage, true, sreach_value);
+            getCardClip("", countPage, true, sreach_value);
         }
 
     }
@@ -222,12 +222,12 @@ public class SreachActivity extends BaseActivity {
     /**
      * 获取用户收藏名片
      */
-    private void getCardClip(final int page, boolean isShow, String key) {
+    private void getCardClip(String type, final int page, boolean isShow, String key) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("limit", 5);
         map.put("page", page);
         map.put("keyword", key);
-
+        map.put("type", type);
         CardClipLogic.Instance(mActivity).getCardClipApi(map, isShow, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
@@ -238,7 +238,7 @@ public class SreachActivity extends BaseActivity {
                     String message = json.getString("message");
                     //String data = json.getString("data");
                     if (status.equals("0")) {
-                        JSONArray array = new JSONArray(json.getString("data"));
+                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
                         if (page == 1) {
                             ListCardData = new ArrayList<>();
                             if (array.length() == 0) {
