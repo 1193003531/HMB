@@ -17,7 +17,17 @@ public class FindsCommentsEntity implements Serializable {
     public String FindsIsPraise;
     public String FindsTime;
     public String FindsChildCommentNum;
+    public boolean FindsIsMore;
     public List<FindsCommentEntity> list;
+
+    public boolean isFindsIsMore() {
+        return FindsIsMore;
+    }
+
+    public void setFindsIsMore(boolean findsIsMore) {
+        FindsIsMore = findsIsMore;
+    }
+
 
     public String getFindsChildCommentNum() {
         return FindsChildCommentNum;

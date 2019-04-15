@@ -37,7 +37,7 @@
 
 
     <!--添加号码到通讯录-->
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
         android:name=".base.BaseApplication"
@@ -117,7 +117,9 @@
             android:name=".login.PerfectBActivity"
             android:label="完善信息"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".login.GuideActivity"
             android:label="引导页"

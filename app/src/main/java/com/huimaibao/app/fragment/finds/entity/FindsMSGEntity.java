@@ -18,6 +18,15 @@ public class FindsMSGEntity implements Serializable {
     public String FindsTeaching;
     public String FindsTime;
     public String FindsCommentId;
+    public String FindsNewMessageId;
+
+    public String getFindsNewMessageId() {
+        return FindsNewMessageId;
+    }
+
+    public void setFindsNewMessageId(String findsNewMessageId) {
+        this.FindsNewMessageId = findsNewMessageId;
+    }
 
     public String getFindsId() {
         return FindsId;

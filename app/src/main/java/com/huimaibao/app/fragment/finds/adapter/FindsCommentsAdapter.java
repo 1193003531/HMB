@@ -127,7 +127,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
             mHolder._item_list.setVisibility(View.GONE);
             mHolder._item_more.setVisibility(View.GONE);
         } else {
-            if (Integer.parseInt(item.getFindsChildCommentNum()) > 1) {
+            if (item.isFindsIsMore()) {
                 mHolder._item_more.setVisibility(View.VISIBLE);
             } else {
                 mHolder._item_more.setVisibility(View.GONE);

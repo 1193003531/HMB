@@ -10,6 +10,7 @@ import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XNetworkUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.utils.http.HttpCallBack;
 import com.youth.xframe.utils.http.XHttp;
 import com.youth.xframe.widget.XToast;
@@ -454,7 +455,7 @@ public class LoginLogic {
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", id);
         if (XNetworkUtils.isConnected()) {
-            XHttp.obtain().get(ServerApi.GET_USERINFO_URL, map, new HttpCallBack() {
+            XHttp.obtain().get(ServerApi.GET_USERINFO_URL, null, new HttpCallBack() {
                 @Override
                 public void showProgress() {
                     if (isShowLoad)
@@ -510,6 +511,13 @@ public class LoginLogic {
                             XPreferencesUtils.put("invitation_code", jsonD.optString("invitation_code", ""));//邀请码
                             XPreferencesUtils.put("is_perfect", jsonD.optString("is_perfect", "10"));//是否完善
                             XPreferencesUtils.put("background", jsonD.optString("background", ""));//背景图片
+                            if (XEmptyUtils.isSpace(jsonD.optString("vip_expire", ""))) {
+                                XPreferencesUtils.put("member_data", "开通会员");//会员到期时间
+                            } else {
+                                XPreferencesUtils.put("member_data", XTimeUtils.StringToYMD(jsonD.optString("vip_expire", "")) + "到期");
+                            }
+
+
                             if (resultBack != null)
                                 resultBack.onSuccess(o);
                         } else {

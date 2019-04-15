@@ -102,7 +102,7 @@ public class FindsCommentAdapter extends BaseAdapter {
         mHolder._item_name.setText(item.getFindsUserName());
         mHolder._item_praise_num.setText(item.getFindsPraiseNum());
 
-        SpannableString ssContent, ssTime;
+        SpannableString ssName, ssContent, ssTime;
 
         ssContent = new SpannableString(item.getFindsContent() + "  ");
         ssContent.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, ssContent.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -111,11 +111,28 @@ public class FindsCommentAdapter extends BaseAdapter {
         ssTime.setSpan(new ForegroundColorSpan(Color.parseColor("#a2a2a2")), 0, ssTime.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ssTime.setSpan(new AbsoluteSizeSpan(12, true), 0, ssTime.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-        SpannableStringBuilder multiWord = new SpannableStringBuilder();
-        multiWord.append(ssContent);
-        multiWord.append(ssTime);
 
-        mHolder._item_content.setText(multiWord);
+
+
+
+        if (item.getFindsType().equals("0")) {
+            SpannableStringBuilder multiWord = new SpannableStringBuilder();
+            multiWord.append(ssContent);
+            multiWord.append(ssTime);
+            mHolder._item_content.setText(multiWord);
+        } else {
+            ssName = new SpannableString("回复" + item.getFindsToUserName() + ": ");
+            ssName.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            ssName.setSpan(new ForegroundColorSpan(Color.parseColor("#a2a2a2")), 2, ssName.length() - 2, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            ssName.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), ssName.length() - 2, ssName.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            ssName.setSpan(new AbsoluteSizeSpan(15, true), 0, ssName.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            SpannableStringBuilder multiWord = new SpannableStringBuilder();
+            multiWord.append(ssName);
+            multiWord.append(ssContent);
+            multiWord.append(ssTime);
+            mHolder._item_content.setText(multiWord);
+        }
+
 
         if (item.getFindsIsPraise().equals("0")) {
             mHolder._item_praise_iv.setImageResource(R.drawable.finds_list_praise);

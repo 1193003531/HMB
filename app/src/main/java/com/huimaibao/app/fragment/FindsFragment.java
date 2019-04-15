@@ -194,6 +194,8 @@ public class FindsFragment extends BaseFragment {
             public void onClick(View v) {
                 startActivity(FindsMSGActivity.class, "新消息");
                 XPreferencesUtils.put("finds_new_msg", false);
+                //移除新消息
+                mListView.removeHeaderView(_view_top);
             }
         });
 
@@ -352,6 +354,7 @@ public class FindsFragment extends BaseFragment {
                                     ImageLoaderManager.loadImage(data.optString("head_picture"), _finds_msg_head);
                                     _finds_msg_content.setText(data.optString("user_name") + "等" + data.optString("count", "0") + "人回复了你");
                                     //添加新消息
+                                    mListView.removeHeaderView(_view_top);
                                     mListView.addHeaderView(_view_top);
                                 }
                             }

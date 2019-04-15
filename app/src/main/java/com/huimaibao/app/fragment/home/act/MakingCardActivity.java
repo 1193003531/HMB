@@ -152,7 +152,7 @@ public class MakingCardActivity extends TakePhotoActivity {
                     imagePthData.remove(position);
                     albumData.clear();
                     albumData.addAll(imagePthData);
-                    if (albumData.size() < 6) {
+                    if (albumData.size() < 3) {
                         albumData.add("添加");
                     }
                     albumAdapter.notifyDataSetChanged();
@@ -307,7 +307,7 @@ public class MakingCardActivity extends TakePhotoActivity {
                             imagePthData.add(ServerApi.OSS_IMAGE_URL + object);
                             albumData.clear();
                             albumData.addAll(imagePthData);
-                            if (albumData.size() < 6) {
+                            if (albumData.size() < 3) {
                                 albumData.add("添加");
                             }
                             if (albumData.size() == 2) {

@@ -155,10 +155,10 @@ public class FindsMSGActivity extends BaseActivity {
                 break;
             case R.id.finds_clear_btn:
                 //清空
-                ToastUtils.showCenter("清空");
                 mDialogUtils.showNoTitleDialog("是否清空当前消息?", "取消", "清空", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mDialogUtils.dismissDialog();
                         getClearData();
                     }
                 });
@@ -201,7 +201,7 @@ public class FindsMSGActivity extends BaseActivity {
                             entity.setFindsCommentId(array.getJSONObject(i).optString("comment_id"));
                             entity.setFindsImage(array.getJSONObject(i).optString("image_path"));
                             entity.setFindsTime(array.getJSONObject(i).optString("created_at"));
-
+                            entity.setFindsNewMessageId(array.getJSONObject(i).optString("new_message_id", ""));
                             entity.setFindsUserId(array.getJSONObject(i).optString("user_id"));
                             entity.setFindsUserHead(array.getJSONObject(i).optString("head_picture"));
                             entity.setFindsUserName(array.getJSONObject(i).optString("user_name"));
@@ -261,12 +261,12 @@ public class FindsMSGActivity extends BaseActivity {
     private void getClearData() {
         listMSGIDData = new ArrayList<>();
         for (int i = 0; i < listData.size(); i++) {
-            listMSGIDData.add(listData.get(i).getFindsCommentId());
+            listMSGIDData.add(listData.get(i).getFindsNewMessageId());
         }
         LogUtils.debug("listMSGIDData:" + listMSGIDData.toString());
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("comment_id", listMSGIDData.toString().replace("[", "").replace("]", "").trim());
+        map.put("new_message_id", listMSGIDData.toString().replace("[", "").replace("]", "").trim());
         FindsLogic.Instance(mActivity).getClearMSGApi(map, true, new ResultBack() {
             @Override
             public void onSuccess(Object object) {

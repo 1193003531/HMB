@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/white">
+
+    <com.youth.xframe.widget.XScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="50.5dp"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <include layout="@layout/act_finds_top" />
+
+
+            <com.youth.xframe.widget.NoScrollListView
+                android:id="@+id/finds_comments_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:fadingEdge="none"
+                android:fastScrollEnabled="false"
+                android:listSelector="@color/transparent" />
+        </LinearLayout>
+    </com.youth.xframe.widget.XScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,44 +137,6 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.0"
-        android:orientation="vertical">
-
-        <com.youth.xframe.widget.XScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="vertical">
-
-
-                <include layout="@layout/act_finds_top" />
-
-
-                <com.youth.xframe.widget.NoScrollListView
-                    android:id="@+id/finds_comments_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@android:color/transparent"
-                    android:dividerHeight="0dp"
-                    android:fadingEdge="none"
-                    android:fastScrollEnabled="false"
-                    android:listSelector="@color/transparent" />
-            </LinearLayout>
-        </com.youth.xframe.widget.XScrollView>
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -196,12 +187,12 @@
                 android:paddingTop="6dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="6dp"
-                android:text="发送"
+                android:text="发布"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_14" />
 
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
 

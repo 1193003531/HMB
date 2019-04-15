@@ -296,6 +296,7 @@ public class FindsMyActivity extends BaseActivity {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                XPreferencesUtils.put("add_dynamic", true);
                                 showToast("删除成功");
                                 if (listData.size() > 0) {
                                     listData.remove(position);

@@ -24,6 +24,7 @@ import com.huimaibao.app.takePhone.LoadCallback;
 import com.huimaibao.app.takePhone.TakePhoneHelper;
 import com.huimaibao.app.takePhone.TakePhotoActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
@@ -576,7 +577,7 @@ public class PerfectBActivity extends TakePhotoActivity {
 
             @Override
             public void onFailed(String error) {
-                //XLog.d("error:" + error);
+                LogUtils.debug("error:" + error);
                 showToast("保存失败");
             }
         });
@@ -591,24 +592,24 @@ public class PerfectBActivity extends TakePhotoActivity {
         final HashMap<String, Object> map = new HashMap<>();
         map.put("user_id", XPreferencesUtils.get("user_id", ""));//	用户id
         map.put("user_name", name);//	用户名称
+        map.put("portrait", head);//头像
+        map.put("profession", jobs);//职业
         map.put("birthday", "1990-01-01");//生日
         map.put("sex", sex);//性别
         map.put("mobile_phone", XPreferencesUtils.get("phone", ""));//手机号码
-        map.put("head_picture", "");//用户头像
-        map.put("telephone", "");//公司电话
         map.put("company", company);//公司名称
-        map.put("industry", "");//行业
-        map.put("profession", jobs);//职业
-        map.put("wechat_code", "");//微信号
-        map.put("qq", "");//QQ
-        map.put("email", "");//邮箱
-        map.put("website", "");//网页
-        map.put("province", "");//省id
-        map.put("city", "");//市id
-        map.put("area", "");//区id
-        map.put("address_detail", "");//详情地址
-        map.put("portrait", head);//头像
-        map.put("motto", "");//自我描述
+//        map.put("head_picture", "");//用户头像
+//        map.put("telephone", "");//公司电话
+//        map.put("industry", "");//行业
+//        map.put("wechat_code", "");//微信号
+//        map.put("qq", "");//QQ
+//        map.put("email", "");//邮箱
+//        map.put("website", "");//网页
+//        map.put("province", "");//省id
+//        map.put("city", "");//市id
+//        map.put("area", "");//区id
+//        map.put("address_detail", "");//详情地址
+//        map.put("motto", "");//自我描述
 
         runOnUiThread(new Runnable() {
             @Override
@@ -619,7 +620,7 @@ public class PerfectBActivity extends TakePhotoActivity {
 
                         try {
                             JSONObject json = new JSONObject(object.toString());
-                            // XLog.d("json" + json);
+                            LogUtils.debug("json" + json);
                             if (json.getString("status").equals("0")) {
                                 showToast("保存成功");
                                 toMainView();
@@ -627,13 +628,14 @@ public class PerfectBActivity extends TakePhotoActivity {
                                 showToast("保存失败");
                             }
                         } catch (Exception e) {
+                            LogUtils.debug("error:" + e);
                             showToast("保存失败");
                         }
                     }
 
                     @Override
                     public void onFailed(String error) {
-                        //XLog.d("error:" + error);
+                        LogUtils.debug("error:" + error);
                         showToast("保存失败");
                     }
                 });
