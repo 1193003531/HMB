@@ -23,6 +23,7 @@ import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.view.NineGridViewLayout;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XTimeUtils;
@@ -124,7 +125,12 @@ public class FindsAdapter extends BaseAdapter {
 
 
         mHolder._item_name.setText(item.getFindsUserName());
-        mHolder._item_content.setText(item.getFindsContent());
+        if (XEmptyUtils.isSpace(item.getFindsContent())) {
+            mHolder._item_content.setVisibility(View.GONE);
+        } else {
+            mHolder._item_content.setVisibility(View.VISIBLE);
+            mHolder._item_content.setText(item.getFindsContent());
+        }
         mHolder._item_time.setText(XTimeUtils.getTimeRangeS(item.getFindsTime()));
         mHolder._item_praise_num.setText(item.getFindsPraiseNum());
         mHolder._item_comments_num.setText(item.getFindsCommentsNum());
@@ -172,6 +178,7 @@ public class FindsAdapter extends BaseAdapter {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
                 XPreferencesUtils.put("concern", item.getFindsIsFocus());
                 XPreferencesUtils.put("dynamic_id", item.getFindsId());
+                XPreferencesUtils.put("comment_num_pos", position);
                 startActivity(FindsCommentsActivity.class, "评论");
             }
         });
@@ -228,6 +235,7 @@ public class FindsAdapter extends BaseAdapter {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
                 XPreferencesUtils.put("concern", item.getFindsIsFocus());
                 XPreferencesUtils.put("dynamic_id", item.getFindsId());
+                XPreferencesUtils.put("comment_num_pos", position);
                 startActivity(FindsCommentsActivity.class, "动态");
             }
         });

@@ -20,6 +20,26 @@ public class FindsCommentsEntity implements Serializable {
     public boolean FindsIsMore;
     public List<FindsCommentEntity> list;
 
+
+    public String FindsToUserName;
+    public String FindsType;
+
+    public String getFindsToUserName() {
+        return FindsToUserName;
+    }
+
+    public void setFindsToUserName(String findsToUserName) {
+        this.FindsToUserName = findsToUserName;
+    }
+
+    public String getFindsType() {
+        return FindsType;
+    }
+
+    public void setFindsType(String findsType) {
+        this.FindsType = findsType;
+    }
+
     public boolean isFindsIsMore() {
         return FindsIsMore;
     }

@@ -243,7 +243,7 @@ public class PersonalWebDetailsActivity extends BaseActivity {
         switch (v.getId()) {
             //头像
             case R.id.personal_web_details_head:
-                startActivity(PersonalActivity.class, _user_id_value);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
                 break;
             //名片
             case R.id.personal_web_details_card:

@@ -54,6 +54,7 @@
                 android:background="@color/white"
                 android:gravity="top"
                 android:hint="请输入理由"
+                android:maxLength="127"
                 android:padding="15dp"
                 android:textColor="@color/color000000"
                 android:textColorHint="@color/color666666"

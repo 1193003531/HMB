@@ -25,6 +25,7 @@ import com.huimaibao.app.fragment.mine.entity.CardEntity;
 import com.huimaibao.app.fragment.mine.server.CardClipLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
+import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
@@ -120,6 +121,10 @@ public class CMListFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                if (position == 0) {
+                    //ToastUtils.showCenter("" + position);
+                    return;
+                }
                 if (listData.get(position - 1).getMessageId().equals("0")) {
                     if (text.equals("人气")) {
                         DialogUtils.of(mActivity).showNoSureDialog("平台外用户访问了您", "知道了");
@@ -260,12 +265,15 @@ public class CMListFragment extends BaseFragment {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.debug("json:" + e);
+                    showNoData();
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                //XLog.e("error:" + error);
+                LogUtils.debug("json:" + error);
+                showNoData();
             }
         });
     }
@@ -339,12 +347,15 @@ public class CMListFragment extends BaseFragment {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.debug("json:" + e);
+                    showNoData();
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                // XLog.e("error:" + error);
+                LogUtils.debug("json:" + error);
+                showNoData();
             }
         });
     }
@@ -356,6 +367,11 @@ public class CMListFragment extends BaseFragment {
             @Override
             public void run() {
                 XToast.normal(msg);
+                if (listData.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
                 // 加载完数据设置为不刷新状态，将下拉进度收起来
                 if (mSwipeRefreshView.isRefreshing()) {
                     mSwipeRefreshView.setRefreshing(false);
@@ -369,6 +385,11 @@ public class CMListFragment extends BaseFragment {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (listData.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
                 // 加载完数据设置为不刷新状态，将下拉进度收起来
                 if (mSwipeRefreshView.isRefreshing()) {
                     mSwipeRefreshView.setRefreshing(false);

@@ -93,7 +93,8 @@ public interface ServerApi {
     /**
      * 主页
      */
-    String HOME_PAGE_WEB_URL = SERVER_WEB_URL + "/#/card/detail/" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
+    //String HOME_PAGE_WEB_URL = SERVER_WEB_URL + "/#/card/detail/" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
+    String HOME_PAGE_WEB_URL = MERCHANTS_URL;
 
     /**
      * 公共接口
@@ -482,7 +483,8 @@ public interface ServerApi {
      * item-投诉的栏目
      * content-投诉的内容
      */
-    String COMPLAINT_URL = SERVER_URL + "/front/complaint";
+    //String COMPLAINT_URL = SERVER_URL + "/front/complaint";
+    String COMPLAINT_URL = SERVER_URL + "/front/finds/complaint_advise_save";
     /**
      * 意见反馈
      * type	1功能异常2产品建议3其他

@@ -211,7 +211,7 @@ public class LoginSMSActivity extends Activity {
                     @Override
                     public void onSuccess(Object object) {
                         showToast("发送成功");
-                        XPreferencesUtils.get("phone", phone);
+                        XPreferencesUtils.put("phone", phone);
                         toVCodeView();
                     }
 

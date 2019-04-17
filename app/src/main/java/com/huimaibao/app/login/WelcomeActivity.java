@@ -1,22 +1,27 @@
 package com.huimaibao.app.login;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
 import com.huimaibao.app.R;
+import com.huimaibao.app.base.BaseApplication;
 import com.huimaibao.app.main.MainActivity;
 import com.huimaibao.app.signs.SignaturesMsg;
 import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.permission.XPermission;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -44,6 +49,38 @@ public class WelcomeActivity extends Activity {
 //        } else {
 //            ToastUtils.showCenter("Java层签名验证失败");
 //        }
+
+//
+//        if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
+//            XPermission.requestPermissions(getApplicationContext(), 1010, new String[]{
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    Manifest.permission.READ_EXTERNAL_STORAGE
+//            }, new XPermission.OnPermissionListener() {
+//                //权限申请成功时调用
+//                @Override
+//                public void onPermissionGranted() {
+//                    // String path = getApplicationContext().getCacheDir()+"/HMB/Cache/"; //
+//                    File file = new File(BaseApplication.getApp().getFilePath());
+//                    if (!file.exists()) {
+//                        file.mkdirs();
+//                    }
+//                }
+//
+//                //权限被用户禁止时调用
+//                @Override
+//                public void onPermissionDenied() {
+//                    //给出友好提示，并且提示启动当前应用设置页面打开权限
+//                    XPermission.showTipsDialog(getApplicationContext());
+//                }
+//            });
+//        } else {
+//            // String path = getApplicationContext().getCacheDir()+"/HMB/Cache/"; //
+//            File file = new File(BaseApplication.getApp().getFilePath());
+//            if (!file.exists()) {
+//                file.mkdirs();
+//            }
+//        }
+
 
         isFirstUse = (boolean) XPreferencesUtils.get("isFirstUse", true);
 

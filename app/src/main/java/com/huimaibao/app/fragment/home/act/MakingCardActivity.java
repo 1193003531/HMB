@@ -146,7 +146,7 @@ public class MakingCardActivity extends TakePhotoActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (albumData.get(position).equals("添加")) {
                     _check_head = "相册";
-                    takePhoneHelper.setTakePhone(1, true, true, 800, 800, true, 512000, 0, 0);
+                    takePhoneHelper.setTakePhone(1, false, false, 800, 800, false, 512000, 0, 0);
                     takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                 } else {
                     imagePthData.remove(position);
@@ -173,7 +173,7 @@ public class MakingCardActivity extends TakePhotoActivity {
         _phone_value = "" + XPreferencesUtils.get("phone", "");
         _wechat_value = "" + XPreferencesUtils.get("wechat", "");
         _addr_value = "" + XPreferencesUtils.get("address_detail", "");
-        _introduce_value = "" + XPreferencesUtils.get("introduce", "");
+        _introduce_value = "" + XPreferencesUtils.get("introduce", "").toString().trim();
         _city_value = "" + XPreferencesUtils.get("address", "");
         _province_id_value = "" + XPreferencesUtils.get("province", "");
         _city_id_value = "" + XPreferencesUtils.get("city", "");
@@ -187,10 +187,11 @@ public class MakingCardActivity extends TakePhotoActivity {
         _card_phone.setText(_phone_value);
         _card_wechat.setText(_wechat_value);
         _card_addr.setText(_addr_value);
-        _card_introduce.setText(XEmptyUtils.isSpace(_introduce_value) ? "" : _introduce_value);
+        _card_introduce.setText(_introduce_value);
 
         _card_name.setSelection(_name_value.length());
         _card_introduce_num.setText("限" + String.valueOf(50 - _introduce_value.length()) + "字");//此处需要进行强制类型转换
+
         setFocusChangeListener();
         setaddTextChangedListener();
         setAllAnimation();
@@ -287,9 +288,16 @@ public class MakingCardActivity extends TakePhotoActivity {
 //            images.add(new File(imagesData.get(i).getCompressPath()));
 //        }
 //        feedbackUploadApi(images);
+        final String url;
+        if (_check_head.equals("头像")) {
+            url = result.getImages().get(0).getCompressPath();
+        } else {
+            url = result.getImages().get(0).getOriginalPath();
+        }
 
-        final String url = result.getImages().get(0).getCompressPath();
-        // XLog.d("url:" + url);
+
+        LogUtils.debug("url:" + url);
+        LogUtils.debug("url:" + result.getImages().get(0).getCompressPath());
         final String object = setImageUrl();
 
         putLoadImage(object, url, new LoadCallback() {

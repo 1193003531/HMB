@@ -90,6 +90,17 @@ public class FindsMyActivity extends BaseActivity {
         initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ((boolean) XPreferencesUtils.get("is_comment_num", false)) {
+            XPreferencesUtils.put("is_comment_num", false);
+            if (listData != null && listData.size() > 0) {
+                listData.get((int) XPreferencesUtils.get("comment_num_pos", 0)).setFindsCommentsNum("" + XPreferencesUtils.get("commentCount", "0"));
+            }
+        }
+    }
+
     private void initEvent() {
         // 下拉时触发SwipeRefreshLayout的下拉动画，动画完毕之后就会回调这个方法
         mSwipeRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -154,7 +165,7 @@ public class FindsMyActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    LogUtils.debug("json:" + json);
+                    LogUtils.debug("finds:" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
                         totalPage = json.getJSONObject("data").optInt("total", 0);
@@ -180,6 +191,7 @@ public class FindsMyActivity extends BaseActivity {
                             entity.setFindsUserHead(array.getJSONObject(i).optString("head_picture"));
                             entity.setFindsUserName(array.getJSONObject(i).optString("user_name"));
 
+                            listImage = new ArrayList<>();
                             mUrls = new String[]{};
                             try {
                                 if (!XEmptyUtils.isSpace(array.getJSONObject(i).optString("image_path"))) {
@@ -192,10 +204,10 @@ public class FindsMyActivity extends BaseActivity {
 
                             }
 
-                            listImage = new ArrayList<>();
-                            for (int j = 0; j < mUrls.length; j++) {
-                                listImage.add(mUrls[j]);
-                            }
+//
+//                            for (int j = 0; j < mUrls.length; j++) {
+//                                listImage.add(mUrls[j]);
+//                            }
                             entity.setFindsImageList(listImage);
 
                             listData.add(entity);

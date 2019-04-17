@@ -49,12 +49,13 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textStyle="bold"
                                 android:layout_weight="1"
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="推送消息"
-                                android:textColor="@color/color000000"
-                                android:textSize="@dimen/text_size_15" />
+                                android:textColor="@color/FF333333"
+                                android:textSize="@dimen/text_size_14" />
 
 
                             <TextView
@@ -66,7 +67,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="--"
-                                android:textColor="@color/FF6e6e6e"
+                                android:textColor="@color/color999999"
                                 android:textSize="@dimen/text_size_11" />
                         </LinearLayout>
 
@@ -84,7 +85,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="--"
-                                android:textColor="@color/FF6e6e6e"
+                                android:textColor="@color/color999999"
                                 android:textSize="@dimen/text_size_12" />
 
                             <ImageView
@@ -139,11 +140,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textStyle="bold"
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="小脉宝"
-                                android:textColor="@color/color000000"
-                                android:textSize="@dimen/text_size_15" />
+                                android:textColor="@color/FF333333"
+                                android:textSize="@dimen/text_size_14" />
 
 
                             <TextView
@@ -155,7 +157,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="--"
-                                android:textColor="@color/FF6e6e6e"
+                                android:textColor="@color/color999999"
                                 android:textSize="@dimen/text_size_11" />
                         </LinearLayout>
 
@@ -173,7 +175,7 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="--"
-                                android:textColor="@color/FF6e6e6e"
+                                android:textColor="@color/color999999"
                                 android:textSize="@dimen/text_size_12" />
 
                             <ImageView

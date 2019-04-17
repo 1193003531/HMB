@@ -57,35 +57,6 @@ public class BaseApplication extends XApplication {
         mAppContext = getApplicationContext();
         AreaDataList = new ArrayList<>();
 
-//        if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
-//            XPermission.requestPermissions(getApplicationContext(), 1010, new String[]{
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                    Manifest.permission.READ_EXTERNAL_STORAGE
-//            }, new XPermission.OnPermissionListener() {
-//                //权限申请成功时调用
-//                @Override
-//                public void onPermissionGranted() {
-//                    String path = getApplicationContext().getCacheDir()+"/HMB/Cache/"; //
-//                    File file = new File(path);
-//                    if (!file.exists()) {
-//                        file.mkdirs();
-//                    }
-//                }
-//
-//                //权限被用户禁止时调用
-//                @Override
-//                public void onPermissionDenied() {
-//                    //给出友好提示，并且提示启动当前应用设置页面打开权限
-//                    XPermission.showTipsDialog(getApplicationContext());
-//                }
-//            });
-//        } else {
-//            String path = getApplicationContext().getCacheDir()+"/HMB/Cache/"; //
-//            File file = new File(path);
-//            if (!file.exists()) {
-//                file.mkdirs();
-//            }
-//        }
 
         registerToWX();
 

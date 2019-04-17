@@ -140,7 +140,7 @@ public class ForgotActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Object object) {
                         showToast("发送成功");
-                        XPreferencesUtils.get("phone", phone);
+                        XPreferencesUtils.put("phone", phone);
                         startActivity(VerificationCodeActivity.class, "忘记密码");
                         finish();
                     }

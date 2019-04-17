@@ -180,7 +180,7 @@ public class FindsMSGActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    LogUtils.debug("json:" + json);
+                    LogUtils.debug("finds:" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
                         total = json.getJSONObject("data").optInt("total", 0);
@@ -197,7 +197,7 @@ public class FindsMSGActivity extends BaseActivity {
                             FindsMSGEntity entity = new FindsMSGEntity();
                             entity.setFindsId(array.getJSONObject(i).optString("dynamic_id"));
                             entity.setFindsContent(array.getJSONObject(i).optString("content"));
-                            entity.setFindsTeaching(array.getJSONObject(i).optString("teaching"));
+                            entity.setFindsDYType(array.getJSONObject(i).optString("dynamic_type"));
                             entity.setFindsCommentId(array.getJSONObject(i).optString("comment_id"));
                             entity.setFindsImage(array.getJSONObject(i).optString("image_path"));
                             entity.setFindsTime(array.getJSONObject(i).optString("created_at"));

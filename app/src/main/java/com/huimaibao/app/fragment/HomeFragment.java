@@ -355,14 +355,15 @@ public class HomeFragment extends BaseFragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view,
                                                 int position, long id) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id", mlList.get(position).getMakingListId());
-                            bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + mlList.get(position).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
-                            bundle.putString("share_title", mlList.get(position).getMakingListTitle());
-                            bundle.putString("share_des", "");
-                            bundle.putString("share_imageUrl", mlList.get(position).getMakingListImage());
-
-                            startActivity(PersonalWebDetailsActivity.class, bundle);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("id", mlList.get(position).getMakingListId());
+//                            bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + mlList.get(position).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
+//                            bundle.putString("share_title", mlList.get(position).getMakingListTitle());
+//                            bundle.putString("share_des", "");
+//                            bundle.putString("share_imageUrl", mlList.get(position).getMakingListImage());
+//
+//                            startActivity(PersonalWebDetailsActivity.class, bundle);
+                            startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
                         }
                     });
                 } else {

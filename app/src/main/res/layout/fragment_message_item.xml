@@ -8,15 +8,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:paddingTop="15dp"
+        android:paddingBottom="12dp"
         android:orientation="horizontal">
 
 
         <com.youth.xframe.widget.CircleImageView
             android:id="@+id/list_message_item_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="@dimen/paddingLeft"
             android:src="@drawable/msg_xt_icon"
             app:civ_border_color="@color/A5A8B6"
@@ -37,13 +39,13 @@
                     android:id="@+id/list_message_item_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="--"
-                    android:textColor="@color/color000000"
-                    android:textSize="@dimen/text_size_15" />
+                    android:textColor="@color/FF333333"
+                    android:textSize="@dimen/text_size_14"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -55,7 +57,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="2018-12-12"
-                    android:textColor="@color/FF6e6e6e"
+                    android:textColor="@color/color999999"
                     android:textSize="@dimen/text_size_11" />
             </LinearLayout>
 
@@ -64,6 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -75,7 +78,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="------------------------------------------------------------------------------------------------------------------------"
-                    android:textColor="@color/FF6e6e6e"
+                    android:textColor="@color/color999999"
                     android:textSize="@dimen/text_size_12" />
 
                 <TextView

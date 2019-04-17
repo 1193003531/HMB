@@ -15,6 +15,7 @@ import com.huimaibao.app.fragment.finds.entity.FindsMSGEntity;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.youth.xframe.utils.XEmptyUtils;
+import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.RoundedImagView;
@@ -81,9 +82,9 @@ public class FindsMSGAdapter extends BaseAdapter {
         mHolder._item_name.setText(item.getFindsUserName());
         mHolder._item_time.setText(XTimeUtils.getTimeRangeS(item.getFindsTime()));
 
-        if (item.FindsTeaching.equals("2")) {
+        if (item.getFindsDYType().equals("2")) {
             mHolder._item_content.setText("点赞了我");
-        } else if (item.FindsTeaching.equals("3")) {
+        } else if (item.getFindsDYType().equals("3")) {
             mHolder._item_content.setText("" + item.getFindsContent());
         } else {
             mHolder._item_content.setText("回复我：" + item.getFindsContent());
@@ -102,6 +103,8 @@ public class FindsMSGAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
+                XPreferencesUtils.put("concern", "0");
+                XPreferencesUtils.put("dynamic_id", item.getFindsId());
                 startActivity(FindsCommentsActivity.class, "动态");
             }
         });

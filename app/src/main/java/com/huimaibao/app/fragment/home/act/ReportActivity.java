@@ -17,6 +17,7 @@ import com.huimaibao.app.fragment.mine.server.GeneralLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.utils.XEmptyUtils;
+import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.NoScrollListView;
 import com.youth.xframe.widget.XToast;
 
@@ -116,14 +117,17 @@ public class ReportActivity extends BaseActivity {
 
     /***/
     private void initData() {
+        //投诉类型（（1.互推圈投诉，2.文库投诉，3.文库评论投诉，4.个人网页投诉，5.动态投诉，6.动态评论投诉,7.名片'）
         if (mType.equals("名片")) {
-            _type_value = "5";
+            _type_value = "7";
         } else if (mType.equals("互推圈")) {
             _type_value = "1";
         } else if (mType.equals("文章")) {
             _type_value = "2";
         } else if (mType.equals("网页")) {
             _type_value = "4";
+        }else if (mType.equals("动态")) {
+            _type_value = "5";
         }
 
 
@@ -195,10 +199,18 @@ public class ReportActivity extends BaseActivity {
      */
     private void getComplaint(String item, String content) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("target", Integer.parseInt(_target_value));
-        map.put("type", Integer.parseInt(_type_value));
-        map.put("item", item);
-        map.put("content", content);
+//        map.put("target", Integer.parseInt(_target_value));
+//        map.put("type", Integer.parseInt(_type_value));
+//        map.put("item", item);
+//        map.put("content", content);
+
+        map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        map.put("content_id", _target_value);
+        map.put("complaint_type", _type_value);
+        map.put("title", item);
+        map.put("advise", content);
+
+
         GeneralLogic.Instance(mActivity).getComplaintApi(map, new ResultBack() {
             @Override
             public void onSuccess(Object object) {

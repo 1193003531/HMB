@@ -112,15 +112,7 @@ public class FindsCommentAdapter extends BaseAdapter {
         ssTime.setSpan(new AbsoluteSizeSpan(12, true), 0, ssTime.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
 
-
-
-
-        if (item.getFindsType().equals("0")) {
-            SpannableStringBuilder multiWord = new SpannableStringBuilder();
-            multiWord.append(ssContent);
-            multiWord.append(ssTime);
-            mHolder._item_content.setText(multiWord);
-        } else {
+        if (item.getFindsType().equals("1")) {
             ssName = new SpannableString("回复" + item.getFindsToUserName() + ": ");
             ssName.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             ssName.setSpan(new ForegroundColorSpan(Color.parseColor("#a2a2a2")), 2, ssName.length() - 2, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -131,6 +123,12 @@ public class FindsCommentAdapter extends BaseAdapter {
             multiWord.append(ssContent);
             multiWord.append(ssTime);
             mHolder._item_content.setText(multiWord);
+        } else {
+            SpannableStringBuilder multiWord = new SpannableStringBuilder();
+            multiWord.append(ssContent);
+            multiWord.append(ssTime);
+            mHolder._item_content.setText(multiWord);
+
         }
 
 

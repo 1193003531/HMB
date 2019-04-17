@@ -58,7 +58,6 @@ public class HomePageWebActivity extends BaseActivity {
     private ValueCallback<Uri[]> uploadMessageAboveL;
     private final static int FILE_CHOOSER_RESULT_CODE = 10000;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

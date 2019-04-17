@@ -15,7 +15,7 @@ public class FindsMSGEntity implements Serializable {
     public String FindsUserHead;
     public String FindsContent;
     public String FindsImage;
-    public String FindsTeaching;
+    public String FindsDYType;
     public String FindsTime;
     public String FindsCommentId;
     public String FindsNewMessageId;
@@ -76,12 +76,12 @@ public class FindsMSGEntity implements Serializable {
         this.FindsImage = FindsImage;
     }
 
-    public String getFindsTeaching() {
-        return FindsTeaching;
+    public String getFindsDYType() {
+        return FindsDYType;
     }
 
-    public void setFindsTeaching(String FindsTeaching) {
-        this.FindsTeaching = FindsTeaching;
+    public void setFindsDYType(String FindsDYType) {
+        this.FindsDYType = FindsDYType;
     }
 
     public String getFindsCommentId() {

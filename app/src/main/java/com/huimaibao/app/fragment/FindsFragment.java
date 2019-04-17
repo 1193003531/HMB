@@ -74,6 +74,8 @@ public class FindsFragment extends BaseFragment {
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finds, container, false);
         mActivity = this.getActivity();
+        listData = new ArrayList<>();
+
         initView(view);
         return view;
     }
@@ -104,14 +106,15 @@ public class FindsFragment extends BaseFragment {
         mSwipeRefreshView.setColorSchemeResources(R.color.ff274ff3);
 
         // 手动调用,通知系统去测量
-        mSwipeRefreshView.measure(0, 0);
-        mSwipeRefreshView.setRefreshing(true);
+        // mSwipeRefreshView.measure(0, 0);
+        //mSwipeRefreshView.setRefreshing(true);
         mSwipeRefreshView.setItemCount(5);
 
         initEvent();
 
 
     }
+
 
     @Override
     public void onResume() {
@@ -122,6 +125,15 @@ public class FindsFragment extends BaseFragment {
             countPage = 1;
             getDYListData(countPage, false);
         }
+        if ((boolean) XPreferencesUtils.get("is_comment_num", false)) {
+            XPreferencesUtils.put("is_comment_num", false);
+            if (listData != null && listData.size() > 0) {
+                listData.get((int) XPreferencesUtils.get("comment_num_pos", 0)).setFindsCommentsNum("" + XPreferencesUtils.get("commentCount", "0"));
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+
+
     }
 
     private void initEvent() {
@@ -166,6 +178,11 @@ public class FindsFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         XStatusBar.setTranslucentForImageViewInFragment(mActivity, _needOffsetView);
+        if (!hidden) {
+            getNewMSGData();
+            countPage = 1;
+            getDYListData(countPage, true);
+        }
     }
 
     /**
@@ -352,7 +369,16 @@ public class FindsFragment extends BaseFragment {
                                 } else {
                                     XPreferencesUtils.put("finds_new_msg", true);
                                     ImageLoaderManager.loadImage(data.optString("head_picture"), _finds_msg_head);
-                                    _finds_msg_content.setText(data.optString("user_name") + "等" + data.optString("count", "0") + "人回复了你");
+                                    String type;
+                                    if (data.optString("dynamic_type").equals("1")) {
+                                        type = "人回复了你";
+                                    } else if (data.optString("dynamic_type").equals("2")) {
+                                        type = "人点赞了你";
+                                    } else {
+                                        type = "人评论了你";
+                                    }
+                                    //data.optString("user_name") + "等"
+                                    _finds_msg_content.setText(data.optString("count", "0") + "条新消息");
                                     //添加新消息
                                     mListView.removeHeaderView(_view_top);
                                     mListView.addHeaderView(_view_top);
@@ -508,6 +534,11 @@ public class FindsFragment extends BaseFragment {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (listData.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
                 // 加载完数据设置为不刷新状态，将下拉进度收起来
                 if (mSwipeRefreshView.isRefreshing()) {
                     mSwipeRefreshView.setRefreshing(false);

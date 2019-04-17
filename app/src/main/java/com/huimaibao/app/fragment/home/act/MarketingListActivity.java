@@ -16,6 +16,7 @@ import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.home.adapter.MarketingListAdapter;
 import com.huimaibao.app.fragment.home.entity.MakingListEntity;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.fragment.web.MessageWebActivity;
 import com.huimaibao.app.fragment.web.PersonalWebDetailsActivity;
 import com.huimaibao.app.http.ResultBack;
@@ -113,14 +114,15 @@ public class MarketingListActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Bundle bundle = new Bundle();
-                bundle.putString("id", mlList.get(position - 1).getMakingListId());
-                bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + mlList.get(position - 1).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
-                bundle.putString("share_title", mlList.get(position - 1).getMakingListTitle());
-                bundle.putString("share_des", "");
-                bundle.putString("share_imageUrl", mlList.get(position - 1).getMakingListImage());
-
-                startActivity(PersonalWebDetailsActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("id", mlList.get(position - 1).getMakingListId());
+//                bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + mlList.get(position - 1).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
+//                bundle.putString("share_title", mlList.get(position - 1).getMakingListTitle());
+//                bundle.putString("share_des", "");
+//                bundle.putString("share_imageUrl", mlList.get(position - 1).getMakingListImage());
+//
+//                startActivity(PersonalWebDetailsActivity.class, bundle);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
             }
         });
 

@@ -80,6 +80,7 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
+                        android:maxLength="8"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:singleLine="true"

@@ -1,21 +1,16 @@
 package com.huimaibao.app.fragment.message.act;
 
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
-import com.huimaibao.app.fragment.home.act.SreachActivity;
 import com.huimaibao.app.fragment.library.adapter.NewsFragmentPagerAdapter;
 import com.huimaibao.app.fragment.message.fragment.CMListFragment;
-import com.huimaibao.app.fragment.message.fragment.MsgFragment;
-import com.huimaibao.app.fragment.message.fragment.MsgListFragment;
 
 import java.util.ArrayList;
 

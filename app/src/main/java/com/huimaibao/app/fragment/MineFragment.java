@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseFragment;
+import com.huimaibao.app.fragment.home.act.MakingCardActivity;
 import com.huimaibao.app.fragment.message.act.MessageActivity;
 import com.huimaibao.app.fragment.mine.act.AdvertSlogansActivity;
 import com.huimaibao.app.fragment.mine.act.BasicActivity;
@@ -77,7 +78,7 @@ public class MineFragment extends BaseFragment {
 
     private CircleImageView mHeadImageView;
     //姓名，广告语，邀请码,复制邀请码,会员到期时间
-    private TextView _name_tv, _motto_tv, _code_tv, btn_code_copy,_member_data;
+    private TextView _name_tv, _motto_tv, _code_tv, btn_code_copy, _member_data;
     //营销奖励,脉宝
     private TextView _reward_tv;
     private int _vip_value = 0;
@@ -190,7 +191,7 @@ public class MineFragment extends BaseFragment {
         _yqm_ll = v.findViewById(R.id.mine_basic_code_ll);
 
         _card_num = v.findViewById(R.id.mine_card_clip_tv);
-        _member_data= v.findViewById(R.id.mine_member_data_tv);
+        _member_data = v.findViewById(R.id.mine_member_data_tv);
 //        _perfect_progress = v.findViewById(R.id.mine_basic_progressbar);
 
         mHeadImageView = v.findViewById(R.id.mine_basic_image);
@@ -280,7 +281,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //BasicActivity
-               // startActivity(BasicActivity.class, "基本信息");
+                // startActivity(BasicActivity.class, "基本信息");
                 startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
             }
         });
@@ -288,8 +289,8 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //BasicActivity
-                //startActivity(BasicActivity.class, "基本信息");
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(MakingCardActivity.class, "完善名片");
+                //startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
             }
         });
 

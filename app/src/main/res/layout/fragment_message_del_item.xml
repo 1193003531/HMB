@@ -46,13 +46,13 @@
                             android:id="@+id/list_message_item_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:layout_weight="1"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="--"
                             android:textColor="@color/color000000"
-                            android:textSize="@dimen/text_size_15" />
+                            android:textSize="@dimen/text_size_15"
+                            android:textStyle="bold" />
 
 
                         <TextView
@@ -64,7 +64,7 @@
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="2018-12-12"
-                            android:textColor="@color/FF6e6e6e"
+                            android:textColor="@color/color999999"
                             android:textSize="@dimen/text_size_11" />
                     </LinearLayout>
 
@@ -83,7 +83,7 @@
                             android:ellipsize="end"
                             android:maxLines="2"
                             android:text="------------------------------------------------------------------------------------------------------------------------"
-                            android:textColor="@color/FF6e6e6e"
+                            android:textColor="@color/color999999"
                             android:textSize="@dimen/text_size_12" />
 
                         <ImageView

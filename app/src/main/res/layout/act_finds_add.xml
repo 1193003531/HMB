@@ -47,62 +47,75 @@
 
     </LinearLayout>
 
-
-    <EditText
-        android:id="@+id/finds_add_content"
-        android:layout_width="match_parent"
-        android:layout_height="168dp"
-        android:background="@color/transparent"
-        android:gravity="top"
-        android:hint="一起聊聊吧~"
-        android:paddingLeft="15dp"
-        android:paddingTop="8dp"
-        android:paddingRight="15dp"
-        android:textColor="@color/FF333333"
-        android:textColorHint="@color/colored0d0d0"
-        android:textSize="@dimen/text_size_16"
-
-        />
-
-    <TextView
-        android:id="@+id/finds_add_content_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
-        android:text="150字"
-        android:textColor="@color/colored0d0d0"
-        android:textSize="@dimen/text_size_14" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/coloref5f5f5"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:text="照片选择（限9张）"
-        android:textColor="@color/color999999"
-        android:textSize="@dimen/text_size_12" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:scrollbars="none">
 
-        <com.youth.xframe.widget.NoScrollGridView
-            android:id="@+id/finds_add_album"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:horizontalSpacing="10dp"
-            android:listSelector="@color/transparent"
-            android:numColumns="3"
-            android:verticalSpacing="10dp" />
-    </LinearLayout>
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/finds_add_content"
+                android:layout_width="match_parent"
+                android:layout_height="168dp"
+                android:background="@color/transparent"
+                android:gravity="top"
+                android:hint="一起聊聊吧~"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/FF333333"
+                android:textColorHint="@color/colored0d0d0"
+                android:textSize="@dimen/text_size_16"
+
+                />
+
+            <TextView
+                android:id="@+id/finds_add_content_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp"
+                android:text="150字"
+                android:textColor="@color/colored0d0d0"
+                android:textSize="@dimen/text_size_14" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/coloref5f5f5"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="照片选择（限9张）"
+                android:textColor="@color/color999999"
+                android:textSize="@dimen/text_size_12" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+
+                <com.youth.xframe.widget.NoScrollGridView
+                    android:id="@+id/finds_add_album"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:horizontalSpacing="10dp"
+                    android:listSelector="@color/transparent"
+                    android:numColumns="3"
+                    android:verticalSpacing="10dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
 

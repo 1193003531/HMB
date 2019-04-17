@@ -146,13 +146,15 @@ public class MainActivity extends BaseActivity {
         mDialogUtils = new DialogUtils(mActivity);
         mDownloadManager = new AppDownloadManager(mActivity);
 
-        //LoginLogic.Instance(mActivity).refreshTokenApi();
+        //LogUtils.debug("token" + XPreferencesUtils.get("token", ""));
+        //
+       // LoginLogic.Instance(mActivity).refreshTokenApi();
 
         getUserInfo();
         upDataAPP();
         getPushData(false);
 
-
+        //LogUtils.debug("token" + XPreferencesUtils.get("token", ""));
     }
 
 
@@ -761,7 +763,7 @@ public class MainActivity extends BaseActivity {
                 XToast.normal("在按一次退出");
                 mExitTime = System.currentTimeMillis();
             } else {
-                XFileUtils.deleteDirs(BaseApplication.getApp().getFilePath());
+                //XFileUtils.deleteDirs(BaseApplication.getApp().getFilePath());
                 finish();
                 XActivityStack.getInstance().appExit();
             }

@@ -26,6 +26,7 @@ import com.huimaibao.app.fragment.finds.adapter.FindsAdapter;
 import com.huimaibao.app.fragment.finds.adapter.FindsCommentsAdapter;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentEntity;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
+import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
 import com.huimaibao.app.fragment.finds.entity.FindsEntity;
 import com.huimaibao.app.fragment.finds.server.FindsLogic;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
@@ -879,8 +880,8 @@ public class FindsCommentsActivity extends BaseActivity {
             @Override
             public void run() {
                 showToast(msg);
-                _item_focus_iv.setVisibility(View.VISIBLE);
-                _top_focus_iv.setVisibility(View.VISIBLE);
+                _item_focus_iv.setImageResource(R.drawable.finds_list_top_focus);
+                _top_focus_iv.setImageResource(R.drawable.finds_list_top_focus);
                 _dy_isfocus_value = "0";
             }
         });
@@ -1177,6 +1178,9 @@ public class FindsCommentsActivity extends BaseActivity {
                         JSONObject data = new JSONObject(json.getString("data"));
                         _comment_id_value = data.optString("commentId", "");
                         _dy_comments_num_value = data.optString("commentCount", _dy_comments_num_value);
+                        XPreferencesUtils.put("commentCount",_dy_comments_num_value);
+                        XPreferencesUtils.put("is_comment_num",true);
+
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -1225,6 +1229,8 @@ public class FindsCommentsActivity extends BaseActivity {
                     if (json.getString("status").equals("0")) {
                         JSONObject data = new JSONObject(json.getString("data"));
                         _dy_comments_num_value = data.optString("commentCount", _dy_comments_num_value);
+                        XPreferencesUtils.put("commentCount",_dy_comments_num_value);
+                        XPreferencesUtils.put("is_comment_num",true);
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -1245,18 +1251,18 @@ public class FindsCommentsActivity extends BaseActivity {
                         });
 
                     } else {
-                        showToast("评论失败");
+                        showToast("删除评论失败");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    showToast("评论失败");
+                    showToast("删除评论失败");
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
-                showToast("评论失败");
+                showToast("删除评论失败");
             }
         });
     }

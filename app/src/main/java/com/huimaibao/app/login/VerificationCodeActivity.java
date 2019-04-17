@@ -134,6 +134,7 @@ public class VerificationCodeActivity extends BaseActivity {
      */
     private void ValidateSMS(final String phone, final String code) {
 
+        LogUtils.debug("responseObj=s=" + code+"-"+phone);
         LoginLogic.Instance(mActivity).LoginValidateSMSApi(phone, code, new ResultBack() {
             @Override
             public void onSuccess(Object object) {

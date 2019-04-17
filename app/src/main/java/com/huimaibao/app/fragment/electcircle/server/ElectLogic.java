@@ -89,6 +89,16 @@ public class ElectLogic {
 
                 @Override
                 public void onSuccess(Object o) {
+                    if (o.equals("401")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mDialogUtils.showNoTokenDialog();
+                                return;
+                            }
+                        });
+
+                    }
                     resultBack.onSuccess(o);
                 }
 

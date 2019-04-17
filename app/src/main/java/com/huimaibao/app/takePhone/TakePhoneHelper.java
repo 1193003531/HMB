@@ -3,12 +3,16 @@ package com.huimaibao.app.takePhone;
 import android.app.Activity;
 import android.app.Dialog;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.huimaibao.app.BuildConfig;
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseApplication;
 import com.youth.xframe.takephoto.app.TakePhoto;
@@ -151,12 +155,23 @@ public class TakePhoneHelper {
      * 显示弹出框
      */
     public void showTakePhoneDialog(final TakePhoto takePhoto) {
-
+//
         File file = new File(BaseApplication.getApp().getFilePath(), "images/" + System.currentTimeMillis() + ".jpg");
+
+//        String path = Environment.getExternalStorageDirectory() + File.separator + "images" + File.separator;
+//        File file = new File(path, System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        final Uri imageUri = Uri.fromFile(file);
+        final Uri mUri = Uri.fromFile(file);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            //步骤二：Android 7.0及以上获取文件 Uri
+//            mUri = FileProvider.getUriForFile(mActivity, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+//        } else {
+//            //步骤三：获取文件Uri
+//            mUri = Uri.fromFile(file);
+//        }
 
         configCompress(takePhoto);
         configTakePhotoOption(takePhoto);
@@ -186,9 +201,11 @@ public class TakePhoneHelper {
             @Override
             public void onClick(View view) {
                 if (isCrop) {
-                    takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
+                    takePhoto.onPickFromCaptureWithCrop(mUri, getCropOptions());
                 } else {
-                    takePhoto.onPickFromCapture(imageUri);
+//                    isCrop = true;
+//                    takePhoto.onPickFromCaptureWithCrop(mUri, getCropOptions());
+                    takePhoto.onPickFromCapture(mUri);
                 }
                 dialog.dismiss();
             }
@@ -207,7 +224,7 @@ public class TakePhoneHelper {
                     return;
                 }
                 if (isCrop) {
-                    takePhoto.onPickFromGalleryWithCrop(imageUri, getCropOptions());
+                    takePhoto.onPickFromGalleryWithCrop(mUri, getCropOptions());
                 } else {
                     takePhoto.onPickFromGallery();
                 }

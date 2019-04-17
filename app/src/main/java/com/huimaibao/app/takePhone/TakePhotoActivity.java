@@ -29,8 +29,12 @@ import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.takephoto.permission.InvokeListener;
 import com.youth.xframe.takephoto.permission.PermissionManager;
 import com.youth.xframe.takephoto.permission.TakePhotoInvocationHandler;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.XToast;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * 继承这个类来让Activity获取拍照的能力
@@ -128,7 +132,9 @@ public class TakePhotoActivity extends BaseActivity implements TakePhoto.TakeRes
         //XLog.d("oss----------------");
     }
 
-
+    /**
+     * 阿里云OSS上传（默认是异步单文件上传）
+     */
     public void putLoadImage(final String object, String uploadFilePath, final LoadCallback loadCallback) {
 
 
@@ -199,31 +205,107 @@ public class TakePhotoActivity extends BaseActivity implements TakePhoto.TakeRes
     }
 
     /**
-     * 同步上传
+     * 阿里云OSS上传（默认是异步多文件上传）
+     *
+     * @param urls
      */
-    public void updateImagePut(String uploadFilePath) {
-        // 构造上传请求
-        PutObjectRequest put = new PutObjectRequest("hytx-app", "hmb/app" + XTimeUtils.getCurDate() + "/images_" + XTimeUtils.getCurString() + ".png", uploadFilePath);
-// 文件元信息的设置是可选的
-// ObjectMetadata metadata = new ObjectMetadata();
-// metadata.setContentType("application/octet-stream"); // 设置content-type
-// metadata.setContentMD5(BinaryUtil.calculateBase64Md5(uploadFilePath)); // 校验MD5
-// put.setMetadata(metadata);
-        try {
-            PutObjectResult putResult = oss.putObject(put);
-//            XLog.d("PutObject", "UploadSuccess");
-//            XLog.d("ETag", putResult.getETag());
-//            XLog.d("RequestId", putResult.getRequestId());
-        } catch (ClientException e) {
-            // 本地异常如网络异常等
-            e.printStackTrace();
-        } catch (ServiceException e) {
-            // 服务异常
-//            XLog.e("RequestId", e.getRequestId());
-//            XLog.e("ErrorCode", e.getErrorCode());
-//            XLog.e("HostId", e.getHostId());
-//            XLog.e("RawMessage", e.getRawMessage());
+    private void ossUpload(final List<String> urls) {
+
+        if (urls.size() <= 0) {
+            // 文件全部上传完毕，这里编写上传结束的逻辑，如果要在主线程操作，最好用Handler或runOnUiThead做对应逻辑
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mDialogUtils.dismissDialog();
+                }
+            });
+            return;// 这个return必须有，否则下面报越界异常，原因自己思考下哈
         }
+        final String url = urls.get(0);
+        if (XEmptyUtils.isEmpty(url)) {
+            urls.remove(0);
+            // url为空就没必要上传了，这里做的是跳过它继续上传的逻辑。
+            ossUpload(urls);
+            return;
+        }
+
+        File file = new File(url);
+        if (null == file || !file.exists()) {
+            urls.remove(0);
+            // 文件为空或不存在就没必要上传了，这里做的是跳过它继续上传的逻辑。
+            ossUpload(urls);
+            return;
+        }
+        // 文件后缀
+        String fileSuffix = "";
+        if (file.isFile()) {
+            // 获取文件后缀名
+            fileSuffix = file.getName().substring(file.getName().lastIndexOf("."));
+        }
+        // 文件标识符objectKey
+        final String objectKey = "alioss_" + System.currentTimeMillis() + fileSuffix;
+        // 下面3个参数依次为bucket名，ObjectKey名，上传文件路径
+        PutObjectRequest put = new PutObjectRequest("hytx-app", objectKey, url);
+
+        // 设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                // 进度逻辑
+                final int progress = (int) (100 * currentSize / totalSize);
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogUtils.showLoadingDialog("上传" + progress + "%");
+                    }
+                });
+            }
+        });
+
+
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                urls.remove(0);
+                ossUpload(urls);// 递归同步效果
+//                XLog.d("request:" + request);
+//                XLog.d("result:" + result);
+//                XLog.d("ETag:" + result.getETag());
+//                XLog.d("RequestId:" + result.getRequestId());
+//                XLog.d("ServerCallbackReturnBody:" + result.getServerCallbackReturnBody());
+//                XLog.d("ResponseHeader:" + result.getResponseHeader());
+
+
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                //showToast("上传失败");
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+//                    XLog.e("ErrorCode:" + serviceException.getErrorCode());
+//                    XLog.e("RequestId:" + serviceException.getRequestId());
+//                    XLog.e("HostId:" + serviceException.getHostId());
+//                    XLog.e("RawMessage:" + serviceException.getRawMessage());
+                }
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mDialogUtils.dismissDialog();
+//                    }
+//                });
+                //loadCallback.onFailure(request, clientExcepion, serviceException);
+            }
+        });
+
+
+        // task.cancel(); // 可以取消任务
+        // task.waitUntilFinished(); // 可以等待直到任务完成
     }
 
 

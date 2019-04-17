@@ -82,6 +82,7 @@ public class PersonalWebActivity extends BaseActivity {
             }
         });
 
+        listData = new ArrayList<>();
 
         mWxShare = WXShare.Instance(mActivity);
         mDialogUtils = new DialogUtils(mActivity);

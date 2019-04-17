@@ -46,11 +46,11 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:gravity="center_horizontal"
-                        android:textStyle="bold"
                         android:maxLines="1"
                         android:text="小脉宝"
                         android:textColor="@color/FF333333"
-                        android:textSize="@dimen/text_size_14" />
+                        android:textSize="@dimen/text_size_14"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/finds_list_item_time"
@@ -85,7 +85,7 @@
                 android:lineSpacingExtra="5dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="14dp"
-                android:text="土耳其真是霸道：埃尔多安就这么决定了，俄罗斯能接受吗?"
+                android:text=""
                 android:textColor="@color/FF333333"
                 android:textSize="@dimen/text_size_16" />
 
