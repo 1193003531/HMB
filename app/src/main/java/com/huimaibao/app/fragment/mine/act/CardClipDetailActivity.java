@@ -22,27 +22,24 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseActivity;
-import com.huimaibao.app.base.BaseApplication;
-import com.huimaibao.app.fragment.home.act.PersonalActivity;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.home.adapter.CardAlbumAdapter;
 import com.huimaibao.app.fragment.home.server.CardLogic;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
 import com.huimaibao.app.fragment.library.act.ImageShowActivity;
 import com.huimaibao.app.fragment.mine.server.CardClipLogic;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.share.OnResponseListener;
 import com.huimaibao.app.share.WXShare;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.JsonFormatUtils;
-import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.view.ExpandableTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
-import com.youth.xframe.utils.XFileUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XRegexUtils;
 import com.youth.xframe.utils.permission.XPermission;
@@ -289,7 +286,8 @@ public class CardClipDetailActivity extends BaseActivity {
         switch (v.getId()) {
             //个人
             case R.id.card_detail_head:
-                startActivity(PersonalActivity.class, mType);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mType + ServerApi.HOME_PAGE_WEB_TOKEN);
+                // startActivity(PersonalActivity.class, mType);
                 break;
             //加入通讯录
             case R.id.card_detail_phone_add:
@@ -467,7 +465,7 @@ public class CardClipDetailActivity extends BaseActivity {
                                 } else {
                                     _card_collect.setText("收藏名片");
                                 }
-                                XPreferencesUtils.put("is_collect_card",true);
+                                XPreferencesUtils.put("is_collect_card", true);
                             }
                         });
                     } else {
@@ -509,7 +507,7 @@ public class CardClipDetailActivity extends BaseActivity {
                                 } else {
                                     _card_collect.setText("收藏名片");
                                 }
-                                XPreferencesUtils.put("is_collect_card",true);
+                                XPreferencesUtils.put("is_collect_card", true);
                             }
                         });
                     } else {

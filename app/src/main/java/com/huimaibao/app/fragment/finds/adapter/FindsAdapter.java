@@ -2,6 +2,7 @@ package com.huimaibao.app.fragment.finds.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,21 +15,27 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.fragment.finds.act.FindsCommentsActivity;
-import com.huimaibao.app.fragment.finds.act.FindsPraiseActivity;
 import com.huimaibao.app.fragment.finds.entity.FindsEntity;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
+import com.huimaibao.app.fragment.library.act.ImageShowActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
-import com.huimaibao.app.utils.ToastUtils;
+import com.huimaibao.app.view.FriendsCircleImageLayout;
 import com.huimaibao.app.view.NineGridViewLayout;
+import com.huimaibao.app.view.RatioImageView;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -102,6 +109,7 @@ public class FindsAdapter extends BaseAdapter {
             mHolder._item_praise_iv = convertView.findViewById(R.id.finds_list_item_praise_iv);
             mHolder._item_praise_ll = convertView.findViewById(R.id.finds_list_item_praise_ll);
             mHolder._item_feedback_iv = convertView.findViewById(R.id.finds_list_item_feedback);
+            mHolder._item_one_image = convertView.findViewById(R.id.finds_list_item_grid_one);
             mHolder._item_images = convertView.findViewById(R.id.finds_list_item_grid);
             mHolder._item_del = convertView.findViewById(R.id.finds_list_item_praise_del);
 
@@ -134,7 +142,30 @@ public class FindsAdapter extends BaseAdapter {
         mHolder._item_time.setText(XTimeUtils.getTimeRangeS(item.getFindsTime()));
         mHolder._item_praise_num.setText(item.getFindsPraiseNum());
         mHolder._item_comments_num.setText(item.getFindsCommentsNum());
-        mHolder._item_images.setUrlList(item.FindsImageList);
+        mHolder._item_one_image.setVisibility(View.GONE);
+        mHolder._item_images.setImageUrls( item.getFindsImageList());
+//        if (item.getFindsImageList().size() == 1) {
+//            mHolder._item_one_image.setVisibility(View.VISIBLE);
+//            // mHolder._item_images.setVisibility(View.GONE);
+//            if (item.getFindsImageList().get(0).equals(mHolder._item_one_image.getTag())) {
+//
+//            } else {
+//                showOneImageData(mHolder._item_one_image, item.getFindsImageList().get(0));
+//                mHolder._item_one_image.setTag(item.getFindsImageList().get(0));
+//            }
+//        } else {
+//            mHolder._item_one_image.setVisibility(View.GONE);
+//            //mHolder._item_images.setVisibility(View.VISIBLE);
+//            mHolder._item_images.setIsShowAll(false);
+//            if (item.getFindsImageList().equals(mHolder._item_images.getTag())) {
+//
+//            } else {
+//                mHolder._item_images.setUrlList(item.getFindsImageList());
+//                mHolder._item_images.setTag(item.getFindsImageList());
+//            }
+//
+//        }
+
 
         if (item.getFindsIsFocus().equals("0")) {
             mHolder._item_focus_iv.setImageResource(R.drawable.finds_list_top_focus);
@@ -153,7 +184,7 @@ public class FindsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + item.getFindsUserId() + ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
         mHolder._item_focus_iv.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +210,7 @@ public class FindsAdapter extends BaseAdapter {
                 XPreferencesUtils.put("concern", item.getFindsIsFocus());
                 XPreferencesUtils.put("dynamic_id", item.getFindsId());
                 XPreferencesUtils.put("comment_num_pos", position);
+                XPreferencesUtils.put("comment_id", "");
                 startActivity(FindsCommentsActivity.class, "评论");
             }
         });
@@ -236,10 +268,17 @@ public class FindsAdapter extends BaseAdapter {
                 XPreferencesUtils.put("concern", item.getFindsIsFocus());
                 XPreferencesUtils.put("dynamic_id", item.getFindsId());
                 XPreferencesUtils.put("comment_num_pos", position);
+                XPreferencesUtils.put("comment_id", "");
                 startActivity(FindsCommentsActivity.class, "动态");
             }
         });
 
+        mHolder._item_one_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickImage(0, "", (ArrayList<String>) item.getFindsImageList());
+            }
+        });
 
         return convertView;
     }
@@ -248,23 +287,17 @@ public class FindsAdapter extends BaseAdapter {
         CircleImageView _item_head;
         TextView _item_name, _item_content, _item_time, _item_praise_num, _item_comments_num, _item_del;
         ImageView _item_focus_iv, _item_praise_iv, _item_feedback_iv;
-        NineGridViewLayout _item_images;
+        RatioImageView _item_one_image;
+        // NineGridViewLayout _item_images;
+        FriendsCircleImageLayout _item_images;
         LinearLayout _item_praise_ll;
     }
 
     private onItemDeleteListener mOnItemDeleteListener;
-    private onItemHeadClickListener mOnItemHeadClickListener;
-    private onItemClickListener mOnItemClickListener;
+    // private onItemClickListener mOnItemClickListener;
     private onItemFocusClickListener mOnItemFocusClickListener;
-    private onItemCommentClickListener mOnItemCommentClickListener;
     private onItemPraiseClickListener mOnItemPraiseClickListener;
 
-    /**
-     * 头像点击监听接口
-     */
-    public interface onItemHeadClickListener {
-        void onItemHeadClick(int position);
-    }
 
     /**
      * 关注点击监听接口
@@ -273,12 +306,6 @@ public class FindsAdapter extends BaseAdapter {
         void onItemFocusClick(int position);
     }
 
-    /**
-     * 评论点击监听接口
-     */
-    public interface onItemCommentClickListener {
-        void onItemCommentClick(int position);
-    }
 
     /**
      * 赞点击监听接口
@@ -306,25 +333,19 @@ public class FindsAdapter extends BaseAdapter {
         this.mOnItemDeleteListener = mOnItemDeleteListener;
     }
 
-    public void setOnItemHeadClickListener(onItemHeadClickListener mOnItemHeadClickListener) {
-        this.mOnItemHeadClickListener = mOnItemHeadClickListener;
-    }
 
     public void setOnItemFocusClickListener(onItemFocusClickListener mOnItemFocusClickListener) {
         this.mOnItemFocusClickListener = mOnItemFocusClickListener;
     }
 
-    public void setOnItemCommentClickListener(onItemCommentClickListener mOnItemCommentClickListener) {
-        this.mOnItemCommentClickListener = mOnItemCommentClickListener;
-    }
 
     public void setOnItemPraiseClickListener(onItemPraiseClickListener mOnItemPraiseClickListener) {
         this.mOnItemPraiseClickListener = mOnItemPraiseClickListener;
     }
 
-    public void setOnItemClickListener(onItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
+//    public void setOnItemClickListener(onItemClickListener mOnItemClickListener) {
+//        this.mOnItemClickListener = mOnItemClickListener;
+//    }
 
     private void startActivity(Class<?> classs, String type) {
         Intent intent = new Intent();
@@ -343,6 +364,65 @@ public class FindsAdapter extends BaseAdapter {
         intent.putExtra("vUrl", url);
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+
+    private void onClickImage(int i, String url, ArrayList<String> urlList) {
+        // Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setClass(mActivity, ImageShowActivity.class);
+        intent.putStringArrayListExtra("infos", urlList);
+        intent.putExtra("position", i);
+        mActivity.startActivity(intent);
+        // mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+
+    private void showOneImageData(final RatioImageView imageView, String url) {
+        final int parentWidth = XDensityUtils.getScreenWidth() - XDensityUtils.dp2px(84);
+        LogUtils.debug("mTotalWidth:" + parentWidth);
+        //这里是只显示一张图片的情况，显示图片的宽高可以根据实际图片大小自由定制，parentWidth 为该layout的宽度
+        ImageLoaderManager.displayImage(mActivity, imageView, url, ImageLoaderManager.getPhotoImageOption(), new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
+                int w = bitmap.getWidth();
+                int h = bitmap.getHeight();
+
+                int newW;
+                int newH;
+                if (h > w * 3) {//h:w = 5:3
+                    newW = parentWidth / 2;
+                    newH = newW * 5 / 3;
+                } else if (h < w) {//h:w = 2:3
+                    newW = parentWidth * 2 / 3;
+                    newH = newW * 2 / 3;
+                } else {//newH:h = newW :w
+                    newW = parentWidth / 2;
+                    newH = h * newW / w;
+                }
+                setOneImageLayoutParams(imageView, newW, newH);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
+    }
+
+    protected void setOneImageLayoutParams(RatioImageView imageView, int width, int height) {
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        imageView.layout(0, 0, width, height);
     }
 
 }

@@ -23,11 +23,9 @@ import com.huimaibao.app.fragment.home.act.MakingCardActivity;
 import com.huimaibao.app.fragment.message.act.MessageActivity;
 import com.huimaibao.app.fragment.mine.act.AdvertSlogansActivity;
 import com.huimaibao.app.fragment.mine.act.BasicActivity;
-import com.huimaibao.app.fragment.mine.act.CardClipActivity;
 import com.huimaibao.app.fragment.mine.act.CollectionActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
 import com.huimaibao.app.fragment.mine.act.MarketingRewardActivity;
-import com.huimaibao.app.fragment.mine.act.MarketingTagActivity;
 import com.huimaibao.app.fragment.mine.act.MemberActivity;
 import com.huimaibao.app.fragment.mine.act.MyQRCodeActivity;
 import com.huimaibao.app.fragment.mine.act.SetActivity;
@@ -282,7 +280,7 @@ public class MineFragment extends BaseFragment {
             public void onClick(View v) {
                 //BasicActivity
                 // startActivity(BasicActivity.class, "基本信息");
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + XPreferencesUtils.get("user_id", "") + ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
         btn_perfect.setOnClickListener(new View.OnClickListener() {

@@ -7,8 +7,8 @@
         <external-files-path
             name="Download"
             path="" />
-        <files-path
-            name="hmb"
-            path="images" />
+        <root-path
+            name="camera_photos"
+            path="" />
     </paths>
 </resources>

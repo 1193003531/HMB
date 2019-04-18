@@ -39,7 +39,7 @@ public class AdvertSlogansActivity extends BaseActivity {
         setTopRight(true, false, true, "完成", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _as_content_value = _as_content.getText().toString();
+                _as_content_value = _as_content.getText().toString().trim();
                 if (XEmptyUtils.isSpace(_as_content_value)) {
                     ToastUtils.showCenter("请输入广告标语");
                 } else {

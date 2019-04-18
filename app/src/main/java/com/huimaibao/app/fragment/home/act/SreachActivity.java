@@ -17,11 +17,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
+import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.mine.act.CardClipDetailActivity;
 import com.huimaibao.app.fragment.mine.adapter.CardAdapter;
 import com.huimaibao.app.fragment.mine.entity.CardEntity;
 import com.huimaibao.app.fragment.mine.server.CardClipLogic;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.youth.xframe.flowlayout.FlowLayout;
 import com.youth.xframe.flowlayout.TagAdapter;
@@ -136,7 +138,8 @@ public class SreachActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
+               // startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mCardAdapter.getItem(position).getCardId()+ServerApi.HOME_PAGE_WEB_TOKEN);
 
             }
         });

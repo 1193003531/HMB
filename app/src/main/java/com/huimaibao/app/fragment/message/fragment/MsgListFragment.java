@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
@@ -17,7 +19,6 @@ import com.huimaibao.app.fragment.message.act.MessageListActivity;
 import com.huimaibao.app.fragment.message.adapter.MessageDelAdapter;
 import com.huimaibao.app.fragment.message.entity.MessageEntity;
 import com.huimaibao.app.fragment.message.server.MessageLogic;
-import com.huimaibao.app.fragment.mine.act.CardClipDetailActivity;
 import com.huimaibao.app.fragment.mine.adapter.CardAdapter;
 import com.huimaibao.app.fragment.mine.entity.CardEntity;
 import com.huimaibao.app.fragment.mine.server.CardClipLogic;
@@ -49,6 +50,8 @@ public class MsgListFragment extends BaseFragment {
     private ListView mListView;
 
     private LinearLayout _no_data;
+    private ImageView _no_image_data;
+    private TextView _no_tv_data;
 
     //提醒
     private MessageDelAdapter mDelAdapter;
@@ -89,9 +92,25 @@ public class MsgListFragment extends BaseFragment {
      */
     private void initView(View v) {
         _no_data = v.findViewById(R.id.list_no_data);
-        //_no_data.setVisibility(View.GONE);
+        _no_data.setVisibility(View.GONE);
+        _no_image_data = v.findViewById(R.id.list_no_data_iv);
+        _no_tv_data = v.findViewById(R.id.list_no_data_tv);
+        if (text.equals("关注")) {
+            _no_image_data.setImageResource(R.drawable.blank_pages_14_icon);
+            _no_tv_data.setText(R.string.no_datas_14);
+        } else if (text.equals("粉丝")) {
+            _no_image_data.setImageResource(R.drawable.blank_pages_15_icon);
+            _no_tv_data.setText(R.string.no_datas_15);
+        }else{
+            _no_image_data.setImageResource(R.drawable.blank_pages_16_icon);
+            _no_tv_data.setText(R.string.no_datas_16);
+        }
+
+
         mSwipeRefreshView = v.findViewById(R.id.list_swipe_value);
         mListView = v.findViewById(R.id.list_pull_value);
+
+
 //
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -100,7 +119,7 @@ public class MsgListFragment extends BaseFragment {
                                     int position, long id) {
                 if (text.equals("关注") || text.equals("粉丝")) {
                     //startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
-                    startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                    startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mCardAdapter.getItem(position).getCardId() + ServerApi.HOME_PAGE_WEB_TOKEN);
                 } else {
                 }
             }

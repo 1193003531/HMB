@@ -15,11 +15,22 @@ public class MakingListEntity implements Serializable {
     public String MakingListBrowse;
     public String MakingListShare;
     public String MakingListInterested;
+
+
+    public String MakingListUserId;
     public String MakingListHead;
     public String MakingListName;
     public String MakingListUrl;
     public String MakingListTime;
     public String MakingListIsDuf;
+
+    public String getMakingListUserId() {
+        return MakingListUserId;
+    }
+
+    public void setMakingListUserId(String makingListUserId) {
+        this.MakingListUserId = makingListUserId;
+    }
 
     public String getMakingListInterested() {
         return MakingListInterested;

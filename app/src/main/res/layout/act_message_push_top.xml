@@ -208,7 +208,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/blank_pages_4_icon" />
+                    android:src="@drawable/blank_pages_16_icon" />
 
                 <TextView
                     android:id="@+id/list_no_data_tv"
@@ -216,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/no_datas_4"
+                    android:text="@string/no_datas_16"
                     android:textColor="#484f64"
                     android:textSize="@dimen/text_size_16" />
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
@@ -37,6 +38,8 @@ public class FindsMyActivity extends BaseActivity {
 
     //数据集合
     private LinearLayout _no_data;
+    private ImageView _no_image_data;
+    private TextView _no_tv_data;
     private XSwipeRefreshView mSwipeRefreshView;
     private ListView mListView;
 
@@ -57,6 +60,7 @@ public class FindsMyActivity extends BaseActivity {
         setContentView(R.layout.act_finds_list_my);
         setNeedBackGesture(true);
         mDialogUtils = new DialogUtils(mActivity);
+        listData = new ArrayList<>();
         initView();
     }
 
@@ -76,6 +80,10 @@ public class FindsMyActivity extends BaseActivity {
         mSwipeRefreshView = findViewById(R.id.list_swipe_value);
         mListView = findViewById(R.id.list_pull_value);
         _no_data = findViewById(R.id.list_no_data);
+        _no_image_data = findViewById(R.id.list_no_data_iv);
+        _no_tv_data = findViewById(R.id.list_no_data_tv);
+        _no_image_data.setImageResource(R.drawable.blank_pages_11_icon);
+        _no_tv_data.setText(R.string.no_datas_11);
         _no_data.setVisibility(View.GONE);
 
 
@@ -409,6 +417,11 @@ public class FindsMyActivity extends BaseActivity {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (listData.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
                 // 加载完数据设置为不刷新状态，将下拉进度收起来
                 if (mSwipeRefreshView.isRefreshing()) {
                     mSwipeRefreshView.setRefreshing(false);

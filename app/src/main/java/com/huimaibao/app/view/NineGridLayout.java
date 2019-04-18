@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 
 import com.huimaibao.app.R;
+import com.youth.xframe.pickers.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ public abstract class NineGridLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mTotalWidth = right - left;
+        LogUtils.debug("mTotalWidth:" + mTotalWidth + "right:" + right + "left:" + left);
         mSingleWidth = (int) ((mTotalWidth - mSpacing * (3 - 1)) / 3);
         if (mIsFirst) {
             notifyDataSetChanged();
@@ -106,13 +108,13 @@ public abstract class NineGridLayout extends ViewGroup {
     }
 
     public void notifyDataSetChanged() {
-        refresh();
 //        post(new TimerTask() {
 //            @Override
 //            public void run() {
 //                refresh();
 //            }
 //        });
+        refresh();
     }
 
 
@@ -134,29 +136,14 @@ public abstract class NineGridLayout extends ViewGroup {
             params.height = mSingleWidth;
             setLayoutParams(params);
             imageView.layout(0, 0, mSingleWidth, mSingleWidth);
-
-            boolean isShowDefualt = displayOneImage(imageView, url, mTotalWidth);
-            if (isShowDefualt) {
+            boolean isShowDefault = displayOneImage(imageView, url, mTotalWidth);
+            if (isShowDefault) {
                 layoutImageView(imageView, 0, url, false);
             } else {
                 addView(imageView);
             }
             return;
         }
-
-
-//        if (size == 1) {
-//            String url = mUrlList.get(0).trim();
-//            RatioImageView imageView = createImageView(0, url);
-//
-//            imageView.layout(0, 0, mSingleWidth, mSingleWidth);
-//            LayoutParams params = getLayoutParams();
-//            params.height = mSingleWidth;
-//            setLayoutParams(params);
-//            addView(imageView);
-//            displayOneImage(imageView, url, mTotalWidth);
-//            return;
-//        }
 
 
         generateChildrenLayout(size);

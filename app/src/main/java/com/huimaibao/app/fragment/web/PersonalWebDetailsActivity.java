@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseActivity;
-import com.huimaibao.app.fragment.home.act.PersonalActivity;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
 import com.huimaibao.app.fragment.mine.act.CardClipDetailActivity;

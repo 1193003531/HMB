@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -16,13 +15,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
-import com.huimaibao.app.fragment.finds.entity.FindsPraiseEntity;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.youth.xframe.utils.XFrameAnimation;
@@ -159,7 +156,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
         mHolder._item_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+item.getFindsUserId()+ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
         mHolder._item_praise_ll.setOnClickListener(new View.OnClickListener() {

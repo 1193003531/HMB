@@ -141,7 +141,7 @@ public class FindsCommentAdapter extends BaseAdapter {
         mHolder._item_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + item.getFindsUserId() + ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
         mHolder._item_praise_ll.setOnClickListener(new View.OnClickListener() {

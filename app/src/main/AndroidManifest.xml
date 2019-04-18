@@ -211,12 +211,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".fragment.home.act.PersonalActivity"
-            android:label="用户主页"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".fragment.home.act.ToCloneActivity"
             android:label="去克隆"
             android:screenOrientation="portrait"

@@ -93,8 +93,8 @@ public interface ServerApi {
     /**
      * 主页
      */
-    //String HOME_PAGE_WEB_URL = SERVER_WEB_URL + "/#/card/detail/" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
-    String HOME_PAGE_WEB_URL = MERCHANTS_URL;
+    String HOME_PAGE_WEB_URL = SERVER_WEB_URL + "/#/userIndex/";
+    String HOME_PAGE_WEB_TOKEN = "?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
 
     /**
      * 公共接口

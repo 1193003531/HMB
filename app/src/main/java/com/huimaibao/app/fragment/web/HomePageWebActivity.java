@@ -36,6 +36,7 @@ import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.permission.XPermission;
+import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.XToast;
 
 import org.json.JSONObject;
@@ -85,6 +86,8 @@ public class HomePageWebActivity extends BaseActivity {
 
 
     public void init() {
+        //View mViewNeedOffset = findViewById(R.id.fake_status_bar);
+        //XStatusBar.setTranslucentForImageView(mActivity, 0, mViewNeedOffset);
         mWebView = findViewById(R.id.home_page_web_value);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -283,7 +286,7 @@ public class HomePageWebActivity extends BaseActivity {
             finish();
         }
 
-        //个人微网(去制作)
+        //添加通讯录
         @JavascriptInterface
         public void toAddPhoneView(final String name, final String phone) {   //提供给js调用的方法
             mActivity.runOnUiThread(new Runnable() {

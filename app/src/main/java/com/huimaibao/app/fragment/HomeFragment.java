@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -29,14 +27,11 @@ import com.huimaibao.app.fragment.home.act.CardDetailActivity;
 import com.huimaibao.app.fragment.home.act.IncomeListActivity;
 import com.huimaibao.app.fragment.home.act.LibraryActivity;
 import com.huimaibao.app.fragment.home.act.MarketingListActivity;
-import com.huimaibao.app.fragment.home.act.MarketingWebActivity;
-import com.huimaibao.app.fragment.home.act.PersonalActivity;
 import com.huimaibao.app.fragment.home.act.PersonalWebActivity;
 import com.huimaibao.app.fragment.home.adapter.MarketingListAdapter;
 import com.huimaibao.app.fragment.home.entity.IncomeListEntity;
 import com.huimaibao.app.fragment.home.entity.MakingListEntity;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
-import com.huimaibao.app.fragment.library.adapter.LibNewsAdapter;
 import com.huimaibao.app.fragment.library.adapter.LibNewsHomeAdapter;
 import com.huimaibao.app.fragment.library.bean.LibNewsEntity;
 import com.huimaibao.app.fragment.library.server.LibLogic;
@@ -45,11 +40,8 @@ import com.huimaibao.app.fragment.mine.act.MarketingTagActivity;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.fragment.web.LibDetailsWebActivity;
 import com.huimaibao.app.fragment.web.MessageWebActivity;
-import com.huimaibao.app.fragment.web.PersonalWebDetailsActivity;
 import com.huimaibao.app.http.ResultBack;
-import com.huimaibao.app.main.MainActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
-import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.zxing.act.CaptureActivity;
 import com.huimaibao.app.zxing.util.Constant;
 import com.youth.xframe.banner.BannerItemBean;
@@ -363,7 +355,7 @@ public class HomeFragment extends BaseFragment {
 //                            bundle.putString("share_imageUrl", mlList.get(position).getMakingListImage());
 //
 //                            startActivity(PersonalWebDetailsActivity.class, bundle);
-                            startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                            startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mlList.get(position).getMakingListUserId() + ServerApi.HOME_PAGE_WEB_TOKEN);
                         }
                     });
                 } else {
@@ -405,7 +397,7 @@ public class HomeFragment extends BaseFragment {
                         @Override
                         public void onClick(View v) {
                             // startActivity(PersonalActivity.class, iLData.get(v.getId()).getIncomeId());
-                            startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                            startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + iLData.get(v.getId()).getIncomeId() + ServerApi.HOME_PAGE_WEB_TOKEN);
                         }
                     });
 
@@ -612,6 +604,7 @@ public class HomeFragment extends BaseFragment {
                             mli.setMakingListInterested(array.getJSONObject(i).optString("interested", "0"));
                             mli.setMakingListHead(array.getJSONObject(i).getJSONObject("user").getString("portrait"));
                             mli.setMakingListName(array.getJSONObject(i).getJSONObject("user").getString("name"));
+                            mli.setMakingListUserId(array.getJSONObject(i).getJSONObject("user").optString("id", ""));
                             mlList.add(mli);
                         }
                         setMarketingList();

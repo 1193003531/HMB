@@ -25,7 +25,6 @@ import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
-import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.CircleImageView;
@@ -299,7 +298,6 @@ public class FindsFragment extends BaseFragment {
                                         mSwipeRefreshView.setRefreshing(false);
                                     }
 
-
                                     mAdapter.setOnItemFocusClickListener(new FindsAdapter.onItemFocusClickListener() {
                                         @Override
                                         public void onItemFocusClick(int position) {
@@ -457,7 +455,7 @@ public class FindsFragment extends BaseFragment {
             @Override
             public void onSuccess(Object object) {
                 try {
-                    JSONObject json = new org.json.JSONObject(object.toString());
+                    JSONObject json = new JSONObject(object.toString());
                     String msg = json.getString("message");
                     LogUtils.debug("finds:" + json);
                     if (json.getString("status").equals("0")) {

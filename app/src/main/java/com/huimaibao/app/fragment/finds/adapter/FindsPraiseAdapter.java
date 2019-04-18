@@ -69,7 +69,7 @@ public class FindsPraiseAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+item.getFindsUserId()+ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
 

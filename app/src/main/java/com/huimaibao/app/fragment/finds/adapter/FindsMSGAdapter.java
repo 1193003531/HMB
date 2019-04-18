@@ -95,7 +95,7 @@ public class FindsMSGAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+item.getFindsUserId()+ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
 
@@ -105,6 +105,7 @@ public class FindsMSGAdapter extends BaseAdapter {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
                 XPreferencesUtils.put("concern", "0");
                 XPreferencesUtils.put("dynamic_id", item.getFindsId());
+                XPreferencesUtils.put("comment_id", item.getFindsCommentId());
                 startActivity(FindsCommentsActivity.class, "动态");
             }
         });

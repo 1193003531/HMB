@@ -18,9 +18,7 @@ import com.huimaibao.app.fragment.home.entity.MakingListEntity;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.fragment.web.MessageWebActivity;
-import com.huimaibao.app.fragment.web.PersonalWebDetailsActivity;
 import com.huimaibao.app.http.ResultBack;
-import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
@@ -122,7 +120,7 @@ public class MarketingListActivity extends BaseActivity {
 //                bundle.putString("share_imageUrl", mlList.get(position - 1).getMakingListImage());
 //
 //                startActivity(PersonalWebDetailsActivity.class, bundle);
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+mlList.get(position - 1).getMakingListUserId()+ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
 
@@ -269,6 +267,7 @@ public class MarketingListActivity extends BaseActivity {
                             mli.setMakingListInterested(array.getJSONObject(i).optString("interested", "0"));
                             mli.setMakingListHead(array.getJSONObject(i).getJSONObject("user").getString("portrait"));
                             mli.setMakingListName(array.getJSONObject(i).getJSONObject("user").getString("name"));
+                            mli.setMakingListUserId(array.getJSONObject(i).getJSONObject("user").optString("id", ""));
                             //XLog.d("image:" + HomeLogic.Instance(mActivity).getJsonImageUrls(array.getJSONObject(i).getString("content")));
                             mlList.add(mli);
                         }

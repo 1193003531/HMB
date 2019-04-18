@@ -3,16 +3,12 @@ package com.huimaibao.app.takePhone;
 import android.app.Activity;
 import android.app.Dialog;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.support.v4.content.FileProvider;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.huimaibao.app.BuildConfig;
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseApplication;
 import com.youth.xframe.takephoto.app.TakePhoto;
@@ -155,11 +151,10 @@ public class TakePhoneHelper {
      * 显示弹出框
      */
     public void showTakePhoneDialog(final TakePhoto takePhoto) {
-//
         File file = new File(BaseApplication.getApp().getFilePath(), "images/" + System.currentTimeMillis() + ".jpg");
 
-//        String path = Environment.getExternalStorageDirectory() + File.separator + "images" + File.separator;
-//        File file = new File(path, System.currentTimeMillis() + ".jpg");
+        //String path = Environment.getExternalStorageDirectory() + File.separator + "images" + File.separator;
+        // File file = new File(path, System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -203,9 +198,10 @@ public class TakePhoneHelper {
                 if (isCrop) {
                     takePhoto.onPickFromCaptureWithCrop(mUri, getCropOptions());
                 } else {
-//                    isCrop = true;
-//                    takePhoto.onPickFromCaptureWithCrop(mUri, getCropOptions());
-                    takePhoto.onPickFromCapture(mUri);
+                    setTakePhone(1, true, false, 800, 800, true, 512000, 0, 0);
+
+                    takePhoto.onPickFromCaptureWithCrop(mUri, getCropOptions());
+                    //takePhoto.onPickFromCapture(mUri);
                 }
                 dialog.dismiss();
             }

@@ -20,15 +20,22 @@
 
     <string name="no_datas">暂无数据</string>
     <string name="no_datas_1">错过了机会，明天早点来吧！</string>
-    <string name="no_datas_2">您还没有个人微网</string>
+    <string name="no_datas_2">你还没有制作产品微网</string>
     <string name="no_datas_3">参加互推、完成分享任务，带来无限浏览量</string>
     <string name="no_datas_4">还没有哦</string>
-    <string name="no_datas_5">您还没有收藏名片</string>
-    <string name="no_datas_6">您还没有收藏文章</string>
-    <string name="no_datas_7">您还没有营销网页</string>
+    <string name="no_datas_5">你还没有收藏名片</string>
+    <string name="no_datas_6">你还没有收藏文章</string>
+    <string name="no_datas_7">你还没有营销网页</string>
     <string name="no_datas_8">完善名片、制作网页，参加互推，\n分享出去，提升人气</string>
     <string name="no_datas_9">制作吸引人的网页，参加互推，分享出去，\n他人对您的兴趣倍增</string>
     <string name="no_datas_10">客观很抱歉,暂无榜单</string>
+    <string name="no_datas_11">你还没有发布动态</string>
+    <string name="no_datas_12">你还未有人气</string>
+    <string name="no_datas_13">未有客户对你感兴趣</string>
+    <string name="no_datas_14">你还没有去关注</string>
+    <string name="no_datas_15">你还未拥有粉丝</string>
+    <string name="no_datas_16">暂无通知</string>
+    <string name="no_datas_17">很抱歉,网络走丢了</string>
 
     <string name="login_user_agreement">注册登录即同意《汇脉宝用户协议》</string>
 

@@ -19,7 +19,6 @@ import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.fragment.web.MessageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ImageLoaderManager;
-import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
@@ -116,7 +115,7 @@ public class IncomeListActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // startActivity(PersonalActivity.class, iListmData.get(position - 1).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+iListmData.get(position - 1).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
 
@@ -154,17 +153,17 @@ public class IncomeListActivity extends BaseActivity {
             case R.id.a_h_i_1_head_ll:
             case R.id.a_h_i_1_money_ll:
                 // startActivity(PersonalActivity.class, mlList.get(0).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mlList.get(0).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
             case R.id.a_h_i_2_head_ll:
             case R.id.a_h_i_2_money_ll:
                 // startActivity(PersonalActivity.class, mlList.get(1).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mlList.get(1).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
             case R.id.a_h_i_3_head_ll:
             case R.id.a_h_i_3_money_ll:
                 // startActivity(PersonalActivity.class, mlList.get(2).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mlList.get(2).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
         }
     }

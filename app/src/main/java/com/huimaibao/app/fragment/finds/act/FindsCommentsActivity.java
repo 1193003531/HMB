@@ -911,6 +911,7 @@ public class FindsCommentsActivity extends BaseActivity {
         HashMap<String, Object> map = new HashMap<>();
         map.put("dynamic_id", XPreferencesUtils.get("dynamic_id", ""));
         map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        map.put("comment_id", XPreferencesUtils.get("comment_id", ""));
         map.put("page", page);
         map.put("pageSize", "10");
         FindsLogic.Instance(mActivity).getDYCommentApi(map, isShow, new ResultBack() {
@@ -922,7 +923,11 @@ public class FindsCommentsActivity extends BaseActivity {
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
                         totalPage = json.getJSONObject("data").optInt("total", 0);
+
+
+                        String dynamicComment, children;
                         JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
+                        dynamicComment = json.getJSONObject("data").optString("dynamicComment", "");
                         if (page == 1) {
                             listData = new ArrayList<>();
                         } else {
@@ -930,8 +935,24 @@ public class FindsCommentsActivity extends BaseActivity {
                                 showToast("没有数据了");
                             }
                         }
+                        if (!XEmptyUtils.isSpace(dynamicComment)) {
+                            JSONObject jsonC = new JSONObject(dynamicComment);
+                            FindsCommentsEntity entity = new FindsCommentsEntity();
+                            entity.setFindsTime(jsonC.optString("created_at"));
+                            entity.setFindsUserId(jsonC.optString("user_id"));
+                            entity.setFindsUserHead(jsonC.optString("head_picture"));
+                            entity.setFindsUserName(jsonC.optString("user_name"));
+                            entity.setFindsCommentId(jsonC.optString("comment_id"));
+                            entity.setFindsContent(jsonC.optString("content"));
+                            entity.setFindsIsPraise(jsonC.optString("praise"));
+                            entity.setFindsPraiseNum(jsonC.optString("praise_number"));
+                            entity.setFindsChildCommentNum("0");
+                            //子评论
+                            List<FindsCommentEntity> list = new ArrayList<>();
+                            entity.setList(list);
+                            listData.add(entity);
+                        }
 
-                        String children = "";
 
                         for (int i = 0; i < array.length(); i++) {
                             FindsCommentsEntity entity = new FindsCommentsEntity();
@@ -1178,8 +1199,8 @@ public class FindsCommentsActivity extends BaseActivity {
                         JSONObject data = new JSONObject(json.getString("data"));
                         _comment_id_value = data.optString("commentId", "");
                         _dy_comments_num_value = data.optString("commentCount", _dy_comments_num_value);
-                        XPreferencesUtils.put("commentCount",_dy_comments_num_value);
-                        XPreferencesUtils.put("is_comment_num",true);
+                        XPreferencesUtils.put("commentCount", _dy_comments_num_value);
+                        XPreferencesUtils.put("is_comment_num", true);
 
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
@@ -1229,8 +1250,8 @@ public class FindsCommentsActivity extends BaseActivity {
                     if (json.getString("status").equals("0")) {
                         JSONObject data = new JSONObject(json.getString("data"));
                         _dy_comments_num_value = data.optString("commentCount", _dy_comments_num_value);
-                        XPreferencesUtils.put("commentCount",_dy_comments_num_value);
-                        XPreferencesUtils.put("is_comment_num",true);
+                        XPreferencesUtils.put("commentCount", _dy_comments_num_value);
+                        XPreferencesUtils.put("is_comment_num", true);
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

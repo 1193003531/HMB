@@ -17,9 +17,9 @@ import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.electcircle.server.ElectLogic;
-import com.huimaibao.app.fragment.home.act.PersonalActivity;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.share.OnResponseListener;
 import com.huimaibao.app.share.WXShare;
@@ -265,7 +265,9 @@ public class ElectPersonalActivity extends BaseActivity {
                 break;
             //用户主页
             case R.id.mine_basic_ll_btn:
-                startActivity(PersonalActivity.class, _user_id_value);
+               // startActivity(PersonalActivity.class, _user_id_value);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + _user_id_value + ServerApi.HOME_PAGE_WEB_TOKEN);
+
                 break;
             //举报
             case R.id.report_btn:

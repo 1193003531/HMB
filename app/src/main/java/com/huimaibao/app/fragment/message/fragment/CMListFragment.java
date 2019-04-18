@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
+import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseFragment;
 import com.huimaibao.app.fragment.message.act.MessageListActivity;
 import com.huimaibao.app.fragment.message.adapter.MessageAdapter;
@@ -23,6 +25,7 @@ import com.huimaibao.app.fragment.mine.act.CardClipDetailActivity;
 import com.huimaibao.app.fragment.mine.adapter.CardAdapter;
 import com.huimaibao.app.fragment.mine.entity.CardEntity;
 import com.huimaibao.app.fragment.mine.server.CardClipLogic;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ToastUtils;
@@ -52,6 +55,8 @@ public class CMListFragment extends BaseFragment {
     private ListView mListView;
 
     private LinearLayout _no_data;
+    private ImageView _no_image_data;
+    private TextView _no_tv_data;
 
     private View mTopView;
     //人气，感兴趣
@@ -95,19 +100,26 @@ public class CMListFragment extends BaseFragment {
         _top_right = mTopView.findViewById(R.id.act_message_top_right);
 
         _no_data = v.findViewById(R.id.list_no_data);
-        //_no_data.setVisibility(View.GONE);
+        _no_data.setVisibility(View.GONE);
+        _no_image_data = v.findViewById(R.id.list_no_data_iv);
+        _no_tv_data = v.findViewById(R.id.list_no_data_tv);
+
         mSwipeRefreshView = v.findViewById(R.id.list_swipe_value);
         mListView = v.findViewById(R.id.list_pull_value);
 
         mListView.addHeaderView(mTopView);
 
         if (text.equals("人气")) {
+            _no_image_data.setImageResource(R.drawable.blank_pages_12_icon);
+            _no_tv_data.setText(R.string.no_datas_12);
             // _top_right.setVisibility(View.VISIBLE);
             _top_left.setCompoundDrawablesWithIntrinsicBounds(mActivity.getResources().getDrawable(R.drawable.msg_act_rq_icon), null,
                     null, null);
             _top_left.setText("总人气  " + 0);
             _top_right.setText("今日人气  " + 0);
         } else {
+            _no_image_data.setImageResource(R.drawable.blank_pages_13_icon);
+            _no_tv_data.setText(R.string.no_datas_13);
             //_top_right.setVisibility(View.GONE);
             _top_left.setCompoundDrawablesWithIntrinsicBounds(mActivity.getResources().getDrawable(R.drawable.msg_act_gxq_icon), null,
                     null, null);
@@ -133,7 +145,9 @@ public class CMListFragment extends BaseFragment {
                         startActivity(intent);//调用上面这个intent实现拨号
                     }
                 } else {
-                    startActivity(CardClipDetailActivity.class, listData.get(position - 1).getMessageId());
+                    //startActivity(CardClipDetailActivity.class, listData.get(position - 1).getMessageId());
+                    startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + listData.get(position - 1).getMessageId() + ServerApi.HOME_PAGE_WEB_TOKEN);
+
                 }
             }
         });

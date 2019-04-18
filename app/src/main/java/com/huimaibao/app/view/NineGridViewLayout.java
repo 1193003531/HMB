@@ -35,6 +35,7 @@ public class NineGridViewLayout extends NineGridLayout {
     @Override
     protected boolean displayOneImage(final RatioImageView imageView, String url, final int parentWidth) {
 
+        //这里是只显示一张图片的情况，显示图片的宽高可以根据实际图片大小自由定制，parentWidth 为该layout的宽度
         ImageLoaderManager.displayImage(mContext, imageView, url, ImageLoaderManager.getPhotoImageOption(), new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -71,6 +72,7 @@ public class NineGridViewLayout extends NineGridLayout {
 
             }
         });
+        // true 代表按照九宫格默认大小显示(此时不要调用setOneImageLayoutParams)；false 代表按照自定义宽高显示。
         return false;
     }
 
@@ -81,7 +83,7 @@ public class NineGridViewLayout extends NineGridLayout {
 
     @Override
     protected void onClickImage(int i, String url, ArrayList<String> urlList) {
-       // Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(mContext, "点击了图片" + url, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
         intent.setClass(mContext, ImageShowActivity.class);
         intent.putStringArrayListExtra("infos", urlList);
