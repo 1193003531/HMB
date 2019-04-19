@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:background="@drawable/btn_duf"
     android:orientation="vertical">
 
     <LinearLayout
@@ -28,14 +28,14 @@
             android:id="@+id/finds_list_like_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_marginLeft="15dp"
             android:ellipsize="end"
             android:gravity="center_horizontal"
             android:maxLines="1"
             android:text="桥东波"
             android:textColor="@color/color666666"
-            android:textSize="@dimen/text_size_14" />
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

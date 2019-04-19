@@ -97,6 +97,10 @@
     <color name="e8e8e8">#e8e8e8</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent1">#10000000</color>
+    <color name="transparent2">#20000000</color>
+    <color name="transparent3">#30000000</color>
+    <color name="transparent4">#40000000</color>
     <color name="transparent5">#50000000</color>
     <color name="transparent6">#60000000</color>
     <color name="transparent7">#70000000</color>

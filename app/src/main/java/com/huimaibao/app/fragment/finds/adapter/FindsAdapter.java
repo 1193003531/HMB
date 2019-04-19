@@ -143,7 +143,19 @@ public class FindsAdapter extends BaseAdapter {
         mHolder._item_praise_num.setText(item.getFindsPraiseNum());
         mHolder._item_comments_num.setText(item.getFindsCommentsNum());
         mHolder._item_one_image.setVisibility(View.GONE);
-        mHolder._item_images.setImageUrls( item.getFindsImageList());
+        //mHolder._item_images.setSpacing(4);
+
+//        if (item.getFindsImageList().size() == 1) {
+//            mHolder._item_images.setItemAspectRatio(ImageLoaderManager.getAspectRatio(item.getFindsImageList().get(0).trim()));
+//        } else {
+//            mHolder._item_images.setItemAspectRatio(1);
+//        }
+//
+        mHolder._item_images.setImageUrls(item.getFindsImageList());
+
+
+        //  mHolder._item_images.setUrlList(item.getFindsImageList());
+
 //        if (item.getFindsImageList().size() == 1) {
 //            mHolder._item_one_image.setVisibility(View.VISIBLE);
 //            // mHolder._item_images.setVisibility(View.GONE);
@@ -167,12 +179,17 @@ public class FindsAdapter extends BaseAdapter {
 //        }
 
 
-        if (item.getFindsIsFocus().equals("0")) {
-            mHolder._item_focus_iv.setImageResource(R.drawable.finds_list_top_focus);
-            mHolder._item_focus_iv.setVisibility(View.VISIBLE);
-        } else {
+        if (item.getFindsUserId().equals(XPreferencesUtils.get("user_id", ""))) {
             mHolder._item_focus_iv.setVisibility(View.GONE);
+        } else {
+            if (item.getFindsIsFocus().equals("0")) {
+                mHolder._item_focus_iv.setImageResource(R.drawable.finds_list_top_focus);
+                mHolder._item_focus_iv.setVisibility(View.VISIBLE);
+            } else {
+                mHolder._item_focus_iv.setVisibility(View.GONE);
+            }
         }
+
 
         if (item.getFindsIsPraise().equals("0")) {
             mHolder._item_praise_iv.setImageResource(R.drawable.finds_list_praise);
@@ -288,7 +305,7 @@ public class FindsAdapter extends BaseAdapter {
         TextView _item_name, _item_content, _item_time, _item_praise_num, _item_comments_num, _item_del;
         ImageView _item_focus_iv, _item_praise_iv, _item_feedback_iv;
         RatioImageView _item_one_image;
-        // NineGridViewLayout _item_images;
+        //NineGridViewLayout _item_images;
         FriendsCircleImageLayout _item_images;
         LinearLayout _item_praise_ll;
     }

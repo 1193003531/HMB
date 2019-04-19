@@ -17,6 +17,15 @@ public class FindsCommentEntity implements Serializable {
     public String FindsTime;
     public String FindsToUserName;
     public String FindsType;
+    public boolean FindsIsNewMsg;
+
+    public boolean isFindsIsNewMsg() {
+        return FindsIsNewMsg;
+    }
+
+    public void setFindsIsNewMsg(boolean findsIsNewMsg) {
+        this.FindsIsNewMsg = findsIsNewMsg;
+    }
 
     public String getFindsToUserName() {
         return FindsToUserName;

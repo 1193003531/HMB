@@ -19,10 +19,17 @@ public class FindsCommentsEntity implements Serializable {
     public String FindsChildCommentNum;
     public boolean FindsIsMore;
     public List<FindsCommentEntity> list;
-
-
+    public boolean FindsIsNewMsg;
     public String FindsToUserName;
     public String FindsType;
+
+    public boolean isFindsIsNewMsg() {
+        return FindsIsNewMsg;
+    }
+
+    public void setFindsIsNewMsg(boolean findsIsNewMsg) {
+        this. FindsIsNewMsg = findsIsNewMsg;
+    }
 
     public String getFindsToUserName() {
         return FindsToUserName;

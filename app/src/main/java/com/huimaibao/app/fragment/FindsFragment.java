@@ -140,7 +140,10 @@ public class FindsFragment extends BaseFragment {
         mSwipeRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData();
+                //initData();
+                getNewMSGData();
+                countPage = 1;
+                getDYListData(countPage, false);
             }
         });
 
@@ -156,9 +159,9 @@ public class FindsFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        getNewMSGData();
-        countPage = 1;
-        getDYListData(countPage, false);
+//        getNewMSGData();
+//        countPage = 1;
+//        getDYListData(countPage, false);
     }
 
     private void loadMoreData() {
@@ -414,6 +417,7 @@ public class FindsFragment extends BaseFragment {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                             showToast("点赞成功");
                                 if (listData.get(position).getFindsIsPraise().equals("0")) {
                                     praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
                                     listData.get(position).setFindsIsPraise("1");
@@ -429,18 +433,18 @@ public class FindsFragment extends BaseFragment {
                         });
 
                     } else {
-                        setPraiseError(position);
+                        setPraiseError("点赞失败",position);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    setPraiseError(position);
+                    setPraiseError("点赞失败",position);
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
-                setPraiseError(position);
+                setPraiseError("点赞失败",position);
             }
         });
     }
@@ -502,10 +506,11 @@ public class FindsFragment extends BaseFragment {
     /**
      * 点赞失败
      */
-    private void setPraiseError(final int position) {
+    private void setPraiseError(final String msg,final int position) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                showToast(msg);
                 if (listData.get(position).getFindsIsPraise().equals("0")) {
                     listData.get(position).setFindsIsPraise("1");
                 } else {

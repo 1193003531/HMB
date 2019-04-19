@@ -758,7 +758,7 @@ public class HomeFragment extends BaseFragment {
 //                    startActivity(MessageWebActivity.class, "营销网页", "http://weixin.yuhongrocky.top/#/tools/marketing/edit/");
 //                }
 
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + XPreferencesUtils.get("user_id", "") + ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
 

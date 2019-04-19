@@ -82,6 +82,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mActivity).inflate(R.layout.act_finds_list_comments_item, null);
             mHolder = new ViewHolder();
+            mHolder._item_bg_ll = convertView.findViewById(R.id.finds_list_comments_item_ll);
             mHolder._item_head = convertView.findViewById(R.id.finds_list_comments_item_head);
             mHolder._item_name = convertView.findViewById(R.id.finds_list_comments_item_name);
             mHolder._item_content = convertView.findViewById(R.id.finds_list_comments_item_content);
@@ -96,6 +97,20 @@ public class FindsCommentsAdapter extends BaseAdapter {
             mHolder = (ViewHolder) convertView.getTag();
         }
         final FindsCommentsEntity item = getItem(position);
+
+        //新消息展示-评论动态
+        if (item.isFindsIsNewMsg()) {
+            if (position == 0) {
+                if (item.getList().size() == 0) {
+                    mHolder._item_bg_ll.setBackgroundResource(R.color.transparent1);
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            mHolder._item_bg_ll.setBackgroundResource(R.drawable.btn_duf);
+                        }
+                    }, 2000);
+                }
+            }
+        }
 
         if (!item.getFindsUserHead().equals(mHolder._item_head.getTag())) {
             ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head);
@@ -156,7 +171,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
         mHolder._item_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+item.getFindsUserId()+ServerApi.HOME_PAGE_WEB_TOKEN);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + item.getFindsUserId() + ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
         mHolder._item_praise_ll.setOnClickListener(new View.OnClickListener() {
@@ -200,7 +215,7 @@ public class FindsCommentsAdapter extends BaseAdapter {
         CircleImageView _item_head;
         TextView _item_name, _item_content, _item_praise_num, _item_more;
         ImageView _item_praise_iv;
-        LinearLayout _item_praise_ll;
+        LinearLayout _item_praise_ll, _item_bg_ll;
         NoScrollListView _item_list;
     }
 

@@ -85,7 +85,7 @@ public class FindsMSGActivity extends BaseActivity {
         if (mType.equals("新消息")) {
             _top_clear.setVisibility(View.INVISIBLE);
         } else {
-            _top_clear.setVisibility(View.INVISIBLE);
+            _top_clear.setVisibility(View.GONE);
         }
 
         //数据集合

@@ -100,21 +100,19 @@
                 android:visibility="gone" />
 
             <!--<com.huimaibao.app.view.NineGridViewLayout-->
-            <!--android:id="@+id/finds_list_item_grid"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="12dp"-->
-            <!--android:layout_marginRight="16dp"-->
-            <!--app:spacing="4dp" />-->
+                <!--android:id="@+id/finds_list_item_grid"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="12dp"-->
+                <!--android:layout_marginRight="16dp"-->
+                <!--app:spacing="4dp" />-->
 
             <com.huimaibao.app.view.FriendsCircleImageLayout
                 android:id="@+id/finds_list_item_grid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="16dp">
-
-            </com.huimaibao.app.view.FriendsCircleImageLayout>
+                android:layout_marginRight="16dp" />
 
 
             <LinearLayout

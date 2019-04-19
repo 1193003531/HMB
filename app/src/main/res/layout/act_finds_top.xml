@@ -79,14 +79,21 @@
         android:textColor="@color/FF333333"
         android:textSize="@dimen/text_size_16" />
 
-    <com.huimaibao.app.view.NineGridViewLayout
+    <!--<com.huimaibao.app.view.NineGridViewLayout-->
+        <!--android:id="@+id/finds_list_item_comments_grid"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--app:spacing="4dp" />-->
+    <com.huimaibao.app.view.FriendsCircleImageLayout
         android:id="@+id/finds_list_item_comments_grid"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
-        app:spacing="4dp" />
+        android:layout_marginRight="16dp"/>
 
 
     <LinearLayout

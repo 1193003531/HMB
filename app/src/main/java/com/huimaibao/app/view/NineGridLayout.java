@@ -58,20 +58,41 @@ public abstract class NineGridLayout extends ViewGroup {
         }
     }
 
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        //测量所有子控件的宽和高,只有先测量了所有子控件的尺寸，后面才能使用child.getMeasuredWidth()
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
+        //调用系统的onMeasure一般是测量自己(当前ViewGroup)的宽和高
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        refresh();
     }
+
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mTotalWidth = right - left;
-        LogUtils.debug("mTotalWidth:" + mTotalWidth + "right:" + right + "left:" + left);
+        // LogUtils.debug("mTotalWidth:" + mTotalWidth + "right:" + right + "left:" + left);
         mSingleWidth = (int) ((mTotalWidth - mSpacing * (3 - 1)) / 3);
-        if (mIsFirst) {
-            notifyDataSetChanged();
-            mIsFirst = false;
-        }
+        notifyDataSetChanged();
+//        if (mIsFirst) {
+//            notifyDataSetChanged();
+//            mIsFirst = false;
+//        }
+    }
+
+    @Override
+    protected void measureChild(View child, int parentWidthMeasureSpec,
+                                int parentHeightMeasureSpec) {
+        final LayoutParams lp = child.getLayoutParams();
+        //获取子控件的宽高约束规则
+        final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
+                getPaddingLeft() + getPaddingRight(), lp.width);
+        final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
+                getPaddingLeft() + getPaddingRight(), lp.height);
+
+        child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+
     }
 
     /**
@@ -136,12 +157,16 @@ public abstract class NineGridLayout extends ViewGroup {
             params.height = mSingleWidth;
             setLayoutParams(params);
             imageView.layout(0, 0, mSingleWidth, mSingleWidth);
-            boolean isShowDefault = displayOneImage(imageView, url, mTotalWidth);
-            if (isShowDefault) {
-                layoutImageView(imageView, 0, url, false);
-            } else {
-                addView(imageView);
-            }
+            displayOneImage(imageView, url, mTotalWidth);
+            //displayImage(imageView, url);
+            addView(imageView);
+
+//            boolean isShowDefault = displayOneImage(imageView, url, mTotalWidth);
+//            if (isShowDefault) {
+//                layoutImageView(imageView, 0, url, false);
+//            } else {
+//                addView(imageView);
+//            }
             return;
         }
 
@@ -281,7 +306,7 @@ public abstract class NineGridLayout extends ViewGroup {
         imageView.layout(0, 0, width, height);
 
         LayoutParams params = getLayoutParams();
-//        params.width = width;
+        //params.width = width;
         params.height = height;
         setLayoutParams(params);
     }

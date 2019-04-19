@@ -36,6 +36,7 @@ import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
+import com.huimaibao.app.view.FriendsCircleImageLayout;
 import com.huimaibao.app.view.NineGridViewLayout;
 import com.youth.xframe.common.XActivityStack;
 import com.youth.xframe.pickers.util.LogUtils;
@@ -93,7 +94,7 @@ public class FindsCommentsActivity extends BaseActivity {
     private CircleImageView _item_head;
     private TextView _item_name, _item_content, _item_time, _item_praise_num, _item_comments_num;
     private ImageView _item_focus_iv, _item_praise_iv;
-    private NineGridViewLayout _item_images;
+    private FriendsCircleImageLayout _item_images;
     private LinearLayout _item_ll;
     private RelativeLayout _item_comment_ll;
     private CircleImageView _item_comment_iv_1, _item_comment_iv_2, _item_comment_iv_3, _item_comment_iv_4, _item_comment_iv_more;
@@ -327,7 +328,8 @@ public class FindsCommentsActivity extends BaseActivity {
         _item_comments_num.setText(_dy_comments_num_value + "条评论");
         _top_comment_num.setText(_dy_comments_num_value + "条评论");
         _item_praise_num.setText(_dy_praisenum_value);
-        _item_images.setUrlList(listImage);
+        _item_images.setSpacing(4);
+        _item_images.setImageUrls(listImage);
 
         if (_dy_ispraise_value.equals("0")) {
             _item_praise_iv.setImageResource(R.drawable.finds_list_praise);
@@ -335,11 +337,17 @@ public class FindsCommentsActivity extends BaseActivity {
             _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
         }
 
-        if (_dy_isfocus_value.equals("0")) {
-            _item_focus_iv.setVisibility(View.VISIBLE);
-        } else {
+        if (_dy_userid_value.equals(XPreferencesUtils.get("user_id", ""))) {
             _item_focus_iv.setVisibility(View.GONE);
+            _dy_isfocus_value = "1";
+        }else{
+            if (_dy_isfocus_value.equals("0")) {
+                _item_focus_iv.setVisibility(View.VISIBLE);
+            } else {
+                _item_focus_iv.setVisibility(View.GONE);
+            }
         }
+
 
         commentHeadList = new ArrayList<>();
         if (!XEmptyUtils.isSpace(_dy_comment_head_value) && _dy_comment_head_value.length() > 5) {
@@ -927,6 +935,7 @@ public class FindsCommentsActivity extends BaseActivity {
 
                         String dynamicComment, children;
                         JSONArray array = new JSONArray(json.getJSONObject("data").getString("list"));
+
                         dynamicComment = json.getJSONObject("data").optString("dynamicComment", "");
                         if (page == 1) {
                             listData = new ArrayList<>();
@@ -935,7 +944,7 @@ public class FindsCommentsActivity extends BaseActivity {
                                 showToast("没有数据了");
                             }
                         }
-                        if (!XEmptyUtils.isSpace(dynamicComment)) {
+                        if (!XEmptyUtils.isSpace(dynamicComment) && dynamicComment.length() > 5) {
                             JSONObject jsonC = new JSONObject(dynamicComment);
                             FindsCommentsEntity entity = new FindsCommentsEntity();
                             entity.setFindsTime(jsonC.optString("created_at"));
@@ -947,9 +956,31 @@ public class FindsCommentsActivity extends BaseActivity {
                             entity.setFindsIsPraise(jsonC.optString("praise"));
                             entity.setFindsPraiseNum(jsonC.optString("praise_number"));
                             entity.setFindsChildCommentNum("0");
+                            entity.setFindsIsMore(false);
+
+
                             //子评论
                             List<FindsCommentEntity> list = new ArrayList<>();
+                            children = jsonC.optString("children");
+                            if (!XEmptyUtils.isSpace(children) && children.length() > 5) {
+                                JSONObject childJson = new JSONObject(children);
+                                FindsCommentEntity entity2 = new FindsCommentEntity();
+                                entity2.setFindsIsNewMsg(true);
+                                entity2.setFindsUserId(childJson.optString("user_id"));
+                                entity2.setFindsUserHead(childJson.optString("head_picture"));
+                                entity2.setFindsUserName(childJson.optString("user_name"));
+                                entity2.setFindsCommentId(childJson.optString("comment_id"));
+                                entity2.setFindsContent(childJson.optString("content"));
+                                entity2.setFindsIsPraise(childJson.optString("praise"));
+                                entity2.setFindsPraiseNum(childJson.optString("praise_number"));
+                                entity2.setFindsTime(childJson.optString("created_at"));
+                                entity2.setFindsToUserName("");
+                                entity2.setFindsType("0");
+                                list.add(entity2);
+                            }
+
                             entity.setList(list);
+                            entity.setFindsIsNewMsg(true);
                             listData.add(entity);
                         }
 
@@ -984,6 +1015,7 @@ public class FindsCommentsActivity extends BaseActivity {
                                 JSONArray childArray = new JSONArray(children);
                                 for (int j = 0; j < childArray.length(); j++) {
                                     FindsCommentEntity entity2 = new FindsCommentEntity();
+                                    entity2.setFindsIsNewMsg(false);
                                     entity2.setFindsUserId(childArray.getJSONObject(j).optString("user_id"));
                                     entity2.setFindsUserHead(childArray.getJSONObject(j).optString("head_picture"));
                                     entity2.setFindsUserName(childArray.getJSONObject(j).optString("user_name"));
@@ -999,7 +1031,7 @@ public class FindsCommentsActivity extends BaseActivity {
                             }
 
                             entity.setList(list);
-
+                            entity.setFindsIsNewMsg(false);
                             listData.add(entity);
                         }
 
@@ -1078,15 +1110,22 @@ public class FindsCommentsActivity extends BaseActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.debug("finds:" + e.toString());
                     loadOver();
                 }
             }
 
             @Override
             public void onFailed(String error) {
+                LogUtils.debug("finds:" + error);
                 loadOver();
             }
         });
+    }
+
+
+    /***/
+    private void setDataList() {
     }
 
 
@@ -1109,6 +1148,7 @@ public class FindsCommentsActivity extends BaseActivity {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                showToast("点赞成功");
                                 if (type.equals("child")) {
                                     if (listData.get(gposition).getList().get(cposition).getFindsIsPraise().equals("0")) {
                                         praise_num = Integer.parseInt(listData.get(gposition).getList().get(cposition).getFindsPraiseNum()) + 1;
@@ -1135,18 +1175,18 @@ public class FindsCommentsActivity extends BaseActivity {
                         });
 
                     } else {
-                        setPraiseError(type, gposition, cposition);
+                        setPraiseError("点赞失败", type, gposition, cposition);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    setPraiseError(type, gposition, cposition);
+                    setPraiseError("点赞失败", type, gposition, cposition);
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
-                setPraiseError(type, gposition, cposition);
+                setPraiseError("点赞失败", type, gposition, cposition);
             }
         });
     }
@@ -1154,10 +1194,11 @@ public class FindsCommentsActivity extends BaseActivity {
     /**
      * 点赞失败
      */
-    private void setPraiseError(final String type, final int position, final int cposition) {
+    private void setPraiseError(final String msg, final String type, final int position, final int cposition) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                showToast(msg);
                 if (type.equals("child")) {
                     if (listData.get(position).getList().get(cposition).getFindsIsPraise().equals("0")) {
                         listData.get(position).getList().get(cposition).setFindsIsPraise("1");
