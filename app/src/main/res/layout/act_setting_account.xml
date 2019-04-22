@@ -26,11 +26,6 @@
         android:textSize="@dimen/text_size_15" />
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_05"
-        android:background="@color/linee7e7e7" />
-
 
     <TextView
         android:id="@+id/setting_account_phone_btn"
@@ -49,10 +44,6 @@
         android:textSize="@dimen/text_size_15" />
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_05"
-        android:background="@color/linee7e7e7" />
 
 
 </LinearLayout>

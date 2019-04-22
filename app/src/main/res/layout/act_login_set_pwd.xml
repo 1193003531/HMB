@@ -67,8 +67,10 @@
                 android:textSize="@dimen/text_size_14" />
 
             <ImageView
+                android:id="@+id/login_pwd_show"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:onClick="onAction"
                 android:paddingLeft="@dimen/text_size_15"
                 android:paddingRight="5dp"
                 android:src="@drawable/login_pwd_n" />

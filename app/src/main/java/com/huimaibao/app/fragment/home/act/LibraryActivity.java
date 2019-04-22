@@ -55,7 +55,7 @@ public class LibraryActivity extends BaseActivity {
     /**
      * 用户选择的新闻分类列表
      */
-    private ArrayList<ChannelItem> userChannelList = new ArrayList<ChannelItem>();
+    private ArrayList<ChannelItem> userChannelList;//= new ArrayList<ChannelItem>();
 
     private ArrayList<NewsFragment> fragments = new ArrayList<>();
 
@@ -74,7 +74,6 @@ public class LibraryActivity extends BaseActivity {
     LocalBroadcastManager broadcastManager;
     IntentFilter intentFilter;
     BroadcastReceiver mReceiver;
-
 
 
     //private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -104,20 +103,20 @@ public class LibraryActivity extends BaseActivity {
         broadcastManager.registerReceiver(mReceiver, intentFilter);
 
         //setChangelView();
-        getUserLabel(false);
+        getUserLabel(true);
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).getUserChannel().size() == 0) {
-            getUserLabel(true);
-        } else {
-            ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).deleteAllChannel();
-            ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).setChannerData(defaultUserChannels, defaultOtherChannels);
-            setChangelView();
-        }
+//        if (ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).getUserChannel().size() == 0) {
+//            getUserLabel(true);
+//        } else {
+//            ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).deleteAllChannel();
+//            ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).setChannerData(defaultUserChannels, defaultOtherChannels);
+//            setChangelView();
+//        }
     }
 
 
@@ -143,6 +142,7 @@ public class LibraryActivity extends BaseActivity {
             }
         });
 
+        userChannelList = new ArrayList<>();
         defaultUserChannels = new ArrayList<>();
         defaultOtherChannels = new ArrayList<>();
 
@@ -196,6 +196,7 @@ public class LibraryActivity extends BaseActivity {
         int count = userChannelList.size();
         for (int i = 0; i < count; i++) {
             columnsData.add(userChannelList.get(i).getName());
+            LogUtils.debug("columnsData:" + userChannelList.get(i).getName());
         }
     }
 
@@ -260,13 +261,15 @@ public class LibraryActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                   LogUtils.debug("lib=s=" + json);
+                    LogUtils.debug("lib=s=" + json);
                     String status = json.getString("status");
                     String message = json.getString("message");
                     //String data = json.getString("data");
                     if (status.equals("0")) {
                         JSONArray arraySet = new JSONArray(json.getJSONObject("data").getString("set"));
                         JSONArray arrayUnset = new JSONArray(json.getJSONObject("data").getString("unset"));
+                        defaultUserChannels = new ArrayList<>();
+                        defaultOtherChannels = new ArrayList<>();
                         // defaultUserChannels.add(new ChannelItem(1, "关注", 1, 1));
                         defaultUserChannels.add(new ChannelItem(1000, 1, "关注", 1, 1));
                         defaultUserChannels.add(new ChannelItem(2000, 2, "推荐", 2, 1));
@@ -335,7 +338,6 @@ public class LibraryActivity extends BaseActivity {
         });
 
     }
-
 
 
     @Override

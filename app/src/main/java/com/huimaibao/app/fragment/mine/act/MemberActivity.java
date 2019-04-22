@@ -15,6 +15,7 @@ import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.mine.entity.VipEntity;
 import com.huimaibao.app.fragment.mine.server.MemberLogic;
+import com.huimaibao.app.fragment.mine.server.WalletLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.login.logic.LoginLogic;
@@ -135,6 +136,7 @@ public class MemberActivity extends BaseActivity {
         } else {
             getProfileVipData();
         }
+        getWallet();
         getProductsVipData();
         // setVipList();
     }
@@ -395,5 +397,23 @@ public class MemberActivity extends BaseActivity {
         LoginLogic.Instance(mActivity).getUserInfoApi("", false, null);
     }
 
+    /***/
+    private void getWallet() {
+        WalletLogic.Instance(mActivity).getWalletApi(false, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    XPreferencesUtils.put("money", json.getJSONObject("data").getString("money"));
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+
+            }
+        });
+    }
 
 }

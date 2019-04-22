@@ -182,15 +182,18 @@ public class FindsCommentsActivity extends BaseActivity {
         _add_comment_btn = findViewById(R.id.finds_add_comments_btn);
         _add_comment.addTextChangedListener(addCommentWatcher);
         _add_comment_btn.setEnabled(false);
-        if (mType.equals("动态")) {
-            _add_comment.setFocusable(false);
-            _add_comment.setFocusableInTouchMode(false);
-        } else {
-            _comment_type = "0";
-            _add_comment.setFocusable(true);
-            _add_comment.setFocusableInTouchMode(true);
-            XKeyboardUtils.openKeyboard(mActivity, _add_comment);
-        }
+        _add_comment.setFocusable(false);
+        _add_comment.setFocusableInTouchMode(false);
+
+//        if (mType.equals("动态")) {
+//            _add_comment.setFocusable(false);
+//            _add_comment.setFocusableInTouchMode(false);
+//        } else {
+//            _comment_type = "0";
+//            _add_comment.setFocusable(true);
+//            _add_comment.setFocusableInTouchMode(true);
+//            XKeyboardUtils.openKeyboard(mActivity, _add_comment);
+//        }
 
         XKeyboardUtils.observeSoftKeyboard(mActivity, new XKeyboardUtils.OnSoftKeyboardChangeListener() {
             @Override

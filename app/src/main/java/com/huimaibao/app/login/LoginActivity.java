@@ -335,7 +335,7 @@ public class LoginActivity extends Activity {
                             if (data.optBoolean("is_perfect")) {
                                 toMainView();
                             } else {
-                                toPerfect("登录");
+                                toPerfect("微信");
                             }
                         }
                     } catch (Exception e) {

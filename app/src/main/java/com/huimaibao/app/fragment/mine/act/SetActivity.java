@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
@@ -15,9 +16,11 @@ import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.base.BaseApplication;
 import com.huimaibao.app.fragment.mine.settings.AboutUsActivity;
 import com.huimaibao.app.fragment.mine.settings.AccountActivity;
+import com.huimaibao.app.fragment.mine.settings.InviterActivity;
 import com.huimaibao.app.fragment.mine.settings.PaymentActivity;
 import com.huimaibao.app.fragment.mine.settings.UserAgreementActivity;
 import com.huimaibao.app.fragment.mine.settings.VerifyPhoneActivity;
+import com.huimaibao.app.fragment.mine.settings.server.SettingLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.login.LoginActivity;
 import com.huimaibao.app.login.logic.LoginLogic;
@@ -26,7 +29,9 @@ import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.zxing.act.CaptureActivity;
 import com.huimaibao.app.zxing.util.Constant;
 import com.youth.xframe.common.XActivityStack;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XAppUtils;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XFileUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 
@@ -42,11 +47,16 @@ import org.json.JSONObject;
 public class SetActivity extends BaseActivity {
 
     private String mType = "";
-
-    private TextView _cache_value, _version_tv;
-    private ImageView _version_new_iv;
+    //缓存，版本，邀请人
+    private String _inviter_phone_value = "";
+    private LinearLayout _inviter_ll;
+    private TextView _cache_value, _version_tv, _inviter_tv;
+    private ImageView _version_new_iv, _inviter_iv;
     private DialogUtils mDialogUtils;
     private AppDownloadManager mDownloadManager;
+
+    //
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +71,16 @@ public class SetActivity extends BaseActivity {
         setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
+        setShoweLine(false);
 
         mDialogUtils = new DialogUtils(mActivity);
 
         _cache_value = findViewById(R.id.setting_clear_cache_value);
         _version_new_iv = findViewById(R.id.setting_about_hmb_new_value);
         _version_tv = findViewById(R.id.setting_about_hmb_value);
+        _inviter_ll = findViewById(R.id.setting_inviter_btn);
+        _inviter_tv = findViewById(R.id.setting_inviter_phone_value);
+        _inviter_iv = findViewById(R.id.setting_inviter_iv);
 
         _version_tv.setText("版本 " + XAppUtils.getVersionName(mActivity));
         _cache_value.setText(XFileUtils.getFilesSize(BaseApplication.getApp().getFilePath()));
@@ -77,6 +91,12 @@ public class SetActivity extends BaseActivity {
         } else {
             _version_new_iv.setVisibility(View.GONE);
         }
+
+//        _inviter_phone_value = XPreferencesUtils.get("inviter_phone", "").toString().trim();
+//        if (XEmptyUtils.isSpace(_inviter_phone_value)) {
+        getInviterPhone();
+        //}
+
     }
 
 
@@ -105,6 +125,9 @@ public class SetActivity extends BaseActivity {
                 break;
             case R.id.setting_about_us_btn:
                 startActivity(AboutUsActivity.class, "联系我们");
+                break;
+            case R.id.setting_inviter_btn:
+                startActivity(InviterActivity.class, "邀请人");
                 break;
             //关于汇脉宝
             case R.id.setting_about_hmb_btn:
@@ -298,6 +321,13 @@ public class SetActivity extends BaseActivity {
         if (mDownloadManager != null) {
             mDownloadManager.resume();
         }
+
+        if (!XEmptyUtils.isSpace(XPreferencesUtils.get("inviter_phone", "").toString().trim())) {
+            _inviter_tv.setText(XPreferencesUtils.get("inviter_phone", "") + "");
+            _inviter_iv.setVisibility(View.GONE);
+            _inviter_ll.setEnabled(false);
+        }
+
     }
 
     @Override
@@ -307,4 +337,53 @@ public class SetActivity extends BaseActivity {
             mDownloadManager.onPause();
         }
     }
+
+    /**
+     * 获取邀请人
+     */
+    private void getInviterPhone() {
+        SettingLogic.Instance(mActivity).getInvitationPhoneApi(true, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    String status = json.optString("status");
+                    //String message = json.getString("message");
+                    if (status.equals("0")) {
+                        JSONObject data = new JSONObject(json.optString("data"));
+                        final String phone = data.optString("phone", "").trim();
+                        XPreferencesUtils.put("inviter_phone", phone);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (XEmptyUtils.isSpace(phone)) {
+                                    _inviter_tv.setText("");
+                                    _inviter_iv.setVisibility(View.VISIBLE);
+                                    _inviter_ll.setEnabled(true);
+                                } else {
+                                    _inviter_tv.setText(phone);
+                                    _inviter_iv.setVisibility(View.GONE);
+                                    _inviter_ll.setEnabled(false);
+                                }
+                            }
+                        });
+
+                    } else {
+
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+
+            }
+        });
+    }
+
+
 }

@@ -22,6 +22,7 @@ import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.base.BaseApplication;
 import com.huimaibao.app.fragment.LibraryFragment;
+import com.huimaibao.app.fragment.home.act.LibraryActivity;
 import com.huimaibao.app.fragment.library.adapter.DragAdapter;
 import com.huimaibao.app.fragment.library.adapter.OtherAdapter;
 import com.huimaibao.app.fragment.library.adapter.view.DragGrid;
@@ -296,19 +297,10 @@ public class ChannelActivity extends BaseActivity implements OnItemClickListener
         ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).saveOtherChannel(otherAdapter.getChannnelLst());
     }
 
-    @Override
-    public void onBackPressed() {
-        saveChannel();
-        if (userAdapter.isListChanged()) {
-            Intent intent = new Intent();
-            setResult(LibraryFragment.CHANNELRESULT, intent);
-            finish();
-            // Log.d(TAG, "数据发生改变");
-        } else {
-            super.onBackPressed();
-        }
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//    }
 
     // HashMap<String, Object> map = new HashMap<>();
     //            map.put("user_id", XPreferencesUtils.get("user_id", ""));
@@ -352,7 +344,16 @@ public class ChannelActivity extends BaseActivity implements OnItemClickListener
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                onBackPressed();
+                                saveChannel();
+                                if (userAdapter.isListChanged()) {
+                                    Intent intent = new Intent();
+                                    setResult(LibraryActivity.CHANNELRESULT, intent);
+                                    finish();
+                                    // Log.d(TAG, "数据发生改变");
+                                } else {
+                                    finish();
+                                }
+                                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                             }
                         });
 

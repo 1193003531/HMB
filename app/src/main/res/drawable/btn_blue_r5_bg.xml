@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/FF274FF3" />
-    <!-- 这里是设置为四周 也可以单独设置某个位置为圆角-->
-    <corners android:radius="5dp" />
-    <stroke
-        android:width="0dp"
-        android:color="@color/FF274FF3" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/main_color_s" />
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+    <item android:state_pressed="false">
+        <shape>
+            <solid android:color="@color/main_color" />
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+</selector>

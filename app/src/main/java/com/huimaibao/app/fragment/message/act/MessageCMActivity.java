@@ -11,6 +11,10 @@ import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.library.adapter.NewsFragmentPagerAdapter;
 import com.huimaibao.app.fragment.message.fragment.CMListFragment;
+import com.huimaibao.app.fragment.mine.act.MemberActivity;
+import com.huimaibao.app.utils.DialogUtils;
+import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.widget.NoScrollViewPager;
 
 import java.util.ArrayList;
 
@@ -23,16 +27,18 @@ public class MessageCMActivity extends BaseActivity {
     private TextView _top_titel_1, _top_titel_2;
 
 
-    private ViewPager mViewPager;
+    private NoScrollViewPager mViewPager;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private String[] nameData = {"人气", "对我感兴趣"};
     private String[] typeData = {"1", "2"};
 
+    private DialogUtils mDialogUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_message_customer_m);
+        mDialogUtils = new DialogUtils(mActivity);
 
 //        Intent intent = getIntent();
 //        if (intent != null) {
@@ -52,11 +58,12 @@ public class MessageCMActivity extends BaseActivity {
         _top_titel_2 = findViewById(R.id.mine_msg_title_2);
 
         mViewPager = findViewById(R.id.msg_viewpager);
-
+        mViewPager.setNoScroll(true);
 
         //添加点击事件
         _top_titel_1.setOnClickListener(new MyOnClickListener(0));
         _top_titel_2.setOnClickListener(new MyOnClickListener(1));
+
 
         initData();
     }
@@ -106,7 +113,22 @@ public class MessageCMActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            mViewPager.setCurrentItem(index);
+            if (index == 1) {
+                if (XPreferencesUtils.get("vip_level", "0").equals("0")) {
+                    mDialogUtils.showNoTitleDialog("开通会员才能看\"对我感兴趣\"", "取消", "开通", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(MemberActivity.class, "会员中心");
+                            mDialogUtils.dismissDialog();
+                        }
+                    });
+                } else {
+                    mViewPager.setCurrentItem(index, false);
+                }
+            } else {
+                mViewPager.setCurrentItem(index, false);
+            }
+
         }
     }
 
@@ -128,7 +150,7 @@ public class MessageCMActivity extends BaseActivity {
         @Override
         public void onPageSelected(int position) {
             // TODO Auto-generated method stub
-            mViewPager.setCurrentItem(position);
+            mViewPager.setCurrentItem(position, false);
             setTopCurrentItem(position);
         }
     };

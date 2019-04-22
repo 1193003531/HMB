@@ -417,7 +417,7 @@ public class FindsFragment extends BaseFragment {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                             showToast("点赞成功");
+                                showToast("点赞成功");
                                 if (listData.get(position).getFindsIsPraise().equals("0")) {
                                     praise_num = Integer.parseInt(listData.get(position).getFindsPraiseNum()) + 1;
                                     listData.get(position).setFindsIsPraise("1");
@@ -433,18 +433,18 @@ public class FindsFragment extends BaseFragment {
                         });
 
                     } else {
-                        setPraiseError("点赞失败",position);
+                        setPraiseError("点赞失败", position);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    setPraiseError("点赞失败",position);
+                    setPraiseError("点赞失败", position);
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
-                setPraiseError("点赞失败",position);
+                setPraiseError("点赞失败", position);
             }
         });
     }
@@ -452,7 +452,7 @@ public class FindsFragment extends BaseFragment {
     /**
      * 添加收藏
      */
-    private void getCardAdd(String card_id_value, final int position) {
+    private void getCardAdd(final String card_id_value, final int position) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("card_id", card_id_value);
         CardClipLogic.Instance(mActivity).getCardClipAddApi(map, false, new ResultBack() {
@@ -467,7 +467,12 @@ public class FindsFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 showToast("关注成功");
-                                listData.get(position).setFindsIsFocus("1");
+                                for (int i = 0; i < listData.size(); i++) {
+                                    if (listData.get(position).getFindsCardId().equals(card_id_value)) {
+                                        listData.get(position).setFindsIsFocus("1");
+                                    }
+                                }
+
                                 mAdapter.notifyDataSetChanged();
                             }
                         });
@@ -506,7 +511,7 @@ public class FindsFragment extends BaseFragment {
     /**
      * 点赞失败
      */
-    private void setPraiseError(final String msg,final int position) {
+    private void setPraiseError(final String msg, final int position) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

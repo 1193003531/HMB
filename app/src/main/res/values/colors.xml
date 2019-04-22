@@ -10,6 +10,8 @@
     <color name="AFAEB1">#FAFAFA</color>
     <color name="_535255">#535255</color>
     <color name="main_color">#f56900</color>
+    <color name="main_color_s">#de5c00</color>
+    <color name="main_color_n">#f3ccb0</color>
     <!--常用色-->
     <color name="_34394C">#34394C</color>
     <color name="_484F64">#484F64</color>
@@ -86,6 +88,7 @@
     <color name="color777777">#777777</color>
     <color name="colorc7c7c7">#c7c7c7</color>
     <color name="e92121">#e92121</color>
+    <color name="e00000">#e00000</color>
     <color name="cecccc">#cecccc</color>
     <color name="d8d8d8">#d8d8d8</color>
     <color name="c2c2c2">#c2c2c2</color>

@@ -478,6 +478,11 @@
             android:label="点赞动态"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.mine.settings.InviterActivity"
+            android:label="邀请人"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".fragment.web.HomePageWebActivity"

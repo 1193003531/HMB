@@ -82,6 +82,16 @@ public class WelcomeActivity extends Activity {
 //        }
 
 
+        File file = new File(BaseApplication.getApp().getFilePath() + "images/");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+//        if (!file.getParentFile().exists()) {
+//            file.getParentFile().mkdirs();
+//        }
+
+
         isFirstUse = (boolean) XPreferencesUtils.get("isFirstUse", true);
 
         new Handler().postDelayed(new Runnable() {

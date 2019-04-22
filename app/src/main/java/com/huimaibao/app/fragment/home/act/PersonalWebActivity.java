@@ -73,7 +73,7 @@ public class PersonalWebActivity extends BaseActivity {
             mType = intent.getStringExtra("vType");
         }
         setShoweLine(false);
-        setTopTitle(mType);
+        setTopTitle("产品");
         setTopLeft(true, true, false, "");
         setTopRight(true, false, true, "产品价值", new View.OnClickListener() {
             @Override
@@ -287,10 +287,8 @@ public class PersonalWebActivity extends BaseActivity {
                                                                         userAmendData(listData.get(position).getMakingListId(), "0", "0");
                                                                         mDialogUtils.dismissDialog();
                                                                     }
-
                                                                 }
                                                             });
-
                                                         }
                                                     },
                                                     //修改
@@ -316,9 +314,18 @@ public class PersonalWebActivity extends BaseActivity {
                                                             if (listData.get(position).getMakingListIsDuf().equals("1")) {
                                                                 ToastUtils.showCenter("默认不能删除");
                                                                 return;
+                                                            } else {
+                                                                mDialogUtils.dismissDialog();
+                                                                mDialogUtils.showNoTitleDialog("是否删除产品?", "取消", "删除", new View.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(View v) {
+                                                                        mDialogUtils.dismissDialog();
+                                                                        userTempDelData(listData.get(position).getMakingListId());
+                                                                    }
+                                                                });
                                                             }
-                                                            userTempDelData(listData.get(position).getMakingListId());
-                                                            mDialogUtils.dismissDialog();
+
+
                                                         }
                                                     });
                                         }

@@ -94,6 +94,8 @@ public class CMListFragment extends BaseFragment {
      * 初始化控件
      */
     private void initView(View v) {
+        listData = new ArrayList<>();
+
         mTopView = getLayoutInflater().inflate(R.layout.act_message_top, null);
         //_top_ll = mTopView.findViewById(R.id.act_message_top_ll);
         _top_left = mTopView.findViewById(R.id.act_message_top_left);
@@ -233,8 +235,8 @@ public class CMListFragment extends BaseFragment {
                                 showToast("没有数据了");
                             }
                         }
-                        _top_left_value = json.getJSONObject("data").getString("all");
-                        _top_right_value = json.getJSONObject("data").getString("today");
+                        _top_left_value = json.getJSONObject("data").optString("all","0");
+                        _top_right_value = json.getJSONObject("data").optString("today","0");
                         for (int i = 0; i < array.length(); i++) {
                             MessageEntity item = new MessageEntity();
                             item.setMessageId(array.getJSONObject(i).getString("user_id"));

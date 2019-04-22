@@ -3,6 +3,7 @@ package com.huimaibao.app.takePhone;
 import android.app.Activity;
 import android.app.Dialog;
 import android.net.Uri;
+import android.os.Environment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,7 +152,8 @@ public class TakePhoneHelper {
      * 显示弹出框
      */
     public void showTakePhoneDialog(final TakePhoto takePhoto) {
-        File file = new File(BaseApplication.getApp().getFilePath(), "images/" + System.currentTimeMillis() + ".jpg");
+        //File file = new File(BaseApplication.getApp().getFilePath(), "images/" + System.currentTimeMillis() + ".jpg");
+        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
 
         //String path = Environment.getExternalStorageDirectory() + File.separator + "images" + File.separator;
         // File file = new File(path, System.currentTimeMillis() + ".jpg");

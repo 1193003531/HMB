@@ -678,4 +678,12 @@ public interface ServerApi {
      * get
      */
     String FINDS_DY_LIST_URL = SERVER_URL + "/front/finds/dynamic_list";
+    /**
+     * 用户获取邀请人的电话号码
+     * get
+     * 设置邀请人
+     * post
+     * phone
+     */
+    String INVITATION_PHONE_URL = SERVER_URL + "/app/invitation-phone";
 }

@@ -99,6 +99,7 @@ public class WalletActivity extends BaseActivity {
                 try {
                     JSONObject json = new JSONObject(object.toString());
                     _wallet_value = json.getJSONObject("data").getString("money");
+                    XPreferencesUtils.put("money", _wallet_value);
                     if (json.getString("status").equals("0")) {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override

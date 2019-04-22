@@ -24,7 +24,7 @@ public class SettingLogic {
 
     public static SettingLogic Instance(Activity activity) {
         _Instance = new SettingLogic(activity);
-        mDialogUtils =new DialogUtils(activity);
+        mDialogUtils = new DialogUtils(activity);
         return _Instance;
     }
 
@@ -227,6 +227,78 @@ public class SettingLogic {
                 @Override
                 public void dismissProgress() {
                     if (!mActivity.isFinishing())
+                        mDialogUtils.dismissDialog();
+
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                    resultBack.onSuccess(o);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    resultBack.onFailed(error);
+                }
+            });
+        } else {
+            XToast.normal(mActivity.getResources().getString(R.string.network_enable));
+        }
+    }
+
+    /**
+     * 用户获取邀请人的电话号码
+     */
+    public void getInvitationPhoneApi(final boolean isShow, final ResultBack resultBack) {
+        if (XNetworkUtils.isConnected()) {
+            XHttp.obtain().get(ServerApi.INVITATION_PHONE_URL, null, new HttpCallBack() {
+                @Override
+                public void showProgress() {
+                    if (isShow)
+                        mDialogUtils.showLoadingDialog("加载中...");
+
+                }
+
+                @Override
+                public void dismissProgress() {
+                    if (isShow)
+                        mDialogUtils.dismissDialog();
+
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                    resultBack.onSuccess(o);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    resultBack.onFailed(error);
+                }
+            });
+        } else {
+            XToast.normal(mActivity.getResources().getString(R.string.network_enable));
+        }
+    }
+
+    /**
+     * 设置邀请人
+     */
+    public void setInvitationPhoneApi(String phone, final boolean isShow, final ResultBack resultBack) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("phone", "phone");
+        if (XNetworkUtils.isConnected()) {
+            XHttp.obtain().get(ServerApi.INVITATION_PHONE_URL, map, new HttpCallBack() {
+                @Override
+                public void showProgress() {
+                    if (isShow)
+                        mDialogUtils.showLoadingDialog("设置中...");
+
+                }
+
+                @Override
+                public void dismissProgress() {
+                    if (isShow)
                         mDialogUtils.dismissDialog();
 
                 }

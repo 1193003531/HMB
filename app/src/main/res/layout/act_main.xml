@@ -154,11 +154,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/fragment_home_no" />
-
-    <include layout="@layout/fragment_elect_circle_no" />
-
-    <include layout="@layout/fragment_mine_no" />
-
     <include layout="@layout/dialog_home_layout" />
 </RelativeLayout>

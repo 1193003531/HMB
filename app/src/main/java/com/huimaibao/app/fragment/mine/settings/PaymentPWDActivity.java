@@ -64,6 +64,7 @@ public class PaymentPWDActivity extends BaseActivity {
         _tv = findViewById(R.id.setting_amend_pwd_tv);
         _commit_btn = findViewById(R.id.setting_amend_pwd_commit_btn);
         verificationcodeview = findViewById(R.id.setting_amend_pwd_value);
+        XKeyboardUtils.openKeyboard(mActivity);
     }
 
     /**

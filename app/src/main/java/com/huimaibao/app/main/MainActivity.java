@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
 
 
     //引导页
-    private RelativeLayout _home_no_ll, _elect_no_ll, _mine_no_ll;
+    //private RelativeLayout _home_no_ll, _elect_no_ll, _mine_no_ll;
 
     private DialogUtils mDialogUtils;
     //app更新
@@ -138,17 +138,17 @@ public class MainActivity extends BaseActivity {
         //mCurrent = mainFragment;
         fragmentTransaction.commit();
 
-        if ((boolean) XPreferencesUtils.get("isFirstHome", true))
-            _home_no_ll.setVisibility(View.VISIBLE);
-        else
-            _home_no_ll.setVisibility(View.GONE);
+//        if ((boolean) XPreferencesUtils.get("isFirstHome", true))
+//            _home_no_ll.setVisibility(View.VISIBLE);
+//        else
+//            _home_no_ll.setVisibility(View.GONE);
 
         mDialogUtils = new DialogUtils(mActivity);
         mDownloadManager = new AppDownloadManager(mActivity);
 
         //LogUtils.debug("token" + XPreferencesUtils.get("token", ""));
         //
-       // LoginLogic.Instance(mActivity).refreshTokenApi();
+        // LoginLogic.Instance(mActivity).refreshTokenApi();
 
         getUserInfo();
         upDataAPP();
@@ -189,9 +189,9 @@ public class MainActivity extends BaseActivity {
         _red_iv.setImageResource(R.drawable.home_dialog_red_icon);
         _red_ll.setVisibility(View.GONE);
 
-        _home_no_ll = findViewById(R.id.home_no_ll);
-        _elect_no_ll = findViewById(R.id.elect_no_ll);
-        _mine_no_ll = findViewById(R.id.mine_no_ll);
+        //_home_no_ll = findViewById(R.id.home_no_ll);
+        //_elect_no_ll = findViewById(R.id.elect_no_ll);
+        //_mine_no_ll = findViewById(R.id.mine_no_ll);
         //底部
         item_home = findViewById(R.id.home_buttom_home_tv);
         item_elect_circle = findViewById(R.id.home_buttom_elect_tv);
@@ -246,10 +246,10 @@ public class MainActivity extends BaseActivity {
                 }
                 //mCurrent = electCircleFragment;
                 changeTextColor(1);
-                if ((boolean) XPreferencesUtils.get("isFirstElect", true))
-                    _elect_no_ll.setVisibility(View.VISIBLE);
-                else
-                    _elect_no_ll.setVisibility(View.GONE);
+//                if ((boolean) XPreferencesUtils.get("isFirstElect", true))
+//                    _elect_no_ll.setVisibility(View.VISIBLE);
+//                else
+//                    _elect_no_ll.setVisibility(View.GONE);
                 break;
             //消息
             case R.id.home_buttom_msg_btn:
@@ -291,25 +291,25 @@ public class MainActivity extends BaseActivity {
 
                 //mCurrent = mineFragment;
                 changeTextColor(3);
-                if ((boolean) XPreferencesUtils.get("isFirstMine", true))
-                    _mine_no_ll.setVisibility(View.VISIBLE);
-                else
-                    _mine_no_ll.setVisibility(View.GONE);
+//                if ((boolean) XPreferencesUtils.get("isFirstMine", true))
+//                    _mine_no_ll.setVisibility(View.VISIBLE);
+//                else
+//                    _mine_no_ll.setVisibility(View.GONE);
                 break;
             //首页首次提示
             case R.id.home_no_ll_btn:
-                _home_no_ll.setVisibility(View.GONE);
-                XPreferencesUtils.put("isFirstHome", false);
+                //_home_no_ll.setVisibility(View.GONE);
+                // XPreferencesUtils.put("isFirstHome", false);
                 break;
             //互推圈首次提示
             case R.id.elect_no_ll_btn:
-                _elect_no_ll.setVisibility(View.GONE);
-                XPreferencesUtils.put("isFirstElect", false);
+                //_elect_no_ll.setVisibility(View.GONE);
+                //XPreferencesUtils.put("isFirstElect", false);
                 break;
             //我的首次提示
             case R.id.mine_no_ll_btn:
-                _mine_no_ll.setVisibility(View.GONE);
-                XPreferencesUtils.put("isFirstMine", false);
+                //_mine_no_ll.setVisibility(View.GONE);
+                //XPreferencesUtils.put("isFirstMine", false);
                 break;
             //隐藏
             case R.id.dialog_home_ll:
@@ -437,10 +437,10 @@ public class MainActivity extends BaseActivity {
         }
         //mCurrent = electCircleFragment;
         changeTextColor(1);
-        if ((boolean) XPreferencesUtils.get("isFirstElect", true))
-            _elect_no_ll.setVisibility(View.VISIBLE);
-        else
-            _elect_no_ll.setVisibility(View.GONE);
+//        if ((boolean) XPreferencesUtils.get("isFirstElect", true))
+//            _elect_no_ll.setVisibility(View.VISIBLE);
+//        else
+//            _elect_no_ll.setVisibility(View.GONE);
         fragmentTransaction.commit();
     }
 

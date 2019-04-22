@@ -15,6 +15,7 @@ import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.login.logic.LoginLogic;
 import com.huimaibao.app.main.MainActivity;
 import com.huimaibao.app.utils.ToastUtils;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
@@ -104,13 +105,13 @@ public class LoginSetPWDActivity extends BaseActivity {
                 // 重新设置光标位置
                 _pwd_et.setSelection(_pwd_et.getText().length());
                 break;
-            //完成/注册
+            //完成/注册/绑定
             case R.id.login_set_pwd:
                 _pwd_value = _pwd_et.getText().toString();
                 if (XEmptyUtils.isSpace(_pwd_value)) {
                     ToastUtils.showCenter("请输入密码");
                 } else {
-                    if (mType.equals("忘记密码")) {
+                    if (mType.equals("忘记密码") || mType.equals("绑定")) {
                         RestPWD(_pwd_value);
                     } else if (mType.equals("注册")) {
                         Register(_pwd_value);
@@ -173,7 +174,12 @@ public class LoginSetPWDActivity extends BaseActivity {
                             XPreferencesUtils.put("token", dataJ.getString("token"));
                             XPreferencesUtils.put("phone", _phone_value);
                             showToast("设置密码成功");
-                            toMainView();
+                            if (mType.equals("绑定")) {
+                                toPerfect("微信");
+                            } else {
+                                toMainView();
+                            }
+
                         } else {
                             showToast(message);
                         }
@@ -202,6 +208,7 @@ public class LoginSetPWDActivity extends BaseActivity {
         map.put("phone", _phone_value);
         map.put("sign", XPreferencesUtils.get("VCode", ""));
         map.put("password", pwd);
+        LogUtils.debug("register:" + map);
         LoginLogic.Instance(this).LoginRegisterApi(map, new ResultBack() {
             @Override
             public void onSuccess(Object object) {

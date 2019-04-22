@@ -60,6 +60,7 @@ public class FindsAddActivity extends TakePhotoActivity {
     private FindsAlbumAdapter albumAdapter;
     private ArrayList<String> albumData, imagePthData, loadPathData;
     private String imagePthData_value = "";
+    private int limit = 9;
 
     private DialogUtils mDialogUtils;
 
@@ -96,8 +97,11 @@ public class FindsAddActivity extends TakePhotoActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (albumData.get(position).equals("添加")) {
-                    takePhoneHelper.setTakePhone(9, false, false, 800, 800, false, 512000, 0, 0);
-                    takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                    limit = 9 - imagePthData.size();
+                    if (limit > 0) {
+                        takePhoneHelper.setTakePhone(limit, false, false, 800, 800, false, 512000, 0, 0);
+                        takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                    }
                 } else {
                     imagePthData.remove(position);
                     albumData.clear();

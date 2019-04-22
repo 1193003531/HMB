@@ -598,7 +598,7 @@ public class PerfectBActivity extends TakePhotoActivity {
         map.put("sex", sex);//性别
         map.put("mobile_phone", XPreferencesUtils.get("phone", ""));//手机号码
         map.put("company", company);//公司名称
-//        map.put("head_picture", "");//用户头像
+        map.put("head_picture", head);//用户头像
 //        map.put("telephone", "");//公司电话
 //        map.put("industry", "");//行业
 //        map.put("wechat_code", "");//微信号
