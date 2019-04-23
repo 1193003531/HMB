@@ -38,7 +38,7 @@ public class BankCardDelActivity extends BaseActivity {
         }
 
         setTopTitle("银行卡");
-        setShoweLine(false);
+        setShowLine(false);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
 

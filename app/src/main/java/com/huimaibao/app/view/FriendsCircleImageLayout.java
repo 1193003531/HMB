@@ -1,6 +1,7 @@
 package com.huimaibao.app.view;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,6 +29,7 @@ import java.util.List;
  */
 public class FriendsCircleImageLayout extends ViewGroup {
 
+    private Activity mActivity;
     private int mTotalWidth;
     private int mSingleWidth;
 
@@ -54,6 +56,9 @@ public class FriendsCircleImageLayout extends ViewGroup {
     private int mItemWidth;
     private int mItemHeight;
 
+    public void init(Activity activity) {
+        this.mActivity = activity;
+    }
 
     public FriendsCircleImageLayout(Context context) {
         this(context, null);
@@ -81,15 +86,15 @@ public class FriendsCircleImageLayout extends ViewGroup {
         //当只有一张图片的时候
         if (count == 1) {
             mColumnCount = 1;
-//            int mItemMaxWidth = (int) (width * MAX_WIDTH_PERCENTAGE);
-//            int mItemMaxHeight = mItemMaxWidth;
-//            if (mItemAspectRatio < 1) {
-//                mItemHeight = mItemMaxHeight;
-//                mItemWidth = (int) (mItemHeight * mItemAspectRatio);
-//            } else {
-//                mItemWidth = mItemMaxWidth;
-//                mItemHeight = (int) (mItemMaxWidth / mItemAspectRatio);
-//            }
+            int mItemMaxWidth = (int) (width * MAX_WIDTH_PERCENTAGE);
+            int mItemMaxHeight = mItemMaxWidth;
+            if (mItemAspectRatio < 1) {
+                mItemHeight = mItemMaxHeight;
+                mItemWidth = (int) (mItemHeight * mItemAspectRatio);
+            } else {
+                mItemWidth = mItemMaxWidth;
+                mItemHeight = (int) (mItemMaxWidth / mItemAspectRatio);
+            }
         } else {
             if (count == 4) {
                 mColumnCount = 2;
@@ -166,10 +171,6 @@ public class FriendsCircleImageLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         mTotalWidth = r - l;
         mSingleWidth = (int) ((mTotalWidth - mSpacing * (3 - 1)) / 3);
-//
-//        if (getChildCount() == 1) {
-//            mItemWidth = mItemHeight = mSingleWidth;
-//        }
         for (int i = 0; i < getChildCount(); i++) {
             View imageView = getChildAt(i);
 
@@ -197,14 +198,14 @@ public class FriendsCircleImageLayout extends ViewGroup {
         if (size == 1) {
             //一般在url中会有宽高 可以算出宽高比
             //测试url固定用的 1000:1376
-            //mItemAspectRatio = 1000 / 1376f;
+            mItemAspectRatio = 1000 / 1376f;
             //mItemAspectRatio = ImageLoaderManager.getAspectRatio(imageUrls.get(0).trim());
-            setOneImageSHow(imageUrls);
+            //setOneImageSHow(imageUrls);
         } else {
             mItemAspectRatio = 1;
-            setMoreImageSHow(imageUrls);
+            //setMoreImageSHow(imageUrls);
         }
-        //setMoreImageSHow(imageUrls);
+        setMoreImageSHow(imageUrls);
     }
 
 
@@ -294,6 +295,7 @@ public class FriendsCircleImageLayout extends ViewGroup {
 //                setLayoutParams(params);
 
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
                 addView(imageView);
                 //点击查看大图
                 imageView.setOnClickListener(new OnClickListener() {
@@ -394,8 +396,8 @@ public class FriendsCircleImageLayout extends ViewGroup {
         intent.setClass(getContext(), ImageShowActivity.class);
         intent.putStringArrayListExtra("infos", urlList);
         intent.putExtra("position", i);
-        getContext().startActivity(intent);
-        // mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        mActivity.startActivity(intent);
+        mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }
 

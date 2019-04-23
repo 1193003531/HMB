@@ -21,13 +21,14 @@
             android:layout_height="42dp"
             android:background="@color/white"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:onClick="onAction"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:layout_height="match_parent"
                 android:src="@drawable/login_back_left" />
 
             <com.huimaibao.app.tablayout.TabLayout
@@ -91,11 +92,13 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/list_no_data_iv"
+        android:id="@+id/list_n_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/lib_no_data" />
+
+    <include layout="@layout/list_no_data" />
 
 
 </RelativeLayout>

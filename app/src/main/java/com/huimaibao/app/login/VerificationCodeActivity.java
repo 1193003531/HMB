@@ -134,7 +134,7 @@ public class VerificationCodeActivity extends BaseActivity {
      */
     private void ValidateSMS(final String phone, final String code) {
 
-        LogUtils.debug("responseObj=s=" + code+"-"+phone);
+        LogUtils.debug("responseObj=s=" + code + "-" + phone);
         LoginLogic.Instance(mActivity).LoginValidateSMSApi(phone, code, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
@@ -307,7 +307,7 @@ public class VerificationCodeActivity extends BaseActivity {
                 if (object != null && !"".equals(object)) {
                     try {
                         JSONObject json = new JSONObject(object.toString());
-                        //XLog.d("json:" + json);
+                        LogUtils.debug("json:" + json);
                         String status = json.getString("status");
                         String message = json.getString("message");
                         String data = json.getString("data");
@@ -318,6 +318,7 @@ public class VerificationCodeActivity extends BaseActivity {
                             if (dataJ.optBoolean("is_perfect")) {
                                 toMainView();
                             } else {
+                                XPreferencesUtils.put("VCode", dataJ.getString("sign"));
                                 startActivity(LoginSetPWDActivity.class, "绑定");
                                 finish();
                                 //toPerfect("微信");

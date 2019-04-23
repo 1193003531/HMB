@@ -99,7 +99,7 @@ public class CardClipDetailActivity extends BaseActivity {
         }
         mDialogUtils = new DialogUtils(mActivity);
         setTopTitle("名片详情");
-        setShoweLine(false);
+        setShowLine(false);
         setTopLeft(true, true, false, "");
         setTopRight(true, true, false, "", new View.OnClickListener() {
             @Override

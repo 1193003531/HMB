@@ -66,7 +66,7 @@ public class LibDetailsWebActivity extends BaseActivity {
             mUrl = intent.getStringExtra("vUrl");
         }
 
-        setShoweTitle(false);
+        setShowTitle(false);
 //        setTopLeft(true, true, false, "");
 //        setTopRight(false, true, false, "", null);
 //        setTopRight(true, true, false, "", new View.OnClickListener() {

@@ -34,7 +34,7 @@ public class AdvertSlogansActivity extends BaseActivity {
         setNeedBackGesture(true);
 
         setTopTitle("广告标语");
-        setShoweLine(false);
+        setShowLine(false);
         setTopLeft(true, true, false, "");
         setTopRight(true, false, true, "完成", new View.OnClickListener() {
             @Override

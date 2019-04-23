@@ -68,7 +68,7 @@ public class ShareTaskActivity extends BaseActivity {
         setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
-        setShoweLine(false);
+        setShowLine(false);
 
         mWxShare = WXShare.Instance(mActivity);
 
@@ -155,7 +155,7 @@ public class ShareTaskActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.elect_share_task_top:
                 _top_btn.setVisibility(View.GONE);
-                setShoweLine(true);
+                setShowLine(true);
                 break;
         }
     }

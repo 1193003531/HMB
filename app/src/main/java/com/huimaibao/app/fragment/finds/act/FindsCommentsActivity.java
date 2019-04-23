@@ -47,6 +47,7 @@ import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XScrollViewUtils;
+import com.youth.xframe.utils.XStringUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.GifView;
@@ -326,7 +327,7 @@ public class FindsCommentsActivity extends BaseActivity {
 
         _top_name.setText(_dy_name_value.length() > 5 ? _dy_name_value.substring(0, 5) : _dy_name_value);
         _item_name.setText(_dy_name_value);
-        _item_content.setText(_dy_content_value);
+        _item_content.setText(XStringUtils.ToDBC(_dy_content_value));
         _item_time.setText(XTimeUtils.getTimeRangeS(_dy_time_value));
         _item_comments_num.setText(_dy_comments_num_value + "条评论");
         _top_comment_num.setText(_dy_comments_num_value + "条评论");
@@ -484,15 +485,15 @@ public class FindsCommentsActivity extends BaseActivity {
             //关注
             case R.id.finds_list_top_foucs:
             case R.id.finds_list_top_foucs_btn:
-                xFAFocus = new XFrameAnimation(_top_focus_iv, focusRes, 30, false);
-                xFAFocus = new XFrameAnimation(_item_focus_iv, focusRes, 30, false);
+                xFAFocus = new XFrameAnimation(_top_focus_iv, focusRes, 20, false);
+                xFAFocus = new XFrameAnimation(_item_focus_iv, focusRes, 20, false);
 
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
 
                         getCardAdd();
                     }
-                }, 810);
+                }, 540);
 
                 break;
             //点赞

@@ -181,7 +181,7 @@ public class BaseActivity extends XActivity {
      *
      * @param isshowline
      */
-    protected void setShoweTitle(boolean isshowline) {
+    protected void setShowTitle(boolean isshowline) {
         try {
             LinearLayout titlell = findViewById(R.id.stub_title_bar_ll);
             if (isshowline) {
@@ -199,7 +199,7 @@ public class BaseActivity extends XActivity {
      *
      * @param isshowline
      */
-    protected void setShoweLine(boolean isshowline) {
+    protected void setShowLine(boolean isshowline) {
         try {
             ImageView titleLine = findViewById(R.id.stub_title_bar_line);
             if (isshowline) {

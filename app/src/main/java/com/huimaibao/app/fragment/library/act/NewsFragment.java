@@ -110,7 +110,7 @@ public class NewsFragment extends Fragment {
             _no_data_iv.setImageResource(R.drawable.lib_focus_on_bg);
             //XLog.d("MainActivity---------7");
             countPage = 1;
-            getFoucsOnUser();
+            getFocusOnUser();
         } else if (text.equals("推荐")) {
             //XLog.d("MainActivity---------6");
             mListView.removeFooterView(mTopView);
@@ -122,7 +122,6 @@ public class NewsFragment extends Fragment {
         }
     }
 
-    private LibraryActivity libraryActivity;
     /***/
     private void initView(View v) {
         mTopView = getLayoutInflater().inflate(R.layout.fragment_lib_news_item_head, null);
@@ -154,7 +153,6 @@ public class NewsFragment extends Fragment {
         _no_data = v.findViewById(R.id.list_no_data);
         _no_data_btn = v.findViewById(R.id.list_no_data_btn);
         _no_data.setVisibility(View.GONE);
-
 
 
         mSwipeRefreshView = v.findViewById(R.id.list_swipe_value);
@@ -245,7 +243,7 @@ public class NewsFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (text.equals("关注")) {
-            getFoucsOnUser();
+            getFocusOnUser();
         }
     }
 
@@ -254,7 +252,7 @@ public class NewsFragment extends Fragment {
      */
     private void getData() {
         if (text.equals("关注")) {
-            getFoucsOnUser();
+            getFocusOnUser();
         } else if (text.equals("推荐")) {
             mListView.removeHeaderView(mTopView);
             countPage = 1;
@@ -311,7 +309,7 @@ public class NewsFragment extends Fragment {
                     Intent intent = new Intent(mActivity, FocusOnActivity.class);
                     // LogUtils.debug("LibFocusOnUser:" + userList);
                     // XPreferencesUtils.put("LibFocusOnUser", userList.toString());
-                    intent.putExtra("position",view.getId());
+                    intent.putExtra("position", view.getId());
                     mActivity.startActivity(intent);
                     mActivity.overridePendingTransition(R.anim.slide_in_up_ac, R.anim.slide_out_down_ac);
                 }
@@ -328,13 +326,13 @@ public class NewsFragment extends Fragment {
     /**
      * 获取关注用户
      */
-    private void getFoucsOnUser() {
+    private void getFocusOnUser() {
         LibLogic.Instance(mActivity).getFocusOnUserApi(false, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    //XLog.d("lib=s=" + json);
+                    LogUtils.debug("lib=s=" + json);
                     String status = json.getString("status");
                     String message = json.getString("message");
                     String data = json.getString("data");

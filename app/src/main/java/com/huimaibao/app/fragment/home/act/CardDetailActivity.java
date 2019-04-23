@@ -181,7 +181,7 @@ public class CardDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(Object object) {
                 //_style_value = "" + XPreferencesUtils.get("style", "style3");
-                _head_value = XEmptyUtils.isSpace(XPreferencesUtils.get("logo", "") + "") ? XPreferencesUtils.get("portrait", "") + "" : XPreferencesUtils.get("logo", "") + "";
+                _head_value = XEmptyUtils.isSpace(XPreferencesUtils.get("portrait", "") + "") ? XPreferencesUtils.get("logo", "") + "" : XPreferencesUtils.get("portrait", "") + "";
                 _name_value = "" + XPreferencesUtils.get("name", "");
                 _jobs_value = "" + XPreferencesUtils.get("profession", "");
                 _company_value = "" + XPreferencesUtils.get("company", "");
@@ -216,7 +216,7 @@ public class CardDetailActivity extends BaseActivity {
                 ImageLoaderManager.loadImage(_head_value, _top_head_iv);
                 ImageLoaderManager.loadImage(_head_value, _head_iv);
                 try {
-                    _top_head.setImageBitmap(XBitmapUtils.doBlur(ImageLoader.getInstance().loadImageSync(_head_value),5,10));
+                    _top_head.setImageBitmap(XBitmapUtils.doBlur(ImageLoader.getInstance().loadImageSync(_head_value), 5, 10));
                 } catch (Exception e) {
 
                 }

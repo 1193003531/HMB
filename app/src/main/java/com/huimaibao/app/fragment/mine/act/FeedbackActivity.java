@@ -58,7 +58,7 @@ public class FeedbackActivity extends TakePhotoActivity {
         if (intent != null) {
             mType = intent.getStringExtra("vType");
         }
-        setShoweLine(false);
+        setShowLine(false);
         setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
@@ -225,7 +225,7 @@ public class FeedbackActivity extends TakePhotoActivity {
 
 
                 } catch (Exception e) {
-                   // XLog.e("e:" + e.toString());
+                    // XLog.e("e:" + e.toString());
                     showToast("反馈失败");
                     e.printStackTrace();
                 }

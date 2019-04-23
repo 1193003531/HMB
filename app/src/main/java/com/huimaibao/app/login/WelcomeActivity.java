@@ -82,10 +82,10 @@ public class WelcomeActivity extends Activity {
 //        }
 
 
-        File file = new File(BaseApplication.getApp().getFilePath() + "images/");
-        if (!file.exists()) {
-            file.mkdirs();
-        }
+//        File file = new File(BaseApplication.getApp().getFilePath() + "images/");
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
 
 //        if (!file.getParentFile().exists()) {
 //            file.getParentFile().mkdirs();

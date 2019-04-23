@@ -3,39 +3,35 @@
     android:id="@+id/full_image_root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bg_full_image" >
+    android:background="@drawable/bg_full_image">
 
-    <include
-        android:id="@+id/full_image_title"
-        layout="@layout/stub_title_bar"/>
 
     <com.youth.xframe.utils.imageshow.ImageShowViewPager
         android:id="@+id/image_pager"
         android:layout_width="fill_parent"
-        android:layout_below="@+id/full_image_title"
         android:layout_height="fill_parent" />
 
     <ImageView
         android:id="@+id/download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="15.0dip"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="15.0dip"
-        android:visibility="gone"
-        android:src="@drawable/ic_download" />
+        android:layout_marginBottom="15.0dip"
+        android:src="@drawable/ic_download"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/page_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/download"
-        android:layout_marginLeft="15.0dip"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15.0dip"
         android:layout_marginBottom="15dp"
         android:text=""
-        android:layout_alignParentBottom="true"
         android:textColor="#ffeeeeee"
         android:textSize="12.0sp" />
 

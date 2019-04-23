@@ -28,7 +28,7 @@ public class AccountActivity extends BaseActivity {
         setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
-        setShoweLine(false);
+        setShowLine(false);
     }
 
 

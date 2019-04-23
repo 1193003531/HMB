@@ -1,5 +1,6 @@
 package com.huimaibao.app.fragment.library.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
  * 图片浏览的PagerAdapter
  */
 public class ImagePagerAdapter extends PagerAdapter {
-    Context context;
+    Activity mActivity;
     ArrayList<String> imgsUrl;
     LayoutInflater inflater = null;
     protected ImageLoader imageLoader = ImageLoader.getInstance();
@@ -36,10 +37,10 @@ public class ImagePagerAdapter extends PagerAdapter {
     ProgressBar progress;
     TextView retry;
 
-    public ImagePagerAdapter(Context context, ArrayList<String> imgsUrl) {
-        this.context = context;
+    public ImagePagerAdapter(Activity activity, ArrayList<String> imgsUrl) {
+        this.mActivity = activity;
         this.imgsUrl = imgsUrl;
-        inflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(activity);
         options = Options.getListOptions();
     }
 
@@ -70,7 +71,7 @@ public class ImagePagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        View view = inflater.from(context).inflate(R.layout.fragment_lib_imageshow_item, null);
+        View view = inflater.from(mActivity).inflate(R.layout.fragment_lib_imageshow_item, null);
         full_image = view.findViewById(R.id.full_image);
         progress_text = view.findViewById(R.id.progress_text);
         progress = view.findViewById(R.id.progress);
@@ -117,7 +118,17 @@ public class ImagePagerAdapter extends PagerAdapter {
                 retry.setVisibility(View.VISIBLE);
             }
         });
+
+        full_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.finish();
+            }
+        });
+
         container.addView(view);
+
+
         return view;
     }
 

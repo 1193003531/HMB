@@ -33,7 +33,7 @@ public class BankCardDetailActivity extends BaseActivity {
         }
         mDialogUtils = new DialogUtils(mActivity);
         setTopTitle("银行卡");
-        setShoweLine(false);
+        setShowLine(false);
         setTopLeft(true, true, false, "");
         setTopRight(true, true, false, "", new View.OnClickListener() {
             @Override

@@ -32,8 +32,10 @@ import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.XStringUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
+import com.youth.xframe.widget.NiceImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +139,7 @@ public class FindsAdapter extends BaseAdapter {
             mHolder._item_content.setVisibility(View.GONE);
         } else {
             mHolder._item_content.setVisibility(View.VISIBLE);
-            mHolder._item_content.setText(item.getFindsContent());
+            mHolder._item_content.setText(XStringUtils.ToDBC(item.getFindsContent()));
         }
         mHolder._item_time.setText(XTimeUtils.getTimeRangeS(item.getFindsTime()));
         mHolder._item_praise_num.setText(item.getFindsPraiseNum());
@@ -151,7 +153,13 @@ public class FindsAdapter extends BaseAdapter {
 //            mHolder._item_images.setItemAspectRatio(1);
 //        }
 //
-        mHolder._item_images.setImageUrls(item.getFindsImageList());
+        mHolder._item_images.init(mActivity);
+        if (item.getFindsImageList().equals(mHolder._item_images.getTag())) {
+
+        } else {
+            mHolder._item_images.setImageUrls(item.getFindsImageList());
+            mHolder._item_images.setTag(item.getFindsImageList());
+        }
 
 
         //  mHolder._item_images.setUrlList(item.getFindsImageList());
@@ -208,13 +216,13 @@ public class FindsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // mOnItemHeadClickListener.onItemHeadClick(position);
-                xFAFocus = new XFrameAnimation(mHolder._item_focus_iv, focusRes, 30, false);
+                xFAFocus = new XFrameAnimation(mHolder._item_focus_iv, focusRes, 20, false);
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         //execute the task
                         mOnItemFocusClickListener.onItemFocusClick(position);
                     }
-                }, 810);
+                }, 540);
 
             }
         });
@@ -301,7 +309,7 @@ public class FindsAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        CircleImageView _item_head;
+        NiceImageView _item_head;
         TextView _item_name, _item_content, _item_time, _item_praise_num, _item_comments_num, _item_del;
         ImageView _item_focus_iv, _item_praise_iv, _item_feedback_iv;
         RatioImageView _item_one_image;

@@ -49,13 +49,13 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
                                 android:layout_weight="1"
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="推送消息"
                                 android:textColor="@color/FF333333"
-                                android:textSize="@dimen/text_size_14" />
+                                android:textSize="@dimen/text_size_14"
+                                android:textStyle="bold" />
 
 
                             <TextView
@@ -140,12 +140,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textStyle="bold"
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:text="小脉宝"
                                 android:textColor="@color/FF333333"
-                                android:textSize="@dimen/text_size_14" />
+                                android:textSize="@dimen/text_size_14"
+                                android:textStyle="bold" />
 
 
                             <TextView
@@ -195,32 +195,7 @@
                     android:background="@color/line_eaeaea" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/list_no_data"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="100dp"
-                android:gravity="center"
-                android:orientation="vertical">
 
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/blank_pages_16_icon" />
-
-                <TextView
-                    android:id="@+id/list_no_data_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/no_datas_16"
-                    android:textColor="#484f64"
-                    android:textSize="@dimen/text_size_16" />
-
-            </LinearLayout>
         </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>

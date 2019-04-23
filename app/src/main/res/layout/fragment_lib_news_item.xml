@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/btn_duf"
     android:orientation="vertical">
 
 
@@ -46,7 +47,7 @@
             android:layout_height="@dimen/line_05"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:background="@color/efeff4" />
+            android:background="@color/line_f2f2f2" />
     </LinearLayout>
 
     <RelativeLayout
@@ -70,7 +71,8 @@
             android:textColor="@color/color000000"
             android:textSize="@dimen/text_size_15" />
 
-        <com.youth.xframe.widget.RoundedImagView
+        <com.youth.xframe.widget.NiceImageView
+            app:corner_radius="4dp"
             android:id="@+id/lib_news_item_image_right"
             android:layout_width="100dp"
             android:layout_height="67dp"
@@ -92,14 +94,15 @@
             <LinearLayout
                 android:id="@+id/lib_news_item_image_3_ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <com.youth.xframe.widget.RoundedImagView
+                <com.youth.xframe.widget.NiceImageView
+                    app:corner_radius="4dp"
                     android:id="@+id/lib_news_item_image_1"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:src="@drawable/ic_launcher"
                     android:scaleType="centerCrop" />
@@ -108,10 +111,11 @@
                     android:layout_width="6dp"
                     android:layout_height="@dimen/line_05" />
 
-                <com.youth.xframe.widget.RoundedImagView
+                <com.youth.xframe.widget.NiceImageView
+                    app:corner_radius="4dp"
                     android:id="@+id/lib_news_item_image_2"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:src="@drawable/ic_launcher"
                     android:scaleType="centerCrop" />
@@ -120,16 +124,18 @@
                     android:layout_width="6dp"
                     android:layout_height="@dimen/line_05" />
 
-                <com.youth.xframe.widget.RoundedImagView
+                <com.youth.xframe.widget.NiceImageView
+                    app:corner_radius="4dp"
                     android:id="@+id/lib_news_item_image_3"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:src="@drawable/ic_launcher"
                     android:scaleType="centerCrop" />
             </LinearLayout>
 
-            <com.youth.xframe.widget.RoundedImagView
+            <com.youth.xframe.widget.NiceImageView
+                app:corner_radius="4dp"
                 android:id="@+id/lib_news_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="168dp"
@@ -188,12 +194,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_05"
         android:layout_marginTop="10dp"
-        android:background="@color/linee7e7e7" />
+        android:background="@color/line_f2f2f2" />
 
     <ImageView
         android:id="@+id/lib_focus_on_item_line"
         android:layout_width="match_parent"
         android:layout_height="9.5dp"
-        android:background="@color/linee7e7e7" />
+        android:background="@color/coloref5f5f5" />
 
 </LinearLayout>

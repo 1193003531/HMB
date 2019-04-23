@@ -55,6 +55,7 @@ import com.youth.xframe.utils.XScrollViewUtils;
 import com.youth.xframe.utils.permission.XPermission;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.CircleImageView;
+import com.youth.xframe.widget.NoScrollListView;
 import com.youth.xframe.widget.XHorizontalScrollView;
 import com.youth.xframe.widget.XScrollView;
 
@@ -101,7 +102,7 @@ public class HomeFragment extends BaseFragment {
 
     //精品文库
     //NoScroll
-    private ListView mListViewLib;
+    private NoScrollListView mListViewLib;
     private List<LibNewsEntity> newsList;
     private LibNewsHomeAdapter mLibAdapter;
 
@@ -143,6 +144,7 @@ public class HomeFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         XStatusBar.setTranslucentForImageViewInFragment(mActivity, 0, _needOffsetView);
+        //getRecommend();
     }
 
     /**
@@ -589,21 +591,21 @@ public class HomeFragment extends BaseFragment {
                     String message = json.getString("message");
                     String data = json.getString("data");
                     if (status.equals("0")) {
-                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("rank"));
-                        // XLog.d("array:" + array);
+                        JSONArray array = new JSONArray(json.getJSONObject("data").optString("rank"));
+                        LogUtils.debug("json:" + array);
                         mlList = new ArrayList<>();
                         for (int i = 0; i < array.length(); i++) {
                             MakingListEntity mli = new MakingListEntity();
                             mli.setMakingListNum("" + (i + 1));
                             //HomeLogic.Instance(mActivity).getJsonImageUrls(array.getJSONObject(i).getString("content"))
-                            mli.setMakingListId(array.getJSONObject(i).getString("id"));
-                            mli.setMakingListImage(array.getJSONObject(i).getString("cover"));
-                            mli.setMakingListTitle(array.getJSONObject(i).getString("title"));
-                            mli.setMakingListBrowse(array.getJSONObject(i).getString("popularity"));
-                            mli.setMakingListShare(array.getJSONObject(i).getString("share_count"));
+                            mli.setMakingListId(array.getJSONObject(i).optString("id", ""));
+                            mli.setMakingListImage("");
+                            mli.setMakingListTitle("");
+                            mli.setMakingListBrowse(array.getJSONObject(i).optString("popularity", "0"));
+                            mli.setMakingListShare("0");
                             mli.setMakingListInterested(array.getJSONObject(i).optString("interested", "0"));
-                            mli.setMakingListHead(array.getJSONObject(i).getJSONObject("user").getString("portrait"));
-                            mli.setMakingListName(array.getJSONObject(i).getJSONObject("user").getString("name"));
+                            mli.setMakingListHead(array.getJSONObject(i).getJSONObject("user").optString("portrait"));
+                            mli.setMakingListName(array.getJSONObject(i).getJSONObject("user").optString("name"));
                             mli.setMakingListUserId(array.getJSONObject(i).getJSONObject("user").optString("id", ""));
                             mlList.add(mli);
                         }
@@ -741,7 +743,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // if ((boolean) XPreferencesUtils.get("has_usertemp", false)) {
-                startActivity(PersonalWebActivity.class, "个人微网");
+                startActivity(PersonalWebActivity.class, "产品微网");
 //                } else {
 //                    startActivity(MessageWebActivity.class, "个人微网", "http://weixin.51huimaibao.cn/#/tools/personal/customTemplate/");
 //                }

@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.base.BaseApplication;
-import com.huimaibao.app.fragment.LibraryFragment;
 import com.huimaibao.app.fragment.home.act.LibraryActivity;
 import com.huimaibao.app.fragment.library.adapter.DragAdapter;
 import com.huimaibao.app.fragment.library.adapter.OtherAdapter;

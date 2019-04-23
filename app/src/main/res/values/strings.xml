@@ -35,7 +35,8 @@
     <string name="no_datas_14">你还没有去关注</string>
     <string name="no_datas_15">你还未拥有粉丝</string>
     <string name="no_datas_16">暂无通知</string>
-    <string name="no_datas_17">很抱歉,网络走丢了</string>
+    <string name="no_datas_17">暂无提醒</string>
+    <string name="no_datas_18">很抱歉,网络走丢了</string>
 
     <string name="login_user_agreement">注册登录即同意《汇脉宝用户协议》</string>
 

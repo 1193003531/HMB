@@ -54,7 +54,7 @@ public class ShareRecordActivity extends BaseActivity {
         setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
-        setShoweLine(false);
+        setShowLine(false);
 
         initView();
         initData();

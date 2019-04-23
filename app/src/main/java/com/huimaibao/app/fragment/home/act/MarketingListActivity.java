@@ -244,8 +244,8 @@ public class MarketingListActivity extends BaseActivity {
                     String message = json.getString("message");
                     String data = json.getString("data");
                     if (status.equals("0")) {
-                        JSONArray array = new JSONArray(json.getJSONObject("data").getString("rank"));
-                        ranking = json.getJSONObject("data").getString("ranking");
+                        JSONArray array = new JSONArray(json.getJSONObject("data").optString("rank"));
+                        ranking = json.getJSONObject("data").optString("ranking");
 //                        XLog.d("array:" + array);
                         if (countPage == 1) {
                             mlList = new ArrayList<>();
@@ -258,15 +258,15 @@ public class MarketingListActivity extends BaseActivity {
 
                         for (int i = 0; i < array.length(); i++) {
                             MakingListEntity mli = new MakingListEntity();
-                            mli.setMakingListId(array.getJSONObject(i).getString("id"));
+                            mli.setMakingListId(array.getJSONObject(i).optString("id"));
                             //HomeLogic.Instance(mActivity).getJsonImageUrls(array.getJSONObject(i).getString("content"))
-                            mli.setMakingListImage(array.getJSONObject(i).getString("cover"));
-                            mli.setMakingListTitle(array.getJSONObject(i).getString("title"));
-                            mli.setMakingListBrowse(array.getJSONObject(i).getString("popularity"));
-                            mli.setMakingListShare(array.getJSONObject(i).getString("share_count"));
+                            mli.setMakingListImage(array.getJSONObject(i).optString("cover"));
+                            mli.setMakingListTitle(array.getJSONObject(i).optString("title"));
+                            mli.setMakingListBrowse(array.getJSONObject(i).optString("popularity","0"));
+                            mli.setMakingListShare(array.getJSONObject(i).optString("share_count","0"));
                             mli.setMakingListInterested(array.getJSONObject(i).optString("interested", "0"));
-                            mli.setMakingListHead(array.getJSONObject(i).getJSONObject("user").getString("portrait"));
-                            mli.setMakingListName(array.getJSONObject(i).getJSONObject("user").getString("name"));
+                            mli.setMakingListHead(array.getJSONObject(i).getJSONObject("user").optString("portrait"));
+                            mli.setMakingListName(array.getJSONObject(i).getJSONObject("user").optString("name"));
                             mli.setMakingListUserId(array.getJSONObject(i).getJSONObject("user").optString("id", ""));
                             //XLog.d("image:" + HomeLogic.Instance(mActivity).getJsonImageUrls(array.getJSONObject(i).getString("content")));
                             mlList.add(mli);

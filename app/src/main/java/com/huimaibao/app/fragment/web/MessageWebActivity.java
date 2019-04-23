@@ -66,9 +66,9 @@ public class MessageWebActivity extends BaseActivity {
         }
 
         if (mType.equals("邀请好友") || mType.equals("招商合作") || mType.equals("营销攻略") || mType.equals("赚钱攻略") || mType.equals("产品价值")) {
-            setShoweTitle(true);
+            setShowTitle(true);
         } else {
-            setShoweTitle(false);
+            setShowTitle(false);
         }
         setTopTitle(mType);
         setTopLeft(true, true, false, "");

@@ -13,12 +13,20 @@
         android:paddingLeft="16dp"
         android:paddingTop="15dp">
 
-        <com.youth.xframe.widget.CircleImageView
+        <com.youth.xframe.widget.NiceImageView
             android:id="@+id/finds_list_item_head"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_launcher"
-            app:civ_border_width="0dp" />
+            app:is_circle="true" />
+
+        <!--<com.youth.xframe.widget.CircleImageView-->
+            <!--android:id="@+id/finds_list_item_head"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/ic_launcher" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="10dp"
+
                 android:lineSpacingExtra="5dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="14dp"
@@ -100,18 +108,19 @@
                 android:visibility="gone" />
 
             <!--<com.huimaibao.app.view.NineGridViewLayout-->
-                <!--android:id="@+id/finds_list_item_grid"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="12dp"-->
-                <!--android:layout_marginRight="16dp"-->
-                <!--app:spacing="4dp" />-->
+            <!--android:id="@+id/finds_list_item_grid"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--app:spacing="4dp" />-->
 
             <com.huimaibao.app.view.FriendsCircleImageLayout
                 android:id="@+id/finds_list_item_grid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="16dp" />
 
 

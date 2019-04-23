@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -70,7 +71,7 @@
             android:textColor="@color/color000000"
             android:textSize="@dimen/text_size_15" />
 
-        <com.youth.xframe.widget.RoundedImagView
+        <com.youth.xframe.widget.NiceImageView
             android:id="@+id/lib_news_item_image_right"
             android:layout_width="100dp"
             android:layout_height="67dp"
@@ -79,7 +80,8 @@
             android:layout_weight="1.0"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:corner_radius="4dp" />
 
         <LinearLayout
             android:id="@+id/lib_news_item_image_ll"
@@ -87,57 +89,60 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lib_news_item_title"
             android:layout_marginTop="9dp"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/lib_news_item_image_3_ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                android:layout_height="75dp"
+                android:orientation="horizontal">
 
-                <com.youth.xframe.widget.RoundedImagView
+                <com.youth.xframe.widget.NiceImageView
                     android:id="@+id/lib_news_item_image_1"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_launcher"
+                    app:corner_radius="4dp" />
 
                 <View
                     android:layout_width="6dp"
-                    android:layout_height="@dimen/line_05" />
+                    android:layout_height="0dp" />
 
-                <com.youth.xframe.widget.RoundedImagView
+                <com.youth.xframe.widget.NiceImageView
                     android:id="@+id/lib_news_item_image_2"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_launcher"
+                    app:corner_radius="4dp" />
 
                 <View
                     android:layout_width="6dp"
-                    android:layout_height="@dimen/line_05" />
+                    android:layout_height="0dp" />
 
-                <com.youth.xframe.widget.RoundedImagView
+                <com.youth.xframe.widget.NiceImageView
                     android:id="@+id/lib_news_item_image_3"
                     android:layout_width="match_parent"
-                    android:layout_height="75dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_launcher"
+                    app:corner_radius="4dp" />
             </LinearLayout>
 
-            <com.youth.xframe.widget.RoundedImagView
+            <com.youth.xframe.widget.NiceImageView
                 android:id="@+id/lib_news_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="168dp"
                 android:layout_weight="1.0"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:corner_radius="4dp" />
         </LinearLayout>
 
 
@@ -145,10 +150,10 @@
             android:id="@+id/lib_news_item_c_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/lib_news_item_image_right"
-
             android:layout_below="@+id/lib_news_item_image_ll"
+
             android:layout_marginTop="9dp"
+            android:layout_toLeftOf="@+id/lib_news_item_image_right"
             android:orientation="horizontal">
 
             <TextView
@@ -167,8 +172,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
-                android:gravity="center_horizontal"
                 android:ellipsize="end"
+                android:gravity="center_horizontal"
                 android:maxLines="1"
                 android:text="728阅读"
                 android:textColor="@color/color666666"
@@ -178,8 +183,8 @@
                 android:id="@+id/lib_news_item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:ellipsize="end"
+                android:gravity="right"
                 android:maxLines="1"
                 android:text="5分钟前"
                 android:textColor="@color/color666666"

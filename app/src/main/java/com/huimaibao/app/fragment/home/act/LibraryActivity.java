@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
@@ -42,7 +42,11 @@ public class LibraryActivity extends BaseActivity {
     private LibViewPager mViewPager;
     private List<String> columnsData;
 
-    private ImageView _no_data_iv;
+    private LinearLayout _no_data;
+    private ImageView _no_image_data;
+    private TextView _no_tv_data, _no_tv_btn;
+
+    private ImageView _n_iv;
 
     /**
      * 默认的用户选择频道列表
@@ -125,8 +129,33 @@ public class LibraryActivity extends BaseActivity {
      */
     private void initView() {
 
-        _no_data_iv = findViewById(R.id.list_no_data_iv);
+        _no_data = findViewById(R.id.list_no_data);
+        _no_data.setVisibility(View.GONE);
+        _no_image_data = findViewById(R.id.list_no_data_iv);
+        _no_tv_data = findViewById(R.id.list_no_data_tv);
+        _no_tv_btn = findViewById(R.id.list_no_data_btn);
 
+        _no_tv_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getUserLabel(true);
+            }
+        });
+
+
+//        if (text.equals("关注")) {
+//            _no_image_data.setImageResource(R.drawable.blank_pages_14_icon);
+//            _no_tv_data.setText(R.string.no_datas_14);
+//        } else if (text.equals("粉丝")) {
+//            _no_image_data.setImageResource(R.drawable.blank_pages_15_icon);
+//            _no_tv_data.setText(R.string.no_datas_15);
+//        }else{
+//            _no_image_data.setImageResource(R.drawable.blank_pages_16_icon);
+//            _no_tv_data.setText(R.string.no_datas_17);
+//        }
+
+
+        _n_iv = findViewById(R.id.list_n_iv);
         hd_tl = findViewById(R.id.lib_tab_ll);
 
         mViewPager = findViewById(R.id.mViewPager);
@@ -298,7 +327,7 @@ public class LibraryActivity extends BaseActivity {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                _no_data_iv.setVisibility(View.GONE);
+                                _n_iv.setVisibility(View.GONE);
                                 ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).deleteAllChannel();
                                 ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).setChannerData(defaultUserChannels, defaultOtherChannels);
                                 setChangelView();
@@ -329,7 +358,10 @@ public class LibraryActivity extends BaseActivity {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                _no_data_iv.setVisibility(View.GONE);
+                _n_iv.setVisibility(View.GONE);
+                _no_image_data.setImageResource(R.drawable.blank_pages_4_icon);
+                _no_tv_data.setText("很抱歉,加载失败");
+                _no_tv_btn.setVisibility(View.VISIBLE);
                 //加载完数据设置为不刷新状态，将下拉进度收起来
 //                if (mSwipeRefreshLayout.isRefreshing()) {
 //                    mSwipeRefreshLayout.setRefreshing(false);

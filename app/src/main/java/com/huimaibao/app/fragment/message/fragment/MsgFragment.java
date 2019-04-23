@@ -41,7 +41,7 @@ public class MsgFragment extends BaseFragment {
     private ImageView _xmb_dian;
 
     private SwipeRefreshLayout mSwipeRefreshView;
-    private LinearLayout _no_data;
+    // private LinearLayout _no_data;
 
 
     private List<MessageEntity> ListPushData, ListXMBData;
@@ -77,8 +77,8 @@ public class MsgFragment extends BaseFragment {
         _xmb_content = v.findViewById(R.id.list_message_xmb_content);
         _xmb_dian = v.findViewById(R.id.list_message_xmb_dian);
 
-        _no_data = v.findViewById(R.id.list_no_data);
-        _no_data.setVisibility(View.GONE);
+//        _no_data = v.findViewById(R.id.list_no_data);
+//        _no_data.setVisibility(View.GONE);
 
         mSwipeRefreshView = v.findViewById(R.id.list_swipe_value);
 
@@ -121,13 +121,13 @@ public class MsgFragment extends BaseFragment {
                         ListPushData = new ArrayList<>();
                         for (int i = 0; i < array.length(); i++) {
                             MessageEntity item = new MessageEntity();
-                            item.setMessageId(array.getJSONObject(i).getString("id"));
-                            item.setMessageImage(array.getJSONObject(i).getString("icon"));
-                            item.setMessageName(array.getJSONObject(i).getString("title"));
-                            item.setMessageContent(array.getJSONObject(i).getString("content"));
-                            item.setMessageTime(array.getJSONObject(i).getString("created_at"));
-                            item.setMessageType(array.getJSONObject(i).getString("type"));
-                            item.setMessageUrl(array.getJSONObject(i).getString("link"));
+                            item.setMessageId(array.getJSONObject(i).optString("id"));
+                            item.setMessageImage(array.getJSONObject(i).optString("icon"));
+                            item.setMessageName(array.getJSONObject(i).optString("title"));
+                            item.setMessageContent(array.getJSONObject(i).optString("content"));
+                            item.setMessageTime(array.getJSONObject(i).optString("created_at"));
+                            item.setMessageType(array.getJSONObject(i).optString("type"));
+                            item.setMessageUrl(array.getJSONObject(i).optString("link"));
                             ListPushData.add(item);
                         }
 
@@ -135,10 +135,10 @@ public class MsgFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 if (ListPushData.size() == 0) {
-                                    _no_data.setVisibility(View.VISIBLE);
-                                    _push_ll.setVisibility(View.GONE);
+                                    //_no_data.setVisibility(View.VISIBLE);
+                                    //_push_ll.setVisibility(View.GONE);
                                 } else {
-                                    _no_data.setVisibility(View.GONE);
+//                                   _no_data.setVisibility(View.GONE);
                                     _push_ll.setVisibility(View.VISIBLE);
                                     _push_dian.setVisibility(View.GONE);
 //                                    if (_push_time.getText().equals(XTimeUtils.getTimeRange(ListPushData.get(0).getMessageTime()))) {
@@ -206,10 +206,10 @@ public class MsgFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 if (ListXMBData.size() == 0) {
-                                    _no_data.setVisibility(View.VISIBLE);
-                                    _xmb_ll.setVisibility(View.GONE);
+                                    //_no_data.setVisibility(View.VISIBLE);
+                                    //_xmb_ll.setVisibility(View.GONE);
                                 } else {
-                                    _no_data.setVisibility(View.GONE);
+                                    // _no_data.setVisibility(View.GONE);
                                     _xmb_ll.setVisibility(View.VISIBLE);
                                     _xmb_dian.setVisibility(View.GONE);
 //                                    if (_xmb_time.getText().equals(XTimeUtils.getTimeRange(ListXMBData.get(0).getMessageTime()))) {

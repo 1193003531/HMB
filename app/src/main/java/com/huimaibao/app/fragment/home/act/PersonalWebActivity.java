@@ -72,8 +72,8 @@ public class PersonalWebActivity extends BaseActivity {
         if (intent != null) {
             mType = intent.getStringExtra("vType");
         }
-        setShoweLine(false);
-        setTopTitle("产品");
+        setShowLine(false);
+        setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(true, false, true, "产品价值", new View.OnClickListener() {
             @Override

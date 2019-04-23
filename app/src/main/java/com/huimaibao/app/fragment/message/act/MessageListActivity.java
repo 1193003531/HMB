@@ -107,6 +107,7 @@ public class MessageListActivity extends BaseActivity {
             }
         });
 
+        listData = new ArrayList<>();
     }
 
 
@@ -171,8 +172,8 @@ public class MessageListActivity extends BaseActivity {
                         JSONArray array = new JSONArray(json.getJSONObject("data").getJSONObject("list").getString("data"));
                         if (page == 1) {
                             listData = new ArrayList<>();
-                        }else {
-                            if(array.length()==0){
+                        } else {
+                            if (array.length() == 0) {
                                 showToast("没有数据了");
                             }
                         }
@@ -221,8 +222,8 @@ public class MessageListActivity extends BaseActivity {
                         JSONArray array = new JSONArray(json.getJSONObject("data").getJSONObject("list").getString("data"));
                         if (page == 1) {
                             listData = new ArrayList<>();
-                        }else {
-                            if(array.length()==0){
+                        } else {
+                            if (array.length() == 0) {
                                 showToast("没有数据了");
                             }
                         }
@@ -272,8 +273,8 @@ public class MessageListActivity extends BaseActivity {
                         JSONArray array = new JSONArray(json.getJSONObject("data").getJSONObject("list").getString("data"));
                         if (page == 1) {
                             listData = new ArrayList<>();
-                        }else {
-                            if(array.length()==0){
+                        } else {
+                            if (array.length() == 0) {
                                 showToast("没有数据了");
                             }
                         }
@@ -434,6 +435,23 @@ public class MessageListActivity extends BaseActivity {
             @Override
             public void run() {
                 XToast.normal(msg);
+                // 加载完数据设置为不刷新状态，将下拉进度收起来
+                if (mSwipeRefreshView.isRefreshing()) {
+                    mSwipeRefreshView.setRefreshing(false);
+                }
+            }
+        });
+    }
+
+    public void showToast() {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (listData.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
                 // 加载完数据设置为不刷新状态，将下拉进度收起来
                 if (mSwipeRefreshView.isRefreshing()) {
                     mSwipeRefreshView.setRefreshing(false);

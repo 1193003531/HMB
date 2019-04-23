@@ -90,7 +90,7 @@ public class CollectionActivity extends BaseActivity {
         if (intent != null) {
             mType = intent.getStringExtra("vType");
         }
-        setShoweLine(false);
+        setShowLine(false);
         setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(true, false, true, "编辑", new View.OnClickListener() {

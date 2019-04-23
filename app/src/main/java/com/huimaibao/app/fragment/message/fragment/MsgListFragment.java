@@ -103,7 +103,7 @@ public class MsgListFragment extends BaseFragment {
             _no_tv_data.setText(R.string.no_datas_15);
         }else{
             _no_image_data.setImageResource(R.drawable.blank_pages_16_icon);
-            _no_tv_data.setText(R.string.no_datas_16);
+            _no_tv_data.setText(R.string.no_datas_17);
         }
 
 

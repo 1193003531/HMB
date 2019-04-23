@@ -74,7 +74,7 @@ public class MarketingWebActivity extends BaseActivity {
         if (intent != null) {
             mType = intent.getStringExtra("vType");
         }
-        setShoweLine(false);
+        setShowLine(false);
         setTopTitle(mType);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);

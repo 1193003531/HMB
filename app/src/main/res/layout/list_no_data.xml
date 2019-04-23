@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:visibility="invisible"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="invisible">
 
 
     <ImageView
@@ -28,15 +28,14 @@
     <TextView
         android:id="@+id/list_no_data_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/btn_blue_r20_bg"
-        android:paddingLeft="24dp"
-        android:paddingTop="9dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="9dp"
-        android:text="去制作"
-        android:textColor="@color/white"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_blue_line_r50_bg"
+        android:gravity="center"
+        android:paddingLeft="46dp"
+        android:paddingRight="46dp"
+        android:text="重新加载"
+        android:textColor="@color/main_color"
         android:textSize="@dimen/text_size_16"
         android:visibility="gone" />
 </LinearLayout>

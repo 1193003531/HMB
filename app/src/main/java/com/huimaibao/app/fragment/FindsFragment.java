@@ -450,7 +450,7 @@ public class FindsFragment extends BaseFragment {
     }
 
     /**
-     * 添加收藏
+     * 添加关注
      */
     private void getCardAdd(final String card_id_value, final int position) {
         HashMap<String, Object> map = new HashMap<>();
@@ -468,8 +468,8 @@ public class FindsFragment extends BaseFragment {
                             public void run() {
                                 showToast("关注成功");
                                 for (int i = 0; i < listData.size(); i++) {
-                                    if (listData.get(position).getFindsCardId().equals(card_id_value)) {
-                                        listData.get(position).setFindsIsFocus("1");
+                                    if (listData.get(i).getFindsCardId().equals(card_id_value)) {
+                                        listData.get(i).setFindsIsFocus("1");
                                     }
                                 }
 

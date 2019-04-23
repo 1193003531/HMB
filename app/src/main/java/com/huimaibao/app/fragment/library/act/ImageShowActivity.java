@@ -2,6 +2,9 @@ package com.huimaibao.app.fragment.library.act;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,11 +43,17 @@ public class ImageShowActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        //无title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.fragment_lib_imageshow);
 
-        setTopTitle("图片展示");
-        setTopLeft(true, true, false, "");
-        setTopRight(false, true, false, "", null);
+        //setShowTitle(false);
+//        setTopTitle("图片展示");
+//        setTopLeft(true, true, false, "");
+//        setTopRight(false, true, false, "", null);
 
         initView();
         initData();
@@ -62,6 +71,7 @@ public class ImageShowActivity extends BaseActivity {
         image_pager = findViewById(R.id.image_pager);
         page_number = findViewById(R.id.page_number);
         download = findViewById(R.id.download);
+
         image_pager.addOnPageChangeListener(new OnPageChangeListener() {
 
             @Override
@@ -85,7 +95,7 @@ public class ImageShowActivity extends BaseActivity {
 
     private void initViewPager() {
         if (imgsUrl != null && imgsUrl.size() != 0) {
-            mAdapter = new ImagePagerAdapter(getApplicationContext(), imgsUrl);
+            mAdapter = new ImagePagerAdapter(mActivity, imgsUrl);
             image_pager.setAdapter(mAdapter);
             image_pager.setCurrentItem(count);
         }

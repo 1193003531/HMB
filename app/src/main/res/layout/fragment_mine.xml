@@ -263,13 +263,13 @@
                     <LinearLayout
                         android:id="@+id/mine_basic_code_ll"
                         android:layout_width="match_parent"
-                        android:layout_height="45.5dp"
+                        android:layout_height="50.5dp"
                         android:background="@drawable/btn_duf"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/title_height"
+                            android:layout_height="50dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -324,7 +324,7 @@
                     <LinearLayout
                         android:id="@+id/mine_member_center_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="50dp"
 
                         android:background="@drawable/btn_duf"
                         android:clickable="true"
@@ -372,7 +372,7 @@
                     <LinearLayout
                         android:id="@+id/mine_marketing_reward_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/title_height"
+                        android:layout_height="50dp"
                         android:background="@drawable/btn_duf"
                         android:clickable="true"
 
@@ -421,7 +421,7 @@
                     <LinearLayout
                         android:id="@+id/mine_ggby_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/title_height"
+                        android:layout_height="50dp"
                         android:background="@drawable/btn_duf"
                         android:clickable="true"
 
@@ -470,7 +470,7 @@
                     <LinearLayout
                         android:id="@+id/mine_wallet_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/title_height"
+                        android:layout_height="50dp"
                         android:background="@drawable/btn_duf"
                         android:clickable="true"
 
@@ -506,7 +506,7 @@
                     <LinearLayout
                         android:id="@+id/mine_invite_friends_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/btn_duf"
                         android:clickable="true"
                         android:onClick="onClick"
@@ -555,7 +555,7 @@
                     <LinearLayout
                         android:id="@+id/mine_push_around_each_other_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/title_height"
+                        android:layout_height="50dp"
                         android:background="@drawable/btn_duf"
                         android:clickable="true"
 
@@ -592,7 +592,7 @@
                     <LinearLayout
                         android:id="@+id/mine_collection_btn"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/title_height"
+                        android:layout_height="50dp"
                         android:background="@drawable/btn_duf"
                         android:clickable="true"
 
@@ -625,7 +625,7 @@
                 <LinearLayout
                     android:id="@+id/mine_feedback_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/title_height"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/btn_duf"
 

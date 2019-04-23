@@ -86,7 +86,7 @@ public class MakingCardActivity extends TakePhotoActivity {
         }
 
         setTopTitle("");
-        setShoweLine(false);
+        setShowLine(false);
         setTopLeft(true, true, false, "");
         setTopRight(true, false, true, "保存", new View.OnClickListener() {
             @Override
@@ -167,7 +167,7 @@ public class MakingCardActivity extends TakePhotoActivity {
     /***/
     private void initData() {
         _check_style = "" + XPreferencesUtils.get("style", "style3");
-        _head_value = XEmptyUtils.isSpace(XPreferencesUtils.get("logo", "") + "") ? XPreferencesUtils.get("portrait", "") + "" : XPreferencesUtils.get("logo", "") + "";
+        _head_value = XEmptyUtils.isSpace(XPreferencesUtils.get("portrait", "") + "") ? XPreferencesUtils.get("logo", "") + "" : XPreferencesUtils.get("portrait", "") + "";
         _name_value = "" + XPreferencesUtils.get("name", "");
         _jobs_value = "" + XPreferencesUtils.get("profession", "");
         _company_value = "" + XPreferencesUtils.get("company", "");
@@ -691,8 +691,8 @@ public class MakingCardActivity extends TakePhotoActivity {
                     ToastUtils.showCenter("你输入的字数已经超过了");
                 }
 
-                // _introduce_value = _card_introduce.getText().toString();
-                // setEdAnimation(_introduce_value, _card_introduce_tv);
+                _introduce_value = _card_introduce.getText().toString();
+                setEdAnimation(_introduce_value, _card_introduce_tv);
 
             }
         });

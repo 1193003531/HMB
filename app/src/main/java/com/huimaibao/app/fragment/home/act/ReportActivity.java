@@ -63,7 +63,7 @@ public class ReportActivity extends BaseActivity {
             _target_value = intent.getStringExtra("vUrl");
         }
         setTopTitle("举报");
-        setShoweLine(false);
+        setShowLine(false);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
 
