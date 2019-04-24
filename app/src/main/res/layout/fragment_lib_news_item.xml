@@ -75,7 +75,7 @@
             app:corner_radius="4dp"
             android:id="@+id/lib_news_item_image_right"
             android:layout_width="100dp"
-            android:layout_height="67dp"
+            android:layout_height="64dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="3dp"
             android:layout_weight="1.0"
@@ -94,7 +94,7 @@
             <LinearLayout
                 android:id="@+id/lib_news_item_image_3_ll"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="64dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
 

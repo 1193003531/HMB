@@ -1,6 +1,6 @@
 package com.huimaibao.app.fragment.library.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +12,18 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.fragment.library.bean.LibNewsEntity;
 import com.huimaibao.app.utils.ImageLoaderManager;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.NiceImageView;
-import com.youth.xframe.widget.RoundedImagView;
 
 import java.util.List;
 
 public class LibNewsHomeAdapter extends BaseAdapter {
-    private Context context;
+    private Activity mActivity;
     public List<LibNewsEntity> libNewsList;
 
 
-    public LibNewsHomeAdapter(Context context, List<LibNewsEntity> libNewsList) {
-        this.context = context;
+    public LibNewsHomeAdapter(Activity activity, List<LibNewsEntity> libNewsList) {
+        this.mActivity = activity;
         this.libNewsList = libNewsList;
     }
 
@@ -52,7 +50,7 @@ public class LibNewsHomeAdapter extends BaseAdapter {
         ViewHolder mHolder;
         View view = convertView;
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.fragment_lib_news_home_item, null);
+            view = LayoutInflater.from(mActivity).inflate(R.layout.fragment_lib_news_home_item, null);
             mHolder = new ViewHolder();
 
             mHolder._item_focus_image = view.findViewById(R.id.lib_focus_on_item_name_image);
@@ -89,7 +87,7 @@ public class LibNewsHomeAdapter extends BaseAdapter {
             mHolder._item_focus_ll.setVisibility(View.VISIBLE);
             mHolder._item_name.setVisibility(View.GONE);
             mHolder._item_focus_name.setText("" + item.getLibNewsName());
-            ImageLoaderManager.loadImage(item.getLibLibNewsNameImage(), mHolder._item_focus_image);
+            ImageLoaderManager.loadImage(item.getLibLibNewsNameImage().trim(), mHolder._item_focus_image);
         } else {
             mHolder._item_focus_ll.setVisibility(View.GONE);
             mHolder._item_name.setVisibility(View.VISIBLE);
@@ -99,21 +97,24 @@ public class LibNewsHomeAdapter extends BaseAdapter {
         if (item.getLibNewsType().equals("0")) {
             mHolder._item_image_right.setVisibility(View.VISIBLE);
             mHolder._item_image_ll.setVisibility(View.GONE);
-            ImageLoaderManager.loadImage(item.getLibNewsImageRight(), mHolder._item_image_right);
+            ImageLoaderManager.loadImage(item.getLibNewsImageRight().trim(), mHolder._item_image_right);
         } else if (item.getLibNewsType().equals("1")) {
             mHolder._item_image_right.setVisibility(View.GONE);
             mHolder._item_image_ll.setVisibility(View.VISIBLE);
             mHolder._item_image_3_ll.setVisibility(View.VISIBLE);
             mHolder._item_image.setVisibility(View.GONE);
-            ImageLoaderManager.loadImage(item.getLibNewsImage1(), mHolder._item_image_1);
-            ImageLoaderManager.loadImage(item.getLibNewsImage2(), mHolder._item_image_2);
-            ImageLoaderManager.loadImage(item.getLibNewsImage3(), mHolder._item_image_3);
+            ImageLoaderManager.loadImage(item.getLibNewsImage1().trim(), mHolder._item_image_1);
+            ImageLoaderManager.loadImage(item.getLibNewsImage2().trim(), mHolder._item_image_2);
+            ImageLoaderManager.loadImage(item.getLibNewsImage3().trim(), mHolder._item_image_3);
+//            Glide.with(mActivity).load(item.getLibNewsImage1().trim()).into(mHolder._item_image_1);
+//            Glide.with(mActivity).load(item.getLibNewsImage2().trim()).into(mHolder._item_image_2);
+//            Glide.with(mActivity).load(item.getLibNewsImage3().trim()).into(mHolder._item_image_3);
         } else {
             mHolder._item_image_right.setVisibility(View.GONE);
             mHolder._item_image.setVisibility(View.VISIBLE);
             mHolder._item_image_ll.setVisibility(View.VISIBLE);
             mHolder._item_image_3_ll.setVisibility(View.GONE);
-            ImageLoaderManager.loadImage(item.getLibNewsImage(), mHolder._item_image);
+            ImageLoaderManager.loadImage(item.getLibNewsImage().trim(), mHolder._item_image);
         }
 
 

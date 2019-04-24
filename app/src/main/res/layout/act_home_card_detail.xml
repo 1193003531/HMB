@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/f3f3f3"
     android:orientation="vertical">
 
 
@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
+
         android:overScrollMode="never"
         android:scrollbars="none">
 
@@ -122,10 +123,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/card_item_bg"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -134,7 +136,6 @@
                     android:layout_gravity="center_vertical"
                     android:drawableLeft="@drawable/card_phone_icon"
                     android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
                     android:paddingLeft="20dp"
                     android:text="电话"
                     android:textColor="@color/color666666"
@@ -146,10 +147,110 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
-                    android:gravity="center_vertical"
                     android:maxLines="1"
                     android:paddingLeft="30dp"
                     android:paddingRight="10dp"
+                    android:text=""
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/card_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawableLeft="@drawable/card_wechat_icon"
+                    android:drawablePadding="10dp"
+
+                    android:paddingLeft="20dp"
+                    android:text="微信"
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/card_detail_wechat_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="10dp"
+                    android:text=""
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/card_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/card_city_icon"
+                    android:drawablePadding="10dp"
+                    android:paddingLeft="20dp"
+                    android:text="城市"
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/card_detail_city_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="15dp"
+                    android:text=""
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/text_size_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/card_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/card_addr_icon"
+                    android:drawablePadding="10dp"
+                    android:paddingLeft="20dp"
+                    android:text="地址"
+                    android:textColor="@color/color666666"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/card_detail_addr_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="5dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="15dp"
                     android:text=""
                     android:textColor="@color/color666666"
                     android:textSize="@dimen/text_size_14" />
@@ -167,101 +268,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:drawableLeft="@drawable/card_wechat_icon"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="微信"
-                    android:textColor="@color/color666666"
-                    android:textSize="@dimen/text_size_14" />
-
-                <TextView
-                    android:id="@+id/card_detail_wechat_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="10dp"
-                    android:text=""
-                    android:textColor="@color/color666666"
-                    android:textSize="@dimen/text_size_14" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/card_item_bg"
-                android:orientation="horizontal"
-                android:paddingBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:drawableLeft="@drawable/card_addr_icon"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="地址"
-                    android:textColor="@color/color666666"
-                    android:textSize="@dimen/text_size_14" />
-
-                <TextView
-                    android:id="@+id/card_detail_addr_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="5dp"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="15dp"
-                    android:text=""
-                    android:textColor="@color/color666666"
-                    android:textSize="@dimen/text_size_14" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/card_item_bg"
-                android:orientation="horizontal"
-                android:paddingBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:drawableLeft="@drawable/card_mark_icon"
                     android:drawablePadding="10dp"
+                    android:paddingTop="12dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="20dp"
                     android:text="简介"
                     android:textColor="@color/color666666"
                     android:textSize="@dimen/text_size_14" />
 
+
                 <TextView
                     android:id="@+id/card_detail_introduce_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="5dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="15dp"
+                    android:paddingBottom="24dp"
                     android:text=""
                     android:textColor="@color/color666666"
                     android:textSize="@dimen/text_size_14" />
-
             </LinearLayout>
 
 

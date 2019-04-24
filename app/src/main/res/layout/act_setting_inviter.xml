@@ -79,14 +79,14 @@
 
     </LinearLayout>
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="邀请人号码如果发生更改，你们的关系保持不变。"
+        android:lineSpacingExtra="5dp"
+        android:text="@string/set_inviter"
         android:textColor="@color/color666666"
         android:textSize="@dimen/text_size_11" />
 

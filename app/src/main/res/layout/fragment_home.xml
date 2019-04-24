@@ -76,7 +76,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="个人微网"
+                                android:text="个人名片"
                                 android:textColor="@color/color666666"
                                 android:textSize="@dimen/text_size_13"
                                 android:textStyle="bold" />

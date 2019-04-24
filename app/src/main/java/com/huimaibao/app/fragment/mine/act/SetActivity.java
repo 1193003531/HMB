@@ -351,18 +351,20 @@ public class SetActivity extends BaseActivity {
                     String status = json.optString("status");
                     //String message = json.getString("message");
                     if (status.equals("0")) {
-                        JSONObject data = new JSONObject(json.optString("data"));
+                        JSONObject data = new JSONObject(json.optString("data", ""));
                         final String phone = data.optString("phone", "").trim();
-                        XPreferencesUtils.put("inviter_phone", phone);
+
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (XEmptyUtils.isSpace(phone)) {
-                                    _inviter_tv.setText("");
+                                if (XEmptyUtils.isSpace(phone) || phone.length() > 5) {
+                                    XPreferencesUtils.put("inviter_phone", "");
+                                    _inviter_tv.setText("请填写邀请人电话号码");
                                     _inviter_iv.setVisibility(View.VISIBLE);
                                     _inviter_ll.setEnabled(true);
                                 } else {
+                                    XPreferencesUtils.put("inviter_phone", phone);
                                     _inviter_tv.setText(phone);
                                     _inviter_iv.setVisibility(View.GONE);
                                     _inviter_ll.setEnabled(false);

@@ -74,13 +74,12 @@
         <com.youth.xframe.widget.NiceImageView
             android:id="@+id/lib_news_item_image_right"
             android:layout_width="100dp"
-            android:layout_height="67dp"
+            android:layout_height="64dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="3dp"
-            android:layout_weight="1.0"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher"
-            android:visibility="visible"
+            android:visibility="gone"
             app:corner_radius="4dp" />
 
         <LinearLayout
@@ -90,12 +89,12 @@
             android:layout_below="@+id/lib_news_item_title"
             android:layout_marginTop="9dp"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/lib_news_item_image_3_ll"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="64dp"
                 android:orientation="horizontal">
 
                 <com.youth.xframe.widget.NiceImageView
@@ -108,7 +107,7 @@
                     app:corner_radius="4dp" />
 
                 <View
-                    android:layout_width="6dp"
+                    android:layout_width="5dp"
                     android:layout_height="0dp" />
 
                 <com.youth.xframe.widget.NiceImageView
@@ -121,7 +120,7 @@
                     app:corner_radius="4dp" />
 
                 <View
-                    android:layout_width="6dp"
+                    android:layout_width="5dp"
                     android:layout_height="0dp" />
 
                 <com.youth.xframe.widget.NiceImageView
@@ -138,7 +137,6 @@
                 android:id="@+id/lib_news_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="168dp"
-                android:layout_weight="1.0"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher"
                 android:visibility="gone"
@@ -151,7 +149,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lib_news_item_image_ll"
-
             android:layout_marginTop="9dp"
             android:layout_toLeftOf="@+id/lib_news_item_image_right"
             android:orientation="horizontal">

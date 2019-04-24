@@ -37,6 +37,7 @@ import com.youth.xframe.pickers.entity.Province;
 import com.youth.xframe.pickers.listeners.OnLinkageListener;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.takephoto.model.TResult;
+import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XRegexUtils;
@@ -61,10 +62,10 @@ public class MakingCardActivity extends TakePhotoActivity {
 
     private String _check_style = "style3", _check_head = "头像";
     private CircleImageView _card_head;
-    private TextView _card_city;
-    private EditText _card_name, _card_jobs, _card_company, _card_phone, _card_wechat, _card_addr, _card_introduce;
-    private TextView _card_name_tv, _card_jobs_tv, _card_company_tv, _card_phone_tv, _card_wechat_tv, _card_addr_tv, _card_introduce_tv;
-    private ImageView _iv_name, _iv_jobs, _iv_company, _iv_phone, _iv_wechat, _iv_addr, _iv_introduce;
+    //private TextView _card_city;
+    private EditText _card_name, _card_jobs, _card_company, _card_phone, _card_wechat, _card_city, _card_addr, _card_introduce;
+    private TextView _card_name_tv, _card_jobs_tv, _card_company_tv, _card_phone_tv, _card_wechat_tv, _card_city_tv, _card_addr_tv, _card_introduce_tv;
+    private ImageView _iv_name, _iv_jobs, _iv_company, _iv_phone, _iv_wechat, _iv_city, _iv_addr, _iv_introduce;
     private TextView _card_introduce_num;
     private String _city_value = "", _province_id_value = "", _city_id_value = "", _area_id_value = "";
     private String _head_value = "", _name_value = "", _jobs_value = "", _company_value = "", _phone_value = "", _wechat_value = "", _addr_value = "", _introduce_value = "";
@@ -119,8 +120,11 @@ public class MakingCardActivity extends TakePhotoActivity {
         _card_city = findViewById(R.id.making_card_city);
         _card_addr = findViewById(R.id.making_card_addr);
         _card_introduce = findViewById(R.id.making_card_introduce);
-
         _card_introduce_num = findViewById(R.id.making_card_introduce_num);
+
+        //城市不可编辑
+        _card_city.setFocusable(false);
+        _card_city.setFocusableInTouchMode(false);
 
 
         _card_name_tv = findViewById(R.id.making_card_name_tv);
@@ -128,6 +132,7 @@ public class MakingCardActivity extends TakePhotoActivity {
         _card_company_tv = findViewById(R.id.making_card_company_tv);
         _card_phone_tv = findViewById(R.id.making_card_phone_tv);
         _card_wechat_tv = findViewById(R.id.making_card_wechat_tv);
+        _card_city_tv = findViewById(R.id.making_card_city_tv);
         _card_addr_tv = findViewById(R.id.making_card_addr_tv);
         _card_introduce_tv = findViewById(R.id.making_card_introduce_tv);
 
@@ -136,6 +141,7 @@ public class MakingCardActivity extends TakePhotoActivity {
         _iv_company = findViewById(R.id.making_card_company_iv);
         _iv_phone = findViewById(R.id.making_card_phone_iv);
         _iv_wechat = findViewById(R.id.making_card_wechat_iv);
+        _iv_city = findViewById(R.id.making_card_city_iv);
         _iv_addr = findViewById(R.id.making_card_addr_iv);
         _iv_introduce = findViewById(R.id.making_card_introduce_iv);
 
@@ -517,6 +523,18 @@ public class MakingCardActivity extends TakePhotoActivity {
             }
         });
 
+        _card_city.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    _iv_city.setBackgroundResource(R.color.main_color);
+                    setAnimationED(_card_city);
+                } else {
+                    _iv_city.setBackgroundResource(R.color.line_eaeaea);
+                }
+            }
+        });
+
         _card_addr.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -713,7 +731,7 @@ public class MakingCardActivity extends TakePhotoActivity {
     private void setEdAnimation(String value, final TextView textView) {
         if (value.length() == 0) {
             AnimationSet animationSet = new AnimationSet(true);
-            Animation translateAnimation = new TranslateAnimation(0, 0, 0, 60);//平移动画  从0,0,平移到0,60
+            Animation translateAnimation = new TranslateAnimation(0, 0, 0, XDensityUtils.dp2px(15));//平移动画  从0,0,平移到0,45
             translateAnimation.setDuration(100);//动画持续的时间为0.1s
             animationSet.addAnimation(translateAnimation);
             animationSet.setFillAfter(true);
@@ -740,7 +758,7 @@ public class MakingCardActivity extends TakePhotoActivity {
         } else {
             if (isAnimation) {
                 AnimationSet animationSet = new AnimationSet(true);
-                Animation translateAnimation = new TranslateAnimation(0, 0, 60, 0);//平移动画  从0,0,平移到0,60
+                Animation translateAnimation = new TranslateAnimation(0, 0, XDensityUtils.dp2px(15), 0);//平移动画  从0,0,平移到0,45
                 translateAnimation.setDuration(100);//动画持续的时间为0.1s
                 animationSet.addAnimation(translateAnimation);
                 animationSet.setFillAfter(true);
@@ -775,6 +793,7 @@ public class MakingCardActivity extends TakePhotoActivity {
         setEdAnimation(_company_value, _card_company_tv);
         setEdAnimation(_phone_value, _card_phone_tv);
         setEdAnimation(_wechat_value, _card_wechat_tv);
+        setEdAnimation(_city_value, _card_city_tv);
         setEdAnimation(_addr_value, _card_addr_tv);
         setEdAnimation(XEmptyUtils.isSpace(_introduce_value) ? "" : _introduce_value, _card_introduce_tv);
     }
@@ -830,6 +849,7 @@ public class MakingCardActivity extends TakePhotoActivity {
             _city_value = province.getAreaName() + " " + city.getAreaName() + " " + county.getAreaName();
         }
         _card_city.setText(_city_value);
+        setEdAnimation(_city_value, _card_city_tv);
     }
 
 }

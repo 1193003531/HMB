@@ -13,7 +13,9 @@ import com.huimaibao.app.fragment.home.server.HomeLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.utils.XEmptyUtils;
+import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.XStringUtils;
 
 import org.json.JSONObject;
 
@@ -56,6 +58,10 @@ public class AdvertSlogansActivity extends BaseActivity {
     private void initView() {
         _as_content = findViewById(R.id.advertising_slogans_content);
         _as_num = findViewById(R.id.advertising_slogans_num);
+        _as_content_value = XStringUtils.ToDBC(XPreferencesUtils.get("motto", "").toString().trim());
+        _as_content.setText(_as_content_value);
+        _as_content.setSelection(_as_content_value.length());
+        XKeyboardUtils.openKeyboard(mActivity);
     }
 
     /***/

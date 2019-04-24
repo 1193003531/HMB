@@ -20,6 +20,7 @@ import com.huimaibao.app.fragment.FindsFragment;
 import com.huimaibao.app.fragment.HomeFragment;
 import com.huimaibao.app.fragment.MessageFragment;
 import com.huimaibao.app.fragment.MineFragment;
+import com.huimaibao.app.fragment.home.act.LibraryActivity;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
 import com.huimaibao.app.fragment.message.entity.MessageEntity;
 import com.huimaibao.app.fragment.message.server.MessageLogic;
@@ -297,20 +298,20 @@ public class MainActivity extends BaseActivity {
 //                    _mine_no_ll.setVisibility(View.GONE);
                 break;
             //首页首次提示
-            case R.id.home_no_ll_btn:
+            //case R.id.home_no_ll_btn:
                 //_home_no_ll.setVisibility(View.GONE);
                 // XPreferencesUtils.put("isFirstHome", false);
-                break;
+                //break;
             //互推圈首次提示
-            case R.id.elect_no_ll_btn:
+            //case R.id.elect_no_ll_btn:
                 //_elect_no_ll.setVisibility(View.GONE);
                 //XPreferencesUtils.put("isFirstElect", false);
-                break;
+                //break;
             //我的首次提示
-            case R.id.mine_no_ll_btn:
+            //case R.id.mine_no_ll_btn:
                 //_mine_no_ll.setVisibility(View.GONE);
                 //XPreferencesUtils.put("isFirstMine", false);
-                break;
+                //break;
             //隐藏
             case R.id.dialog_home_ll:
             case R.id.dialog_home_del:
@@ -485,8 +486,8 @@ public class MainActivity extends BaseActivity {
         }
         // 打开文库
 //        if ((boolean) XPreferencesUtils.get("isStrategyArticle", false)) {
-//            setArticleView();
 //            XPreferencesUtils.put("isStrategyArticle", false);
+//            startActivity(LibraryActivity.class, "文库");
 //        }
 
     }

@@ -90,13 +90,13 @@ public class Card2Adapter extends BaseAdapter {
 
             mHolder._item_state_ll.setVisibility(View.GONE);
             if (ilItem.getCardIsVip().equals("1")) {
-                mHolder._item_vip_iv.setImageResource(R.drawable.vip_1_icon);
+                mHolder._item_vip_iv.setImageResource(R.drawable.mine_vip_1_icon);
             } else if (ilItem.getCardIsVip().equals("2")) {
-                mHolder._item_vip_iv.setImageResource(R.drawable.vip_2_icon);
+                mHolder._item_vip_iv.setImageResource(R.drawable.mine_vip_1_icon);
             } else if (ilItem.getCardIsVip().equals("3")) {
-                mHolder._item_vip_iv.setImageResource(R.drawable.vip_3_icon);
+                mHolder._item_vip_iv.setImageResource(R.drawable.mine_vip_2_icon);
             } else if (ilItem.getCardIsVip().equals("4")) {
-                mHolder._item_vip_iv.setImageResource(R.drawable.vip_4_icon);
+                mHolder._item_vip_iv.setImageResource(R.drawable.mine_vip_2_icon);
             }
 
         } else {

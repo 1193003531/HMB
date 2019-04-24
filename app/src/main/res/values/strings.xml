@@ -28,7 +28,7 @@
     <string name="no_datas_7">你还没有营销网页</string>
     <string name="no_datas_8">完善名片、制作网页，参加互推，\n分享出去，提升人气</string>
     <string name="no_datas_9">制作吸引人的网页，参加互推，分享出去，\n他人对您的兴趣倍增</string>
-    <string name="no_datas_10">客观很抱歉,暂无榜单</string>
+    <string name="no_datas_10">客官很抱歉,暂无榜单</string>
     <string name="no_datas_11">你还没有发布动态</string>
     <string name="no_datas_12">你还未有人气</string>
     <string name="no_datas_13">未有客户对你感兴趣</string>
@@ -133,6 +133,7 @@
     <string name="setting_commit">完成</string>
 
     <!---->
+    <string name="set_inviter">友情提示:\n1.请正确填写邀请人的电话号码,保存后不可更改;\n2.邀请人号码如果发生更改,将不会影响彼此的关系.</string>
     <string name="about_us_title">营销人的资源整合平台</string>
 
     <string name="user_agreement_title">汇脉宝用户协议与隐私条款</string>

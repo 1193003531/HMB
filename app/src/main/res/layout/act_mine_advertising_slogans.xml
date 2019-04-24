@@ -15,7 +15,7 @@
         android:background="@drawable/ed_white_r5_bg"
         android:gravity="top"
         android:hint="广告标语作为你主页分享的标题，能增加你的点击量哦！"
-        android:imeOptions="normal"
+        android:imeOptions="actionNone"
         android:maxLength="300"
         android:paddingLeft="16dp"
         android:paddingTop="20dp"

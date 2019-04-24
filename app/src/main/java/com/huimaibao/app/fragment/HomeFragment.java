@@ -420,7 +420,7 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    //XLog.d("home=s=" + json);
+                    LogUtils.debug("json:" + json);
                     String status = json.getString("status");
                     String message = json.getString("message");
                     String data = json.getString("data");

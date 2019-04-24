@@ -31,6 +31,7 @@ import com.youth.xframe.utils.XBitmapUtils;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.XStringUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.NoScrollGridView;
@@ -58,8 +59,8 @@ public class CardDetailActivity extends BaseActivity {
     private String _material_id_value = "", _user_id_value = "", _browse_value = "", _focus_on_value = "";
 
 
-    private TextView _card_name, _top_name_tv, _card_company, _card_phone, _card_wechat, _card_addr, _card_introduce, _card_browse, _card_focus_on;
-    private String _head_value = "", _name_value = "", _jobs_value = "", _company_value = "", _phone_value = "", _wechat_value = "", _addr_value = "", _introduce_value = "";
+    private TextView _card_name, _top_name_tv, _card_company, _card_phone, _card_wechat, _card_city, _card_addr, _card_introduce, _card_browse, _card_focus_on;
+    private String _head_value = "", _name_value = "", _jobs_value = "", _company_value = "", _phone_value = "", _wechat_value = "", _city_value = "", _addr_value = "", _introduce_value = "";
 
     private WXShare mWxShare;
     private String shareDes = "";
@@ -124,6 +125,7 @@ public class CardDetailActivity extends BaseActivity {
         _card_company = findViewById(R.id.card_detail_company_tv);
         _card_phone = findViewById(R.id.card_detail_phone_tv);
         _card_wechat = findViewById(R.id.card_detail_wechat_tv);
+        _card_city = findViewById(R.id.card_detail_city_tv);
         _card_addr = findViewById(R.id.card_detail_addr_tv);
         _card_introduce = findViewById(R.id.card_detail_introduce_tv);
 
@@ -187,6 +189,7 @@ public class CardDetailActivity extends BaseActivity {
                 _company_value = "" + XPreferencesUtils.get("company", "");
                 _phone_value = "" + XPreferencesUtils.get("phone", "");
                 _wechat_value = "" + XPreferencesUtils.get("wechat", "");
+                _city_value = "" + XPreferencesUtils.get("address", "");
                 _addr_value = "" + XPreferencesUtils.get("address_detail", "");
                 _introduce_value = "" + XPreferencesUtils.get("introduce", "");
 
@@ -229,8 +232,9 @@ public class CardDetailActivity extends BaseActivity {
                 _card_focus_on.setText("关注 " + _focus_on_value);
                 _card_phone.setText(_phone_value);
                 _card_wechat.setText(_wechat_value);
+                _card_city.setText(_city_value);
                 _card_addr.setText(_addr_value);
-                _card_introduce.setText(XEmptyUtils.isSpace(_introduce_value) ? "" : _introduce_value);
+                _card_introduce.setText(XEmptyUtils.isSpace(_introduce_value) ? "" : XStringUtils.ToDBC(_introduce_value));
 
                 albumData = new ArrayList<>();
                 _album_value = "" + XPreferencesUtils.get("album", "");

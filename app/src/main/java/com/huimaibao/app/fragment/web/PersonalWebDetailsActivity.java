@@ -242,7 +242,7 @@ public class PersonalWebDetailsActivity extends BaseActivity {
         switch (v.getId()) {
             //头像
             case R.id.personal_web_details_head:
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + _user_id_value + ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
             //名片
             case R.id.personal_web_details_card:
@@ -525,7 +525,7 @@ public class PersonalWebDetailsActivity extends BaseActivity {
                                 ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_launcher);
                                 if (XPreferencesUtils.get("user_id", "").equals(_user_id_value)) {
                                     _clone_tv.setVisibility(View.GONE);
-                                    is_interest=false;
+                                    is_interest = false;
                                 } else {
                                     if (is_clone.equals("1")) {
                                         _clone_tv.setVisibility(View.VISIBLE);

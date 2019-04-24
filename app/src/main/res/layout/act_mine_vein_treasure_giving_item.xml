@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/vip_1_icon" />
+                    android:src="@drawable/mine_vip_1_icon" />
 
                 <LinearLayout
                     android:id="@+id/card_item_state_ll"

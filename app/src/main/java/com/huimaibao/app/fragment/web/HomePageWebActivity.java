@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
+import com.huimaibao.app.fragment.home.act.LibraryActivity;
 import com.huimaibao.app.fragment.home.act.MakingCardActivity;
 import com.huimaibao.app.fragment.home.act.PersonalWebActivity;
 import com.huimaibao.app.share.OnResponseListener;
@@ -273,7 +274,7 @@ public class HomePageWebActivity extends BaseActivity {
         //文章(文库)
         @JavascriptInterface
         public void toArticleView() {   //提供给js调用的方法
-            XPreferencesUtils.put("isStrategyArticle", true);
+            startActivity(LibraryActivity.class, "文库");
             XPreferencesUtils.put("isStrategy", true);
             finish();
         }

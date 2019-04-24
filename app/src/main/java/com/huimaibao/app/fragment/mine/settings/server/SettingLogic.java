@@ -286,9 +286,9 @@ public class SettingLogic {
      */
     public void setInvitationPhoneApi(String phone, final boolean isShow, final ResultBack resultBack) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("phone", "phone");
+        map.put("phone", phone);
         if (XNetworkUtils.isConnected()) {
-            XHttp.obtain().get(ServerApi.INVITATION_PHONE_URL, map, new HttpCallBack() {
+            XHttp.obtain().post(ServerApi.INVITATION_PHONE_URL, map, new HttpCallBack() {
                 @Override
                 public void showProgress() {
                     if (isShow)

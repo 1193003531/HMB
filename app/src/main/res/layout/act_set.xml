@@ -82,7 +82,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingRight="@dimen/paddingRight"
-            android:text=""
+            android:text="请填写邀请人电话号码"
             android:textSize="@dimen/text_size_14" />
 
         <ImageView
