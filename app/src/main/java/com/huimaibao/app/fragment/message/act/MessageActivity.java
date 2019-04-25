@@ -1,9 +1,13 @@
 package com.huimaibao.app.fragment.message.act;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -55,6 +59,15 @@ public class MessageActivity extends BaseActivity {
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private String[] nameData = {"关注", "粉丝"};
     private String[] typeData = {"1", "2"};
+    private String isType = "";
+
+
+    /**
+     * 广播接收
+     */
+    LocalBroadcastManager broadcastManager;
+    IntentFilter intentFilter;
+    BroadcastReceiver mReceiver;
 
 
     @Override
@@ -69,6 +82,24 @@ public class MessageActivity extends BaseActivity {
 
 
         initView();
+
+
+        broadcastManager = LocalBroadcastManager.getInstance(mActivity);
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.MESSAGE_FOCUS");
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //收到广播后所作的操作
+                if (isType.equals("关注")) {
+                    _top_titel_1.setText("关注(" + XPreferencesUtils.get("card_num", "0") + ")");
+                } else {
+                    _top_titel_2.setText("粉丝(" + XPreferencesUtils.get("fans_num", "0") + ")");
+                }
+            }
+        };
+        broadcastManager.registerReceiver(mReceiver, intentFilter);
+
 
     }
 
@@ -87,6 +118,7 @@ public class MessageActivity extends BaseActivity {
             _top_titel_2.setText("通知");
             _top_sreach.setVisibility(View.INVISIBLE);
         } else {
+            isType = "关注";
             _top_titel_1.setText("关注(" + XPreferencesUtils.get("card_num", "0") + ")");
             _top_titel_2.setText("粉丝");
             _top_sreach.setVisibility(View.VISIBLE);
@@ -198,6 +230,7 @@ public class MessageActivity extends BaseActivity {
         switch (position) {
             case 0:
                 if (mType.equals("关注")) {
+                    isType = "关注";
                     _top_titel_1.setText("关注(" + XPreferencesUtils.get("card_num", "0") + ")");
                     _top_titel_2.setText("粉丝");
                 }
@@ -210,6 +243,7 @@ public class MessageActivity extends BaseActivity {
                 break;
             case 1:
                 if (mType.equals("关注")) {
+                    isType = "粉丝";
                     _top_titel_1.setText("关注");
                     _top_titel_2.setText("粉丝(" + XPreferencesUtils.get("fans_num", "0") + ")");
                 }
@@ -230,8 +264,23 @@ public class MessageActivity extends BaseActivity {
                 _top_titel_2.setText("粉丝(" + XPreferencesUtils.get("fans_num", "0") + ")");
             }
         }
-
     }
 
+    public void setFocusNum() {
+        if (mType.equals("关注")) {
+            if (_top_titel_1 != null) {
+                _top_titel_1.setText("关注(" + XPreferencesUtils.get("card_num", "0") + ")");
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (broadcastManager != null) {
+            broadcastManager.unregisterReceiver(mReceiver);
+        }
+
+    }
 
 }

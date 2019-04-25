@@ -16,6 +16,7 @@ import com.huimaibao.app.fragment.home.entity.ReportEntity;
 import com.huimaibao.app.fragment.mine.server.GeneralLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ToastUtils;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.NoScrollListView;
@@ -126,7 +127,7 @@ public class ReportActivity extends BaseActivity {
             _type_value = "2";
         } else if (mType.equals("网页")) {
             _type_value = "4";
-        }else if (mType.equals("动态")) {
+        } else if (mType.equals("动态")) {
             _type_value = "5";
         }
 
@@ -159,7 +160,7 @@ public class ReportActivity extends BaseActivity {
                         }
                     }
 
-                    getComplaint(reportL.toString(), _report_other_value);
+                    getComplaint(reportL.toString().replace("[", "").replace("]", "").trim(), _report_other_value);
                 }
                 break;
         }
@@ -210,12 +211,13 @@ public class ReportActivity extends BaseActivity {
         map.put("title", item);
         map.put("advise", content);
 
-
+        LogUtils.debug("json:" + map);
         GeneralLogic.Instance(mActivity).getComplaintApi(map, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
                     if (json.getString("status").equals("0")) {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
@@ -225,10 +227,10 @@ public class ReportActivity extends BaseActivity {
                             }
                         });
                     } else {
-                        showToast("举报失败");
+                        showToast("举报失败," + json.getString("message"));
                     }
                 } catch (Exception e) {
-                    //XLog.e("e:" + e.toString());
+                    LogUtils.debug("json:" + e.toString());
                     showToast("举报失败");
                     e.printStackTrace();
                 }
@@ -236,7 +238,7 @@ public class ReportActivity extends BaseActivity {
 
             @Override
             public void onFailed(String error) {
-                //XLog.e("e:" + error);
+                LogUtils.debug("json:" + error);
                 showToast("举报失败");
             }
         });

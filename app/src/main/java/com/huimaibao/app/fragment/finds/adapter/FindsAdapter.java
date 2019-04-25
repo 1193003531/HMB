@@ -272,7 +272,7 @@ public class FindsAdapter extends BaseAdapter {
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(ReportActivity.class, "动态", item.getFindsUserId());
+                        startActivity(ReportActivity.class, "动态", item.getFindsId());
                         mDialogUtils.dismissDialog();
                     }
                 });

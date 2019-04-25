@@ -1,13 +1,11 @@
 package com.huimaibao.app.fragment.finds.act;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.sdk.android.oss.ClientException;
@@ -21,13 +19,10 @@ import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.fragment.finds.adapter.FindsAlbumAdapter;
 import com.huimaibao.app.fragment.finds.server.FindsLogic;
-import com.huimaibao.app.fragment.home.adapter.CardAlbumAdapter;
 import com.huimaibao.app.http.ResultBack;
-import com.huimaibao.app.takePhone.LoadCallback;
 import com.huimaibao.app.takePhone.TakePhoneHelper;
 import com.huimaibao.app.takePhone.TakePhotoActivity;
 import com.huimaibao.app.utils.DialogUtils;
-import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.takephoto.model.TResult;
@@ -41,7 +36,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 发布动态
@@ -202,6 +196,7 @@ public class FindsAddActivity extends TakePhotoActivity {
         for (int i = 0; i < result.getImages().size(); i++) {
             //LogUtils.debug("finds:" + result.getImages().get(i).getCompressPath());
             //LogUtils.debug("finds:" + result.getImages().get(i).getOriginalPath());
+            //Toast.makeText(mActivity, result.getImages().get(i).getCompressPath(), Toast.LENGTH_LONG).show();
             imagePthData.add(result.getImages().get(i).getOriginalPath());
             albumData.clear();
             albumData.addAll(imagePthData);

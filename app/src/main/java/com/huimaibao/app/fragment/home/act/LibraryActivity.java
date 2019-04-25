@@ -106,6 +106,7 @@ public class LibraryActivity extends BaseActivity {
         };
         broadcastManager.registerReceiver(mReceiver, intentFilter);
 
+        //ChannelManage.getManage(BaseApplication.getApp().getSQLHelper()).deleteAllChannel();
         //setChangelView();
         getUserLabel(true);
     }
@@ -375,7 +376,9 @@ public class LibraryActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        broadcastManager.unregisterReceiver(mReceiver);
+        if (broadcastManager != null) {
+            broadcastManager.unregisterReceiver(mReceiver);
+        }
     }
 
 }

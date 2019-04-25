@@ -100,7 +100,7 @@ public class FindsCommentsActivity extends BaseActivity {
     private RelativeLayout _item_comment_ll;
     private CircleImageView _item_comment_iv_1, _item_comment_iv_2, _item_comment_iv_3, _item_comment_iv_4, _item_comment_iv_more;
 
-    private String _dynamic_id_value = "", _dy_cardid_value = "", _dy_userid_value = "", _dy_head_value = "", _dy_name_value = "", _dy_content_value = "", _dy_images_value = "", _dy_time_value = "", _dy_comments_num_value = "0", _dy_isfocus_value = "0", _dy_ispraise_value = "0", _dy_praisenum_value = "0", _dy_comment_head_value = "";
+    private String _dynamic_id_value = "", _dy_cardid_value = "", _userid_value = "", _dy_head_value = "", _dy_name_value = "", _dy_content_value = "", _dy_images_value = "", _dy_time_value = "", _dy_comments_num_value = "0", _dy_isfocus_value = "0", _dy_ispraise_value = "0", _dy_praisenum_value = "0", _dy_comment_head_value = "";
     //评论头像
     private List<String> commentHeadList;
 
@@ -170,7 +170,7 @@ public class FindsCommentsActivity extends BaseActivity {
         myClipboard = (ClipboardManager) mActivity.getSystemService(mActivity.CLIPBOARD_SERVICE);
         _dy_isfocus_value = XPreferencesUtils.get("concern", "0").toString();
         _dynamic_id_value = XPreferencesUtils.get("dynamic_id", "").toString();
-
+        _userid_value = XPreferencesUtils.get("user_id", "").toString();
 
         _top_focus_iv = findViewById(R.id.finds_list_top_foucs);
         _top_user_ll = findViewById(R.id.finds_list_top_user_ll);
@@ -279,7 +279,7 @@ public class FindsCommentsActivity extends BaseActivity {
             @Override
             public void onScrolledToBottom() {
                 if (countPage >= totalPage) {
-                    showToast("没有数据了");
+                    //showToast("没有数据了");
                     return;
                 }
                 if (!isLoading) {
@@ -332,7 +332,8 @@ public class FindsCommentsActivity extends BaseActivity {
         _item_comments_num.setText(_dy_comments_num_value + "条评论");
         _top_comment_num.setText(_dy_comments_num_value + "条评论");
         _item_praise_num.setText(_dy_praisenum_value);
-        _item_images.setSpacing(4);
+        //_item_images.setSpacing(4);
+        _item_images.init(mActivity);
         _item_images.setImageUrls(listImage);
 
         if (_dy_ispraise_value.equals("0")) {
@@ -341,10 +342,10 @@ public class FindsCommentsActivity extends BaseActivity {
             _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
         }
 
-        if (_dy_userid_value.equals(XPreferencesUtils.get("user_id", ""))) {
+        if (_userid_value.equals(XPreferencesUtils.get("user_id", ""))) {
             _item_focus_iv.setVisibility(View.GONE);
             _dy_isfocus_value = "1";
-        }else{
+        } else {
             if (_dy_isfocus_value.equals("0")) {
                 _item_focus_iv.setVisibility(View.VISIBLE);
             } else {
@@ -477,7 +478,7 @@ public class FindsCommentsActivity extends BaseActivity {
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(ReportActivity.class, "动态", _dy_userid_value);
+                        startActivity(ReportActivity.class, "动态", _dynamic_id_value);
                         mDialogUtils.dismissDialog();
                     }
                 });
@@ -736,7 +737,7 @@ public class FindsCommentsActivity extends BaseActivity {
                         JSONObject data = new JSONObject(json.getString("data"));
                         _dynamic_id_value = data.optString("dynamic_id");
                         _dy_cardid_value = data.optString("cards_id");
-                        _dy_userid_value = data.optString("user_id");
+
                         _dy_head_value = data.optString("head_picture");
                         _dy_name_value = data.optString("user_name");
                         _dy_content_value = data.optString("content");
@@ -1065,10 +1066,10 @@ public class FindsCommentsActivity extends BaseActivity {
                                         @Override
                                         public void onItemReplyClick(final int position) {
                                             _superior_id_value = listData.get(position).getFindsCommentId();
-                                            if (!listData.get(position).getFindsUserId().equals(_dy_userid_value)) {
-                                                setCommentReply("0", position);
-                                            } else {
+                                            if (listData.get(position).getFindsUserId().equals(_userid_value)) {
                                                 setCommentReply("", position);
+                                            } else {
+                                                setCommentReply("0", position);
                                             }
                                         }
                                     });
@@ -1078,10 +1079,10 @@ public class FindsCommentsActivity extends BaseActivity {
                                         @Override
                                         public void onChildItemReplyClick(int groupPosition, int childPosition) {
                                             _superior_id_value = listData.get(groupPosition).getFindsCommentId();
-                                            if (!listData.get(groupPosition).getList().get(childPosition).getFindsUserId().equals(_dy_userid_value)) {
-                                                setChildCommentReply("0", groupPosition, childPosition);
-                                            } else {
+                                            if (listData.get(groupPosition).getList().get(childPosition).getFindsUserId().equals(_userid_value)) {
                                                 setChildCommentReply("", groupPosition, childPosition);
+                                            } else {
+                                                setChildCommentReply("0", groupPosition, childPosition);
                                             }
                                         }
                                     });

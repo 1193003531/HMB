@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;
@@ -326,11 +327,13 @@ public class MakingCardActivity extends TakePhotoActivity {
             url = result.getImages().get(0).getCompressPath();
         } else {
             url = result.getImages().get(0).getOriginalPath();
+            //url = result.getImages().get(0).getCompressPath();
         }
 
 
         LogUtils.debug("url:" + url);
         LogUtils.debug("url:" + result.getImages().get(0).getCompressPath());
+
         final String object = setImageUrl();
 
         putLoadImage(object, url, new LoadCallback() {
@@ -339,6 +342,7 @@ public class MakingCardActivity extends TakePhotoActivity {
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //Toast.makeText(mActivity,url, Toast.LENGTH_LONG).show();
                         showToast("上传成功");
                         if (_check_head.equals("头像")) {
                             _head_value = ServerApi.OSS_IMAGE_URL + object;
@@ -418,7 +422,7 @@ public class MakingCardActivity extends TakePhotoActivity {
                                 finish();
                             } else {
                                 LogUtils.debug("error:" + json.getString("message"));
-                                showToast("保存失败");
+                                showToast("保存失败," + json.getString("message"));
                             }
                         } catch (Exception e) {
                             LogUtils.debug("error:" + e);

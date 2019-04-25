@@ -30,6 +30,8 @@ import java.util.List;
 public class FriendsCircleImageLayout extends ViewGroup {
 
     private Activity mActivity;
+    private static FriendsCircleImageLayout _Instance = null;
+
     private int mTotalWidth;
     private int mSingleWidth;
 
@@ -55,6 +57,7 @@ public class FriendsCircleImageLayout extends ViewGroup {
 
     private int mItemWidth;
     private int mItemHeight;
+
 
     public void init(Activity activity) {
         this.mActivity = activity;
@@ -396,8 +399,13 @@ public class FriendsCircleImageLayout extends ViewGroup {
         intent.setClass(getContext(), ImageShowActivity.class);
         intent.putStringArrayListExtra("infos", urlList);
         intent.putExtra("position", i);
-        mActivity.startActivity(intent);
-        mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        if (mActivity != null) {
+            mActivity.startActivity(intent);
+            mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else {
+            getContext().startActivity(intent);
+        }
+
     }
 }
 

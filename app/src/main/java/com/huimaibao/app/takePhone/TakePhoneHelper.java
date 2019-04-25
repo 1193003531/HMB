@@ -3,7 +3,9 @@ package com.huimaibao.app.takePhone;
 import android.app.Activity;
 import android.app.Dialog;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseApplication;
+import com.youth.xframe.BuildConfig;
 import com.youth.xframe.takephoto.app.TakePhoto;
 import com.youth.xframe.takephoto.compress.CompressConfig;
 import com.youth.xframe.takephoto.model.CropOptions;
@@ -155,8 +158,6 @@ public class TakePhoneHelper {
         //File file = new File(BaseApplication.getApp().getFilePath(), "images/" + System.currentTimeMillis() + ".jpg");
         File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
 
-        //String path = Environment.getExternalStorageDirectory() + File.separator + "images" + File.separator;
-        // File file = new File(path, System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }

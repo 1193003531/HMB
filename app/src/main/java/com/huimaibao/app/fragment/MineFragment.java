@@ -134,8 +134,14 @@ public class MineFragment extends BaseFragment {
             XPreferencesUtils.put("set_payment_pwd", false);
         }
 
+        if ((boolean) XPreferencesUtils.get("updateVip", false)) {
+            showData();
+            XPreferencesUtils.put("updateVip", false);
+        }
+        _card_num.setText("关注" + XPreferencesUtils.get("card_num", "0"));
         _motto_tv.setText("" + XPreferencesUtils.get("motto", ""));
         _member_data.setText("" + XPreferencesUtils.get("member_data", "开通会员"));
+
     }
 
     private void initView(View v) {

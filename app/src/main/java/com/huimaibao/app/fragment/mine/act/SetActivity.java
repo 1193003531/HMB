@@ -82,6 +82,7 @@ public class SetActivity extends BaseActivity {
         _inviter_tv = findViewById(R.id.setting_inviter_phone_value);
         _inviter_iv = findViewById(R.id.setting_inviter_iv);
 
+
         _version_tv.setText("版本 " + XAppUtils.getVersionName(mActivity));
         _cache_value.setText(XFileUtils.getFilesSize(BaseApplication.getApp().getFilePath()));
 
@@ -92,11 +93,13 @@ public class SetActivity extends BaseActivity {
             _version_new_iv.setVisibility(View.GONE);
         }
 
-//        _inviter_phone_value = XPreferencesUtils.get("inviter_phone", "").toString().trim();
-//        if (XEmptyUtils.isSpace(_inviter_phone_value)) {
-        getInviterPhone();
-        //}
-
+        //邀请人-服务商
+        if (XPreferencesUtils.get("type", "4").equals("3")) {
+            _inviter_ll.setVisibility(View.GONE);
+        } else {
+            _inviter_ll.setVisibility(View.VISIBLE);
+            getInviterPhone();
+        }
     }
 
 
@@ -358,7 +361,7 @@ public class SetActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (XEmptyUtils.isSpace(phone) || phone.length() > 5) {
+                                if (XEmptyUtils.isSpace(phone)) {
                                     XPreferencesUtils.put("inviter_phone", "");
                                     _inviter_tv.setText("请填写邀请人电话号码");
                                     _inviter_iv.setVisibility(View.VISIBLE);

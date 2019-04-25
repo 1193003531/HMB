@@ -61,6 +61,7 @@ public class AdvertSlogansActivity extends BaseActivity {
         _as_content_value = XStringUtils.ToDBC(XPreferencesUtils.get("motto", "").toString().trim());
         _as_content.setText(_as_content_value);
         _as_content.setSelection(_as_content_value.length());
+        _as_num.setText("还可输入" + String.valueOf(30 - _as_content_value.length()) + "字");//此处需要进行强制类型转换
         XKeyboardUtils.openKeyboard(mActivity);
     }
 

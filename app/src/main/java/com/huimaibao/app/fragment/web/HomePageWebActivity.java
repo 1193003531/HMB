@@ -293,6 +293,7 @@ public class HomePageWebActivity extends BaseActivity {
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    //showToast(name + "---" + phone);
                     if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
 
                         XPermission.requestPermissions(mActivity, 1008, new String[]{

@@ -233,7 +233,7 @@ public class CardDetailActivity extends BaseActivity {
                 _card_phone.setText(_phone_value);
                 _card_wechat.setText(_wechat_value);
                 _card_city.setText(_city_value);
-                _card_addr.setText(_addr_value);
+                _card_addr.setText( XStringUtils.ToDBC(_addr_value));
                 _card_introduce.setText(XEmptyUtils.isSpace(_introduce_value) ? "" : XStringUtils.ToDBC(_introduce_value));
 
                 albumData = new ArrayList<>();

@@ -249,6 +249,7 @@ public class MemberActivity extends BaseActivity {
             getProfileVipData();
             getUserInfo();
             XPreferencesUtils.put("isPaymentMoney", false);
+            XPreferencesUtils.put("updateVip", true);
         }
     }
 

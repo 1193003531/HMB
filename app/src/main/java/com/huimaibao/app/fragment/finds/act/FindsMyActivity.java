@@ -136,7 +136,7 @@ public class FindsMyActivity extends BaseActivity {
     private void loadMoreData() {
         if (countPage >= totalPage) {
             mSwipeRefreshView.setLoading(false);
-            showToast("没有数据了");
+            //showToast("没有数据了");
             return;
         }
         countPage++;

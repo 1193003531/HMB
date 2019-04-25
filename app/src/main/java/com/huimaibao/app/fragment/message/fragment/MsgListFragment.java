@@ -1,6 +1,8 @@
 package com.huimaibao.app.fragment.message.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +63,6 @@ public class MsgListFragment extends BaseFragment {
     private CardAdapter mCardAdapter;
     private List<CardEntity> ListCardData;
 
-    private MessageActivity messageActivity;
-
 
     @Override
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class MsgListFragment extends BaseFragment {
         } else if (text.equals("粉丝")) {
             _no_image_data.setImageResource(R.drawable.blank_pages_15_icon);
             _no_tv_data.setText(R.string.no_datas_15);
-        }else{
+        } else {
             _no_image_data.setImageResource(R.drawable.blank_pages_16_icon);
             _no_tv_data.setText(R.string.no_datas_17);
         }
@@ -178,11 +178,11 @@ public class MsgListFragment extends BaseFragment {
     private void getData() {
         countPage = 1;
         if (text.equals("关注")) {
-            getCardClip("", countPage, true);
+            getCardClip("", countPage, false);
         } else if (text.equals("粉丝")) {
             getCardClip("fans", countPage, false);
         } else {
-            getOtherData(countPage, true);
+            getOtherData(countPage, false);
         }
 
     }
@@ -329,7 +329,7 @@ public class MsgListFragment extends BaseFragment {
      */
     private void getCardClip(final String type, final int page, boolean isShow) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("limit", 5);
+        map.put("limit", 10);
         map.put("page", page);
         map.put("keyword", "");
         map.put("type", type);
@@ -347,14 +347,12 @@ public class MsgListFragment extends BaseFragment {
                         if (type.equals("fans")) {
                             //json.getJSONObject("data").getString("count")
                             XPreferencesUtils.put("fans_num", json.getJSONObject("data").optString("count", "0"));
-                            mActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    messageActivity = new MessageActivity();
-                                    messageActivity.setFansNum();
-                                }
-                            });
-
+                            Intent intent = new Intent("android.intent.action.MESSAGE_FOCUS");
+                            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+                        } else {
+                            XPreferencesUtils.put("card_num", json.getJSONObject("data").optString("count", "0"));
+                            Intent intent = new Intent("android.intent.action.MESSAGE_FOCUS");
+                            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
                         }
 
                         JSONArray array = new JSONArray(json.getJSONObject("data").optString("list", "[]"));
