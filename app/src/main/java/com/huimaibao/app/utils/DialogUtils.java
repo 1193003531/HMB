@@ -241,6 +241,33 @@ public class DialogUtils {
     /**
      * 无sure弹出框
      */
+    public void showNoSureDialog(boolean cancelable, String msg, String cancel, View.OnClickListener listener) {
+
+        //1、使用Dialog、设置style
+        dialog = new Dialog(mActivity, R.style.DialogTheme);
+        //2、设置布局
+        View view = View.inflate(mActivity, R.layout.dialog_no_sure_layout, null);
+        dialog.setContentView(view);
+        dialog.setCancelable(cancelable);
+        Window window = dialog.getWindow();
+        //设置弹出位置
+        //window.setGravity(Gravity.BOTTOM);
+        //设置弹出动画
+        // window.setWindowAnimations(R.style.main_menu_animStyle);
+        //设置对话框大小
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        TextView _msg_tv = dialog.findViewById(R.id.dialog_no_sure_msg);
+        TextView _cancel_btn = dialog.findViewById(R.id.dialog_no_sure_cancel);
+        _msg_tv.setText(msg);
+        _cancel_btn.setText(cancel);
+        _cancel_btn.setOnClickListener(listener);
+
+    }
+
+    /**
+     * 无sure弹出框
+     */
     public void showNoSureDialog(String msg, String cancel) {
 
         //1、使用Dialog、设置style

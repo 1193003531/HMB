@@ -69,7 +69,7 @@ public class ToCloneActivity extends BaseActivity {
         setTopRight(false, true, false, "", null);
 
         mDialogUtils = new DialogUtils(mActivity);
-
+        listData = new ArrayList<>();
         initView();
 
     }
@@ -167,7 +167,7 @@ public class ToCloneActivity extends BaseActivity {
         map.put("limit", 10);
         map.put("page", page);
         map.put("is_clone", "1");
-        HomeLogic.Instance(mActivity).homeMarketApi(map, isShow, new ResultBack() {
+        HomeLogic.Instance(mActivity).toCloneApi(map, isShow, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {
@@ -242,16 +242,20 @@ public class ToCloneActivity extends BaseActivity {
                                 }
                             }
                         });
+                    } else {
+                        hide();
                     }
                 } catch (Exception e) {
                     // XLog.d("error:" + e);
                     e.printStackTrace();
+                    hide();
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.d("error:" + error);
+                hide();
             }
         });
     }
@@ -300,5 +304,22 @@ public class ToCloneActivity extends BaseActivity {
         });
     }
 
+
+    private void hide() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (listData.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
+                // 加载完数据设置为不刷新状态，将下拉进度收起来
+                if (mSwipeRefreshView.isRefreshing()) {
+                    mSwipeRefreshView.setRefreshing(false);
+                }
+            }
+        });
+    }
 
 }

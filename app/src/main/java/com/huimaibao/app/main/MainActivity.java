@@ -27,6 +27,7 @@ import com.huimaibao.app.fragment.message.server.MessageLogic;
 import com.huimaibao.app.fragment.mine.act.MarketingRewardActivity;
 import com.huimaibao.app.fragment.web.MessageWebActivity;
 import com.huimaibao.app.http.ResultBack;
+import com.huimaibao.app.login.LoginActivity;
 import com.huimaibao.app.login.logic.LoginLogic;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ToastUtils;
@@ -147,9 +148,11 @@ public class MainActivity extends BaseActivity {
         mDialogUtils = new DialogUtils(mActivity);
         mDownloadManager = new AppDownloadManager(mActivity);
 
+        //XPreferencesUtils.put("token","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkuNTFodWltYWliYW8uY25cL2Zyb250XC9yZWZyZXNoIiwiaWF0IjoxNTQ3ODExNjM1LCJleHAiOjE1NTA0MDM4MjcsIm5iZiI6MTU0NzgxMTgyNywianRpIjoiSWo5UlA0QngyQVV4cjhjcSIsInN1YiI6Nzc4LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.3iFuE7ysD0MbflwB_ffxQbWE_M97vweDtGldZRk8lmw");
+
         //LogUtils.debug("token" + XPreferencesUtils.get("token", ""));
         //
-        // LoginLogic.Instance(mActivity).refreshTokenApi();
+        LoginLogic.Instance(mActivity).refreshTokenApi();
 
         getUserInfo();
         upDataAPP();
@@ -299,19 +302,19 @@ public class MainActivity extends BaseActivity {
                 break;
             //首页首次提示
             //case R.id.home_no_ll_btn:
-                //_home_no_ll.setVisibility(View.GONE);
-                // XPreferencesUtils.put("isFirstHome", false);
-                //break;
+            //_home_no_ll.setVisibility(View.GONE);
+            // XPreferencesUtils.put("isFirstHome", false);
+            //break;
             //互推圈首次提示
             //case R.id.elect_no_ll_btn:
-                //_elect_no_ll.setVisibility(View.GONE);
-                //XPreferencesUtils.put("isFirstElect", false);
-                //break;
+            //_elect_no_ll.setVisibility(View.GONE);
+            //XPreferencesUtils.put("isFirstElect", false);
+            //break;
             //我的首次提示
             //case R.id.mine_no_ll_btn:
-                //_mine_no_ll.setVisibility(View.GONE);
-                //XPreferencesUtils.put("isFirstMine", false);
-                //break;
+            //_mine_no_ll.setVisibility(View.GONE);
+            //XPreferencesUtils.put("isFirstMine", false);
+            //break;
             //隐藏
             case R.id.dialog_home_ll:
             case R.id.dialog_home_del:

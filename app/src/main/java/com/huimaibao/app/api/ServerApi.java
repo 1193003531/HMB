@@ -26,8 +26,6 @@ public interface ServerApi {
     /**
      * 域名-开发环境
      */
-    String SERVER_URL_2 = "http://doc.yuhongrocky.top/server/index.php?g=Web&c=Mock&o=simple&projectID=2&uri=";
-
     //测试服
     String SERVER_URL = "http://api.yuhongrocky.top";
     String SERVER_WEB_URL = "http://weixin.yuhongrocky.top";
@@ -287,9 +285,13 @@ public interface ServerApi {
      */
     String HOME_INCOME_URL = SERVER_URL + "/app/reward/rank";
     /**
-     * 营销榜单,去克隆
+     * 营销榜单
      */
-    String HOME_MARKETING_URL = SERVER_URL + "/front/personal_page/rank";
+    String HOME_MARKETING_URL = SERVER_URL + "/front/index/rank";
+    /**
+     * 去克隆
+     */
+    String TO_CLONE_URL = SERVER_URL + "/front/personal_page/rank";
     /**
      * 个人网页预克隆(克隆前调用)
      */

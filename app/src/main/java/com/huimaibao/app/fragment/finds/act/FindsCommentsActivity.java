@@ -737,7 +737,6 @@ public class FindsCommentsActivity extends BaseActivity {
                         JSONObject data = new JSONObject(json.getString("data"));
                         _dynamic_id_value = data.optString("dynamic_id");
                         _dy_cardid_value = data.optString("cards_id");
-
                         _dy_head_value = data.optString("head_picture");
                         _dy_name_value = data.optString("user_name");
                         _dy_content_value = data.optString("content");
@@ -749,10 +748,20 @@ public class FindsCommentsActivity extends BaseActivity {
                         _dy_praisenum_value = data.optString("praise_number");
                         _dy_comment_head_value = data.optString("userHeadPraise");
 
+                        final String is_delete = data.optString("is_delete", "0");
 
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (is_delete.equals("1")) {
+                                    mDialogUtils.showNoTitleDialog("该动态已删除", "取消", "确定", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            mDialogUtils.dismissDialog();
+                                            finish();
+                                        }
+                                    });
+                                }
                                 setDynamicData();
                             }
                         });

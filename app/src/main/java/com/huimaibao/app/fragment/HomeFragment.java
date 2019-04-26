@@ -613,12 +613,13 @@ public class HomeFragment extends BaseFragment {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.debug("home=s=" + e.toString());
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                //XLog.d("error:" + error);
+                LogUtils.debug("home=s=" + error);
             }
         });
     }

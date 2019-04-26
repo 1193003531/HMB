@@ -91,7 +91,7 @@ public class MarketingListActivity extends BaseActivity {
     }
 
     private void initView() {
-
+        mlList = new ArrayList<>();
 
         mSwipeRefreshView = findViewById(R.id.list_swipe_value);
         mSwipeRefreshView.setEnabled(false);
@@ -120,7 +120,7 @@ public class MarketingListActivity extends BaseActivity {
 //                bundle.putString("share_imageUrl", mlList.get(position - 1).getMakingListImage());
 //
 //                startActivity(PersonalWebDetailsActivity.class, bundle);
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+mlList.get(position - 1).getMakingListUserId()+ServerApi.HOME_PAGE_WEB_TOKEN);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mlList.get(position - 1).getMakingListUserId() + ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
 
@@ -262,8 +262,8 @@ public class MarketingListActivity extends BaseActivity {
                             //HomeLogic.Instance(mActivity).getJsonImageUrls(array.getJSONObject(i).getString("content"))
                             mli.setMakingListImage(array.getJSONObject(i).optString("cover"));
                             mli.setMakingListTitle(array.getJSONObject(i).optString("title"));
-                            mli.setMakingListBrowse(array.getJSONObject(i).optString("popularity","0"));
-                            mli.setMakingListShare(array.getJSONObject(i).optString("share_count","0"));
+                            mli.setMakingListBrowse(array.getJSONObject(i).optString("popularity", "0"));
+                            mli.setMakingListShare(array.getJSONObject(i).optString("share_count", "0"));
                             mli.setMakingListInterested(array.getJSONObject(i).optString("interested", "0"));
                             mli.setMakingListHead(array.getJSONObject(i).getJSONObject("user").optString("portrait"));
                             mli.setMakingListName(array.getJSONObject(i).getJSONObject("user").optString("name"));
@@ -275,7 +275,12 @@ public class MarketingListActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 _m_num.setText("你的网页目前排名 " + ranking);
-                                _no_data.setVisibility(View.GONE);
+                                if (mlList.size() == 0) {
+                                    _no_data.setVisibility(View.VISIBLE);
+                                } else {
+                                    _no_data.setVisibility(View.GONE);
+                                }
+
                                 mListView.setVisibility(View.VISIBLE);
 
                                 if (countPage == 1) {
@@ -290,19 +295,36 @@ public class MarketingListActivity extends BaseActivity {
                         });
                     } else {
                         showToast(message);
+                        hide();
                     }
                 } catch (Exception e) {
                     //.d("error:" + e);
                     e.printStackTrace();
+                    hide();
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                //XLog.d("error:" + error);
+                hide();
             }
         });
     }
 
+
+    private void hide() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mlList.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
+                // 加载完数据设置为不加载状态，将加载进度收起来
+                mSwipeRefreshView.setLoading(false);
+            }
+        });
+    }
 
 }

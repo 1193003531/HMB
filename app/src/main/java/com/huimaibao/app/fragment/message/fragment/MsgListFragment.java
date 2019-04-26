@@ -27,6 +27,7 @@ import com.huimaibao.app.fragment.mine.server.CardClipLogic;
 import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
 import com.youth.xframe.widget.XToast;
@@ -118,6 +119,10 @@ public class MsgListFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (text.equals("关注") || text.equals("粉丝")) {
+                    if (XEmptyUtils.isSpace(mCardAdapter.getItem(position).getCardId())) {
+                        showToast("用户不存在");
+                        return;
+                    }
                     //startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
                     startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mCardAdapter.getItem(position).getCardId() + ServerApi.HOME_PAGE_WEB_TOKEN);
                 } else {
@@ -413,14 +418,14 @@ public class MsgListFragment extends BaseFragment {
                     }
 
                 } catch (Exception e) {
-                    //XLog.d("e:" + e.toString());
+                    LogUtils.debug("lib=s=" + e.toString());
                     showNoData();
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                //XLog.d("error:" + error);
+                LogUtils.debug("lib=s=" + error);
                 showNoData();
             }
         });

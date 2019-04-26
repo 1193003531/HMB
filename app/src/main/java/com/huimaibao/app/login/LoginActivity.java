@@ -25,9 +25,11 @@ import com.huimaibao.app.utils.ToastUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.youth.xframe.common.XActivityStack;
 import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XDateUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XRegexUtils;
+import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.XToast;
 
@@ -281,6 +283,8 @@ public class LoginActivity extends Activity {
                     if (status.equals("0")) {
                         JSONObject dataJ = new JSONObject(data);
                         XPreferencesUtils.put("token", dataJ.getString("token"));
+                        //保存token到期时间,有效期1月
+                        XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
                         XPreferencesUtils.put("phone", phone);
 
 //                            Intent intent = new Intent();
@@ -320,30 +324,30 @@ public class LoginActivity extends Activity {
         LoginLogic.Instance(mActivity).LoginWeChatApi(map, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
-
-                if (!object.equals("")) {
-                    try {
-                        //{"status":-1,"message":"\u9700\u8981\u7ed1\u5b9a\u624b\u673a\u53f7\u7801\uff01","data":[]}
-                        JSONObject json = new JSONObject(object.toString());
-                        LogUtils.debug("json--" + json);
-                        String status = json.getString("status"); //国家
-                        if (status.equals("-1")) {
-                            getUserInfo(access_token, openid);
+                try {
+                    //{"status":-1,"message":"\u9700\u8981\u7ed1\u5b9a\u624b\u673a\u53f7\u7801\uff01","data":[]}
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json--" + json);
+                    String status = json.getString("status"); //国家
+                    if (status.equals("-1")) {
+                        getUserInfo(access_token, openid);
+                    } else {
+                        JSONObject data = new JSONObject(json.getString("data"));
+                        XPreferencesUtils.put("token", data.getString("token"));
+                        //保存token到期时间,有效期1月
+                        XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
+//                        if(XEmptyUtils.isSpace(data.optString("phone",""))){
+//                            getUserInfo(access_token, openid);
+//                        }
+                        if (data.optBoolean("is_perfect")) {
+                            toMainView();
                         } else {
-                            JSONObject data = new JSONObject(json.getString("data"));
-                            XPreferencesUtils.put("token", data.getString("token"));
-                            if (data.optBoolean("is_perfect")) {
-                                toMainView();
-                            } else {
-                                toPerfect("微信");
-                            }
+                            toPerfect("微信");
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        LogUtils.debug("json--" + e);
-                        showToast("微信登录失败,请重新登录");
                     }
-                } else {
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    LogUtils.debug("json--" + e);
                     showToast("微信登录失败,请重新登录");
                 }
             }

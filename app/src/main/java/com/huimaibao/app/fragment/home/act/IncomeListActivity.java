@@ -86,6 +86,8 @@ public class IncomeListActivity extends BaseActivity {
     }
 
     private void initView() {
+        iListmData = new ArrayList<>();
+
         mSwipeRefreshView = findViewById(R.id.list_swipe_value);
         mSwipeRefreshView.setEnabled(false);
         mListView = findViewById(R.id.list_pull_value);
@@ -115,7 +117,7 @@ public class IncomeListActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // startActivity(PersonalActivity.class, iListmData.get(position - 1).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+iListmData.get(position - 1).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + iListmData.get(position - 1).getIncomeId() + ServerApi.HOME_PAGE_WEB_TOKEN);
             }
         });
 
@@ -153,17 +155,17 @@ public class IncomeListActivity extends BaseActivity {
             case R.id.a_h_i_1_head_ll:
             case R.id.a_h_i_1_money_ll:
                 // startActivity(PersonalActivity.class, mlList.get(0).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mlList.get(0).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mlList.get(0).getIncomeId() + ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
             case R.id.a_h_i_2_head_ll:
             case R.id.a_h_i_2_money_ll:
                 // startActivity(PersonalActivity.class, mlList.get(1).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mlList.get(1).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mlList.get(1).getIncomeId() + ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
             case R.id.a_h_i_3_head_ll:
             case R.id.a_h_i_3_money_ll:
                 // startActivity(PersonalActivity.class, mlList.get(2).getIncomeId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mlList.get(2).getIncomeId()+ServerApi.HOME_PAGE_WEB_TOKEN);
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mlList.get(2).getIncomeId() + ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
         }
     }
@@ -263,18 +265,35 @@ public class IncomeListActivity extends BaseActivity {
                                 }
                             }
                         });
+                    } else {
+                        hide();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    hide();
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                //XLog.d("error:" + error);
+                hide();
             }
         });
     }
 
+    private void hide() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mlList.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
+                // 加载完数据设置为不加载状态，将加载进度收起来
+                mSwipeRefreshView.setLoading(false);
+            }
+        });
+    }
 
 }

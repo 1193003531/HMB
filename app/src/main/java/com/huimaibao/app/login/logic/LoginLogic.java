@@ -1,10 +1,13 @@
 package com.huimaibao.app.login.logic;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.view.View;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.http.ResultBack;
+import com.huimaibao.app.login.LoginActivity;
 import com.huimaibao.app.utils.DialogUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
@@ -58,24 +61,44 @@ public class LoginLogic {
 
                 @Override
                 public void onSuccess(Object o) {
+                    LogUtils.debug("json:" + o);
                     try {
                         //{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkuNTFodWltYWliYW8uY25cL2Zyb250XC9yZWZyZXNoIiwiaWF0IjoxNTQ3ODExNjM1LCJleHAiOjE1NTA0MDM4MjcsIm5iZiI6MTU0NzgxMTgyNywianRpIjoiSWo5UlA0QngyQVV4cjhjcSIsInN1YiI6Nzc4LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.3iFuE7ysD0MbflwB_ffxQbWE_M97vweDtGldZRk8lmw","expire":"2592000"}
                         //
                         JSONObject json = new JSONObject(o.toString());
-                        LogUtils.debug("refreshTokenApi:" + json);
+                        LogUtils.debug("json:" + json);
 
                         if (!XEmptyUtils.isSpace(json.optString("token", ""))) {
                             //final JSONObject jsonD = new JSONObject(json.optString("data"));
                             XPreferencesUtils.put("token", json.optString("token", ""));
                         }
                     } catch (Exception e) {
-
+                        LogUtils.debug("json:" + e.toString());
                     }
                 }
 
                 @Override
                 public void onFailed(String error) {
-                    LogUtils.debug("refreshTokenApi:" + error);
+                    LogUtils.debug("json:" + error);
+                    if (error.equals("401")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                final DialogUtils dialogUtils = new DialogUtils(mActivity);
+                                dialogUtils.showNoSureDialog(false, "登录凭证已过期,请重新登录", "确定", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        XPreferencesUtils.put("token", "");
+                                        Intent intent = new Intent();
+                                        intent.setClass(mActivity, LoginActivity.class);
+                                        mActivity.startActivity(intent);
+                                        dialogUtils.dismissDialog();
+                                        mActivity.finish();
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
             });
         } else {
@@ -94,14 +117,12 @@ public class LoginLogic {
                 public void showProgress() {
                     if (!mActivity.isFinishing())
                         mDialogUtils.showLoadingDialog("登录中...");
-
                 }
 
                 @Override
                 public void dismissProgress() {
                     if (!mActivity.isFinishing())
                         mDialogUtils.dismissDialog();
-
                 }
 
                 @Override
@@ -472,16 +493,10 @@ public class LoginLogic {
 
                 @Override
                 public void onSuccess(Object o) {
-                    if (o.equals("401")) {
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mDialogUtils.showNoTokenDialog();
-                                return;
-                            }
-                        });
-
-                    }
+//                    if (o.equals("401")) {
+//                        if (resultBack != null)
+//                            resultBack.onSuccess("401");
+//                    }
                     try {
                         JSONObject json = new JSONObject(o.toString());
                         LogUtils.debug("mine:" + json);

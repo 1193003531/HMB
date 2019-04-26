@@ -16,6 +16,7 @@ import com.huimaibao.app.view.SixEditView;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 
 import org.json.JSONObject;
@@ -259,6 +260,8 @@ public class VerificationCodeActivity extends BaseActivity {
                     if (status.equals("0")) {
                         JSONObject dataJ = new JSONObject(data);
                         XPreferencesUtils.put("token", dataJ.getString("token"));
+                        //保存token到期时间,有效期1月
+                        XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
                         XPreferencesUtils.put("phone", phone);
 
 //                            Intent intent = new Intent();
@@ -314,6 +317,8 @@ public class VerificationCodeActivity extends BaseActivity {
                         if (status.equals("0")) {
                             JSONObject dataJ = new JSONObject(data);
                             XPreferencesUtils.put("token", dataJ.getString("token"));
+                            //保存token到期时间,有效期1月
+                            XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
                             XPreferencesUtils.put("phone", phone);
                             if (dataJ.optBoolean("is_perfect")) {
                                 toMainView();

@@ -91,8 +91,8 @@ public class CardAdapter extends BaseAdapter {
 
 
         ImageLoaderManager.loadImage(ilItem.getCardHead(), mHolder._item_head, R.drawable.ic_launcher);
-        mHolder._item_name.setText(ilItem.getCardName());
-        mHolder._item_content.setText(ilItem.getCardIndustry() + "/" + ilItem.getCardCompany());
+        mHolder._item_name.setText(XEmptyUtils.isSpace(ilItem.getCardName()) ? "" : ilItem.getCardName());
+        mHolder._item_content.setText((XEmptyUtils.isSpace(ilItem.getCardJobs()) ? "" : ilItem.getCardJobs()) + "/" + (XEmptyUtils.isSpace(ilItem.getCardCompany()) ? "" : ilItem.getCardCompany()));
 
         return view;
     }

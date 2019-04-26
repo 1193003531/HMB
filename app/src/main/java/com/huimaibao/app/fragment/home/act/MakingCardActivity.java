@@ -243,6 +243,11 @@ public class MakingCardActivity extends TakePhotoActivity {
                 takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                 break;
             case R.id.making_card_city:
+                if (_card_city.getText().toString().length() > 0) {
+                    isAnimation = false;
+                } else {
+                    isAnimation = true;
+                }
                 String pr = "重庆市", ci = "重庆市", co = "渝北区";
                 if (!XEmptyUtils.isSpace(_city_value)) {
                     String[] prs = _city_value.split(" ");
@@ -527,17 +532,17 @@ public class MakingCardActivity extends TakePhotoActivity {
             }
         });
 
-        _card_city.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    _iv_city.setBackgroundResource(R.color.main_color);
-                    setAnimationED(_card_city);
-                } else {
-                    _iv_city.setBackgroundResource(R.color.line_eaeaea);
-                }
-            }
-        });
+//        _card_city.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    _iv_city.setBackgroundResource(R.color.main_color);
+//                    setAnimationED(_card_city);
+//                } else {
+//                    _iv_city.setBackgroundResource(R.color.line_eaeaea);
+//                }
+//            }
+//        });
 
         _card_addr.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

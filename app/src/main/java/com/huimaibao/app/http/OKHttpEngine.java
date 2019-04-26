@@ -62,14 +62,13 @@ public class OKHttpEngine implements IHttpEngine {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    if (response.code() == 401) {
-                        callBack.onSuccess("401");
-                    } else {
-                        callBack.onSuccess(response.body().string());
-                    }
-                    // callBack.onSuccess(response.body().string());
+                    callBack.onSuccess(response.body().string());
                 } else {
-                    callBack.onFailed(response.message());
+                    if (response.code() == 401) {
+                        callBack.onFailed("401");
+                    } else {
+                        callBack.onFailed(response.message());
+                    }
                 }
                 callBack.dismissProgress();
             }
@@ -121,13 +120,13 @@ public class OKHttpEngine implements IHttpEngine {
             public void onResponse(Call call, final Response response) throws IOException {
                 callBack.dismissProgress();
                 if (response.isSuccessful()) {
-                    if (response.code() == 401) {
-                        callBack.onSuccess("401");
-                    } else {
-                        callBack.onSuccess(response.body().string());
-                    }
+                    callBack.onSuccess(response.body().string());
                 } else {
-                    callBack.onFailed(response.message());
+                    if (response.code() == 401) {
+                        callBack.onFailed("401");
+                    } else {
+                        callBack.onFailed(response.message());
+                    }
                 }
             }
         });
@@ -163,13 +162,13 @@ public class OKHttpEngine implements IHttpEngine {
             public void onResponse(Call call, final Response response) throws IOException {
                 callBack.dismissProgress();
                 if (response.isSuccessful()) {
-                    if (response.code() == 401) {
-                        callBack.onSuccess("401");
-                    } else {
-                        callBack.onSuccess(response.body().string());
-                    }
+                    callBack.onSuccess(response.body().string());
                 } else {
-                    callBack.onFailed(response.message());
+                    if (response.code() == 401) {
+                        callBack.onFailed("401");
+                    } else {
+                        callBack.onFailed(response.message());
+                    }
                 }
             }
         });
@@ -207,13 +206,13 @@ public class OKHttpEngine implements IHttpEngine {
             public void onResponse(Call call, final Response response) throws IOException {
                 callBack.dismissProgress();
                 if (response.isSuccessful()) {
-                    if (response.code() == 401) {
-                        callBack.onSuccess("401");
-                    } else {
-                        callBack.onSuccess(response.body().string());
-                    }
+                    callBack.onSuccess(response.body().string());
                 } else {
-                    callBack.onFailed(response.message());
+                    if (response.code() == 401) {
+                        callBack.onFailed("401");
+                    } else {
+                        callBack.onFailed(response.message());
+                    }
                 }
             }
         });

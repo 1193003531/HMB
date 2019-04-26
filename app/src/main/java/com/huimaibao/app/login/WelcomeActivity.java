@@ -19,6 +19,7 @@ import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.utils.permission.XPermission;
 
 import java.io.File;
@@ -110,6 +111,10 @@ public class WelcomeActivity extends Activity {
                     if (XEmptyUtils.isEmpty(XPreferencesUtils.get("token", ""))) {
                         startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
                     } else {
+                        //保存token到期时间,有效期1月
+                        XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
+
+
                         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                     }
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

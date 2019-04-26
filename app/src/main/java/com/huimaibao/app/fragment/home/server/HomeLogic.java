@@ -78,11 +78,46 @@ public class HomeLogic {
 
 
     /**
-     * 营销榜单-去克隆
+     * 营销榜单
      */
     public void homeMarketApi(HashMap<String, Object> map, final boolean isShowD, final ResultBack resultBack) {
         if (XNetworkUtils.isConnected()) {
             XHttp.obtain().get(ServerApi.HOME_MARKETING_URL, map, new HttpCallBack() {
+                @Override
+                public void showProgress() {
+                    if (isShowD)
+                        mDialogUtils.showLoadingDialog("加载中...");
+
+                }
+
+                @Override
+                public void dismissProgress() {
+                    if (isShowD)
+                        mDialogUtils.dismissDialog();
+
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                    resultBack.onSuccess(o);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    resultBack.onFailed(error);
+                }
+            });
+        } else {
+            XToast.normal(mActivity.getResources().getString(R.string.network_enable));
+        }
+    }
+
+    /**
+     * 去克隆
+     */
+    public void toCloneApi(HashMap<String, Object> map, final boolean isShowD, final ResultBack resultBack) {
+        if (XNetworkUtils.isConnected()) {
+            XHttp.obtain().get(ServerApi.TO_CLONE_URL, map, new HttpCallBack() {
                 @Override
                 public void showProgress() {
                     if (isShowD)
