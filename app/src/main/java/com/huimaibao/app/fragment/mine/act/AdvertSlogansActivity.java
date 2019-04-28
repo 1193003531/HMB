@@ -3,6 +3,7 @@ package com.huimaibao.app.fragment.mine.act;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -58,6 +59,14 @@ public class AdvertSlogansActivity extends BaseActivity {
     private void initView() {
         _as_content = findViewById(R.id.advertising_slogans_content);
         _as_num = findViewById(R.id.advertising_slogans_num);
+
+        //回车不换行
+        _as_content.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return (event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+            }
+        });
         _as_content_value = XStringUtils.ToDBC(XPreferencesUtils.get("motto", "").toString().trim());
         _as_content.setText(_as_content_value);
         _as_content.setSelection(_as_content_value.length());
@@ -93,16 +102,15 @@ public class AdvertSlogansActivity extends BaseActivity {
 
                 _as_num.setText("还可输入" + String.valueOf(30 - temp.length()) + "字");//此处需要进行强制类型转换
 
-                if (temp.length() > 30) {//条件判断可以实现其他功能
-
-                    s.delete(editStart - 1, editEnd);
-
-                    int tempSelection = editStart;
-
-                    _as_content.setText(s);
-
-                    _as_content.setSelection(tempSelection);
-                    ToastUtils.showCenter("你输入的字数已经超过了");
+                if (temp.length() >= 30) {//条件判断可以实现其他功能
+//
+//                    s.delete(editStart - 1, editEnd);
+//
+//                    int tempSelection = editStart;
+////
+//                    _as_content.setText(s);
+//                    _as_content.setSelection(tempSelection);
+                    ToastUtils.showCenter("你输入的字数已达上限");
                 }
             }
         });

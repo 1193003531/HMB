@@ -499,7 +499,7 @@ public class LoginLogic {
 //                    }
                     try {
                         JSONObject json = new JSONObject(o.toString());
-                        LogUtils.debug("mine:" + json);
+                        LogUtils.debug("json:" + json);
                         if (json.getString("status").equals("0")) {
                             final JSONObject jsonD = new JSONObject(json.optString("data"));
                             XPreferencesUtils.put("user_id", jsonD.optString("id", "")); //用户id

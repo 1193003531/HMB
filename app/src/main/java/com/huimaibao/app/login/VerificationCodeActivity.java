@@ -303,44 +303,42 @@ public class VerificationCodeActivity extends BaseActivity {
         map.put("union_id", XPreferencesUtils.get("unionid", ""));
         map.put("wechat_name", XPreferencesUtils.get("nickname", ""));
         map.put("head_portrait", XPreferencesUtils.get("headimgurl", ""));
-
+        LogUtils.debug("json:" + map);
         LoginLogic.Instance(this).LoginBindApi(map, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
-                if (object != null && !"".equals(object)) {
-                    try {
-                        JSONObject json = new JSONObject(object.toString());
-                        LogUtils.debug("json:" + json);
-                        String status = json.getString("status");
-                        String message = json.getString("message");
-                        String data = json.getString("data");
-                        if (status.equals("0")) {
-                            JSONObject dataJ = new JSONObject(data);
-                            XPreferencesUtils.put("token", dataJ.getString("token"));
-                            //保存token到期时间,有效期1月
-                            XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
-                            XPreferencesUtils.put("phone", phone);
-                            if (dataJ.optBoolean("is_perfect")) {
-                                toMainView();
-                            } else {
-                                XPreferencesUtils.put("VCode", dataJ.getString("sign"));
-                                startActivity(LoginSetPWDActivity.class, "绑定");
-                                finish();
-                                //toPerfect("微信");
-                            }
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    String status = json.getString("status");
+                    String message = json.getString("message");
+                    String data = json.getString("data");
+                    if (status.equals("0")) {
+                        JSONObject dataJ = new JSONObject(data);
+                        XPreferencesUtils.put("token", dataJ.getString("token"));
+                        //保存token到期时间,有效期1月
+                        XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
+                        XPreferencesUtils.put("phone", phone);
+                        if (dataJ.optBoolean("is_perfect")) {
+                            toMainView();
                         } else {
-                            showToast(message);
+                            XPreferencesUtils.put("VCode", dataJ.optString("sign",""));
+                            startActivity(LoginSetPWDActivity.class, "绑定");
+                            finish();
+                            //toPerfect("微信");
                         }
-                    } catch (Exception e) {
-                        showToast("绑定失败，请重新绑定");
+                    } else {
+                        showToast(message);
                     }
-                } else {
+                } catch (Exception e) {
+                    LogUtils.debug("error:" + e.toString());
                     showToast("绑定失败，请重新绑定");
                 }
             }
 
             @Override
             public void onFailed(String error) {
+                LogUtils.debug("error:" + error);
                 showToast("绑定失败，请重新绑定");
             }
         });

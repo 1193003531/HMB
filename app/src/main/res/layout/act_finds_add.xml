@@ -67,6 +67,7 @@
                 android:hint="一起聊聊吧~"
                 android:paddingLeft="15dp"
                 android:paddingTop="8dp"
+                android:maxLength="150"
                 android:paddingRight="15dp"
                 android:textColor="@color/FF333333"
                 android:textColorHint="@color/colored0d0d0"

@@ -1162,7 +1162,7 @@ public class FindsCommentsActivity extends BaseActivity {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                showToast("点赞成功");
+                                //showToast("点赞成功");
                                 if (type.equals("child")) {
                                     if (listData.get(gposition).getList().get(cposition).getFindsIsPraise().equals("0")) {
                                         praise_num = Integer.parseInt(listData.get(gposition).getList().get(cposition).getFindsPraiseNum()) + 1;

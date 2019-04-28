@@ -123,9 +123,9 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
+                        android:maxLength="20"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:maxLength="20"
                         android:singleLine="true"
                         android:textColor="@color/FF333333"
                         android:textCursorDrawable="@drawable/login_cursor_drawable"
@@ -165,8 +165,8 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
-                        android:paddingLeft="15dp"
                         android:maxLength="50"
+                        android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:singleLine="true"
                         android:textColor="@color/FF333333"
@@ -249,9 +249,9 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
+                        android:maxLength="30"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:maxLength="30"
                         android:singleLine="true"
                         android:textColor="@color/FF333333"
                         android:textCursorDrawable="@drawable/login_cursor_drawable"
@@ -285,7 +285,6 @@
                         android:textSize="@dimen/text_size_11" />
 
 
-
                     <EditText
                         android:id="@+id/making_card_city"
                         android:layout_width="match_parent"
@@ -293,9 +292,9 @@
                         android:layout_alignParentBottom="true"
                         android:layout_weight="1.0"
                         android:background="@color/transparent"
+                        android:cursorVisible="false"
                         android:drawableRight="@drawable/mine_right_icon"
                         android:gravity="center_vertical"
-                        android:cursorVisible="false"
                         android:onClick="onAction"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
@@ -313,6 +312,7 @@
                     android:layout_height="@dimen/line_05"
                     android:layout_marginLeft="15dp"
                     android:background="@color/line_eaeaea" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -339,9 +339,9 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
+                        android:maxLength="35"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:maxLength="35"
                         android:singleLine="true"
                         android:textColor="@color/FF333333"
                         android:textCursorDrawable="@drawable/login_cursor_drawable"
@@ -353,8 +353,10 @@
                     android:id="@+id/making_card_addr_iv"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/line_05"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="15dp"
                     android:background="@color/line_eaeaea" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -372,6 +374,17 @@
                         android:textColor="@color/main_color"
                         android:textSize="@dimen/text_size_11" />
 
+                    <TextView
+                        android:id="@+id/making_card_introduce_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="15dp"
+                        android:text="限50字"
+                        android:textColor="@color/color999999"
+                        android:textSize="@dimen/text_size_13" />
 
                     <EditText
                         android:id="@+id/making_card_introduce"
@@ -380,12 +393,14 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
+                        android:maxLength="50"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:singleLine="true"
                         android:textColor="@color/FF333333"
                         android:textCursorDrawable="@drawable/login_cursor_drawable"
                         android:textSize="@dimen/text_size_15" />
+
 
                 </RelativeLayout>
 
@@ -401,7 +416,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="right"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -414,16 +430,7 @@
                         android:textSize="@dimen/text_size_13"
                         android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/making_card_introduce_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="15dp"
-                        android:text="限50字"
-                        android:textColor="@color/color999999"
-                        android:textSize="@dimen/text_size_13" />
+
                 </LinearLayout>
 
 

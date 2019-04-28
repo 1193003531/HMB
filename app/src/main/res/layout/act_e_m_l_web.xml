@@ -22,7 +22,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
                 android:gravity="center"
-                android:text="个人微网"
+                android:text="产品微网"
                 android:textColor="@color/color040404"
                 android:textSize="@dimen/text_size_14" />
 

@@ -60,7 +60,6 @@
             </intent-filter>
         </activity>
 
-
         <activity
             android:name=".main.MainActivity"
             android:label="首页"

@@ -313,22 +313,27 @@ public class LoginSMSActivity extends Activity {
                     try {
                         //{"status":-1,"message":"\u9700\u8981\u7ed1\u5b9a\u624b\u673a\u53f7\u7801\uff01","data":[]}
                         JSONObject json = new JSONObject(object.toString());
-                        LogUtils.debug("json--" + json);
+                        LogUtils.debug("json:" + json);
                         String status = json.getString("status"); //国家
                         if (status.equals("-1")) {
                             getUserInfo(access_token, openid);
                         } else {
                             JSONObject data = new JSONObject(json.getString("data"));
                             XPreferencesUtils.put("token", data.getString("token"));
-                            if (data.optBoolean("is_perfect")) {
-                                toMainView();
+                            if (XEmptyUtils.isSpace(data.optString("phone", ""))) {
+                                getUserInfo(access_token, openid);
                             } else {
-                                toPerfect("登录");
+                                XPreferencesUtils.put("phone", data.optString("phone",""));
+                                if (data.optBoolean("is_perfect")) {
+                                    toMainView();
+                                } else {
+                                    toPerfect("微信");
+                                }
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        LogUtils.debug("json--" + e);
+                        LogUtils.debug("json:" + e);
                         showToast("微信登录失败,请重新登录");
                     }
                 } else {
@@ -338,7 +343,7 @@ public class LoginSMSActivity extends Activity {
 
             @Override
             public void onFailed(String error) {
-                LogUtils.debug("json--" + error);
+                LogUtils.debug("json:" + error);
                 showToast("微信登录失败,请重新登录");
             }
         });

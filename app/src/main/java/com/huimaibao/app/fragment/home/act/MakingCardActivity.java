@@ -40,6 +40,7 @@ import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
+import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XRegexUtils;
 import com.youth.xframe.widget.CircleImageView;
@@ -706,16 +707,16 @@ public class MakingCardActivity extends TakePhotoActivity {
 
                 _card_introduce_num.setText("限" + String.valueOf(50 - temp.length()) + "字");//此处需要进行强制类型转换
 
-                if (temp.length() > 50) {//条件判断可以实现其他功能
-
-                    s.delete(editStart - 1, editEnd);
-
-                    int tempSelection = editStart;
-
-                    _card_introduce.setText(s);
-
-                    _card_introduce.setSelection(tempSelection);
-                    ToastUtils.showCenter("你输入的字数已经超过了");
+                if (temp.length() >= 50) {//条件判断可以实现其他功能
+                    ToastUtils.showCenter("你输入的字数已达上限");
+//                    s.delete(editStart - 1, editEnd);
+//
+//                    int tempSelection = editStart;
+//
+//                    _card_introduce.setText(s);
+//
+//                    _card_introduce.setSelection(tempSelection);
+//                    ToastUtils.showCenter("你输入的字数已达上限");
                 }
 
                 _introduce_value = _card_introduce.getText().toString();

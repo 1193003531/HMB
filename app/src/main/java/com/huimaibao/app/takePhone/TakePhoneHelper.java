@@ -104,7 +104,7 @@ public class TakePhoneHelper {
             return null;
         }
 
-        //是否使用第三方裁切工具
+        //是否使用TakePhoto自带
         boolean withWonCrop = false;
 
         CropOptions.Builder builder = new CropOptions.Builder();

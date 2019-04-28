@@ -77,7 +77,7 @@ public class ReportActivity extends BaseActivity {
         mListView = findViewById(R.id.report_list);
         _report_other_et = findViewById(R.id.report_other_ed);
         _submit_btn = findViewById(R.id.report_submit_btn);
-
+        _submit_btn.setEnabled(false);
         _report_other_et.addTextChangedListener(otherWatcher);
 
 
@@ -102,15 +102,13 @@ public class ReportActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
 
                 //提交按钮背景变化
-                if (isCHeck) {
+                _report_other_value = _report_other_et.getText().toString();
+                if (isCHeck && !XEmptyUtils.isSpace(_report_other_value)) {
                     _submit_btn.setBackgroundResource(R.drawable.btn_blue_r5_bg);
+                    _submit_btn.setEnabled(true);
                 } else {
-                    _report_other_value = _report_other_et.getText().toString();
-                    if (XEmptyUtils.isSpace(_report_other_value)) {
-                        _submit_btn.setBackgroundResource(R.drawable.btn_hui_r5_bg);
-                    } else {
-                        _submit_btn.setBackgroundResource(R.drawable.btn_blue_r5_bg);
-                    }
+                    _submit_btn.setBackgroundResource(R.drawable.btn_hui_r5_bg);
+                    _submit_btn.setEnabled(false);
                 }
             }
         });
@@ -150,8 +148,10 @@ public class ReportActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.report_submit_btn:
                 _report_other_value = _report_other_et.getText().toString();
-                if (!isCHeck && XEmptyUtils.isSpace(_report_other_value)) {
-                    ToastUtils.showCenter("请选择或输入举报内容");
+                if (!isCHeck) {
+                    ToastUtils.showCenter("请选择投诉原因");
+                } else if (XEmptyUtils.isSpace(_report_other_value)) {
+                    ToastUtils.showCenter("请输入其他理由");
                 } else {
                     reportL = new ArrayList<>();
                     for (int i = 0; i < listData.size(); i++) {
@@ -174,10 +174,12 @@ public class ReportActivity extends BaseActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
-            if (s.length() > 0) {
+            if (isCHeck && s.length() > 0) {
                 _submit_btn.setBackgroundResource(R.drawable.btn_blue_r5_bg);
+                _submit_btn.setEnabled(true);
             } else {
                 _submit_btn.setBackgroundResource(R.drawable.btn_hui_r5_bg);
+                _submit_btn.setEnabled(false);
             }
         }
 

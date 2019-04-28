@@ -327,7 +327,7 @@ public class LoginActivity extends Activity {
                 try {
                     //{"status":-1,"message":"\u9700\u8981\u7ed1\u5b9a\u624b\u673a\u53f7\u7801\uff01","data":[]}
                     JSONObject json = new JSONObject(object.toString());
-                    LogUtils.debug("json--" + json);
+                    LogUtils.debug("json:" + json);
                     String status = json.getString("status"); //国家
                     if (status.equals("-1")) {
                         getUserInfo(access_token, openid);
@@ -336,13 +336,15 @@ public class LoginActivity extends Activity {
                         XPreferencesUtils.put("token", data.getString("token"));
                         //保存token到期时间,有效期1月
                         XPreferencesUtils.put("tokenExpire", XTimeUtils.getCurDate());
-//                        if(XEmptyUtils.isSpace(data.optString("phone",""))){
-//                            getUserInfo(access_token, openid);
-//                        }
-                        if (data.optBoolean("is_perfect")) {
-                            toMainView();
+                        if (XEmptyUtils.isSpace(data.optString("phone", ""))) {
+                            getUserInfo(access_token, openid);
                         } else {
-                            toPerfect("微信");
+                            XPreferencesUtils.put("phone", data.optString("phone",""));
+                            if (data.optBoolean("is_perfect")) {
+                                toMainView();
+                            } else {
+                                toPerfect("微信");
+                            }
                         }
                     }
                 } catch (Exception e) {

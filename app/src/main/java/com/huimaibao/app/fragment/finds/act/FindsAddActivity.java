@@ -138,16 +138,16 @@ public class FindsAddActivity extends TakePhotoActivity {
 
                 _finds_content_num.setText(String.valueOf(150 - temp.length()) + "字");//此处需要进行强制类型转换
 
-                if (temp.length() > 150) {//条件判断可以实现其他功能
-
-                    s.delete(editStart - 1, editEnd);
-
-                    int tempSelection = editStart;
-
-                    _finds_content.setText(s);
-
-                    _finds_content.setSelection(tempSelection);
-                    ToastUtils.showCenter("你输入的字数已经超过了");
+                if (temp.length() >= 150) {//条件判断可以实现其他功能
+                    ToastUtils.showCenter("你输入的字数已达上限");
+//                    s.delete(editStart - 1, editEnd);
+//
+//                    int tempSelection = editStart;
+//
+//                    _finds_content.setText(s);
+//
+//                    _finds_content.setSelection(tempSelection);
+//                    ToastUtils.showCenter("你输入的字数已经超过了");
                 }
 
                 _finds_content_value = _finds_content.getText().toString();

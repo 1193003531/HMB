@@ -270,17 +270,22 @@ public class PayActivity extends BaseActivity {
         HashMap<String, Object> map = new HashMap<>();
         map.put("biz_type", biz_type);//1会员 2克隆 3脉宝
         map.put("money", money);//实付款金额
+//        if(wallet.equals("1")){
+//            map.put("wallet", true);//是否勾选钱包 1or0
+//        }else{
+//            map.put("wallet", false);//是否勾选钱包 1or0
+//        }
         map.put("wallet", wallet);//是否勾选钱包 1or0
         map.put("pay_type", pay_type);//支付方式 0钱包 1微信 2支付宝
         map.put("target_id", target_id);//会员配置id clone_id 脉宝个数
         map.put("pwd", pwd);//支付密码
-
+        LogUtils.debug("json:" + map);
         MemberLogic.Instance(mActivity).memberPaymentApi(map, true, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    LogUtils.debug("memberPayment=s=" + json);
+                    LogUtils.debug("json:" + json);
                     String status = json.getString("status");
                     String message = json.getString("message");
                     //String data = json.getString("data");
@@ -325,14 +330,14 @@ public class PayActivity extends BaseActivity {
                         showToast("支付失败," + message);
                     }
                 } catch (Exception e) {
-                    LogUtils.debug("memberPayment=s=" + e);
+                    LogUtils.debug("json:" + e);
                     showToast("支付失败");
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                LogUtils.debug("memberPayment=s=" + error);
+                LogUtils.debug("json:" + error);
                 showToast("支付失败");
             }
         });
