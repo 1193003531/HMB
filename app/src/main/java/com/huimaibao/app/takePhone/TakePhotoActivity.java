@@ -14,6 +14,8 @@ import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
+import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.huimaibao.app.api.ServerApi;
@@ -200,13 +202,68 @@ public class TakePhotoActivity extends BaseActivity implements TakePhoto.TakeRes
     }
 
 
-
     /**
      * 图片名称
      */
     public String setImageUrl() {
         return "hmb/app" + XTimeUtils.getCurDate() + "/images_" + XTimeUtils.getCurString() + ".png";
     }
+
+    /**
+     * 删除某个Object
+     *
+     * @param bucketUrl
+     * @return
+     */
+    public void deleteObject(String bucketUrl) {
+        // 创建删除请求
+        DeleteObjectRequest delete = new DeleteObjectRequest("hytx-app", bucketUrl);
+        // 异步删除
+        OSSAsyncTask deleteTask = oss.asyncDeleteObject(delete, new OSSCompletedCallback<DeleteObjectRequest, DeleteObjectResult>() {
+            @Override
+            public void onSuccess(DeleteObjectRequest request, DeleteObjectResult result) {
+                Log.d("asyncCopyAndDelObject", "success!");
+            }
+
+            @Override
+            public void onFailure(DeleteObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常。
+                if (clientExcepion != null) {
+                    // 本地异常，如网络异常等。
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常。
+                    Log.e("ErrorCode", serviceException.getErrorCode());
+                    Log.e("RequestId", serviceException.getRequestId());
+                    Log.e("HostId", serviceException.getHostId());
+                    Log.e("RawMessage", serviceException.getRawMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 删除多个Object
+     *
+     * @param bucketName
+     * @param bucketUrls
+     * @return
+     */
+//    public boolean deleteObjects(String bucketName, List<String> bucketUrls) {
+//        OSSClient client = new OSSClient(this.endpoint, this.accessKeyId, this.accessKeySecret);
+//        try {
+//            // 删除Object.
+//            DeleteObjectsResult deleteObjectsResult = client.deleteObjects(new DeleteObjectsRequest(bucketName).withKeys(bucketUrls));
+//            List<String> deletedObjects = deleteObjectsResult.getDeletedObjects();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        } finally {
+//            client.shutdown();
+//        }
+//        return true;
+//    }
 
 
 }

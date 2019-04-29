@@ -12,6 +12,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,8 @@ import java.util.HashMap;
 public class MakingCardActivity extends TakePhotoActivity {
 
     private TakePhoneHelper takePhoneHelper;
+
+    private ScrollView mScrollView;
 
     private String mType = "";
 
@@ -112,7 +115,7 @@ public class MakingCardActivity extends TakePhotoActivity {
      * 初始化控件
      */
     private void initView() {
-
+        mScrollView = findViewById(R.id.making_card_scrollview);
         _card_head = findViewById(R.id.making_card_head);
         _card_name = findViewById(R.id.making_card_name);
         _card_jobs = findViewById(R.id.making_card_jobs);
@@ -155,7 +158,7 @@ public class MakingCardActivity extends TakePhotoActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (albumData.get(position).equals("添加")) {
                     _check_head = "相册";
-                    takePhoneHelper.setTakePhone(1, false, false, 800, 800, false, 512000, 0, 0);
+                    takePhoneHelper.setTakePhone(1, false, false, 800, 800, true, 512000, 0, 0);
                     takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                 } else {
                     imagePthData.remove(position);
@@ -379,6 +382,7 @@ public class MakingCardActivity extends TakePhotoActivity {
             }
         });
 
+        mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
     }
 
     /**

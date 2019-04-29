@@ -14,7 +14,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.content.FileProvider;
 
-import com.huimaibao.app.base.BaseApplication;
+import com.huimaibao.app.BuildConfig;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.widget.XToast;
 
@@ -26,8 +27,8 @@ import java.lang.ref.WeakReference;
  */
 public class AppDownloadManager {
 
-    private static final String savePath = BaseApplication.getApp().getFilePath() + "apk/";
-    private static final String saveFileName = "汇脉宝.apk";
+    //private static final String savePath = BaseApplication.getApp().getFilePath() + "apk/";
+    //private static final String saveFileName = "汇脉宝.apk";
     public static final String TAG = "AppDownloadManager";
     private WeakReference<Activity> weakReference;
     private DownloadManager mDownloadManager;
@@ -203,8 +204,9 @@ public class AppDownloadManager {
                 File apkFile = queryDownloadedApk(context, completeDownLoadId);
                 uri = Uri.fromFile(apkFile);
             } else { // Android 7.0 以上
+                LogUtils.debug("json:"+BuildConfig.APPLICATION_ID + ".fileprovider");
                 uri = FileProvider.getUriForFile(context,
-                        "com.huimaibao.app.fileProvider",
+                        BuildConfig.APPLICATION_ID + ".fileprovider",
                         new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "汇脉宝.apk"));
                 intentInstall.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             }

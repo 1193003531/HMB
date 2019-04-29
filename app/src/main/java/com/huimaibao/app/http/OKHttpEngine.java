@@ -39,7 +39,7 @@ public class OKHttpEngine implements IHttpEngine {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
-                //.proxy(Proxy.NO_PROXY)
+                .proxy(Proxy.NO_PROXY)
                 .cache(new Cache(XFrame.getContext().getCacheDir(), cacheSize))
                 .build();
     }

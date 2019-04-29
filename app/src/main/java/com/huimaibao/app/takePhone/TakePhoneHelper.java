@@ -13,8 +13,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
-import com.huimaibao.app.base.BaseApplication;
-import com.youth.xframe.BuildConfig;
+import com.huimaibao.app.BuildConfig;
 import com.youth.xframe.takephoto.app.TakePhoto;
 import com.youth.xframe.takephoto.compress.CompressConfig;
 import com.youth.xframe.takephoto.model.CropOptions;
@@ -161,11 +160,11 @@ public class TakePhoneHelper {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        final Uri mUri = Uri.fromFile(file);
+        final Uri mUri= Uri.fromFile(file);
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 //            //步骤二：Android 7.0及以上获取文件 Uri
-//            mUri = FileProvider.getUriForFile(mActivity, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+//            mUri = FileProvider.getUriForFile(mActivity, BuildConfig.APPLICATION_ID + ".fileprovider", file);
 //        } else {
 //            //步骤三：获取文件Uri
 //            mUri = Uri.fromFile(file);

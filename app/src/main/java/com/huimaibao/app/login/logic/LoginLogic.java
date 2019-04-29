@@ -61,7 +61,6 @@ public class LoginLogic {
 
                 @Override
                 public void onSuccess(Object o) {
-                    LogUtils.debug("json:" + o);
                     try {
                         //{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkuNTFodWltYWliYW8uY25cL2Zyb250XC9yZWZyZXNoIiwiaWF0IjoxNTQ3ODExNjM1LCJleHAiOjE1NTA0MDM4MjcsIm5iZiI6MTU0NzgxMTgyNywianRpIjoiSWo5UlA0QngyQVV4cjhjcSIsInN1YiI6Nzc4LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.3iFuE7ysD0MbflwB_ffxQbWE_M97vweDtGldZRk8lmw","expire":"2592000"}
                         //

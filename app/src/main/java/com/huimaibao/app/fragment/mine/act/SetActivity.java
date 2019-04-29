@@ -198,7 +198,7 @@ public class SetActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    //XLog.d("app=s=" + json);
+                    LogUtils.debug("app=s=" + json);
                     String status = json.optString("status");
                     //String message = json.getString("message");
                     String data = json.optString("data");

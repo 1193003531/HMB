@@ -154,13 +154,18 @@ public class MainActivity extends BaseActivity {
         //
         LoginLogic.Instance(mActivity).refreshTokenApi();
 
-        getUserInfo();
-        upDataAPP();
-        getPushData(false);
 
         //LogUtils.debug("token" + XPreferencesUtils.get("token", ""));
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getUserInfo();
+        upDataAPP();
+        getPushData(false);
+    }
 
     @Override
     protected void setStatusBar() {
@@ -604,7 +609,15 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailed(String error) {
-
+                LogUtils.debug("json:" + error);
+                if (error.equals("401")) {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getUserInfo();
+                        }
+                    });
+                }
             }
         });
     }
