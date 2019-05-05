@@ -151,7 +151,7 @@ public class VerificationCodeActivity extends BaseActivity {
                     if (status.equals("0")) {
                         JSONObject dataJ = new JSONObject(data);
                         showToast("验证成功");
-                        XPreferencesUtils.put("VCode", dataJ.getString("sign"));
+                        XPreferencesUtils.put("VCode", dataJ.optString("sign"));
                         startActivity(LoginSetPWDActivity.class, mType);
                         finish();
                     } else {

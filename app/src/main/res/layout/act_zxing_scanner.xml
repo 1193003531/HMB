@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             app:corner_color="@color/corner_color"
             app:frame_color="@color/viewfinder_frame"
-            app:label_text="扫描收藏名片"
+            app:label_text="扫描对方二维码"
             app:label_text_color="@color/white"
             app:laser_color="@color/laser_color"
             app:mask_color="@color/viewfinder_mask"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="100dp"
-            android:text="仅支持扫描·汇脉宝APP·用户二维码·收藏名片"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_13" />
 

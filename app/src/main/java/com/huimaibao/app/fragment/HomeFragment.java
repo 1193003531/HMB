@@ -257,7 +257,9 @@ public class HomeFragment extends BaseFragment {
             //将扫描出的信息显示出来
             //XToast.normal(scanResult);
             //startActivity(CardClipDetailActivity.class, scanResult);
-            startActivity(MessageWebActivity.class, "", scanResult);
+            //startActivity(MessageWebActivity.class, "", scanResult);
+            startActivity(HomePageWebActivity.class, "", scanResult);
+
         }
     }
 

@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="扫一扫二维码，添加名片"
+            android:text="扫一扫二维码，查看营销微网"
             android:textColor="@color/color000000"
             android:textSize="@dimen/text_size_13" />
 

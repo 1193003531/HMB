@@ -235,6 +235,7 @@ public class MainActivity extends BaseActivity {
                 }
                 //mCurrent = homeFragment;
                 changeTextColor(0);
+                fragmentTransaction.commit();
                 break;
             //互推圈
             case R.id.home_buttom_elect_btn:
@@ -255,6 +256,7 @@ public class MainActivity extends BaseActivity {
                 }
                 //mCurrent = electCircleFragment;
                 changeTextColor(1);
+                fragmentTransaction.commit();
 //                if ((boolean) XPreferencesUtils.get("isFirstElect", true))
 //                    _elect_no_ll.setVisibility(View.VISIBLE);
 //                else
@@ -279,6 +281,8 @@ public class MainActivity extends BaseActivity {
                 }
                 //mCurrent = findsFragment;
                 changeTextColor(2);
+                fragmentTransaction.commit();
+
                 break;
             //我的
             case R.id.home_buttom_mine_btn:
@@ -300,6 +304,8 @@ public class MainActivity extends BaseActivity {
 
                 //mCurrent = mineFragment;
                 changeTextColor(3);
+                fragmentTransaction.commit();
+
 //                if ((boolean) XPreferencesUtils.get("isFirstMine", true))
 //                    _mine_no_ll.setVisibility(View.VISIBLE);
 //                else
@@ -330,7 +336,7 @@ public class MainActivity extends BaseActivity {
                 getReceiveAward();
                 break;
         }
-        fragmentTransaction.commit();
+
 
     }
 

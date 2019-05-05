@@ -54,6 +54,8 @@ public class FriendsCircleImageLayout extends ViewGroup {
      * 当只有一张图片的 最大显示宽度和高度相对于可用宽的的比例
      */
     private final float MAX_WIDTH_PERCENTAGE = 270f / 350;
+    //图片展示区域
+    final int parentWidth = XDensityUtils.getScreenWidth() - XDensityUtils.dp2px(84);
 
     private int mItemWidth;
     private int mItemHeight;
@@ -85,18 +87,24 @@ public class FriendsCircleImageLayout extends ViewGroup {
 
         //当只有一张图片的时候 显示一张相对比较大的图片
         //当大于1小于等于4张图片的时候 一排显示两张图片
-
         //当只有一张图片的时候
         if (count == 1) {
             mColumnCount = 1;
-            int mItemMaxWidth = (int) (width * MAX_WIDTH_PERCENTAGE);
-            int mItemMaxHeight = mItemMaxWidth;
+            // int mItemMaxWidth = (int) (width * MAX_WIDTH_PERCENTAGE);
+            // int mItemMaxHeight = mItemMaxWidth;
             if (mItemAspectRatio < 1) {
-                mItemHeight = mItemMaxHeight;
-                mItemWidth = (int) (mItemHeight * mItemAspectRatio);
+//                mItemHeight = mItemMaxHeight;
+//                mItemWidth = (int) (mItemHeight * mItemAspectRatio);
+                mItemWidth = parentWidth / 2;
+                mItemHeight = mItemWidth * 5 / 3;
+            } else if (mItemAspectRatio == 1) {
+                mItemWidth = (int) ((width - getPaddingLeft() - getPaddingRight() - 2 * mSpacing) / 3);
+                mItemHeight = (int) (mItemWidth / mItemAspectRatio);
             } else {
-                mItemWidth = mItemMaxWidth;
-                mItemHeight = (int) (mItemMaxWidth / mItemAspectRatio);
+//                mItemWidth = mItemMaxWidth;
+//                mItemHeight = (int) (mItemMaxWidth / mItemAspectRatio);
+                mItemWidth = parentWidth * 2 / 3;
+                mItemHeight = mItemWidth * 2 / 3;
             }
         } else {
             if (count == 4) {
@@ -200,9 +208,10 @@ public class FriendsCircleImageLayout extends ViewGroup {
         int size = imageUrls.size();
         if (size == 1) {
             //一般在url中会有宽高 可以算出宽高比
-            //测试url固定用的 1000:1376
-            mItemAspectRatio = 1000 / 1376f;
+            //测试url固定用的 1000:1376f
+            //mItemAspectRatio = 1;
             //mItemAspectRatio = ImageLoaderManager.getAspectRatio(imageUrls.get(0).trim());
+            mItemAspectRatio = setOneImageAspectRatio(imageUrls.get(0).trim());
             //setOneImageSHow(imageUrls);
         } else {
             mItemAspectRatio = 1;
@@ -250,17 +259,9 @@ public class FriendsCircleImageLayout extends ViewGroup {
     /**
      * 一张图片展示
      */
-    private void setOneImageSHow(final List<String> imageUrls) {
+    private float setOneImageAspectRatio(String url) {
 
-        //图片展示区域
-        final int parentWidth = XDensityUtils.getScreenWidth() - XDensityUtils.dp2px(84);
-        final RatioImageView imageView = new RatioImageView(getContext());
-//        LayoutParams params = getLayoutParams();
-//        params.height = mItemHeight;
-//        setLayoutParams(params);
-//        imageView.layout(0, 0, mItemWidth, mItemHeight);
-
-        ImageLoader.getInstance().displayImage(imageUrls.get(0).trim(), imageView, new ImageLoadingListener() {
+        ImageLoader.getInstance().loadImage(url, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 
@@ -268,95 +269,37 @@ public class FriendsCircleImageLayout extends ViewGroup {
 
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
-
+                //mItemAspectRatio = 1000 / 1376f;
             }
 
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
                 int w = bitmap.getWidth();
                 int h = bitmap.getHeight();
-                //mItemAspectRatio=w/h;
-                //int newW;
-                //int newH;
-                if (h > w * 3) {//h:w = 5:3
-                    mItemWidth = parentWidth / 2;
-                    mItemHeight = mItemWidth * 5 / 3;
-                } else if (h < w) {//h:w = 2:3
-                    mItemWidth = parentWidth * 2 / 3;
-                    mItemHeight = mItemWidth * 2 / 3;
-                } else {//newH:h = newW :w
-                    mItemWidth = parentWidth / 2;
-                    mItemHeight = h * mItemWidth / w;
-                }
-
-                mItemAspectRatio = mItemWidth / mItemHeight;
-                imageView.setLayoutParams(new LayoutParams(mItemWidth, mItemHeight));
-                imageView.layout(0, 0, mItemWidth, mItemHeight);
-
-//                LayoutParams params = getLayoutParams();
-//                params.height = mItemHeight;
-//                setLayoutParams(params);
-
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-                addView(imageView);
-                //点击查看大图
-                imageView.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onClickImage(0, (ArrayList) imageUrls);
-                    }
-                });
-            }
-
-            @Override
-            public void onLoadingCancelled(String s, View view) {
-
-            }
-        });
-
-//        ImageLoader.getInstance().loadImage(imageUrls.get(0).trim(), new ImageLoadingListener() {
-//            @Override
-//            public void onLoadingStarted(String s, View view) {
-//
-//            }
-//
-//            @Override
-//            public void onLoadingFailed(String s, View view, FailReason failReason) {
-//                //mItemAspectRatio = 1000 / 1376f;
-//            }
-//
-//            @Override
-//            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-//                int w = bitmap.getWidth();
-//                int h = bitmap.getHeight();
+                mItemAspectRatio = w / h;
 //                int newW;
 //                int newH;
 //                if (h > w * 3) {//h:w = 5:3
 //                    newW = parentWidth / 2;
 //                    newH = newW * 5 / 3;
-//                    mItemAspectRatio = newW / newH;
+//                    //mItemAspectRatio = newW / newH;
 //                } else if (h < w) {//h:w = 2:3
 //                    newW = parentWidth * 2 / 3;
 //                    newH = newW * 2 / 3;
-//                    mItemAspectRatio = newW / newH;
+//                    //mItemAspectRatio = newW / newH;
 //                } else {//newH:h = newW :w
 //                    newW = parentWidth / 2;
 //                    newH = h * newW / w;
-//                    mItemAspectRatio = newW / newH;
+//                    //mItemAspectRatio = newW / newH;
 //                }
-//                imageView.setLayoutParams(new LayoutParams(newW, newH));
-//                imageView.layout(0, 0, newW, newH);
-//                // setOneImageLayoutParams(imageView, newW, newH);
-//                // imageView.setImageBitmap(bitmap);
-//            }
-//
-//            @Override
-//            public void onLoadingCancelled(String s, View view) {
-//            }
-//        });
+            }
 
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+            }
+        });
 
+        return mItemAspectRatio;
     }
 
     /**
@@ -368,7 +311,7 @@ public class FriendsCircleImageLayout extends ViewGroup {
             imageView.setId(i);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             //ImageLoaderManager.getImageLoader(getContext()).displayImage(imageUrls.get(i).trim(), imageView, ImageLoaderManager.getPhotoImageOption());
-            ImageLoaderManager.loadImage(imageUrls.get(i).trim(), imageView);
+            ImageLoaderManager.loadImages(imageUrls.get(i).trim(), imageView);
             addView(imageView);
             //点击查看大图
             imageView.setOnClickListener(new OnClickListener() {

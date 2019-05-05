@@ -163,7 +163,7 @@
                                     android:drawableLeft="@drawable/mine_qrcode_icon"
                                     android:drawablePadding="10dp"
                                     android:gravity="center_vertical"
-                                    android:text="名片二维码"
+                                    android:text="二维码"
                                     android:textColor="@color/color666666"
                                     android:textSize="@dimen/text_size_12" />
 

@@ -62,7 +62,11 @@ public class MyQRCodeActivity extends BaseActivity {
             public void run() {
                 //BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)
                 //"" + ((int)(Math.random()*90000)+100000)
-                mImageView.setImageBitmap(EncodingHandler.createQRCode(ServerApi.CARD_URL + XPreferencesUtils.get("user_id", ""), XDensityUtils.getScreenWidth() - 200, XDensityUtils.getScreenWidth() - 200, ((BitmapDrawable) _Head_iv.getDrawable()).getBitmap()));
+                //mImageView.setImageBitmap(EncodingHandler.createQRCode(ServerApi.CARD_URL + XPreferencesUtils.get("user_id", ""), XDensityUtils.getScreenWidth() - 200, XDensityUtils.getScreenWidth() - 200, ((BitmapDrawable) _Head_iv.getDrawable()).getBitmap()));
+
+                mImageView.setImageBitmap(EncodingHandler.createQRCode(ServerApi.HOME_PAGE_WEB_URL + XPreferencesUtils.get("user_id", "") + "&platform=android", XDensityUtils.getScreenWidth() - 200, XDensityUtils.getScreenWidth() - 200, ((BitmapDrawable) _Head_iv.getDrawable()).getBitmap()));
+
+
             }
         }, 200);
 

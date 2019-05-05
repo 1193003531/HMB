@@ -411,7 +411,7 @@ public class MineFragment extends BaseFragment {
                         }
                     });
                 } else {
-                    startActivity(MyQRCodeActivity.class, "二维码名片");
+                    startActivity(MyQRCodeActivity.class, "二维码");
                 }
             }
         });

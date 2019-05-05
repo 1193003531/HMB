@@ -50,7 +50,6 @@ import java.util.List;
 public class SreachActivity extends BaseActivity {
 
     private String mType = "";
-    private Context mContext;
 
     private EditText editText;
     private ImageView ed_clear;
@@ -69,7 +68,6 @@ public class SreachActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_sreach);
-        mContext = this;
         setNeedBackGesture(true);
         Intent intent = getIntent();
         if (intent != null) {
@@ -101,7 +99,8 @@ public class SreachActivity extends BaseActivity {
     private void initView() {
         editText = findViewById(R.id.et_search);
         ed_clear = findViewById(R.id.et_search_del);
-        XKeyboardUtils.openKeyboard(mContext, editText);
+        //XKeyboardUtils.openKeyboard(mActivity, editText);
+        XKeyboardUtils.openKeyboard(mActivity);
         editText.addTextChangedListener(textWatcher);
         ed_clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,8 +137,8 @@ public class SreachActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-               // startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
-                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL+ mCardAdapter.getItem(position).getCardId()+ServerApi.HOME_PAGE_WEB_TOKEN);
+                // startActivity(CardClipDetailActivity.class, mCardAdapter.getItem(position).getCardId());
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + mCardAdapter.getItem(position).getCardId() + ServerApi.HOME_PAGE_WEB_TOKEN);
 
             }
         });
@@ -173,13 +172,13 @@ public class SreachActivity extends BaseActivity {
 
     private void loadMoreData() {
         countPage++;
-        getCardClip("",countPage, false, sreach_value);
+        getCardClip("", countPage, false, sreach_value);
     }
 
 
     private void getData() {
         countPage = 1;
-        getCardClip("",countPage, true, sreach_value);
+        getCardClip("", countPage, true, sreach_value);
 
     }
 
@@ -341,5 +340,13 @@ public class SreachActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mActivity != null) {
+            XKeyboardUtils.closeKeyboard(mActivity);
+        }
     }
 }

@@ -43,6 +43,20 @@ public class ImageLoaderManager {
         ImageLoader.getInstance().displayImage(url, imageView, options);
     }
 
+    public static void loadImages(String url, ImageView imageView) {
+        if (XEmptyUtils.isSpace(url)) {
+            return;
+        }
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)//让图片进行内存缓存
+                .cacheOnDisk(true)//让图片进行sdcard缓存
+                .showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher)
+                .showImageOnLoading(R.drawable.ic_launcher)
+                .extraForDownloader(1)
+                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        ImageLoader.getInstance().displayImage(url, imageView, options);
+    }
+
 
     public static ImageLoader getImageLoader(Context context) {
         return ImageLoader.getInstance();
@@ -72,7 +86,7 @@ public class ImageLoaderManager {
     public static float getAspectRatio(String url) {
         //图片展示区域
         final int parentWidth = XDensityUtils.getScreenWidth() - XDensityUtils.dp2px(84);
-        ratio = 1000 / 1376f;
+        //ratio = 1000 / 1376f;
         //这里是只显示一张图片的情况，显示图片的宽高可以根据实际图片大小自由定制，parentWidth 为该layout的宽度
         ImageLoader.getInstance().loadImage(url, new ImageLoadingListener() {
             @Override

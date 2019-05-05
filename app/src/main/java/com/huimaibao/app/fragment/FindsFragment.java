@@ -111,7 +111,6 @@ public class FindsFragment extends BaseFragment {
 
         initEvent();
 
-
     }
 
 
@@ -131,8 +130,6 @@ public class FindsFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-
-
     }
 
     private void initEvent() {
@@ -159,9 +156,7 @@ public class FindsFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-//        getNewMSGData();
-//        countPage = 1;
-//        getDYListData(countPage, false);
+        //getData();
     }
 
     private void loadMoreData() {
@@ -176,14 +171,19 @@ public class FindsFragment extends BaseFragment {
     }
 
 
+    public void getData() {
+        getNewMSGData();
+        countPage = 1;
+        getDYListData(countPage, true);
+    }
+
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         XStatusBar.setTranslucentForImageViewInFragment(mActivity, _needOffsetView);
         if (!hidden) {
-            getNewMSGData();
-            countPage = 1;
-            getDYListData(countPage, true);
+            getData();
         }
     }
 

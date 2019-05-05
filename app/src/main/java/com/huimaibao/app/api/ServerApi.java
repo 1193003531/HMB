@@ -27,12 +27,12 @@ public interface ServerApi {
      * 域名-开发环境
      */
     //测试服
-//    String SERVER_URL = "http://api.yuhongrocky.top";
-//    String SERVER_WEB_URL = "http://weixin.yuhongrocky.top";
+    String SERVER_URL = "http://api.yuhongrocky.top";
+    String SERVER_WEB_URL = "http://weixin.yuhongrocky.top";
 
     //正式服
-    String SERVER_URL = "http://api.51huimaibao.cn";
-    String SERVER_WEB_URL = "http://weixin.51huimaibao.cn";
+//    String SERVER_URL = "http://api.51huimaibao.cn";
+//    String SERVER_WEB_URL = "http://weixin.51huimaibao.cn";
 
 
     /**

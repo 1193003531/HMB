@@ -107,7 +107,7 @@ public class MarketingListAdapter extends BaseAdapter {
         mHolder._item_name.setText(mlItem.getMakingListName());
         mHolder._item_title.setText(mlItem.getMakingListTitle());
         mHolder._item_browse.setText(mlItem.getMakingListBrowse()+" 浏览量");
-        mHolder._item_share.setText(mlItem.getMakingListInterested()+" 感兴趣");
+        mHolder._item_share.setText(mlItem.getMakingListInterested()+" 精准客户");
 
         return view;
     }

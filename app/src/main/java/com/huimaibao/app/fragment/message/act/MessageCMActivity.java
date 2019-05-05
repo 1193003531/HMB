@@ -115,7 +115,7 @@ public class MessageCMActivity extends BaseActivity {
         public void onClick(View v) {
             if (index == 1) {
                 if (XPreferencesUtils.get("vip_level", "0").equals("0")) {
-                    mDialogUtils.showNoTitleDialog("开通会员才能看\"对我感兴趣\"", "取消", "开通", new View.OnClickListener() {
+                    mDialogUtils.showNoTitleDialog("开通会员才能看\"精准客户\"", "取消", "开通", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             startActivity(MemberActivity.class, "会员中心");
