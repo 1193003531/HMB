@@ -93,7 +93,7 @@ public class FindsAddActivity extends TakePhotoActivity {
                 if (albumData.get(position).equals("添加")) {
                     limit = 9 - imagePthData.size();
                     if (limit > 0) {
-                        takePhoneHelper.setTakePhone(limit, false, false, 800, 800, false, 512000, 0, 0);
+                        takePhoneHelper.setTakePhone(limit, false, false, 0, 0, false, 512000, 0, 0);
                         takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                     }
                 } else {
@@ -169,6 +169,7 @@ public class FindsAddActivity extends TakePhotoActivity {
                 if (XEmptyUtils.isSpace(_finds_content_value) && imagePthData.size() == 0) {
                     ToastUtils.showCenter("内容不能为空");
                 } else {
+                    //ToastUtils.showCenter("" + imagePthData.size());
                     ossUpload(imagePthData);
                 }
                 break;
@@ -197,6 +198,9 @@ public class FindsAddActivity extends TakePhotoActivity {
             //LogUtils.debug("finds:" + result.getImages().get(i).getCompressPath());
             //LogUtils.debug("finds:" + result.getImages().get(i).getOriginalPath());
             //Toast.makeText(mActivity, result.getImages().get(i).getCompressPath(), Toast.LENGTH_LONG).show();
+            LogUtils.debug("url:" + result.getImages().get(i).getCompressPath());
+            LogUtils.debug("url:" + result.getImages().get(i).getOriginalPath());
+
             imagePthData.add(result.getImages().get(i).getOriginalPath());
             albumData.clear();
             albumData.addAll(imagePthData);
@@ -210,40 +214,6 @@ public class FindsAddActivity extends TakePhotoActivity {
 //                albumAdapter.notifyDataSetChanged();
 //            }
         }
-
-//        final String url = result.getImages().get(0).getCompressPath();
-//        //XLog.d("url:" + url);
-//        final String object = setImageUrl();
-//
-//        putLoadImage(object, url, new LoadCallback() {
-//            @Override
-//            public void onSuccess(Object o, Object result) {
-//                mActivity.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        showToast("上传成功");
-//                        imagePthData.add(ServerApi.OSS_IMAGE_URL + object);
-//                        albumData.clear();
-//                        albumData.addAll(imagePthData);
-//                        if (albumData.size() < 9) {
-//                            albumData.add("添加");
-//                        }
-//                        if (albumData.size() == 2) {
-//                            albumAdapter = new CardAlbumAdapter(mActivity, albumData, true);
-//                            _album_gv.setAdapter(albumAdapter);
-//                        } else {
-//                            albumAdapter.notifyDataSetChanged();
-//                        }
-//                    }
-//                });
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
-//
-//            }
-//        });
     }
 
 
@@ -365,6 +335,7 @@ public class FindsAddActivity extends TakePhotoActivity {
         map.put("user_id", XPreferencesUtils.get("user_id", ""));
         map.put("content", _finds_content_value);
         map.put("image_path", image_path);
+        LogUtils.debug("finds:" + map);
         FindsLogic.Instance(mActivity).getDYAddApi(map, true, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
@@ -385,12 +356,14 @@ public class FindsAddActivity extends TakePhotoActivity {
                         showToast(msg);
                     }
                 } catch (Exception e) {
+                    LogUtils.debug("finds:" + e.toString());
                     showToast("发布失败");
                 }
             }
 
             @Override
             public void onFailed(String error) {
+                LogUtils.debug("finds:" + error);
                 showToast("发布失败");
             }
         });

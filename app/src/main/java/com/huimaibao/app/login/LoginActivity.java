@@ -168,6 +168,8 @@ public class LoginActivity extends Activity {
 
                     if (XEmptyUtils.isSpace(_pwd_value)) {
                         ToastUtils.showCenter("请输入密码");
+                    } else if (_pwd_value.length() < 6) {
+                        ToastUtils.showCenter("输入密码必须大于6位");
                     } else {
                         Login(_phone_value, _pwd_value);
                     }
@@ -339,7 +341,7 @@ public class LoginActivity extends Activity {
                         if (XEmptyUtils.isSpace(data.optString("phone", ""))) {
                             getUserInfo(access_token, openid);
                         } else {
-                            XPreferencesUtils.put("phone", data.optString("phone",""));
+                            XPreferencesUtils.put("phone", data.optString("phone", ""));
                             if (data.optBoolean("is_perfect")) {
                                 toMainView();
                             } else {

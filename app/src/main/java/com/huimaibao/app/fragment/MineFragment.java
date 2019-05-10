@@ -38,6 +38,8 @@ import com.huimaibao.app.login.logic.LoginLogic;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.youth.xframe.utils.XBitmapUtils;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
@@ -458,7 +460,14 @@ public class MineFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    ImageLoaderManager.loadImage(XPreferencesUtils.get("background", "").toString(), _top_bg_iv, R.drawable.mine_top_bg);
+//                    //ImageLoaderManager.loadImage(XPreferencesUtils.get("background", "").toString(), _top_bg_iv, R.drawable.mine_top_bg);
+//                    try {
+//                        _top_bg_iv.setImageBitmap(XBitmapUtils.lum(XBitmapUtils.doBlur(ImageLoader.getInstance().loadImageSync(XPreferencesUtils.get("portrait", "").toString().trim()), 5, 140), 300));
+//                    } catch (Exception e) {
+//
+//                    }
+
+
                     ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), mHeadImageView, R.drawable.ic_launcher);
                     String name = "" + XPreferencesUtils.get("name", "");
                     String phone = "" + XPreferencesUtils.get("phone", "");

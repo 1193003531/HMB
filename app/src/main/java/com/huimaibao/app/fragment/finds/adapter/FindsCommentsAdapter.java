@@ -141,6 +141,11 @@ public class FindsCommentsAdapter extends BaseAdapter {
         } else {
             if (item.isFindsIsMore()) {
                 mHolder._item_more.setVisibility(View.VISIBLE);
+                if (item.getList().size() > 5) {
+                    mHolder._item_more.setText("展开更多回复");
+                } else {
+                    mHolder._item_more.setText("展开" + item.getFindsChildCommentNum() + "条回复");
+                }
             } else {
                 mHolder._item_more.setVisibility(View.GONE);
             }

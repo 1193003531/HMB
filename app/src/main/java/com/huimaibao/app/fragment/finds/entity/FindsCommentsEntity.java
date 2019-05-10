@@ -22,13 +22,23 @@ public class FindsCommentsEntity implements Serializable {
     public boolean FindsIsNewMsg;
     public String FindsToUserName;
     public String FindsType;
+    public int FindsChildCommentPage;
+
+    public int getFindsChildCommentPage() {
+        return FindsChildCommentPage;
+    }
+
+    public void setFindsChildCommentPage(int findsChildCommentPage) {
+        this.FindsChildCommentPage = findsChildCommentPage;
+    }
+
 
     public boolean isFindsIsNewMsg() {
         return FindsIsNewMsg;
     }
 
     public void setFindsIsNewMsg(boolean findsIsNewMsg) {
-        this. FindsIsNewMsg = findsIsNewMsg;
+        this.FindsIsNewMsg = findsIsNewMsg;
     }
 
     public String getFindsToUserName() {

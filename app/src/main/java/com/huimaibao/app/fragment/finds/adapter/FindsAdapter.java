@@ -67,7 +67,8 @@ public class FindsAdapter extends BaseAdapter {
             , R.drawable.finds_list_praise_16, R.drawable.finds_list_praise_17, R.drawable.finds_list_praise_18, R.drawable.finds_list_praise_19
             , R.drawable.finds_list_praise_20, R.drawable.finds_list_praise_21, R.drawable.finds_list_praise_22, R.drawable.finds_list_praise_23
             , R.drawable.finds_list_praise_24, R.drawable.finds_list_praise_25, R.drawable.finds_list_praise_26, R.drawable.finds_list_praise_27
-            , R.drawable.finds_list_praise_28, R.drawable.finds_list_praise_29};
+            , R.drawable.finds_list_praise_28, R.drawable.finds_list_praise_29,R.drawable.finds_list_praise_30,R.drawable.finds_list_praise_31,
+            R.drawable.finds_list_praise_32,R.drawable.finds_list_praise_33};
 
 
     public FindsAdapter(Activity activity, String type, List<FindsEntity> list) {
@@ -309,7 +310,7 @@ public class FindsAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        NiceImageView _item_head;
+        CircleImageView _item_head;
         TextView _item_name, _item_content, _item_time, _item_praise_num, _item_comments_num, _item_del;
         ImageView _item_focus_iv, _item_praise_iv, _item_feedback_iv;
         RatioImageView _item_one_image;

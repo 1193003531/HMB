@@ -100,6 +100,7 @@ public class ImagePagerAdapter extends PagerAdapter {
                 progress_text.setVisibility(View.GONE);
                 full_image.setVisibility(View.GONE);
                 retry.setVisibility(View.VISIBLE);
+                //failReason.getCause().getMessage();
             }
 
             @Override

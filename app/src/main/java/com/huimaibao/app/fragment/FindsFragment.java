@@ -466,7 +466,7 @@ public class FindsFragment extends BaseFragment {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                showToast("关注成功");
+                                //showToast("关注成功");
                                 for (int i = 0; i < listData.size(); i++) {
                                     if (listData.get(i).getFindsCardId().equals(card_id_value)) {
                                         listData.get(i).setFindsIsFocus("1");

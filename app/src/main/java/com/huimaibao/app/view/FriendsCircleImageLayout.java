@@ -48,7 +48,7 @@ public class FriendsCircleImageLayout extends ViewGroup {
      * 图片宽高比(当为多张图片的时候为1)
      * 一般在url中会有宽高 可计算
      */
-    private float mItemAspectRatio;
+    private float mItemAspectRatio=1;
     /**
      * 最宽的时候相对可用空间比例（当childCount=1的时候）
      * 当只有一张图片的 最大显示宽度和高度相对于可用宽的的比例

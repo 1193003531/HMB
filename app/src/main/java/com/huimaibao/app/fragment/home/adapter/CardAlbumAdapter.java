@@ -49,6 +49,7 @@ public class CardAlbumAdapter extends BaseAdapter {
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.act_home_card_album_item, null);
             mHolder = new ViewHolder();
+            mHolder._item_album_details = view.findViewById(R.id.card_album_image);
             mHolder._item_album = view.findViewById(R.id.card_album_image_value);
             mHolder._item_del = view.findViewById(R.id.card_album_image_del);
             view.setTag(mHolder);
@@ -60,11 +61,16 @@ public class CardAlbumAdapter extends BaseAdapter {
             mHolder._item_album.setImageResource(R.drawable.add_image_no_bg);
             mHolder._item_del.setVisibility(View.GONE);
         } else {
-            ImageLoaderManager.loadImage(ilList.get(position), mHolder._item_album, R.drawable.ic_launcher);
             if (_type) {
+                mHolder._item_album_details.setVisibility(View.GONE);
+                mHolder._item_album.setVisibility(View.VISIBLE);
                 mHolder._item_del.setVisibility(View.VISIBLE);
+                ImageLoaderManager.loadImage(ilList.get(position), mHolder._item_album, R.drawable.ic_launcher);
             } else {
+                mHolder._item_album_details.setVisibility(View.VISIBLE);
+                mHolder._item_album.setVisibility(View.GONE);
                 mHolder._item_del.setVisibility(View.GONE);
+                ImageLoaderManager.loadImage(ilList.get(position), mHolder._item_album_details, R.drawable.ic_launcher);
             }
         }
 
@@ -73,7 +79,7 @@ public class CardAlbumAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        ImageView _item_album, _item_del;
+        ImageView _item_album_details, _item_album, _item_del;
     }
 
 }

@@ -116,7 +116,7 @@ public class PerfectBActivity extends TakePhotoActivity {
     public void onAction(View v) {
         switch (v.getId()) {
             case R.id.login_perfect_image:
-                takePhoneHelper.setTakePhone(1, true, true, 100, 100, true, 102400, 0, 0);
+                takePhoneHelper.setTakePhone(1, true, true, 200, 200, true, 102400, 0, 0);
                 takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                 break;
             //保存
@@ -625,7 +625,7 @@ public class PerfectBActivity extends TakePhotoActivity {
                                 showToast("保存成功");
                                 toMainView();
                             } else {
-                                showToast("保存失败");
+                                showToast("保存失败," + json.getString("message"));
                             }
                         } catch (Exception e) {
                             LogUtils.debug("error:" + e);

@@ -193,7 +193,7 @@ public class SetActivity extends BaseActivity {
      */
     private void upDataAPP() {
 
-        LoginLogic.Instance(mActivity).appVersionApi("检查更新...", new ResultBack() {
+        LoginLogic.Instance(mActivity).appVersionApi("检查更新...", true,new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {

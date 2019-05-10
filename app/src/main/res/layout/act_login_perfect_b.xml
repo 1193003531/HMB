@@ -57,6 +57,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
+                android:maxLength="8"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:singleLine="true"
@@ -102,6 +103,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:singleLine="true"
+                android:maxLength="20"
                 android:textColor="@color/FF333333"
                 android:textCursorDrawable="@drawable/login_cursor_drawable"
                 android:textSize="@dimen/text_size_15" />
@@ -141,6 +143,7 @@
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
+                android:maxLength="50"
                 android:paddingRight="15dp"
                 android:singleLine="true"
                 android:textColor="@color/FF333333"

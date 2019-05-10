@@ -62,24 +62,27 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
-            android:paddingTop="10dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="10dp">
 
-            <ImageView
-                android:id="@+id/finds_list_comments_item_praise_iv"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/finds_list_praise" />
+            >
 
             <TextView
                 android:id="@+id/finds_list_comments_item_praise_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="-2dp"
                 android:text="0"
                 android:textColor="@color/color999999"
                 android:textSize="@dimen/text_size_12" />
+
+            <ImageView
+                android:id="@+id/finds_list_comments_item_praise_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/finds_list_praise" />
+
+
         </LinearLayout>
 
 

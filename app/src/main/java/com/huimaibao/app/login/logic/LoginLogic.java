@@ -636,22 +636,21 @@ public class LoginLogic {
      * 获取app更新信息
      * post
      */
-    public void appVersionApi(final String msg, final ResultBack resultBack) {
+    public void appVersionApi(final String msg, final boolean isShow, final ResultBack resultBack) {
 
         if (XNetworkUtils.isConnected()) {
             XHttp.obtain().get(ServerApi.APP_VERSION_URL, null, new HttpCallBack() {
                 @Override
                 public void showProgress() {
-                    if (!mActivity.isFinishing())
+                    if (isShow)
                         mDialogUtils.showLoadingDialog(msg);
 
                 }
 
                 @Override
                 public void dismissProgress() {
-                    if (!mActivity.isFinishing())
+                    if (isShow)
                         mDialogUtils.dismissDialog();
-
                 }
 
                 @Override

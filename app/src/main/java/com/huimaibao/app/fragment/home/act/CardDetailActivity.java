@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -193,8 +194,8 @@ public class CardDetailActivity extends BaseActivity {
                 _addr_value = "" + XPreferencesUtils.get("address_detail", "");
                 _introduce_value = "" + XPreferencesUtils.get("introduce", "");
 
-                _browse_value = "0";//+ XPreferencesUtils.get("introduce", "");
-                _focus_on_value = "0";//+ XPreferencesUtils.get("introduce", "");
+                _browse_value = "" + XPreferencesUtils.get("popularity", "");
+                _focus_on_value = "" + XPreferencesUtils.get("follow", "");
 
                 setShowAll();
 
@@ -218,22 +219,17 @@ public class CardDetailActivity extends BaseActivity {
 
                 ImageLoaderManager.loadImage(_head_value, _top_head_iv);
                 ImageLoaderManager.loadImage(_head_value, _head_iv);
-                try {
-                    _top_head.setImageBitmap(XBitmapUtils.doBlur(ImageLoader.getInstance().loadImageSync(_head_value), 5, 10));
-                } catch (Exception e) {
-
-                }
 
 
                 _top_name_tv.setText(_name_value);
                 _card_name.setText(_name_value);
                 _card_company.setText(_company_value + "/" + _jobs_value);
                 _card_browse.setText("人气 " + _browse_value);
-                _card_focus_on.setText("关注 " + _focus_on_value);
+                _card_focus_on.setText("粉丝 " + _focus_on_value);
                 _card_phone.setText(_phone_value);
                 _card_wechat.setText(_wechat_value);
                 _card_city.setText(_city_value);
-                _card_addr.setText( XStringUtils.ToDBC(_addr_value));
+                _card_addr.setText(XStringUtils.ToDBC(_addr_value));
                 _card_introduce.setText(XEmptyUtils.isSpace(_introduce_value) ? "" : XStringUtils.ToDBC(_introduce_value));
 
                 albumData = new ArrayList<>();
@@ -243,6 +239,19 @@ public class CardDetailActivity extends BaseActivity {
 
                 albumAdapter = new CardAlbumAdapter(mActivity, albumData, false);
                 _album_gv.setAdapter(albumAdapter);
+
+                try {
+                    _top_head.setImageBitmap(XBitmapUtils.blur(mActivity, ImageLoader.getInstance().loadImageSync(_head_value), 0.1f, 25f));
+                } catch (Exception e) {
+
+                }
+
+//                new Handler().postDelayed(new Runnable() {
+//                    public void run() {
+//
+//                    }
+//                }, 100);
+
 
                 mScrollView.smoothScrollTo(0, 0);
             }

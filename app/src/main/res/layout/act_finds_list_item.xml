@@ -13,20 +13,19 @@
         android:paddingLeft="16dp"
         android:paddingTop="15dp">
 
-        <com.youth.xframe.widget.NiceImageView
+        <com.youth.xframe.widget.CircleImageView
             android:id="@+id/finds_list_item_head"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher"
-            app:is_circle="true" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher" />
 
         <!--<com.youth.xframe.widget.CircleImageView-->
-            <!--android:id="@+id/finds_list_item_head"-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--android:src="@drawable/ic_launcher" />-->
+        <!--android:id="@+id/finds_list_item_head"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/ic_launcher" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,10 +86,9 @@
 
             <TextView
                 android:id="@+id/finds_list_item_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-
                 android:lineSpacingExtra="5dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="14dp"

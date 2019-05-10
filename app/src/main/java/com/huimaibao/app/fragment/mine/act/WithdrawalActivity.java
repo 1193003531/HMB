@@ -311,19 +311,13 @@ public class WithdrawalActivity extends BaseActivity {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                XPreferencesUtils.put("Withdrawal", true);
                 startActivity(WithdrawalDetailsActivity.class, result);
+                finish();
             }
         });
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if ((boolean) XPreferencesUtils.get("Withdrawal", false)) {
-            finish();
-        }
-    }
 
     /***/
     private void getBankCard() {

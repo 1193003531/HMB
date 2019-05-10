@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/f3f3f3"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:paddingLeft="15dp"
-                        android:text="关注 0"
+                        android:text="粉丝 0"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_size_12" />
 
@@ -119,7 +119,8 @@
                 android:paddingLeft="20dp"
                 android:text="个人信息"
                 android:textColor="@color/color666666"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -183,9 +184,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
-                    android:singleLine="true"
                     android:paddingLeft="30dp"
                     android:paddingRight="10dp"
+                    android:singleLine="true"
                     android:text=""
                     android:textColor="@color/color666666"
                     android:textSize="@dimen/text_size_14" />
@@ -305,7 +306,8 @@
                 android:paddingLeft="20dp"
                 android:text="名片相册"
                 android:textColor="@color/color666666"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_16"
+                android:textStyle="bold" />
 
 
             <com.youth.xframe.widget.NoScrollGridView

@@ -1,8 +1,11 @@
 package com.huimaibao.app.login;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -16,7 +19,9 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.permission.XPermission;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +40,7 @@ public class GuideActivity extends Activity {
     private int pointWidth;
 
     //点击
-   private TextView _text_btn;
+    private TextView _text_btn;
 
 
     @Override
@@ -45,6 +50,36 @@ public class GuideActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.act_guide);
         initView();
+
+        if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
+            XPermission.requestPermissions(this, 1010, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, new XPermission.OnPermissionListener() {
+                //权限申请成功时调用
+                @Override
+                public void onPermissionGranted() {
+                    File file2 = new File(Environment.getExternalStorageDirectory() + "/HMB/");
+                    if (!file2.exists()) {
+                        file2.mkdirs();
+                    }
+                }
+
+                //权限被用户禁止时调用
+                @Override
+                public void onPermissionDenied() {
+                    //给出友好提示，并且提示启动当前应用设置页面打开权限
+                    XPermission.showTipsDialog(GuideActivity.this);
+                }
+            });
+        } else {
+            File file2 = new File(Environment.getExternalStorageDirectory() + "/HMB/");
+            if (!file2.exists()) {
+                file2.mkdirs();
+            }
+        }
+
+
     }
 
 
@@ -52,7 +87,7 @@ public class GuideActivity extends Activity {
 
         lan_Iv = findViewById(R.id.lan_Iv);
         linearLayout = findViewById(R.id.ll);
-        _text_btn= findViewById(R.id.guide_btn);
+        _text_btn = findViewById(R.id.guide_btn);
         mViewPager = findViewById(R.id.vp_guide);
 
         initData();

@@ -92,6 +92,8 @@ public class CardLogic {
                             XPreferencesUtils.put("province", jsonD.optString("province", ""));//省id
                             XPreferencesUtils.put("city", jsonD.optString("city", ""));//市id
                             XPreferencesUtils.put("area", jsonD.optString("area", ""));//区id
+                            XPreferencesUtils.put("popularity", jsonD.optString("popularity", "0"));//人气
+                            XPreferencesUtils.put("follow", jsonD.optString("follow", "0"));//关注
                             if (resultBack != null)
                                 resultBack.onSuccess(o);
                         } else {

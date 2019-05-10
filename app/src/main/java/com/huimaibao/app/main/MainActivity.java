@@ -531,7 +531,7 @@ public class MainActivity extends BaseActivity {
      */
     private void upDataAPP() {
 
-        LoginLogic.Instance(mActivity).appVersionApi("", new ResultBack() {
+        LoginLogic.Instance(mActivity).appVersionApi("", false, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {

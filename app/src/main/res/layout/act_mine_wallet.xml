@@ -102,8 +102,8 @@
     <TextView
         android:id="@+id/wallet_bank_btn"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="@color/white"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_duf"
         android:drawableLeft="@drawable/wallet_bank_icon"
         android:drawableRight="@drawable/mine_right_icon"
         android:drawablePadding="@dimen/text_image"
@@ -131,8 +131,8 @@
     <TextView
         android:id="@+id/wallet_tx_btn"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="@color/white"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_duf"
         android:drawableLeft="@drawable/wallet_tx_icon"
         android:drawableRight="@drawable/mine_right_icon"
         android:drawablePadding="@dimen/text_image"

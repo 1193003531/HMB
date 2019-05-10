@@ -158,7 +158,7 @@ public class MakingCardActivity extends TakePhotoActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (albumData.get(position).equals("添加")) {
                     _check_head = "相册";
-                    takePhoneHelper.setTakePhone(1, false, false, 800, 800, true, 512000, 0, 0);
+                    takePhoneHelper.setTakePhone(1, false, false, 0, 0, true, 512000, 0, 0);
                     takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                 } else {
                     imagePthData.remove(position);
@@ -243,7 +243,7 @@ public class MakingCardActivity extends TakePhotoActivity {
         switch (v.getId()) {
             case R.id.making_card_head:
                 _check_head = "头像";
-                takePhoneHelper.setTakePhone(1, true, true, 100, 100, true, 102400, 0, 0);
+                takePhoneHelper.setTakePhone(1, true, true, 200, 200, true, 102400, 0, 0);
                 takePhoneHelper.showTakePhoneDialog(getTakePhoto());
                 break;
             case R.id.making_card_city:
@@ -331,17 +331,19 @@ public class MakingCardActivity extends TakePhotoActivity {
 //            images.add(new File(imagesData.get(i).getCompressPath()));
 //        }
 //        feedbackUploadApi(images);
-        final String url;
-        if (_check_head.equals("头像")) {
-            url = result.getImages().get(0).getCompressPath();
-        } else {
-            url = result.getImages().get(0).getOriginalPath();
-            //url = result.getImages().get(0).getCompressPath();
-        }
+//        final String url;
+//        if (_check_head.equals("头像")) {
+//            url = result.getImages().get(0).getCompressPath();
+//        } else {
+//            url = result.getImages().get(0).getOriginalPath();
+//            //
+//        }
 
+        final String url = result.getImages().get(0).getCompressPath();
 
         LogUtils.debug("url:" + url);
-        LogUtils.debug("url:" + result.getImages().get(0).getCompressPath());
+        LogUtils.debug("url:" + result.getImages().get(0).getOriginalPath());
+
 
         final String object = setImageUrl();
 
@@ -370,6 +372,7 @@ public class MakingCardActivity extends TakePhotoActivity {
                             } else {
                                 albumAdapter.notifyDataSetChanged();
                             }
+                            mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
                         }
                     }
                 });
@@ -382,7 +385,7 @@ public class MakingCardActivity extends TakePhotoActivity {
             }
         });
 
-        mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+
     }
 
     /**

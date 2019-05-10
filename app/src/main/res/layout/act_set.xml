@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/setting_account_btn"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
 
             android:background="@drawable/btn_duf"
             android:drawableRight="@drawable/mine_right_icon"
@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/setting_payment_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_height"
+            android:layout_height="50dp"
             android:background="@drawable/btn_duf"
             android:drawableRight="@drawable/mine_right_icon"
             android:drawablePadding="@dimen/text_image"
@@ -58,7 +58,7 @@
     <LinearLayout
         android:id="@+id/setting_inviter_btn"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
+        android:layout_height="50dp"
         android:layout_marginTop="18dp"
         android:background="@drawable/btn_duf"
         android:clickable="true"
@@ -108,7 +108,7 @@
         <TextView
             android:id="@+id/setting_user_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_height"
+            android:layout_height="50dp"
             android:background="@drawable/btn_duf"
             android:drawableRight="@drawable/mine_right_icon"
             android:drawablePadding="@dimen/text_image"
@@ -131,7 +131,7 @@
         <TextView
             android:id="@+id/setting_about_us_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_height"
+            android:layout_height="50dp"
             android:background="@drawable/btn_duf"
             android:drawableRight="@drawable/mine_right_icon"
             android:drawablePadding="@dimen/text_image"
@@ -152,7 +152,7 @@
         <LinearLayout
             android:id="@+id/setting_about_hmb_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_height"
+            android:layout_height="50dp"
             android:background="@drawable/btn_duf"
             android:clickable="true"
             android:onClick="onAction"
@@ -193,7 +193,7 @@
     <LinearLayout
         android:id="@+id/setting_clear_cache_btn"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
+        android:layout_height="50dp"
         android:layout_marginTop="18dp"
         android:background="@drawable/btn_duf"
         android:clickable="true"

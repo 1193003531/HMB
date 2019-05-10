@@ -1,5 +1,6 @@
 package com.huimaibao.app.takePhone;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import com.youth.xframe.takephoto.app.TakePhoto;
 import com.youth.xframe.takephoto.compress.CompressConfig;
 import com.youth.xframe.takephoto.model.CropOptions;
 import com.youth.xframe.takephoto.model.TakePhotoOptions;
+import com.youth.xframe.utils.permission.XPermission;
 
 import java.io.File;
 
@@ -91,6 +93,8 @@ public class TakePhoneHelper {
         config = new CompressConfig.Builder().setMaxSize(_maxSize)
                 .setMaxPixel(_maxWidth >= _maxHeight ? _maxWidth : _maxHeight)
                 .enableReserveRaw(enableRawFile)
+                .enablePixelCompress(false)
+                .enableQualityCompress(true)
                 .create();
         takePhoto.onEnableCompress(config, showProgressBar);
     }
@@ -155,12 +159,44 @@ public class TakePhoneHelper {
      */
     public void showTakePhoneDialog(final TakePhoto takePhoto) {
         //File file = new File(BaseApplication.getApp().getFilePath(), "images/" + System.currentTimeMillis() + ".jpg");
-        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+
+        if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
+            XPermission.requestPermissions(mActivity, 1010, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, new XPermission.OnPermissionListener() {
+                //权限申请成功时调用
+                @Override
+                public void onPermissionGranted() {
+                    File file2 = new File(Environment.getExternalStorageDirectory() + "/HMB/temp/");
+                    if (!file2.exists()) {
+                        file2.mkdirs();
+                    }
+                }
+
+                //权限被用户禁止时调用
+                @Override
+                public void onPermissionDenied() {
+                    //给出友好提示，并且提示启动当前应用设置页面打开权限
+                    XPermission.showTipsDialog(mActivity);
+                }
+            });
+        } else {
+            File file2 = new File(Environment.getExternalStorageDirectory() + "/HMB/temp/");
+            if (!file2.exists()) {
+                file2.mkdirs();
+            }
+        }
+
+
+        ///HMB
+        File file = new File(Environment.getExternalStorageDirectory(), "/HMB/temp/" + System.currentTimeMillis() + ".jpg");
 
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        final Uri mUri= Uri.fromFile(file);
+        final Uri mUri = Uri.fromFile(file);
+
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 //            //步骤二：Android 7.0及以上获取文件 Uri
@@ -200,8 +236,7 @@ public class TakePhoneHelper {
                 if (isCrop) {
                     takePhoto.onPickFromCaptureWithCrop(mUri, getCropOptions());
                 } else {
-                    setTakePhone(1, true, false, 800, 800, true, 512000, 0, 0);
-
+                    setTakePhone(1, true, true, 0, 0, true, 512000, 0, 0);
                     takePhoto.onPickFromCaptureWithCrop(mUri, getCropOptions());
                     //takePhoto.onPickFromCapture(mUri);
                 }

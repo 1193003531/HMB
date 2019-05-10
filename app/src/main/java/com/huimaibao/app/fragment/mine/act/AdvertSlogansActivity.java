@@ -13,6 +13,7 @@ import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.ToastUtils;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
@@ -133,13 +134,15 @@ public class AdvertSlogansActivity extends BaseActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    showToast("设置失败" + e.toString());
+                    LogUtils.debug("json:" + e.toString());
+                    showToast("设置失败");
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                showToast("设置失败" + error);
+                LogUtils.debug("json:" + error);
+                showToast("设置失败");
             }
         });
     }

@@ -219,11 +219,17 @@ public class MessageWebActivity extends BaseActivity {
         public void toShareView(String str) {   //提供给js调用的方法
             try {
                 JSONObject json = new JSONObject(str);
-                String title = json.optString("title", "");
-                String des = json.optString("desc", "");
-                String link = json.optString("link", "");
-                String imgUrl = json.optString("imgUrl", "");
-                setShare(title, des, link, imgUrl);
+                final String title = json.optString("title", "");
+                final String des = json.optString("desc", "");
+                final String link = json.optString("link", "");
+                final String imgUrl = json.optString("imgUrl", "");
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setShare(title, des, link, imgUrl);
+                    }
+                });
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -240,7 +246,7 @@ public class MessageWebActivity extends BaseActivity {
                 public void run() {
                     startActivity(MakingCardActivity.class, "完善名片");
                     //XPreferencesUtils.put("isStrategy", true);
-                   // finish();
+                    // finish();
                 }
             });
         }

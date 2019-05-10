@@ -139,6 +139,10 @@ public class CMListFragment extends BaseFragment {
                     //ToastUtils.showCenter("" + position);
                     return;
                 }
+                if (XEmptyUtils.isSpace(listData.get(position - 1).getMessageId())) {
+                    showToast("用户不存在");
+                    return;
+                }
                 if (listData.get(position - 1).getMessageId().equals("0")) {
                     if (text.equals("人气")) {
                         DialogUtils.of(mActivity).showNoSureDialog("平台外用户访问了您", "知道了");
@@ -235,8 +239,8 @@ public class CMListFragment extends BaseFragment {
                                 showToast("没有数据了");
                             }
                         }
-                        _top_left_value = json.getJSONObject("data").optString("all","0");
-                        _top_right_value = json.getJSONObject("data").optString("today","0");
+                        _top_left_value = json.getJSONObject("data").optString("all", "0");
+                        _top_right_value = json.getJSONObject("data").optString("today", "0");
                         for (int i = 0; i < array.length(); i++) {
                             MessageEntity item = new MessageEntity();
                             item.setMessageId(array.getJSONObject(i).getString("user_id"));

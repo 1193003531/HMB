@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
+import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.base.BaseApplication;
 import com.huimaibao.app.fragment.finds.adapter.FindsAdapter;
@@ -32,6 +33,7 @@ import com.huimaibao.app.fragment.finds.server.FindsLogic;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
 import com.huimaibao.app.fragment.mine.server.CardClipLogic;
+import com.huimaibao.app.fragment.web.HomePageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
@@ -100,7 +102,7 @@ public class FindsCommentsActivity extends BaseActivity {
     private RelativeLayout _item_comment_ll;
     private CircleImageView _item_comment_iv_1, _item_comment_iv_2, _item_comment_iv_3, _item_comment_iv_4, _item_comment_iv_more;
 
-    private String _dynamic_id_value = "", _dy_cardid_value = "", _userid_value = "", _dy_head_value = "", _dy_name_value = "", _dy_content_value = "", _dy_images_value = "", _dy_time_value = "", _dy_comments_num_value = "0", _dy_isfocus_value = "0", _dy_ispraise_value = "0", _dy_praisenum_value = "0", _dy_comment_head_value = "";
+    private String _dynamic_id_value = "", _dy_cardid_value = "", _dy_userid_value = "", _userid_value = "", _dy_head_value = "", _dy_name_value = "", _dy_content_value = "", _dy_images_value = "", _dy_time_value = "", _dy_comments_num_value = "0", _dy_isfocus_value = "0", _dy_ispraise_value = "0", _dy_praisenum_value = "0", _dy_comment_head_value = "";
     //评论头像
     private List<String> commentHeadList;
 
@@ -142,7 +144,8 @@ public class FindsCommentsActivity extends BaseActivity {
             , R.drawable.finds_list_praise_16, R.drawable.finds_list_praise_17, R.drawable.finds_list_praise_18, R.drawable.finds_list_praise_19
             , R.drawable.finds_list_praise_20, R.drawable.finds_list_praise_21, R.drawable.finds_list_praise_22, R.drawable.finds_list_praise_23
             , R.drawable.finds_list_praise_24, R.drawable.finds_list_praise_25, R.drawable.finds_list_praise_26, R.drawable.finds_list_praise_27
-            , R.drawable.finds_list_praise_28, R.drawable.finds_list_praise_29};
+            , R.drawable.finds_list_praise_28, R.drawable.finds_list_praise_29, R.drawable.finds_list_praise_30, R.drawable.finds_list_praise_31,
+            R.drawable.finds_list_praise_32, R.drawable.finds_list_praise_33};
 
     //动态图片集合
     private String[] mUrls;
@@ -468,6 +471,10 @@ public class FindsCommentsActivity extends BaseActivity {
             case R.id.back_btn:
                 finish();
                 break;
+            //主页
+            case R.id.finds_list_top_head:
+                startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + _dy_userid_value + ServerApi.HOME_PAGE_WEB_TOKEN);
+                break;
             case R.id.finds_list_top_qbfk_btn:
                 mDialogUtils.showGeneralDialog(new View.OnClickListener() {
                     @Override
@@ -736,6 +743,7 @@ public class FindsCommentsActivity extends BaseActivity {
                     if (json.getString("status").equals("0")) {
                         JSONObject data = new JSONObject(json.getString("data"));
                         _dynamic_id_value = data.optString("dynamic_id");
+                        _dy_userid_value = data.optString("user_id");
                         _dy_cardid_value = data.optString("cards_id");
                         _dy_head_value = data.optString("head_picture");
                         _dy_name_value = data.optString("user_name");
@@ -994,6 +1002,7 @@ public class FindsCommentsActivity extends BaseActivity {
                             }
 
                             entity.setList(list);
+                            entity.setFindsChildCommentPage(1);
                             entity.setFindsIsNewMsg(true);
                             listData.add(entity);
                         }
@@ -1045,6 +1054,7 @@ public class FindsCommentsActivity extends BaseActivity {
                             }
 
                             entity.setList(list);
+                            entity.setFindsChildCommentPage(1);
                             entity.setFindsIsNewMsg(false);
                             listData.add(entity);
                         }
@@ -1100,8 +1110,8 @@ public class FindsCommentsActivity extends BaseActivity {
                                         @Override
                                         public void onItemReplyMoreClick(int position) {
                                             _superior_id_value = listData.get(position).getFindsCommentId();
-                                            getCommentMoreData(countPageChild, _superior_id_value, position);
-                                            countPageChild++;
+                                            getCommentMoreData(listData.get(position).getFindsChildCommentPage(), _superior_id_value, position);
+                                            //countPageChild++;
                                         }
                                     });
                                     loadOver();
@@ -1350,18 +1360,18 @@ public class FindsCommentsActivity extends BaseActivity {
     private void getCommentMoreData(final int page, String superior_id, final int position) {
         listCommentIDData = new ArrayList<>();
         for (int i = 0; i < listData.get(position).getList().size(); i++) {
-            listCommentIDData.add(listData.get(position).getList().get(i).getFindsCommentId());
+            listCommentIDData.add(listData.get(position).getList().get(i).getFindsCommentId().trim());
         }
 
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("dynamic_id", _dynamic_id_value);
-        map.put("page", page);
-        map.put("pageSize", 10);
+        //map.put("page", page);
+        map.put("pageSize", 5);
         map.put("user_id", XPreferencesUtils.get("user_id", ""));
         map.put("superior_id", superior_id);
         map.put("comment_id", listCommentIDData.toString().replace("[", "").replace("]", "").trim());
-
+        LogUtils.debug("finds:" + map);
         FindsLogic.Instance(mActivity).getCommentChildAllApi(map, true, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
@@ -1388,8 +1398,8 @@ public class FindsCommentsActivity extends BaseActivity {
                             list.add(entity);
                         }
                         listData.get(position).getList().addAll(list);
-
-                        if (page >= totalPageChild) {
+                        listData.get(position).setFindsChildCommentPage(listData.get(position).getFindsChildCommentPage() + 1);
+                        if (totalPageChild == 1) {
                             listData.get(position).setFindsIsMore(false);
                         }
 

@@ -62,14 +62,9 @@ public class WithdrawalDetailsActivity extends BaseActivity {
     public void onAction(View v) {
         switch (v.getId()) {
             case R.id.waller_detail_sure:
-                onBackPressed();
+                finish();
                 break;
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        XPreferencesUtils.put("Withdrawal", true);
-    }
 }
