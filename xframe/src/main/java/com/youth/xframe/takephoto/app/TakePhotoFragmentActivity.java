@@ -14,7 +14,7 @@ import com.youth.xframe.takephoto.permission.InvokeListener;
 import com.youth.xframe.takephoto.permission.TakePhotoInvocationHandler;
 
 /**
- * 继承这个类来让Activity获取拍照的能力<br>
+ * 继承这个类来让Activity获取拍照的能力
  */
 public class TakePhotoFragmentActivity extends FragmentActivity implements TakePhoto.TakeResultListener, InvokeListener {
     private static final String TAG = TakePhotoFragmentActivity.class.getName();

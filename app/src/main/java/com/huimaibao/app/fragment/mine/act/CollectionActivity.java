@@ -25,6 +25,7 @@ import com.huimaibao.app.fragment.web.MessageWebActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ToastUtils;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
@@ -343,7 +344,7 @@ public class CollectionActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    //XLog.d("lib=s=" + json);
+                    LogUtils.debug("json:" + json);
                     String status = json.getString("status");
                     String message = json.getString("message");
                     //String data = json.getString("data");
@@ -434,16 +435,19 @@ public class CollectionActivity extends BaseActivity {
 
                     } else {
                         showToast(message);
+                        showNoData();
                     }
 
                 } catch (Exception e) {
-                    //XLog.d("e:" + e.toString());
+                    LogUtils.debug("json:" + e.toString());
+                    showNoData();
                 }
             }
 
             @Override
             public void onFailed(String error) {
-                //XLog.d("error:" + error);
+                LogUtils.debug("json:" + error);
+                showNoData();
             }
         });
     }
@@ -548,7 +552,17 @@ public class CollectionActivity extends BaseActivity {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                _no_data.setVisibility(View.VISIBLE);
+                if (cList.size() == 0) {
+                    _no_data.setVisibility(View.VISIBLE);
+                } else {
+                    _no_data.setVisibility(View.GONE);
+                }
+                mAdapter = new CollectionAdapter(mActivity, cList);
+                mListView.setAdapter(mAdapter);
+                //加载完数据设置为不刷新状态，将下拉进度收起来
+                if (mSwipeRefreshView.isRefreshing()) {
+                    mSwipeRefreshView.setRefreshing(false);
+                }
             }
         });
     }

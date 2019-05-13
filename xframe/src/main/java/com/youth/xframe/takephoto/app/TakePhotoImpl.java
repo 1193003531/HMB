@@ -13,25 +13,25 @@ import android.widget.Toast;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
 import com.youth.xframe.R;
-import com.youth.xframe.takephoto.compress.CompressConfig;
 import com.youth.xframe.takephoto.compress.CompressImage;
 import com.youth.xframe.takephoto.compress.CompressImageImpl;
-import com.youth.xframe.takephoto.model.CropOptions;
 import com.youth.xframe.takephoto.model.MultipleCrop;
-import com.youth.xframe.takephoto.model.TContextWrap;
 import com.youth.xframe.takephoto.model.TException;
 import com.youth.xframe.takephoto.model.TExceptionType;
 import com.youth.xframe.takephoto.model.TImage;
 import com.youth.xframe.takephoto.model.TIntentWap;
+import com.youth.xframe.takephoto.permission.PermissionManager;
+import com.youth.xframe.takephoto.uitl.TUriParse;
+import com.youth.xframe.takephoto.compress.CompressConfig;
+import com.youth.xframe.takephoto.model.CropOptions;
+import com.youth.xframe.takephoto.model.TContextWrap;
 import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.takephoto.model.TakePhotoOptions;
-import com.youth.xframe.takephoto.permission.PermissionManager;
 import com.youth.xframe.takephoto.uitl.ImageRotateUtil;
 import com.youth.xframe.takephoto.uitl.IntentUtils;
 import com.youth.xframe.takephoto.uitl.TConstant;
 import com.youth.xframe.takephoto.uitl.TFileUtils;
 import com.youth.xframe.takephoto.uitl.TImageFiles;
-import com.youth.xframe.takephoto.uitl.TUriParse;
 import com.youth.xframe.takephoto.uitl.TUtils;
 
 import java.io.File;
@@ -51,6 +51,8 @@ import java.util.Map;
  * - 提供自带裁剪工具(可选)
  * - 支持智能选取及裁剪异常处理
  * - 支持因拍照Activity被回收后的自动恢复
+ * GitHub:https://github.com/crazycodeboy
+ * Email:crazycodeboy@gmail.com
  */
 public class TakePhotoImpl implements TakePhoto {
     private static final String TAG = IntentUtils.class.getName();
@@ -298,7 +300,7 @@ public class TakePhotoImpl implements TakePhoto {
 //            TUtils.cropWithOwnApp(contextWrap, imageUri, outPutUri, options);
 //        } else {
         TUtils.cropWithOtherAppBySafely(contextWrap, imageUri, outPutUri, options);
-        //       }
+        //}
     }
 
     private void cropContinue(boolean preSuccess) {

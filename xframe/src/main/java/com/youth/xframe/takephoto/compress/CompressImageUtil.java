@@ -5,8 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.takephoto.uitl.TFileUtils;
+import com.youth.xframe.takephoto.uitl.TUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -15,10 +18,6 @@ import java.io.FileOutputStream;
 
 /**
  * 压缩照片
- *
- * @author JPH
- *         Date 2015-08-26 下午1:44:26
- *         Version:1.0.3
  */
 public class CompressImageUtil {
     private CompressConfig config;
@@ -39,6 +38,7 @@ public class CompressImageUtil {
                 e.printStackTrace();
             }
         } else {
+           // LogUtils.debug("getCaptureIntentWithCrop:isReturnData:3");
             compressImageByQuality(BitmapFactory.decodeFile(imagePath), imagePath, listener);
         }
     }
@@ -48,12 +48,10 @@ public class CompressImageUtil {
      *
      * @param bitmap  内存中的图片
      * @param imgPath 图片的保存路径
-     * @author JPH
-     * @date 2014-12-5下午11:30:43
      */
     private void compressImageByQuality(final Bitmap bitmap, final String imgPath, final CompressListener listener) {
         if (bitmap == null) {
-            sendMsg(false, imgPath, "像素压缩失败,bitmap is null", listener);
+            sendMsg(false, imgPath, "质量压缩失败,bitmap is null", listener);
             return;
         }
         new Thread(new Runnable() {//开启多线程进行压缩处理
@@ -94,11 +92,6 @@ public class CompressImageUtil {
 
     /**
      * 按比例缩小图片的像素以达到压缩的目的
-     *
-     * @param imgPath
-     * @return
-     * @author JPH
-     * @date 2014-12-5下午11:30:59
      */
     private void compressImageByPixel(String imgPath, CompressListener listener) throws FileNotFoundException {
         if (imgPath == null) {
@@ -123,15 +116,23 @@ public class CompressImageUtil {
         newOpts.inSampleSize = be;//设置采样率
         newOpts.inPreferredConfig = Config.ARGB_8888;//该模式是默认的,可不设
         newOpts.inPurgeable = true;// 同时设置才会有效
-        newOpts.inInputShareable = true;//。当系统内存不够时候图片自动被回收
+        newOpts.inInputShareable = true;//当系统内存不够时候图片自动被回收
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
         if (config.isEnableQualityCompress()) {
+           // LogUtils.debug("getCaptureIntentWithCrop:isReturnData:1");
             compressImageByQuality(bitmap, imgPath, listener);//压缩好比例大小后再进行质量压缩
         } else {
-            File thumbnailFile = getThumbnailFile(new File(imgPath));
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(thumbnailFile));
+           // LogUtils.debug("getCaptureIntentWithCrop:isReturnData:2");
+            try {
+                File thumbnailFile = getThumbnailFile(new File(imgPath));
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(thumbnailFile));
 
-            listener.onCompressSuccess(thumbnailFile.getPath());
+                listener.onCompressSuccess(thumbnailFile.getPath());
+            } catch (Exception e) {
+                sendMsg(false, imgPath, "像素压缩失败", listener);
+                e.printStackTrace();
+            }
+
         }
     }
 

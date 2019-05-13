@@ -1,4 +1,4 @@
-package com.huimaibao.app.fragment.mine.act;
+package com.huimaibao.app.fragment.mine.bank;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.view.PayPsdInputView;
 import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
-import com.youth.xframe.widget.XToast;
 
 import org.json.JSONObject;
 

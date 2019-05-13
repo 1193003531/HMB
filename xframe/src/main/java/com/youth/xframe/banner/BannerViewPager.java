@@ -163,6 +163,7 @@ public class BannerViewPager extends FrameLayout {
 
 
     public void displayImg(Context context, ImageView imageView, Object s) {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mImageLoader.displayImage(context, s, imageView);
     }
 
@@ -194,9 +195,9 @@ public class BannerViewPager extends FrameLayout {
         }
     }
 
-//    public boolean isAutoPlay() {
-//        return mAutoPlay;
-//    }
+    public boolean isAutoPlay() {
+        return mAutoPlay;
+    }
 
     public BannerViewPager setAutoPlay(boolean autoPlay) {
         if (mItemCount > 1) {

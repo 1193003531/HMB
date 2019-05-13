@@ -1,8 +1,6 @@
 package com.youth.xframe.takephoto.model;
 
 /**
- * Author: JPH
- * Date: 2016/7/26 10:53
  */
 public class TException extends Exception {
     String detailMessage;

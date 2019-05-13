@@ -13,7 +13,7 @@ import java.util.List;
 public class BannerAdapter extends PagerAdapter {
 
     private BannerViewPager bannerViewPager;
-    private int mItemCount = 1;
+    private int mItemCount = 1, mItemMax = Integer.MAX_VALUE;
     private List<BannerItemBean> mData;
     private ImageView.ScaleType mScaleType;
 
@@ -25,6 +25,12 @@ public class BannerAdapter extends PagerAdapter {
         mData = data;
         if (mData != null && mData.size() != 0) {
             mItemCount = mData.size();
+        }
+
+        if (mItemCount == 1) {
+            mItemMax = 1;
+        } else {
+            mItemMax = Integer.MAX_VALUE;
         }
     }
 
@@ -42,7 +48,7 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mData == null ? 0 : Integer.MAX_VALUE;
+        return mData == null ? 0 : mItemMax;
     }
 
     @Override

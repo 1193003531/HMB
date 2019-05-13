@@ -3,7 +3,6 @@ package com.youth.xframe.takephoto.model;
 import java.lang.reflect.Method;
 
 /**
- * Created by penn on 16/9/22.
  */
 public class InvokeParam {
     private Object proxy;

@@ -23,8 +23,6 @@ import java.util.Locale;
 
 /**
  * Uri解析工具类
- * Author: JPH
- * Date: 2015/8/26 0026 16:23
  */
 public class TUriParse {
     private static final String TAG = IntentUtils.class.getName();
@@ -54,8 +52,9 @@ public class TUriParse {
      * @return
      */
     public static Uri getTempUri(Context context) {
+        ///HMB
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File file = new File(Environment.getExternalStorageDirectory(), "/images/" + timeStamp + ".jpg");
+        File file = new File(Environment.getExternalStorageDirectory(), "/HMB/images/" + timeStamp + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -109,8 +108,10 @@ public class TUriParse {
         }
         String path;
         if (TextUtils.equals(uri.getAuthority(), TConstant.getFileProviderName(context))) {
-            path = new File(uri.getPath().replace("camera_photos/", "")).getAbsolutePath();
+            path = new File(Environment.getExternalStorageDirectory(), uri.getPath().replace("external/", "")).getAbsolutePath();
         } else {
+            //  file:///storage/emulated/0/temp/1557130354057.jpg
+            // /storage/emulated/0/temp/1557130354057.jpg
             path = uri.getPath();
         }
         return path;

@@ -17,7 +17,7 @@ import java.util.Date;
 public class XTimeUtils {
 
     @SuppressLint("SimpleDateFormat")
-    private static final DateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+    private static final DateFormat DEFAULT_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final DateFormat DEFAULT_FORMAT2 = new SimpleDateFormat("yyyy-M-dd");
 
     private XTimeUtils() {
@@ -47,7 +47,7 @@ public class XTimeUtils {
      * @return
      */
     public static String getCurDate() {
-        DateFormat sdf = new SimpleDateFormat("yyyyMdd");
+        DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String date = sdf.format(System.currentTimeMillis());
         return date;
     }

@@ -80,32 +80,31 @@
 
     <declare-styleable name="pickerview">
         <attr name="wheelview_gravity">
-            <enum name="center" value="17"/>
-            <enum name="left" value="3"/>
-            <enum name="right" value="5"/>
+            <enum name="center" value="17" />
+            <enum name="left" value="3" />
+            <enum name="right" value="5" />
         </attr>
-        <attr name="wheelview_textSize" format="dimension"/>
-        <attr name="wheelview_textColorOut" format="color"/>
-        <attr name="wheelview_textColorCenter" format="color"/>
-        <attr name="wheelview_dividerColor" format="color"/>
-        <attr name="wheelview_lineSpacingMultiplier" format="float"/>
+        <attr name="wheelview_textSize" format="dimension" />
+        <attr name="wheelview_textColorOut" format="color" />
+        <attr name="wheelview_textColorCenter" format="color" />
+        <attr name="wheelview_dividerColor" format="color" />
+        <attr name="wheelview_lineSpacingMultiplier" format="float" />
     </declare-styleable>
 
     <declare-styleable name="LoopView">
         <attr name="view_gravity">
-            <enum name="center" value="17"/>
-            <enum name="left" value="3"/>
-            <enum name="right" value="5"/>
+            <enum name="center" value="17" />
+            <enum name="left" value="3" />
+            <enum name="right" value="5" />
         </attr>
-        <attr name="lineColor" format="color"/>
-        <attr name="topBottomTextColor" format="color"/>
-        <attr name="centerTextColor" format="color"/>
-        <attr name="textSize" format="dimension"/>
-        <attr name="canLoop" format="boolean"/>
-        <attr name="initPosition" format="integer"/>
-        <attr name="drawItemCount" format="integer"/>
-        <attr name="lineSpacingMultiplier" format="float"/>
-
+        <attr name="lineColor" format="color" />
+        <attr name="topBottomTextColor" format="color" />
+        <attr name="centerTextColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="canLoop" format="boolean" />
+        <attr name="initPosition" format="integer" />
+        <attr name="drawItemCount" format="integer" />
+        <attr name="lineSpacingMultiplier" format="float" />
 
 
         <!--set number of item displayed, default is 3-->
@@ -146,5 +145,18 @@
         <attr name="npv_AlternativeHint" format="reference|string" />
     </declare-styleable>
 
-
+    <declare-styleable name="NiceImageView">
+        <attr name="is_circle" format="boolean" />
+        <attr name="is_cover_src" format="boolean" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_top_left_radius" format="dimension" />
+        <attr name="corner_top_right_radius" format="dimension" />
+        <attr name="corner_bottom_left_radius" format="dimension" />
+        <attr name="corner_bottom_right_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="inner_border_width" format="dimension" />
+        <attr name="inner_border_color" format="color" />
+        <attr name="mask_color" format="color" />
+    </declare-styleable>
 </resources>

@@ -99,6 +99,7 @@
                 android:onClick="onAction"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:visibility="visible"
                 android:src="@drawable/wallet_warning_icon" />
 
         </LinearLayout>

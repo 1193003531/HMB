@@ -1,4 +1,4 @@
-package com.huimaibao.app.fragment.mine.act;
+package com.huimaibao.app.fragment.mine.bank;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import com.huimaibao.app.fragment.mine.server.WalletLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.NoScrollListView;
-import com.youth.xframe.widget.XToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

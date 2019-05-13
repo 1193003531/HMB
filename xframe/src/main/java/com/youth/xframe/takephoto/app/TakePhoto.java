@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-
-import com.youth.xframe.takephoto.model.MultipleCrop;
-import com.youth.xframe.takephoto.model.TException;
-import com.youth.xframe.takephoto.permission.PermissionManager;
 import com.youth.xframe.takephoto.compress.CompressConfig;
 import com.youth.xframe.takephoto.model.CropOptions;
+import com.youth.xframe.takephoto.model.MultipleCrop;
+import com.youth.xframe.takephoto.model.TException;
 import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.takephoto.model.TakePhotoOptions;
+import com.youth.xframe.takephoto.permission.PermissionManager;
 
 
 /**

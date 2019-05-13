@@ -14,17 +14,19 @@ import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.takephoto.permission.InvokeListener;
 
 /**
- * 继承这个类来让Activity获取拍照的能力<
+ * 继承这个类来让Activity获取拍照的能力
  */
 public class TakePhotoActivity extends Activity implements TakePhoto.TakeResultListener, InvokeListener {
     private static final String TAG = TakePhotoActivity.class.getName();
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
+    public Activity mActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
+        mActivity = this;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.huimaibao.app.fragment.mine.act;
+package com.huimaibao.app.fragment.mine.bank;
 
 import android.content.Intent;
 import android.os.Bundle;

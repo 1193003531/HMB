@@ -18,8 +18,9 @@ import com.youth.xframe.takephoto.uitl.TConstant;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+
 /**
- * Created by penn on 16/9/22.
+ *
  */
 public class PermissionManager {
     public enum TPermission {
@@ -51,8 +52,8 @@ public class PermissionManager {
 
 
     private final static String[] methodNames =
-        {"onPickFromCapture", "onPickFromCaptureWithCrop", "onPickMultiple", "onPickMultipleWithCrop", "onPickFromDocuments",
-            "onPickFromDocumentsWithCrop", "onPickFromGallery", "onPickFromGalleryWithCrop", "onCrop"};
+            {"onPickFromCapture", "onPickFromCaptureWithCrop", "onPickMultiple", "onPickMultipleWithCrop", "onPickFromDocuments",
+                    "onPickFromDocumentsWithCrop", "onPickFromGallery", "onPickFromGalleryWithCrop", "onCrop"};
 
     /**
      * 检查当前应用是否被授予相应权限
@@ -75,12 +76,12 @@ public class PermissionManager {
         }
 
         boolean cameraGranted = true, storageGranted =
-            ContextCompat.checkSelfPermission(contextWrap.getActivity(), TPermission.STORAGE.stringValue())
-                == PackageManager.PERMISSION_GRANTED ? true : false;
+                ContextCompat.checkSelfPermission(contextWrap.getActivity(), TPermission.STORAGE.stringValue())
+                        == PackageManager.PERMISSION_GRANTED ? true : false;
 
         if (TextUtils.equals(methodName, "onPickFromCapture") || TextUtils.equals(methodName, "onPickFromCaptureWithCrop")) {
             cameraGranted = ContextCompat.checkSelfPermission(contextWrap.getActivity(), TPermission.CAMERA.stringValue())
-                == PackageManager.PERMISSION_GRANTED ? true : false;
+                    == PackageManager.PERMISSION_GRANTED ? true : false;
         }
 
         boolean granted = storageGranted && cameraGranted;
@@ -134,7 +135,7 @@ public class PermissionManager {
     }
 
     public static void handlePermissionsResult(Activity activity, TPermissionType type, InvokeParam invokeParam,
-        TakePhoto.TakeResultListener listener) {
+                                               TakePhoto.TakeResultListener listener) {
         String tip = null;
         switch (type) {
             case DENIED:
@@ -158,7 +159,7 @@ public class PermissionManager {
                 break;
         }
         if (tip != null) {
-            Toast.makeText(activity, tip, Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, tip, Toast.LENGTH_SHORT).show();
         }
 
     }

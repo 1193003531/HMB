@@ -1,5 +1,7 @@
 package com.huimaibao.app.main;
 
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +41,7 @@ import com.youth.xframe.utils.XFileUtils;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XStringUtils;
+import com.youth.xframe.utils.permission.XPermission;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.RoundedImagView;
 import com.youth.xframe.widget.XToast;
@@ -787,8 +790,29 @@ public class MainActivity extends BaseActivity {
                 mExitTime = System.currentTimeMillis();
             } else {
                 //XFileUtils.deleteDirs(BaseApplication.getApp().getFilePath());
+                if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
+                    XPermission.requestPermissions(mActivity, 1006, new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, new XPermission.OnPermissionListener() {
+                        //权限申请成功时调用
+                        @Override
+                        public void onPermissionGranted() {
+                            XFileUtils.deleteDirs(BaseApplication.getApp().getFilePath());
+                        }
+
+                        //权限被用户禁止时调用
+                        @Override
+                        public void onPermissionDenied() {
+                            //给出友好提示，并且提示启动当前应用设置页面打开权限
+                            XPermission.showTipsDialog(mActivity);
+                        }
+                    });
+                } else {
+                    XFileUtils.deleteDirs(BaseApplication.getApp().getFilePath());
+                }
                 finish();
                 XActivityStack.getInstance().appExit();
+
             }
             return true;
         }

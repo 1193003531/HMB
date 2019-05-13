@@ -288,22 +288,22 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".fragment.mine.act.BankCardActivity"
+            android:name=".fragment.mine.bank.BankCardActivity"
             android:label="银行卡"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".fragment.mine.act.BankCardAddActivity"
+            android:name=".fragment.mine.bank.BankCardAddActivity"
             android:label="添加银行卡"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".fragment.mine.act.BankCardDetailActivity"
+            android:name=".fragment.mine.bank.BankCardDetailActivity"
             android:label="银行卡详情"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".fragment.mine.act.BankCardDelActivity"
+            android:name=".fragment.mine.bank.BankCardDelActivity"
             android:label="解绑银行卡"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

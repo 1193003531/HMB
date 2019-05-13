@@ -13,13 +13,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.darsh.multipleimageselect.models.Image;
-import com.youth.xframe.R;
 import com.youth.xframe.takephoto.model.CropOptions;
-import com.youth.xframe.takephoto.model.TContextWrap;
 import com.youth.xframe.takephoto.model.TException;
 import com.youth.xframe.takephoto.model.TExceptionType;
 import com.youth.xframe.takephoto.model.TImage;
 import com.youth.xframe.takephoto.model.TIntentWap;
+import com.youth.xframe.R;
+import com.youth.xframe.takephoto.model.TContextWrap;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class TUtils {
      * @throws TException
      */
     public static void sendIntentBySafely(TContextWrap contextWrap, List<TIntentWap> intentWapList, int defaultIndex, boolean isCrop)
-        throws TException {
+            throws TException {
         if (defaultIndex + 1 > intentWapList.size()) {
             throw new TException(isCrop ? TExceptionType.TYPE_NO_MATCH_PICK_INTENT : TExceptionType.TYPE_NO_MATCH_CROP_INTENT);
         }
@@ -116,7 +116,7 @@ public class TUtils {
         List result = contextWrap.getActivity().getPackageManager().queryIntentActivities(intentWap.getIntent(), PackageManager.MATCH_ALL);
         if (result.isEmpty()) {
             Toast.makeText(contextWrap.getActivity(), contextWrap.getActivity().getResources().getText(R.string.tip_no_camera),
-                Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
             throw new TException(TExceptionType.TYPE_NO_CAMERA);
         } else {
             startActivityForResult(contextWrap, intentWap);
@@ -134,17 +134,17 @@ public class TUtils {
     public static void cropWithOtherAppBySafely(TContextWrap contextWrap, Uri imageUri, Uri outPutUri, CropOptions options) {
         Intent nativeCropIntent = IntentUtils.getCropIntentWithOtherApp(imageUri, outPutUri, options);
         List result = contextWrap.getActivity().getPackageManager().queryIntentActivities(nativeCropIntent, PackageManager.MATCH_ALL);
-//        if (result.isEmpty()) {
-//            cropWithOwnApp(contextWrap, imageUri, outPutUri, options);
-//        } else {
+        if (result.isEmpty()) {
+            // cropWithOwnApp(contextWrap, imageUri, outPutUri, options);
+        } else {
             //            try {
             //                imageUri=Uri.fromFile(new File(TUriParse.getFilePathWithDocumentsUri(imageUri,contextWrap.getActivity())));
             //            } catch (TException e) {
             //                e.printStackTrace();
             //            }
             startActivityForResult(contextWrap,
-                new TIntentWap(IntentUtils.getCropIntentWithOtherApp(imageUri, outPutUri, options), TConstant.RC_CROP));
-        //}
+                    new TIntentWap(IntentUtils.getCropIntentWithOtherApp(imageUri, outPutUri, options), TConstant.RC_CROP));
+        }
     }
 
     /**

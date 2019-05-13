@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 
 /**
- * Author: JPH
- * Date: 2016/8/11 17:01
  */
 public class TContextWrap {
     private Activity activity;

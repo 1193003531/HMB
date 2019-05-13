@@ -194,8 +194,8 @@ public class CardDetailActivity extends BaseActivity {
                 _addr_value = "" + XPreferencesUtils.get("address_detail", "");
                 _introduce_value = "" + XPreferencesUtils.get("introduce", "");
 
-                _browse_value = "" + XPreferencesUtils.get("popularity", "");
-                _focus_on_value = "" + XPreferencesUtils.get("follow", "");
+                _browse_value = "" + XPreferencesUtils.get("popularity", "0");
+                _focus_on_value = "" + XPreferencesUtils.get("follow", "0");
 
                 setShowAll();
 

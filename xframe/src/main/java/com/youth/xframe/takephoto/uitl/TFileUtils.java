@@ -6,12 +6,7 @@ import android.util.Log;
 import java.io.File;
 
 /**
- * Author: crazycodeboy
- * Date: 2016/11/5 0007 20:10
- * Version:4.0.0
- * 技术博文：http://www.devio.org/
- * GitHub:https://github.com/crazycodeboy
- * Email:crazycodeboy@gmail.com
+ *
  */
 public class TFileUtils {
     private static final String TAG = "TFileUtils";

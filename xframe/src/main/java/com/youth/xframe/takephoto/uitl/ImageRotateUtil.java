@@ -14,12 +14,6 @@ import java.io.IOException;
 
 /**
  * 图片旋转角度修正工具类
- * Author: crazycodeboy
- * Date: 2016/9/21 0007 20:10
- * Version:3.0.0
- * 技术博文：http://www.devio.org
- * GitHub:https://github.com/crazycodeboy
- * Email:crazycodeboy@gmail.com
  */
 public class ImageRotateUtil {
 

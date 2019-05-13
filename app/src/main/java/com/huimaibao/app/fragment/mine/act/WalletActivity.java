@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
+import com.huimaibao.app.fragment.mine.bank.BankCardActivity;
+import com.huimaibao.app.fragment.mine.bank.BankCardAddActivity;
 import com.huimaibao.app.fragment.mine.server.WalletLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;

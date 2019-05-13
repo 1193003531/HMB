@@ -60,10 +60,10 @@ public class PerfectBActivity extends TakePhotoActivity {
         setContentView(R.layout.act_login_perfect_b);
 
         setNeedBackGesture(true);
-        Intent intent = getIntent();
-        if (intent != null) {
-            mType = intent.getStringExtra("vType");
-        }
+//        Intent intent = getIntent();
+//        if (intent != null) {
+//            mType = intent.getStringExtra("vType");
+//        }
 
         setTopTitle("完善信息");
         setTopLeft(false, false, false, "");
@@ -643,6 +643,13 @@ public class PerfectBActivity extends TakePhotoActivity {
         });
 
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        XPreferencesUtils.put("token", "");
+//        LogUtils.debug("json:tokentokentokentokentoken");
+//    }
 
     //物理返回退出
     @Override

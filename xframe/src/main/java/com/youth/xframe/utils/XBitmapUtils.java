@@ -22,6 +22,10 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 
 import java.io.ByteArrayInputStream;
@@ -145,7 +149,8 @@ public class XBitmapUtils {
 
     /**
      * 把bitmap转化为bytes
-     *  Bitmap → byte[]
+     * Bitmap → byte[]
+     *
      * @param bitmap 源Bitmap
      * @return Byte数组
      */
@@ -181,6 +186,7 @@ public class XBitmapUtils {
     /**
      * 获取一个指定大小的bitmap
      * byte[] → Bitmap
+     *
      * @param b Byte数组
      * @return 需要的Bitmap
      */
@@ -257,8 +263,8 @@ public class XBitmapUtils {
         view.buildDrawingCache();
         Bitmap cacheBitmap = view.getDrawingCache();
         if (cacheBitmap == null) {
-            XPrintUtils.e( "failed getViewBitmap(" + view + ") -->"+
-                        new RuntimeException());
+            XPrintUtils.e("failed getViewBitmap(" + view + ") -->" +
+                    new RuntimeException());
             return null;
         }
         Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
@@ -294,6 +300,7 @@ public class XBitmapUtils {
         drawable.draw(canvas);
         return bitmap;
     }
+
     /**
      * 将 Bitmap转化为Drawable
      *
@@ -307,6 +314,7 @@ public class XBitmapUtils {
         }
         return new BitmapDrawable(bm);
     }
+
     /**
      * 合并Bitmap
      *
@@ -972,7 +980,7 @@ public class XBitmapUtils {
      * @return 改变了亮度值之后的图片
      */
     public static Bitmap lum(Bitmap bitmap, int lumValue) {
-        // 计算出符合要求的亮度值
+        // 计算出符合要求的亮度值,lumValue值越小越暗
         float newlumValue = lumValue * 1.0F / 127;
         // 创建一个颜色矩阵
         ColorMatrix lumColorMatrix = new ColorMatrix();
@@ -1101,8 +1109,10 @@ public class XBitmapUtils {
         newBitmap.setPixels(pixels, 0, width, 0, 0, width, height);
         return newBitmap;
     }
+
     /**
      * 模糊效果处理
+     *
      * @return 模糊效果处理后的图片
      */
     public static Bitmap blur(Bitmap bitmap) {
@@ -1191,6 +1201,7 @@ public class XBitmapUtils {
         }
         return newBitmap;
     }
+
     /**
      * 柔化效果处理
      *
@@ -1509,8 +1520,9 @@ public class XBitmapUtils {
 
     /**
      * 对图片进行毛玻璃化
-     * @param sentBitmap 位图
-     * @param radius 虚化程度
+     *
+     * @param sentBitmap       位图
+     * @param radius           虚化程度
      * @param canReuseInBitmap 是否重用
      * @return 位图
      */
@@ -1724,12 +1736,13 @@ public class XBitmapUtils {
 
     /**
      * 对图片进行毛玻璃化
+     *
      * @param originBitmap 位图
-     * @param scaleRatio 缩放比率
-     * @param blurRadius 毛玻璃化比率，虚化程度
+     * @param scaleRatio   缩放比率
+     * @param blurRadius   毛玻璃化比率，虚化程度
      * @return 位图
      */
-    public static Bitmap doBlur(Bitmap originBitmap, int scaleRatio, int blurRadius){
+    public static Bitmap doBlur(Bitmap originBitmap, int scaleRatio, int blurRadius) {
 //        print("原图：：",originBitmap);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originBitmap,
                 originBitmap.getWidth() / scaleRatio,
@@ -1738,6 +1751,50 @@ public class XBitmapUtils {
         Bitmap blurBitmap = doBlur(scaledBitmap, blurRadius, false);
         scaledBitmap.recycle();
         return blurBitmap;
+    }
+
+    /**
+     * 模糊图片
+     *
+     * @param context      上下文
+     * @param bitmap       需要模糊的图片
+     * @param SCALE_DEGREE 图片缩放比例
+     * @param BLUR_RADIUS  最大模糊度（在0.0到25.0之间）
+     * @return 模糊处理后的图片
+     */
+    public static Bitmap blur(Context context, Bitmap bitmap, float SCALE_DEGREE, float BLUR_RADIUS) {
+        //计算图片缩小的长宽
+        int width = Math.round(bitmap.getWidth() * SCALE_DEGREE);
+        int height = Math.round(bitmap.getHeight() * SCALE_DEGREE);
+
+        //将缩小后的图片作为预渲染的图片
+        Bitmap inputBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+        //创建一张渲染后的输入图片
+        Bitmap outputBitmap = Bitmap.createBitmap(inputBitmap);
+
+        //创建RenderScript内核对象
+        RenderScript renderScript = RenderScript.create(context);
+        //创建一个模糊效果的RenderScript的工具对象
+        ScriptIntrinsicBlur scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
+
+        /**
+         * 由于RenderScript并没有使用VM来分配内存,所以需要使用Allocation类来创建和分配内存空间。
+         * 创建Allocation对象的时候其实内存是空的,需要使用copyTo()将数据填充进去。
+         */
+        Allocation inputAllocation = Allocation.createFromBitmap(renderScript, inputBitmap);
+        Allocation outputAllocation = Allocation.createFromBitmap(renderScript, outputBitmap);
+
+        //设置渲染的模糊程度，25f是最大模糊度
+        scriptIntrinsicBlur.setRadius(BLUR_RADIUS);
+        //设置ScriptIntrinsicBlur对象的输入内存
+        scriptIntrinsicBlur.setInput(inputAllocation);
+        //将ScriptIntrinsicBlur输出数据保存到输出内存中
+        scriptIntrinsicBlur.forEach(outputAllocation);
+
+        //将数据填充到Allocation中
+        outputAllocation.copyTo(outputBitmap);
+        renderScript.destroy();
+        return outputBitmap;
     }
 
 

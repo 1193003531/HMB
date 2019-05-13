@@ -3,8 +3,6 @@ package com.youth.xframe.takephoto.model;
 import android.content.Intent;
 
 /**
- * Author: JPH
- * Date: 2016/7/26 14:23
  */
 public class TIntentWap {
     private Intent intent;

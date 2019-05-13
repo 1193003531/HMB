@@ -11,8 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Author: JPH
- * Date: 2016/8/11 17:01
+ *
  */
 public class MultipleCrop {
     private ArrayList<Uri> uris;

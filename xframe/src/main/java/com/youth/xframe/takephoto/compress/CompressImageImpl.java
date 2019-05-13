@@ -46,6 +46,9 @@ public class CompressImageImpl implements CompressImage {
     }
 
     private void compress(final TImage image) {
+//        String path = image.getOriginalPath();
+//        String path2 = image.getCompressPath();
+
         if (TextUtils.isEmpty(image.getOriginalPath())) {
             continueCompress(image, false);
             return;
@@ -53,7 +56,7 @@ public class CompressImageImpl implements CompressImage {
 
         File file = new File(image.getOriginalPath());
         if (file == null || !file.exists() || !file.isFile()) {
-            continueCompress(image, false);
+             continueCompress(image, false);
             return;
         }
 

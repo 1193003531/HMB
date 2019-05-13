@@ -24,9 +24,6 @@ import java.util.UUID;
 
 /**
  * ImageFiles工具类
- *
- * @author JPH
- *         Date 2016/6/7 0007 9:39
  */
 public class TImageFiles {
     private static final String TAG = IntentUtils.class.getName();
@@ -123,7 +120,7 @@ public class TImageFiles {
      */
     public static boolean checkMimeType(Context context, String minType) {
         boolean isPicture =
-            TextUtils.isEmpty(minType) ? false : ".jpg|.gif|.png|.bmp|.jpeg|.webp|".contains(minType.toLowerCase()) ? true : false;
+                TextUtils.isEmpty(minType) ? false : ".jpg|.gif|.png|.bmp|.jpeg|.webp|".contains(minType.toLowerCase()) ? true : false;
         if (!isPicture) {
             Toast.makeText(context, context.getResources().getText(R.string.tip_type_not_image), Toast.LENGTH_SHORT).show();
         }

@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -75,8 +77,8 @@ public class XKeyboardUtils {
             @Override
             public void run() {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(imm.isActive()){
-                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,InputMethodManager.HIDE_NOT_ALWAYS);
+                if (imm.isActive()) {
+                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
                 }
             }
         }, 300);
@@ -134,4 +136,41 @@ public class XKeyboardUtils {
             }
         }
     }
+
+    /**
+     * 监听高度，是否显示
+     */
+    public static void observeSoftKeyboard(Activity activity, final OnSoftKeyboardChangeListener listener) {
+        final View decorView = activity.getWindow().getDecorView();
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            int previousKeyboardHeight = -1;
+
+            @Override
+            public void onGlobalLayout() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Rect rect = new Rect();
+                        decorView.getWindowVisibleDisplayFrame(rect);
+                        int displayHeight = rect.bottom - rect.top;
+                        int height = decorView.getHeight();
+                        int keyboardHeight = height - displayHeight;
+                        if (previousKeyboardHeight != keyboardHeight) {
+                            boolean hide = (double) displayHeight / height > 0.8;
+                            listener.onSoftKeyBoardChange(keyboardHeight, !hide);
+                        }
+
+                        previousKeyboardHeight = height;
+                    }
+                }, 350);
+
+
+            }
+        });
+    }
+
+    public interface OnSoftKeyboardChangeListener {
+        void onSoftKeyBoardChange(int softKeyboardHeight, boolean visible);
+    }
+
 }

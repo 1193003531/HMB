@@ -1,8 +1,6 @@
 package com.youth.xframe.takephoto.model;
 
 /**
- * Author: JPH
- * Date: 2016/7/26 11:01
  */
 public enum TExceptionType {
     TYPE_NOT_IMAGE("选择的文件不是图片"), TYPE_WRITE_FAIL("保存选择的的文件失败"), TYPE_URI_NULL("所选照片的Uri 为null"), TYPE_URI_PARSE_FAIL("从Uri中获取文件路径失败"),

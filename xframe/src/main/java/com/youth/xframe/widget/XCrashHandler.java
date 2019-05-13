@@ -205,7 +205,7 @@ public class XCrashHandler implements UncaughtExceptionHandler {
             String time = formatter.format(new Date());
             String fileName = "crash-" + time + "-" + timestamp + ".txt";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/HMB/log/";
+                String path = Environment.getExternalStorageDirectory() + "/HMB/log/";
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();

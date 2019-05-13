@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.takephoto.model.CropOptions;
 import com.youth.xframe.takephoto.model.TContextWrap;
 
@@ -41,14 +42,12 @@ public class IntentUtils {
      * @return
      */
     public static Intent getCropIntentWithOtherApp(Uri targetUri, Uri outPutUri, CropOptions options) {
-        boolean isReturnData = TUtils.isReturnData();
-        Log.w(TAG, "getCaptureIntentWithCrop:isReturnData:" + (isReturnData ? "true" : "false"));
+        LogUtils.debug("getCaptureIntentWithCrop:isReturnData:" + ( TUtils.isReturnData() ? "true" : "false"));
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setDataAndType(targetUri, "image/*");
         intent.putExtra("crop", "true");
-
-
+        // 设置x,y的比例，截图方框就按照这个比例来截 若设置为0,0，或者不设置 则自由比例截图
         if (options.getAspectX() * options.getAspectY() > 0) {
             if (Build.MANUFACTURER.equals("HUAWEI")) {
                 intent.putExtra("aspectX", 9998);
@@ -57,17 +56,19 @@ public class IntentUtils {
                 intent.putExtra("aspectX", options.getAspectX());
                 intent.putExtra("aspectY", options.getAspectY());
             }
-
         }
+        // 裁剪区的宽和高 其实就是裁剪后的显示区域 若裁剪的比例不是显示的比例，则自动压缩图片填满显示区域。若设置为0,0 就不显示。若不设置，则按原始大小显示
         if (options.getOutputX() * options.getOutputY() > 0) {
             intent.putExtra("outputX", options.getOutputX());
             intent.putExtra("outputY", options.getOutputY());
         }
         intent.putExtra("scale", true);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
-        intent.putExtra("return-data", isReturnData);
+        // true的话直接返回bitmap，可能会很占内存 不建议
+        intent.putExtra("return-data",  TUtils.isReturnData());
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", true); // no face detection
+        // 面部识别 这里用不上
+        intent.putExtra("noFaceDetection", false);
         return intent;
     }
 
