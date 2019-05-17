@@ -22,7 +22,6 @@ import com.huimaibao.app.base.BaseFragment;
 import com.huimaibao.app.fragment.home.act.MakingCardActivity;
 import com.huimaibao.app.fragment.message.act.MessageActivity;
 import com.huimaibao.app.fragment.mine.act.AdvertSlogansActivity;
-import com.huimaibao.app.fragment.mine.act.BasicActivity;
 import com.huimaibao.app.fragment.mine.act.CollectionActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
 import com.huimaibao.app.fragment.mine.act.MarketingRewardActivity;
@@ -38,8 +37,6 @@ import com.huimaibao.app.login.logic.LoginLogic;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.youth.xframe.utils.XBitmapUtils;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
@@ -195,6 +192,7 @@ public class MineFragment extends BaseFragment {
         _perfect_del = v.findViewById(R.id.mine_basic_perfect_del);
         _perfect_ll = v.findViewById(R.id.mine_basic_perfect_ll);
         _yqm_ll = v.findViewById(R.id.mine_basic_code_ll);
+        _yqm_ll.setVisibility(View.GONE);
 
         _card_num = v.findViewById(R.id.mine_card_clip_tv);
         _member_data = v.findViewById(R.id.mine_member_data_tv);
@@ -408,7 +406,7 @@ public class MineFragment extends BaseFragment {
                     mDialogUtils.showNoTitleDialog("请完善头像、姓名、手机号", "取消", "立即完善", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(BasicActivity.class, "基本信息");
+                            startActivity(MakingCardActivity.class, "完善名片");
                             mDialogUtils.dismissDialog();
                         }
                     });
@@ -476,8 +474,13 @@ public class MineFragment extends BaseFragment {
                         _yqm_ll.setVisibility(View.VISIBLE);
                         _fws_iv.setVisibility(View.VISIBLE);
                         _name_tv.setText(XEmptyUtils.isSpace(name) ? phone : name);
-                        _code_tv.setText("" + XPreferencesUtils.get("invitation_code", ""));
-
+                        if (XEmptyUtils.isEmpty(XPreferencesUtils.get("invitation_code", ""))) {
+                            btn_code_copy.setVisibility(View.GONE);
+                            _code_tv.setText("请到管理系统登录生成");
+                        } else {
+                            _code_tv.setText("" + XPreferencesUtils.get("invitation_code", ""));
+                            btn_code_copy.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         _name_tv.setText(XEmptyUtils.isSpace(name) ? phone : name);
                         _yqm_ll.setVisibility(View.GONE);

@@ -27,12 +27,12 @@ public interface ServerApi {
      * 域名-开发环境
      */
     //测试服
-//    String SERVER_URL = "http://api.yuhongrocky.top";
-//    String SERVER_WEB_URL = "http://weixin.yuhongrocky.top";
+    String SERVER_URL = "http://api.yuhongrocky.top";
+    String SERVER_WEB_URL = "http://weixin.yuhongrocky.top";
 
     //正式服
-    String SERVER_URL = "http://api.51huimaibao.cn";
-    String SERVER_WEB_URL = "http://weixin.51huimaibao.cn";
+//    String SERVER_URL = "http://api.51huimaibao.cn";
+//    String SERVER_WEB_URL = "http://weixin.51huimaibao.cn";
 
 
     /**
@@ -517,6 +517,10 @@ public interface ServerApi {
      * 银行卡列表get添加post,删除del
      */
     String BANK_CARD_URL = SERVER_URL + "/front/bank-card";
+    /**
+     * 根据银行卡号获取银行信息
+     */
+    String BANK_INFO_URL = SERVER_URL + "/bank_info";
 
     /**
      * 对我感兴趣get

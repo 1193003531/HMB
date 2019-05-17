@@ -439,8 +439,6 @@ public class FindsCommentsActivity extends BaseActivity {
         getDetailsData();
         countPage = 1;
         getDYCommentData(countPage, true);
-
-
     }
 
 
@@ -733,6 +731,7 @@ public class FindsCommentsActivity extends BaseActivity {
         map.put("dynamic_id", _dynamic_id_value);
         map.put("concern", _dy_isfocus_value);
         map.put("user_id", XPreferencesUtils.get("user_id", ""));
+        LogUtils.debug("finds:" + map);
         FindsLogic.Instance(mActivity).getDYDetailsApi(map, false, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
@@ -741,27 +740,10 @@ public class FindsCommentsActivity extends BaseActivity {
                     LogUtils.debug("finds:" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
-                        JSONObject data = new JSONObject(json.getString("data"));
-                        _dynamic_id_value = data.optString("dynamic_id");
-                        _dy_userid_value = data.optString("user_id");
-                        _dy_cardid_value = data.optString("cards_id");
-                        _dy_head_value = data.optString("head_picture");
-                        _dy_name_value = data.optString("user_name");
-                        _dy_content_value = data.optString("content");
-                        _dy_images_value = data.optString("image_path");
-                        _dy_time_value = data.optString("created_at");
-                        _dy_comments_num_value = data.optString("comment_times");
-                        _dy_isfocus_value = data.optString("concern");
-                        _dy_ispraise_value = data.optString("praise");
-                        _dy_praisenum_value = data.optString("praise_number");
-                        _dy_comment_head_value = data.optString("userHeadPraise");
-
-                        final String is_delete = data.optString("is_delete", "0");
-
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (is_delete.equals("1")) {
+                        if (XEmptyUtils.isSpace(json.optString("data", ""))) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
                                     mDialogUtils.showNoTitleDialog("该动态已删除", "取消", "确定", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -770,21 +752,45 @@ public class FindsCommentsActivity extends BaseActivity {
                                         }
                                     });
                                 }
-                                setDynamicData();
-                            }
-                        });
+                            });
+                        } else {
+                            JSONObject data = new JSONObject(json.optString("data", ""));
+                            _dynamic_id_value = data.optString("dynamic_id");
+                            _dy_userid_value = data.optString("user_id");
+                            _dy_cardid_value = data.optString("cards_id");
+                            _dy_head_value = data.optString("head_picture");
+                            _dy_name_value = data.optString("user_name");
+                            _dy_content_value = data.optString("content");
+                            _dy_images_value = data.optString("image_path");
+                            _dy_time_value = data.optString("created_at");
+                            _dy_comments_num_value = data.optString("comment_times");
+                            _dy_isfocus_value = data.optString("concern");
+                            _dy_ispraise_value = data.optString("praise");
+                            _dy_praisenum_value = data.optString("praise_number");
+                            _dy_comment_head_value = data.optString("userHeadPraise");
 
+                            //final String is_delete = data.optString("is_delete", "0");
+
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setDynamicData();
+                                }
+                            });
+                        }
                     } else {
                         showToast(msg);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.debug("finds:" + e.toString());
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
+                LogUtils.debug("finds:" + error);
             }
         });
     }

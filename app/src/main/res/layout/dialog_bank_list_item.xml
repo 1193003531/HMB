@@ -12,14 +12,19 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
 
+        <ImageView
+            android:id="@+id/dialog_bank_card_item_icon"
+            android:layout_width="22dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/wallet_bank_3_icon" />
+
         <TextView
             android:id="@+id/dialog_bank_card_item_namenum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_weight="1.0"
-            android:drawableLeft="@drawable/wallet_bank_3_icon"
-            android:drawablePadding="13dp"
             android:gravity="center_vertical"
             android:text="中国工商银行(1241)"
             android:textColor="@color/color000000"

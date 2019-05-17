@@ -1,1 +1,1 @@
-include ':app', ':xframe'
+include ':app', ':xframe', ':picturelib', ':ucroplib'

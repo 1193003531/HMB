@@ -13,6 +13,25 @@ public class BankCardEntity implements Serializable {
     public String BankCardType;
     public String BankCardNum;
     public boolean BankCardCheck;
+    public int BankCardSColor;
+    public int BankCardEColor;
+
+    public int getBankCardSColor() {
+        return BankCardSColor;
+    }
+
+    public void setBankCardSColor(int bankCardSColor) {
+        this.BankCardSColor = bankCardSColor;
+    }
+
+    public int getBankCardEColor() {
+        return BankCardEColor;
+    }
+
+    public void setBankCardEColor(int bankCardEColor) {
+        this.BankCardEColor = bankCardEColor;
+    }
+
 
     public String getBankName() {
         return BankName;

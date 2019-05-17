@@ -143,7 +143,7 @@ public class PayActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (XStringUtils.m1(_pay_money_value) >= XStringUtils.m1(_wallet_value)) {
+                    if (XStringUtils.m1(_pay_money_value) > XStringUtils.m1(_wallet_value)) {
                         _wallet_tv.setText("账户余额共￥" + _wallet_value + ",抵￥" + _wallet_value);
                         _pay_wechat_tv.setTextColor(getResources().getColor(R.color.color000000));
                         _pay_alipay_tv.setTextColor(getResources().getColor(R.color.color000000));

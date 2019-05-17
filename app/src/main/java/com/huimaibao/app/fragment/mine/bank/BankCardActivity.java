@@ -11,7 +11,9 @@ import com.huimaibao.app.fragment.mine.adapter.BankCardAdapter;
 import com.huimaibao.app.fragment.mine.entity.BankCardEntity;
 import com.huimaibao.app.fragment.mine.server.WalletLogic;
 import com.huimaibao.app.http.ResultBack;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
+import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.NoScrollListView;
 
 import org.json.JSONArray;
@@ -25,10 +27,13 @@ import java.util.List;
  */
 public class BankCardActivity extends BaseActivity {
 
+    private View _needOffsetView;
+
     private String mType = "";
     private NoScrollListView mListView;
     private BankCardAdapter mAdapter;
     private List<BankCardEntity> ListData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +50,13 @@ public class BankCardActivity extends BaseActivity {
         setTopRight(false, true, false, "", null);
 
         initView();
-        initData();
+         initData();
     }
 
     /***/
     private void initView() {
+        _needOffsetView = findViewById(R.id.fake_status_bar);
+        XStatusBar.setTranslucentForImageViewInFragment(mActivity, 0, _needOffsetView);
         mListView = findViewById(R.id.wallet_bank_add_list);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,6 +65,22 @@ public class BankCardActivity extends BaseActivity {
                 startActivity(BankCardDetailActivity.class, ListData.get(position).getBankCardName(), ListData.get(position).getBankCardNum());
             }
         });
+
+//        ListData = new ArrayList<>();
+//
+//        for (int i = 0; i < 10; i++) {
+//            BankCardEntity entity = new BankCardEntity();
+//            entity.setBankCardId("" + i);
+//            entity.setBankCardName("工商银行" + i);
+//            entity.setBankCardNum("621023541256452168");
+//            entity.setBankCardType("储蓄卡");
+//            entity.setBankCardSColor(0xFFfd6868);
+//            entity.setBankCardEColor(0xFFf94849);
+//            ListData.add(entity);
+//        }
+//
+//        mAdapter = new BankCardAdapter(mActivity, ListData, "0");
+//        mListView.setAdapter(mAdapter);
     }
 
     /***/
@@ -67,6 +90,9 @@ public class BankCardActivity extends BaseActivity {
 
     public void onAction(View v) {
         switch (v.getId()) {
+            case R.id.back_btn:
+                finish();
+                break;
             case R.id.wallet_bank_add_btn:
                 startActivity(BankCardAddActivity.class, "添加银行卡");
                 break;
@@ -90,6 +116,7 @@ public class BankCardActivity extends BaseActivity {
                 try {
                     JSONObject json = new JSONObject(object.toString());
                     String msg = json.getString("message");
+                    LogUtils.debug("json:" + json);
                     if (json.getString("status").equals("0")) {
                         JSONArray array = new JSONArray(json.getJSONObject("data").getString("data"));
                         ListData = new ArrayList<>();

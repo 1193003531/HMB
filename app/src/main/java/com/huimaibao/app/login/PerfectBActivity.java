@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,28 +21,31 @@ import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.login.logic.LoginLogic;
 import com.huimaibao.app.main.MainActivity;
-import com.huimaibao.app.takePhone.LoadCallback;
-import com.huimaibao.app.takePhone.TakePhoneHelper;
-import com.huimaibao.app.takePhone.TakePhotoActivity;
+import com.huimaibao.app.picture.LoadCallback;
+import com.huimaibao.app.picture.PictureActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
+import com.picture.lib.PictureSelector;
+import com.picture.lib.config.PictureConfig;
+import com.picture.lib.entity.LocalMedia;
 import com.youth.xframe.pickers.util.LogUtils;
-import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
-import com.youth.xframe.widget.XToast;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 完善信息
  */
-public class PerfectBActivity extends TakePhotoActivity {
+public class PerfectBActivity extends PictureActivity {
 
     private String mType = "";
 
-    private TakePhoneHelper takePhoneHelper;
+    //拍照或选择图片路径
+    private String urlPath = "";
+
 
     //姓名，公司，职位
     //private EditText _name_et, _company_et, _jobs_et;
@@ -60,10 +64,10 @@ public class PerfectBActivity extends TakePhotoActivity {
         setContentView(R.layout.act_login_perfect_b);
 
         setNeedBackGesture(true);
-//        Intent intent = getIntent();
-//        if (intent != null) {
-//            mType = intent.getStringExtra("vType");
-//        }
+        Intent intent = getIntent();
+        if (intent != null) {
+            mType = intent.getStringExtra("vType");
+        }
 
         setTopTitle("完善信息");
         setTopLeft(false, false, false, "");
@@ -74,7 +78,7 @@ public class PerfectBActivity extends TakePhotoActivity {
             }
         });
 
-        takePhoneHelper = TakePhoneHelper.of(this);
+        // takePhoneHelper = TakePhoneHelper.of(this);
 
         initView();
         initData();
@@ -116,8 +120,9 @@ public class PerfectBActivity extends TakePhotoActivity {
     public void onAction(View v) {
         switch (v.getId()) {
             case R.id.login_perfect_image:
-                takePhoneHelper.setTakePhone(1, true, true, 200, 200, true, 102400, 0, 0);
-                takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                //takePhoneHelper.setTakePhone(1, true, true, 200, 200, true, 102400, 0, 0);
+                //takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                showTakePhoneDialog("头像",1);
                 break;
             //保存
             case R.id.login_perfect_save:
@@ -155,7 +160,6 @@ public class PerfectBActivity extends TakePhotoActivity {
 
     }
 
-
     /**
      * 进入主界面
      */
@@ -173,7 +177,9 @@ public class PerfectBActivity extends TakePhotoActivity {
      * 初始化事件
      */
     private void initData() {
-
+        if (XEmptyUtils.isSpace(mType)) {
+            mType = "";
+        }
         if (mType.equals("微信")) {
             _head_value = XPreferencesUtils.get("headimgurl", "").toString();
             _name_value = XPreferencesUtils.get("nickname", "").toString();
@@ -188,157 +194,8 @@ public class PerfectBActivity extends TakePhotoActivity {
         setaddTextChangedListener();
         setAllAnimation();
 
-//        _name_et.addTextChangedListener(nameWatcher);
-//        _company_et.addTextChangedListener(companyWatcher);
-//        _jobs_et.addTextChangedListener(jobsWatcher);
-//
-//        _ed_name_clear.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                _ed_name_clear.setVisibility(View.GONE);
-//                _name_et.setText("");
-//            }
-//        });
-//        _ed_company_clear.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                _ed_company_clear.setVisibility(View.GONE);
-//                _jobs_et.setText("");
-//            }
-//        });
-//        _ed_jobs_clear.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                _ed_jobs_clear.setVisibility(View.GONE);
-//                _jobs_et.setText("");
-//            }
-//        });
-//
-//        _name_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    if (_name_et.getText().toString().length() > 0)
-//                        _ed_name_clear.setVisibility(View.VISIBLE);
-//                    else
-//                        _ed_name_clear.setVisibility(View.GONE);
-//                } else {
-//                    _ed_name_clear.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-//        _company_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    if (_company_et.getText().toString().length() > 0)
-//                        _ed_company_clear.setVisibility(View.VISIBLE);
-//                    else
-//                        _ed_company_clear.setVisibility(View.GONE);
-//                } else {
-//                    _ed_company_clear.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-//        _jobs_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    if (_jobs_et.getText().toString().length() > 0)
-//                        _ed_jobs_clear.setVisibility(View.VISIBLE);
-//                    else
-//                        _ed_jobs_clear.setVisibility(View.GONE);
-//                } else {
-//                    _ed_jobs_clear.setVisibility(View.GONE);
-//                }
-//            }
-//        });
 
     }
-
-//    /**
-//     * 名称输入监听
-//     */
-//    private TextWatcher nameWatcher = new TextWatcher() {
-//
-//        @Override
-//        public void onTextChanged(CharSequence s, int start, int before,
-//                                  int count) {
-//            if (s.length() > 0) {
-//                _ed_name_clear.setVisibility(View.VISIBLE);
-//            } else {
-//                _ed_name_clear.setVisibility(View.GONE);
-//            }
-//        }
-//
-//        @Override
-//        public void beforeTextChanged(CharSequence s, int start, int count,
-//                                      int after) {
-//
-//
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//
-//        }
-//    };
-//
-//    /**
-//     * 公司输入监听
-//     */
-//    private TextWatcher companyWatcher = new TextWatcher() {
-//
-//        @Override
-//        public void onTextChanged(CharSequence s, int start, int before,
-//                                  int count) {
-//            if (s.length() > 0) {
-//                _ed_company_clear.setVisibility(View.VISIBLE);
-//            } else {
-//                _ed_company_clear.setVisibility(View.GONE);
-//            }
-//        }
-//
-//        @Override
-//        public void beforeTextChanged(CharSequence s, int start, int count,
-//                                      int after) {
-//
-//
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//
-//        }
-//    };
-//    /**
-//     * 职位输入监听
-//     */
-//    private TextWatcher jobsWatcher = new TextWatcher() {
-//
-//        @Override
-//        public void onTextChanged(CharSequence s, int start, int before,
-//                                  int count) {
-//            if (s.length() > 0) {
-//                _ed_jobs_clear.setVisibility(View.VISIBLE);
-//            } else {
-//                _ed_jobs_clear.setVisibility(View.GONE);
-//            }
-//        }
-//
-//        @Override
-//        public void beforeTextChanged(CharSequence s, int start, int count,
-//                                      int after) {
-//
-//
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//
-//        }
-//    };
-
 
     private void setFocusChangeListener() {
         _card_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -513,56 +370,56 @@ public class PerfectBActivity extends TakePhotoActivity {
 
 
     @Override
-    public void takeCancel() {
-        super.takeCancel();
-        XToast.normal("取消获取图片");
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-        super.takeFail(result, msg);
-        XToast.normal("获取图片错误:" + msg);
-    }
-
-    @Override
-    public void takeSuccess(TResult result) {
-        super.takeSuccess(result);
-//        if (imagesData != null) {
-//            imagesData.clear();
-//        } else {
-//            imagesData = new ArrayList<>();
-//        }
-//        imagesData = result.getImages();
-//        ArrayList<File> images = new ArrayList<>();
-//        for (int i = 0; i < imagesData.size(); i++) {
-//            images.add(new File(imagesData.get(i).getCompressPath()));
-//        }
-//        feedbackUploadApi(images);
-
-        final String url = result.getImages().get(0).getCompressPath();
-        //XLog.d("url:" + url);
-        final String object = setImageUrl();
-
-        putLoadImage(object, url, new LoadCallback() {
-            @Override
-            public void onSuccess(Object o, Object result) {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showToast("上传成功");
-                        _head_value = ServerApi.OSS_IMAGE_URL + object;
-                        ImageLoaderManager.loadImage(_head_value, _head_iv);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    for (int i = 0; i < selectList.size(); i++) {
+                        if (selectList.get(i).isCut()) {
+                            //为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
+                            Log.d("PictureUrl:", selectList.get(i).getCutPath());
+                            urlPath = selectList.get(i).getCutPath();
+                        } else if (selectList.get(i).isCompressed()) {
+                            //为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
+                            //如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                            Log.d("PictureUrl:", selectList.get(i).getCompressPath());
+                            urlPath = selectList.get(i).getCompressPath();
+                        } else {
+                            //原图path
+                            Log.d("PictureUrl:", selectList.get(i).getPath());
+                            urlPath = selectList.get(i).getPath();
+                        }
                     }
-                });
 
+
+                    final String object = setImageUrl();
+
+                    putLoadImage(object, urlPath, new LoadCallback() {
+                        @Override
+                        public void onSuccess(Object o, Object result) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showToast("上传成功");
+                                    _head_value = ServerApi.OSS_IMAGE_URL + object;
+                                    ImageLoaderManager.loadImage(_head_value, _head_iv);
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
+
+                        }
+                    });
+
+
+                    break;
             }
-
-            @Override
-            public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
-
-            }
-        });
-
+        }
     }
 
     /**

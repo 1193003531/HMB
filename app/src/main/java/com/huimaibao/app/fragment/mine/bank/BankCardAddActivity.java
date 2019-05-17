@@ -13,8 +13,8 @@ import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.mine.bank.bean.BankInfoBean;
 import com.huimaibao.app.fragment.mine.server.WalletLogic;
 import com.huimaibao.app.http.ResultBack;
-import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ToastUtils;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 
@@ -28,10 +28,11 @@ import java.util.HashMap;
 public class BankCardAddActivity extends BaseActivity {
 
     private String mType = "";
-
-    private EditText _bank_card_name, _bank_card_num;
-    private TextView _bank_type;
-    private String _bank_card_name_v = "", _bank_card_num_v = "", _bank_type_value = "";
+    //持卡人，卡号，开户行
+    private EditText _bank_cardholder, _bank_num, _bank_of_deposit;
+    //银行卡
+    private TextView _bank_name;
+    private String _bank_cardholder_v = "", _bank_num_v = "", _bank_name_value = "", _bank_of_deposit_value = "";
 
     private BankInfoBean bankinfobean;
 
@@ -47,6 +48,7 @@ public class BankCardAddActivity extends BaseActivity {
         }
 
         setTopTitle(mType);
+        setShowLine(false);
         setTopLeft(true, true, false, "");
         setTopRight(false, true, false, "", null);
         initView();
@@ -54,53 +56,75 @@ public class BankCardAddActivity extends BaseActivity {
 
     /***/
     private void initView() {
-        _bank_card_name = findViewById(R.id.bank_add_name);
-        _bank_card_num = findViewById(R.id.bank_add_number);
-        _bank_type = findViewById(R.id.bank_add_type);
+        _bank_cardholder = findViewById(R.id.bank_add_cardholder);
+        _bank_num = findViewById(R.id.bank_add_number);
+        _bank_name = findViewById(R.id.bank_add_name);
+        _bank_of_deposit = findViewById(R.id.bank_add_bank_of_deposit);
+        _bank_num.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-//        _bank_card_num.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                _bank_card_num_v = s.toString().trim();
-//                if (_bank_card_num_v != null && checkBankCard(_bank_card_num_v)) {
-//                    bankinfobean = new BankInfoBean(_bank_card_num_v);
-//                    _bank_type.setText(bankinfobean.getBankName());
-//                    // tv_cardtype.setText(bankinfobean.getCardType());
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _bank_num_v = s.toString().trim();
+                LogUtils.debug("_bank_num_v:" + _bank_num_v);
+                if (_bank_num_v != null && checkBankCard(_bank_num_v)) {
+                    bankinfobean = new BankInfoBean(_bank_num_v);
+                    _bank_name.setText(bankinfobean.getBankName());
+                    // tv_cardtype.setText(bankinfobean.getCardType());
+                } else {
+                    _bank_name.setText("");
+                }
+//                else {
+//                     showToast("卡号 " + _bank_num_v + " 不合法,请重新输入");
 //                }
-////                else {
-////                     showToast("卡号 " + _bank_card_num_v + " 不合法,请重新输入");
-////                }
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
+            }
+        });
 
     }
 
 
     public void onAction(View v) {
         switch (v.getId()) {
-            case R.id.bank_add_toast:
-                DialogUtils.of(mActivity).showNoSureDialog("暂时只支持工商银行卡", "确定");
-                break;
-            case R.id.bank_add_sure:
-                _bank_card_name_v = _bank_card_name.getText().toString();
-                _bank_card_num_v = _bank_card_num.getText().toString();
-               // _bank_type_value = _bank_type.getText().toString();
-                if (XEmptyUtils.isSpace(_bank_card_name_v)) {
-                    ToastUtils.showCenter("请输入持卡人姓名");
-                } else if (XEmptyUtils.isSpace(_bank_card_num_v)) {
+//            case R.id.bank_add_toast:
+//                DialogUtils.of(mActivity).showNoSureDialog("暂时只支持工商银行卡", "确定");
+//                break;
+            case R.id.bank_add_name:
+                _bank_num_v = _bank_num.getText().toString();
+                if (XEmptyUtils.isSpace(_bank_num_v)) {
                     ToastUtils.showCenter("请输入银行卡号");
                 } else {
-                    getBankCardAdd("工商银行", _bank_card_num_v, _bank_card_name_v);
+                    if (_bank_num_v != null && checkBankCard(_bank_num_v)) {
+                        bankinfobean = new BankInfoBean(_bank_num_v);
+                        _bank_name.setText(bankinfobean.getBankName());
+                        // tv_cardtype.setText(bankinfobean.getCardType());
+                    } else {
+                        showToast("卡号 " + _bank_num_v + " 不合法,请重新输入");
+                    }
+
+                    getBankCardAdd(_bank_num_v);
+                }
+                break;
+            case R.id.bank_add_sure:
+                _bank_cardholder_v = _bank_cardholder.getText().toString();
+                _bank_num_v = _bank_num.getText().toString();
+                _bank_name_value = _bank_name.getText().toString();
+                _bank_of_deposit_value = _bank_of_deposit.getText().toString();
+                if (XEmptyUtils.isSpace(_bank_cardholder_v)) {
+                    ToastUtils.showCenter("请输入持卡人姓名");
+                } else if (XEmptyUtils.isSpace(_bank_num_v)) {
+                    ToastUtils.showCenter("请输入银行卡号");
+                } else if (XEmptyUtils.isSpace(_bank_of_deposit_value)) {
+                    ToastUtils.showCenter("请输入开户行");
+                } else {
+                    getBankCardAdd(_bank_name_value, _bank_num_v, _bank_cardholder_v, _bank_of_deposit_value);
                 }
                 break;
         }
@@ -151,13 +175,16 @@ public class BankCardAddActivity extends BaseActivity {
     }
 
 
-    /***/
-    private void getBankCardAdd(String bank_type, String card_no, String name) {
+    /**
+     * 添加
+     */
+    private void getBankCardAdd(String bank_type, String bank_num, String cardholder, String bank_of_deposit) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("bank_name", bank_type);
-        map.put("card_no", card_no);
-        map.put("card_no_confirmation", card_no);
-        map.put("name", name);
+        map.put("card_no", bank_num);
+        map.put("card_no_confirmation", bank_num);
+        map.put("name", cardholder);
+        map.put("opening_bank", bank_of_deposit);
         WalletLogic.Instance(mActivity).getBankCardAddApi(map, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
@@ -176,7 +203,7 @@ public class BankCardAddActivity extends BaseActivity {
                         });
 
                     } else {
-                        showToast(msg);
+                        showToast("添加失败," + msg);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -188,6 +215,50 @@ public class BankCardAddActivity extends BaseActivity {
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
                 showToast("添加失败");
+            }
+        });
+    }
+
+    /**
+     * 添加
+     */
+    private void getBankCardAdd(String bank_num) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("card_no", bank_num);
+        WalletLogic.Instance(mActivity).getBankInfoApi(map, true, new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    String msg = json.getString("message");
+                    LogUtils.debug("json:" + json);
+                    if (json.getString("status").equals("0")) {
+                        final JSONObject data = new JSONObject(json.optString("data"));
+/** "id":4,
+ "bankname":"中国工商银行",
+ "bankcode":"ICBC",
+ "card_type":"DC",
+ "card_type_name":"储蓄卡"*/
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                _bank_name.setText(data.optString("bankname", ""));
+                            }
+                        });
+
+                    } else {
+                        showToast(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    //showToast("添加失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.e("error:" + error);
+                //showToast("添加失败");
             }
         });
     }

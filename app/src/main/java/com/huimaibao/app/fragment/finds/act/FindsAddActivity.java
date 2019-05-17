@@ -1,8 +1,10 @@
 package com.huimaibao.app.fragment.finds.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -20,30 +22,35 @@ import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.fragment.finds.adapter.FindsAlbumAdapter;
 import com.huimaibao.app.fragment.finds.server.FindsLogic;
 import com.huimaibao.app.http.ResultBack;
-import com.huimaibao.app.takePhone.TakePhoneHelper;
-import com.huimaibao.app.takePhone.TakePhotoActivity;
+import com.huimaibao.app.picture.PictureActivity;
 import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ToastUtils;
+import com.picture.lib.PictureSelector;
+import com.picture.lib.config.PictureConfig;
+import com.picture.lib.entity.LocalMedia;
 import com.youth.xframe.pickers.util.LogUtils;
-import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.NoScrollGridView;
-import com.youth.xframe.widget.XToast;
 
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 发布动态
  */
-public class FindsAddActivity extends TakePhotoActivity {
+public class FindsAddActivity extends PictureActivity {
 
     //选择图片
-    private TakePhoneHelper takePhoneHelper;
+    //private TakePhoneHelper takePhoneHelper;
+    //拍照或选择图片路径
+    private String urlPath = "";
+
+
     //动态内容
     private EditText _finds_content;
     private TextView _finds_content_num;
@@ -72,7 +79,7 @@ public class FindsAddActivity extends TakePhotoActivity {
      * 初始化控件
      */
     private void initView() {
-        takePhoneHelper = TakePhoneHelper.of(this);
+        //takePhoneHelper = TakePhoneHelper.of(this);
 
         _finds_content = findViewById(R.id.finds_add_content);
         _finds_content_num = findViewById(R.id.finds_add_content_num);
@@ -93,8 +100,9 @@ public class FindsAddActivity extends TakePhotoActivity {
                 if (albumData.get(position).equals("添加")) {
                     limit = 9 - imagePthData.size();
                     if (limit > 0) {
-                        takePhoneHelper.setTakePhone(limit, false, false, 0, 0, false, 512000, 0, 0);
-                        takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                        //takePhoneHelper.setTakePhone(limit, false, false, 0, 0, false, 512000, 0, 0);
+                        //takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                        showTakePhoneDialog("动态", limit);
                     }
                 } else {
                     imagePthData.remove(position);
@@ -177,42 +185,45 @@ public class FindsAddActivity extends TakePhotoActivity {
     }
 
 
+    /**
+     * 拍照选择图片返回结果
+     */
     @Override
-    public void takeCancel() {
-        super.takeCancel();
-        XToast.normal("取消获取图片");
-    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    for (int i = 0; i < selectList.size(); i++) {
+                        if (selectList.get(i).isCut()) {
+                            //为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
+                            Log.d("PictureUrl:", selectList.get(i).getCutPath());
+                            urlPath = selectList.get(i).getCutPath();
+                        } else if (selectList.get(i).isCompressed()) {
+                            //为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
+                            //如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                            Log.d("PictureUrl:", selectList.get(i).getCompressPath());
+                            urlPath = selectList.get(i).getCompressPath();
+                        } else {
+                            //原图path
+                            Log.d("PictureUrl:", selectList.get(i).getPath());
+                            urlPath = selectList.get(i).getPath();
+                        }
 
-    @Override
-    public void takeFail(TResult result, String msg) {
-        super.takeFail(result, msg);
-        XToast.normal("获取图片错误:" + msg);
-    }
+                        imagePthData.add(urlPath);
+                        albumData.clear();
+                        albumData.addAll(imagePthData);
+                        if (albumData.size() < 9) {
+                            albumData.add("添加");
+                        }
+                        albumAdapter = new FindsAlbumAdapter(mActivity, albumData, true);
+                        _album_gv.setAdapter(albumAdapter);
 
-    @Override
-    public void takeSuccess(TResult result) {
-        super.takeSuccess(result);
+                    }
 
-
-        for (int i = 0; i < result.getImages().size(); i++) {
-            //LogUtils.debug("finds:" + result.getImages().get(i).getCompressPath());
-            //LogUtils.debug("finds:" + result.getImages().get(i).getOriginalPath());
-            //Toast.makeText(mActivity, result.getImages().get(i).getCompressPath(), Toast.LENGTH_LONG).show();
-            LogUtils.debug("url:" + result.getImages().get(i).getCompressPath());
-            LogUtils.debug("url:" + result.getImages().get(i).getOriginalPath());
-
-            imagePthData.add(result.getImages().get(i).getOriginalPath());
-            albumData.clear();
-            albumData.addAll(imagePthData);
-            if (albumData.size() < 9) {
-                albumData.add("添加");
+                    break;
             }
-            //if (albumData.size() == 2) {
-            albumAdapter = new FindsAlbumAdapter(mActivity, albumData, true);
-            _album_gv.setAdapter(albumAdapter);
-//            } else {
-//                albumAdapter.notifyDataSetChanged();
-//            }
         }
     }
 

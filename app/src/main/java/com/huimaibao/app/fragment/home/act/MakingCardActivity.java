@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;
@@ -25,41 +25,43 @@ import com.huimaibao.app.fragment.home.adapter.CardAlbumAdapter;
 import com.huimaibao.app.fragment.home.server.CardLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.login.logic.LoginLogic;
-import com.huimaibao.app.takePhone.LoadCallback;
-import com.huimaibao.app.takePhone.TakePhoneHelper;
-import com.huimaibao.app.takePhone.TakePhotoActivity;
+import com.huimaibao.app.picture.LoadCallback;
+import com.huimaibao.app.picture.PictureActivity;
 import com.huimaibao.app.utils.AddressPickTask;
 import com.huimaibao.app.utils.AddressPickTaskUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.JsonFormatUtils;
 import com.huimaibao.app.utils.ToastUtils;
+import com.picture.lib.PictureSelector;
+import com.picture.lib.config.PictureConfig;
+import com.picture.lib.entity.LocalMedia;
 import com.youth.xframe.pickers.entity.City;
 import com.youth.xframe.pickers.entity.County;
 import com.youth.xframe.pickers.entity.Province;
 import com.youth.xframe.pickers.listeners.OnLinkageListener;
 import com.youth.xframe.pickers.util.LogUtils;
-import com.youth.xframe.takephoto.model.TResult;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
-import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XRegexUtils;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.NoScrollGridView;
-import com.youth.xframe.widget.XToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 制作名片
  */
-public class MakingCardActivity extends TakePhotoActivity {
+public class MakingCardActivity extends PictureActivity {
 
-    private TakePhoneHelper takePhoneHelper;
+    //private TakePhoneHelper takePhoneHelper;
+    //拍照或选择图片路径
+    private String urlPath = "";
 
     private ScrollView mScrollView;
 
@@ -101,7 +103,7 @@ public class MakingCardActivity extends TakePhotoActivity {
             }
         });
 
-        takePhoneHelper = TakePhoneHelper.of(this);
+        //takePhoneHelper = TakePhoneHelper.of(this);
         initView();
 
         if (mType.equals("完善名片")) {
@@ -158,8 +160,9 @@ public class MakingCardActivity extends TakePhotoActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (albumData.get(position).equals("添加")) {
                     _check_head = "相册";
-                    takePhoneHelper.setTakePhone(1, false, false, 0, 0, true, 512000, 0, 0);
-                    takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                    // takePhoneHelper.setTakePhone(1, false, false, 0, 0, true, 512000, 0, 0);
+                    //takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                    showTakePhoneDialog("相册", 1);
                 } else {
                     imagePthData.remove(position);
                     albumData.clear();
@@ -243,8 +246,9 @@ public class MakingCardActivity extends TakePhotoActivity {
         switch (v.getId()) {
             case R.id.making_card_head:
                 _check_head = "头像";
-                takePhoneHelper.setTakePhone(1, true, true, 200, 200, true, 102400, 0, 0);
-                takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                //takePhoneHelper.setTakePhone(1, true, true, 200, 200, true, 102400, 0, 0);
+                //takePhoneHelper.showTakePhoneDialog(getTakePhoto());
+                showTakePhoneDialog("头像", 1);
                 break;
             case R.id.making_card_city:
                 if (_card_city.getText().toString().length() > 0) {
@@ -304,89 +308,80 @@ public class MakingCardActivity extends TakePhotoActivity {
         }
     }
 
-
+    /**
+     * 图片返回
+     */
     @Override
-    public void takeCancel() {
-        super.takeCancel();
-        XToast.normal("取消获取图片");
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-        super.takeFail(result, msg);
-        XToast.normal("获取图片错误:" + msg);
-    }
-
-    @Override
-    public void takeSuccess(TResult result) {
-        super.takeSuccess(result);
-//        if (imagesData != null) {
-//            imagesData.clear();
-//        } else {
-//            imagesData = new ArrayList<>();
-//        }
-//        imagesData = result.getImages();
-//        ArrayList<File> images = new ArrayList<>();
-//        for (int i = 0; i < imagesData.size(); i++) {
-//            images.add(new File(imagesData.get(i).getCompressPath()));
-//        }
-//        feedbackUploadApi(images);
-//        final String url;
-//        if (_check_head.equals("头像")) {
-//            url = result.getImages().get(0).getCompressPath();
-//        } else {
-//            url = result.getImages().get(0).getOriginalPath();
-//            //
-//        }
-
-        final String url = result.getImages().get(0).getCompressPath();
-
-        LogUtils.debug("url:" + url);
-        LogUtils.debug("url:" + result.getImages().get(0).getOriginalPath());
-
-
-        final String object = setImageUrl();
-
-        putLoadImage(object, url, new LoadCallback() {
-            @Override
-            public void onSuccess(Object o, Object result) {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Toast.makeText(mActivity,url, Toast.LENGTH_LONG).show();
-                        showToast("上传成功");
-                        if (_check_head.equals("头像")) {
-                            _head_value = ServerApi.OSS_IMAGE_URL + object;
-                            ImageLoaderManager.loadImage(_head_value, _card_head);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    for (int i = 0; i < selectList.size(); i++) {
+                        if (selectList.get(i).isCut()) {
+                            //为裁剪后path，需判断media.isCut();是否为true  注意：音视频除外
+                            Log.d("PictureUrl:", selectList.get(i).getCutPath());
+                            urlPath = selectList.get(i).getCutPath();
+                        } else if (selectList.get(i).isCompressed()) {
+                            //为压缩后path，需判断media.isCompressed();是否为true  注意：音视频除外
+                            //如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                            Log.d("PictureUrl:", selectList.get(i).getCompressPath());
+                            urlPath = selectList.get(i).getCompressPath();
                         } else {
-
-                            imagePthData.add(ServerApi.OSS_IMAGE_URL + object);
-                            albumData.clear();
-                            albumData.addAll(imagePthData);
-                            if (albumData.size() < 3) {
-                                albumData.add("添加");
-                            }
-                            if (albumData.size() == 2) {
-                                albumAdapter = new CardAlbumAdapter(mActivity, albumData, true);
-                                _album_gv.setAdapter(albumAdapter);
-                            } else {
-                                albumAdapter.notifyDataSetChanged();
-                            }
-                            mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                            //原图path
+                            Log.d("PictureUrl:", selectList.get(i).getPath());
+                            urlPath = selectList.get(i).getPath();
                         }
                     }
-                });
 
+
+                    final String object = setImageUrl();
+
+                    putLoadImage(object, urlPath, new LoadCallback() {
+                        @Override
+                        public void onSuccess(Object o, Object result) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Toast.makeText(mActivity,url, Toast.LENGTH_LONG).show();
+                                    showToast("上传成功");
+                                    if (_check_head.equals("头像")) {
+                                        _head_value = ServerApi.OSS_IMAGE_URL + object;
+                                        ImageLoaderManager.loadImage(_head_value, _card_head);
+                                    } else {
+
+                                        imagePthData.add(ServerApi.OSS_IMAGE_URL + object);
+                                        albumData.clear();
+                                        albumData.addAll(imagePthData);
+                                        if (albumData.size() < 3) {
+                                            albumData.add("添加");
+                                        }
+                                        if (albumData.size() == 2) {
+                                            albumAdapter = new CardAlbumAdapter(mActivity, albumData, true);
+                                            _album_gv.setAdapter(albumAdapter);
+                                        } else {
+                                            albumAdapter.notifyDataSetChanged();
+                                        }
+                                        mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                    }
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
+
+                        }
+                    });
+
+
+                    break;
             }
-
-            @Override
-            public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
-
-            }
-        });
-
-
+        }
     }
+
 
     /**
      * 修改用户信息

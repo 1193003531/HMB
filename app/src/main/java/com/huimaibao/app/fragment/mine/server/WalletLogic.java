@@ -139,6 +139,40 @@ public class WalletLogic {
     }
 
     /**
+     * 根据银行卡号获取银行信息
+     */
+    public void getBankInfoApi(HashMap<String, Object> map, final boolean isShow, final ResultBack resultBack) {
+        if (XNetworkUtils.isConnected()) {
+            XHttp.obtain().get(ServerApi.BANK_INFO_URL, map, new HttpCallBack() {
+                @Override
+                public void showProgress() {
+                    if (isShow)
+                        mDialogUtils.showLoadingDialog("加载中...");
+                }
+
+                @Override
+                public void dismissProgress() {
+                    if (isShow)
+                        mDialogUtils.dismissDialog();
+
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                    resultBack.onSuccess(o);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    resultBack.onFailed(error);
+                }
+            });
+        } else {
+            XToast.normal(mActivity.getResources().getString(R.string.network_enable));
+        }
+    }
+
+    /**
      * 银行卡添加
      */
     public void getBankCardAddApi(HashMap<String, Object> map, final ResultBack resultBack) {

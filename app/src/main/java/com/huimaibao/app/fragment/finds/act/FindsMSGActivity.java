@@ -103,7 +103,7 @@ public class FindsMSGActivity extends BaseActivity {
         mSwipeRefreshView.setItemCount(5);
 
         initEvent();
-        initData();
+       // initData();
     }
 
 

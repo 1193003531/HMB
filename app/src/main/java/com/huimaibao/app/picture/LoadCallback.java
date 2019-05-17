@@ -1,4 +1,4 @@
-package com.huimaibao.app.takePhone;
+package com.huimaibao.app.picture;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;

@@ -204,7 +204,7 @@ public class AppDownloadManager {
                 File apkFile = queryDownloadedApk(context, completeDownLoadId);
                 uri = Uri.fromFile(apkFile);
             } else { // Android 7.0 以上
-                LogUtils.debug("json:"+BuildConfig.APPLICATION_ID + ".fileprovider");
+               // LogUtils.debug("json:"+BuildConfig.APPLICATION_ID + ".fileprovider");
                 uri = FileProvider.getUriForFile(context,
                         BuildConfig.APPLICATION_ID + ".fileprovider",
                         new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "汇脉宝.apk"));
