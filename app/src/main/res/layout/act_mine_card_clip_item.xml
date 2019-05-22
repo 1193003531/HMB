@@ -17,7 +17,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="@dimen/paddingLeft"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_default" />
 
         <LinearLayout
             android:layout_width="match_parent"

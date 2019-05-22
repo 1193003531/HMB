@@ -12,9 +12,37 @@ public class BankCardEntity implements Serializable {
     public String BankCardName;
     public String BankCardType;
     public String BankCardNum;
+    public String BankCardLogoT;//透明
+    public String BankCardLogoM;//彩色
+    public String BankCardLogoW;//白色
     public boolean BankCardCheck;
     public int BankCardSColor;
     public int BankCardEColor;
+
+    public String getBankCardLogoT() {
+        return BankCardLogoT;
+    }
+
+    public void setBankCardLogoT(String bankCardLogoT) {
+        this.BankCardLogoT = bankCardLogoT;
+    }
+
+    public String getBankCardLogoM() {
+        return BankCardLogoM;
+    }
+
+    public void setBankCardLogoM(String bankCardLogoM) {
+        this.BankCardLogoM = bankCardLogoM;
+    }
+
+    public String getBankCardLogoW() {
+        return BankCardLogoW;
+    }
+
+    public void setBankCardLogoW(String bankCardLogoW) {
+        this. BankCardLogoW = bankCardLogoW;
+    }
+
 
     public int getBankCardSColor() {
         return BankCardSColor;
@@ -42,10 +70,10 @@ public class BankCardEntity implements Serializable {
     }
 
 
-    public boolean getBankCardCheck() {
+
+    public boolean isBankCardCheck() {
         return BankCardCheck;
     }
-
     public void setBankCardCheck(boolean bankCardCheck) {
         this.BankCardCheck = bankCardCheck;
     }

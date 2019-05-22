@@ -56,7 +56,7 @@
                     android:id="@+id/finds_list_top_user_head"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_default" />
 
                 <TextView
                     android:id="@+id/finds_list_top_user_name"

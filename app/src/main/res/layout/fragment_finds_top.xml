@@ -24,7 +24,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="9dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_default" />
 
         <TextView
             android:id="@+id/finds_msg_content"

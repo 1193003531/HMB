@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.fragment.home.entity.MakingListEntity;
 import com.huimaibao.app.utils.ImageLoaderManager;
-import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.RoundedImagView;
 
@@ -97,12 +96,12 @@ public class MarketingListAdapter extends BaseAdapter {
         }
 
 //        if (XEmptyUtils.isSpace(mlItem.getMakingListImage())) {
-//            mHolder._item_image.setImageResource(R.drawable.ic_launcher);
+//            mHolder._item_image.setImageResource(R.drawable.ic_default);
 //        } else {
-//            ImageLoaderManager.loadImage(mlItem.getMakingListImage(), mHolder._item_image, R.drawable.ic_launcher);
+//            ImageLoaderManager.loadImage(mlItem.getMakingListImage(), mHolder._item_image, R.drawable.ic_default);
 //        }
 
-        ImageLoaderManager.loadImage(mlItem.getMakingListHead(), mHolder._item_Head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(mlItem.getMakingListHead(), mHolder._item_Head, R.drawable.ic_default);
 
         mHolder._item_name.setText(mlItem.getMakingListName());
         mHolder._item_title.setText(mlItem.getMakingListTitle());

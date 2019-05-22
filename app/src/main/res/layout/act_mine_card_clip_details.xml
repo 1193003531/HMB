@@ -432,7 +432,7 @@
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"
             android:onClick="onAction"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_default" />
 
     </RelativeLayout>
 </RelativeLayout>

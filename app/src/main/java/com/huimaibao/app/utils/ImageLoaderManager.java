@@ -9,7 +9,6 @@ import com.huimaibao.app.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
@@ -51,10 +50,13 @@ public class ImageLoaderManager {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)//让图片进行内存缓存
                 .cacheOnDisk(true)//让图片进行sdcard缓存
-                .showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher)
-                .showImageOnLoading(R.drawable.ic_launcher)
-                .extraForDownloader(1)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+                .showImageForEmptyUri(R.drawable.ic_default)
+                .showImageOnFail(R.drawable.ic_default)
+                .showImageOnLoading(R.drawable.ic_default)
+                //.extraForDownloader(1)//设置额外的内容给ImageDownloader
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+        //ImageSize imageSize=new ImageSize(160,160);
         ImageLoader.getInstance().displayImage(url, imageView, options);
     }
 
@@ -64,12 +66,15 @@ public class ImageLoaderManager {
     }
 
     public static DisplayImageOptions getPhotoImageOption() {
-        Integer extra = 1;
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher)
-                .showImageOnLoading(R.drawable.ic_launcher)
-                .extraForDownloader(extra)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        //Integer extra = 1;
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .showImageForEmptyUri(R.drawable.ic_default)
+                .showImageOnFail(R.drawable.ic_default)
+                .showImageOnLoading(R.drawable.ic_default)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
         return options;
     }
 
@@ -84,12 +89,12 @@ public class ImageLoaderManager {
     //
     static float ratio;
 
-    public static float getAspectRatio(String url) {
+    public static float getAspectRatio(String url, ImageView imageView) {
         //图片展示区域
         final int parentWidth = XDensityUtils.getScreenWidth() - XDensityUtils.dp2px(84);
         //ratio = 1000 / 1376f;
         //这里是只显示一张图片的情况，显示图片的宽高可以根据实际图片大小自由定制，parentWidth 为该layout的宽度
-        ImageLoader.getInstance().loadImage(url, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(url, imageView, getPhotoImageOption(), new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 
@@ -121,12 +126,12 @@ public class ImageLoaderManager {
                 }
             }
 
-
             @Override
             public void onLoadingCancelled(String s, View view) {
 
             }
         });
+
         return ratio;
     }
 

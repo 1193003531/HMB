@@ -161,7 +161,7 @@ public class MessageWebActivity extends BaseActivity {
         });
 
 
-        LogUtils.debug("mUrl:" + mUrl);
+        LogUtils.debug("json:" + mUrl);
 
         mWebView.loadUrl(mUrl);
         //mWebView.loadUrl("http://weixin.yuhongrocky.top/#/app/match?materialType=1&materialId=784");

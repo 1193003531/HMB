@@ -27,7 +27,7 @@
                 android:id="@+id/lib_focus_on_item_name_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_default" />
 
             <TextView
                 android:id="@+id/lib_focus_on_item_name"
@@ -78,7 +78,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="3dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/ic_default"
             android:visibility="gone"
             app:corner_radius="4dp" />
 
@@ -103,7 +103,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     app:corner_radius="4dp" />
 
                 <View
@@ -116,7 +116,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     app:corner_radius="4dp" />
 
                 <View
@@ -129,7 +129,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     app:corner_radius="4dp" />
             </LinearLayout>
 
@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="168dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/ic_default"
                 android:visibility="gone"
                 app:corner_radius="4dp" />
         </LinearLayout>

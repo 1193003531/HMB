@@ -77,7 +77,7 @@ public class VeinTreasureAdapter extends BaseAdapter {
             mHolder._item_name2.setVisibility(View.GONE);
             mHolder._item_image.setImageResource(R.drawable.vein_list_icon);
         } else {
-            ImageLoaderManager.loadImage(ilItem.getVeinTreasureImage(), mHolder._item_image, R.drawable.ic_launcher);
+            ImageLoaderManager.loadImage(ilItem.getVeinTreasureImage(), mHolder._item_image, R.drawable.ic_default);
         }
 
         mHolder._item_type.setText(ilItem.getVeinTreasureType());

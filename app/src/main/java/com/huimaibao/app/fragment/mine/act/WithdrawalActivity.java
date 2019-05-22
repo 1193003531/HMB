@@ -23,6 +23,7 @@ import com.huimaibao.app.fragment.mine.server.WalletLogic;
 import com.huimaibao.app.fragment.mine.settings.VerifyPhoneActivity;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
+import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.view.PayPsdInputView;
 import com.youth.xframe.utils.XDensityUtils;
@@ -47,8 +48,9 @@ public class WithdrawalActivity extends BaseActivity {
     private String mType = "";
 
     //银行卡信息
-    private TextView _bank_card_name_tv, _bank_crad_num_tv;
-    private String _bank_name_v = "", _bank_crad_num_v = "";
+    ImageView _bank_logo;
+    private TextView _bank_card_name_tv, _bank_card_num_tv;
+    private String _bank_name_v = "", _bank_card_num_v = "";
     //输入金额
     private EditText _input_money_et;
     private ImageView _input_money_del;
@@ -84,8 +86,9 @@ public class WithdrawalActivity extends BaseActivity {
 
     /***/
     private void initView() {
+        _bank_logo = findViewById(R.id.withdrawal_bank_card_logo);
         _bank_card_name_tv = findViewById(R.id.withdrawal_bank_card_name);
-        _bank_crad_num_tv = findViewById(R.id.withdrawal_bank_card_num);
+        _bank_card_num_tv = findViewById(R.id.withdrawal_bank_card_num);
         _input_money_et = findViewById(R.id.withdrawal_money);
         _input_money_del = findViewById(R.id.withdrawal_money_del);
         _all_money_tv = findViewById(R.id.withdrawal_t_money);
@@ -109,6 +112,9 @@ public class WithdrawalActivity extends BaseActivity {
                     entity.setBankCardId(array.getJSONObject(i).getString("id"));
                     entity.setBankCardName(array.getJSONObject(i).getString("bank_name"));
                     entity.setBankCardNum(array.getJSONObject(i).getString("card_no"));
+                    entity.setBankCardLogoM(array.getJSONObject(i).optString("multi_logo_path", ""));
+                    entity.setBankCardLogoT(array.getJSONObject(i).optString("transparent_logo_path", ""));
+                    entity.setBankCardLogoW(array.getJSONObject(i).optString("white_logo_path", ""));
                     entity.setBankCardType("储蓄卡");
                     entity.setBankName(array.getJSONObject(i).getString("name"));
                     if (i == 0)
@@ -118,10 +124,11 @@ public class WithdrawalActivity extends BaseActivity {
                     ListData.add(entity);
                 }
                 if (ListData.size() > 0) {
+                    ImageLoaderManager.loadImage(ListData.get(0).getBankCardLogoM(), _bank_logo);
                     _bank_name_v = ListData.get(0).getBankName();
-                    _bank_crad_num_v = ListData.get(0).getBankCardNum();
+                    _bank_card_num_v = ListData.get(0).getBankCardNum();
                     _bank_card_name_tv.setText(ListData.get(0).getBankCardName() + "储蓄卡");
-                    _bank_crad_num_tv.setText(XRegexUtils.cardIdHide2(_bank_crad_num_v));
+                    _bank_card_num_tv.setText(XRegexUtils.cardIdHide2(_bank_card_num_v));
                 }
             } else {
                 getBankCard();
@@ -145,6 +152,7 @@ public class WithdrawalActivity extends BaseActivity {
             //全部金额
             case R.id.withdrawal_money_all:
                 _input_money_et.setText("" + _all_money_value);
+                _input_money_et.setSelection(_all_money_value.length());
                 break;
             //提现
             case R.id.withdrawal_sure:
@@ -247,10 +255,11 @@ public class WithdrawalActivity extends BaseActivity {
                     if (i == position) {
                         ListData.get(position).setBankCardCheck(true);
                         // ListData.set(position, ListData.get(position));
+                        ImageLoaderManager.loadImage(ListData.get(0).getBankCardLogoM(), _bank_logo);
                         _bank_card_name_tv.setText(ListData.get(position).getBankCardName() + ListData.get(position).getBankCardType());
-                        _bank_crad_num_tv.setText(XRegexUtils.cardIdHide2(ListData.get(position).getBankCardNum()));
+                        _bank_card_num_tv.setText(XRegexUtils.cardIdHide2(ListData.get(position).getBankCardNum()));
                         _bank_name_v = ListData.get(position).getBankName();
-                        _bank_crad_num_v = ListData.get(position).getBankCardNum();
+                        _bank_card_num_v = ListData.get(position).getBankCardNum();
                     } else {
                         ListData.get(i).setBankCardCheck(false);
                     }
@@ -275,7 +284,7 @@ public class WithdrawalActivity extends BaseActivity {
         HashMap<String, Object> map = new HashMap<>();
         map.put("amount", money);
         map.put("pwd", pwd);
-        map.put("bank_card_no", _bank_crad_num_v);
+        map.put("bank_card_no", _bank_card_num_v);
         map.put("bank_name", _bank_name_v);
         WalletLogic.Instance(mActivity).getWalletCashApi(map, new ResultBack() {
             @Override
@@ -335,6 +344,9 @@ public class WithdrawalActivity extends BaseActivity {
                             entity.setBankCardId(array.getJSONObject(i).getString("id"));
                             entity.setBankCardName(array.getJSONObject(i).getString("bank_name"));
                             entity.setBankCardNum(array.getJSONObject(i).getString("card_no"));
+                            entity.setBankCardLogoM(array.getJSONObject(i).optString("multi_logo_path", ""));
+                            entity.setBankCardLogoT(array.getJSONObject(i).optString("transparent_logo_path", ""));
+                            entity.setBankCardLogoW(array.getJSONObject(i).optString("white_logo_path", ""));
                             entity.setBankCardType("储蓄卡");
                             entity.setBankName("持卡人");
                             if (i == 0)
@@ -349,10 +361,11 @@ public class WithdrawalActivity extends BaseActivity {
                             public void run() {
 
                                 if (ListData.size() > 0) {
+                                    ImageLoaderManager.loadImage(ListData.get(0).getBankCardLogoM(), _bank_logo);
                                     _bank_name_v = ListData.get(0).getBankName();
-                                    _bank_crad_num_v = ListData.get(0).getBankCardNum();
+                                    _bank_card_num_v = ListData.get(0).getBankCardNum();
                                     _bank_card_name_tv.setText(ListData.get(0).getBankCardName() + "储蓄卡");
-                                    _bank_crad_num_tv.setText(XRegexUtils.cardIdHide2(_bank_crad_num_v));
+                                    _bank_card_num_tv.setText(XRegexUtils.cardIdHide2(_bank_card_num_v));
                                 }
                             }
                         });

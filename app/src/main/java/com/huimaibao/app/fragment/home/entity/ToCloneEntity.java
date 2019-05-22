@@ -19,7 +19,15 @@ public class ToCloneEntity implements Serializable {
     public String ToCloneTime;
     public String ToCloneIsClone;
     public String ToCloneMoney;
+    public String ToCloneUserId;
 
+    public String getToCloneUserId() {
+        return ToCloneUserId;
+    }
+
+    public void setToCloneUserId(String toCloneUserId) {
+        this.ToCloneUserId = toCloneUserId;
+    }
 
     public String getToCloneIsClone() {
         return ToCloneIsClone;

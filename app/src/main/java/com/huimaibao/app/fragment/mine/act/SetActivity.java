@@ -150,6 +150,7 @@ public class SetActivity extends BaseActivity {
                                 //权限申请成功时调用
                                 @Override
                                 public void onPermissionGranted() {
+                                    XFileUtils.deleteCacheDirFile(mActivity);
                                     if (XFileUtils.delAllFile(BaseApplication.getApp().getFilePath())) {
                                         _cache_value.setText(XFileUtils.getFilesSize(BaseApplication.getApp().getFilePath()));
                                     }
@@ -163,6 +164,7 @@ public class SetActivity extends BaseActivity {
                                 }
                             });
                         } else {
+                            XFileUtils.deleteCacheDirFile(mActivity);
                             if (XFileUtils.delAllFile(BaseApplication.getApp().getFilePath())) {
                                 _cache_value.setText(XFileUtils.getFilesSize(BaseApplication.getApp().getFilePath()));
                             }
@@ -193,7 +195,7 @@ public class SetActivity extends BaseActivity {
      */
     private void upDataAPP() {
 
-        LoginLogic.Instance(mActivity).appVersionApi("检查更新...", true,new ResultBack() {
+        LoginLogic.Instance(mActivity).appVersionApi("检查更新...", true, new ResultBack() {
             @Override
             public void onSuccess(Object object) {
                 try {

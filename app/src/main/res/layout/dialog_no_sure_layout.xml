@@ -48,13 +48,14 @@
             android:id="@+id/dialog_no_sure_cancel"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="@drawable/btn_duf_button"
             android:gravity="center"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:textStyle="bold"
             android:text="知道了"
             android:textColor="@color/FF274FF3"
-            android:textSize="@dimen/text_size_17" />
+            android:textSize="@dimen/text_size_17"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

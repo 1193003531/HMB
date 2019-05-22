@@ -395,8 +395,8 @@ public class ElectPersonalActivity extends BaseActivity {
                                         break;
                                 }
 
-                                ImageLoaderManager.loadImage(_head_value, _top_head_iv, R.drawable.ic_launcher);
-                                ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_launcher);
+                                ImageLoaderManager.loadImage(_head_value, _top_head_iv, R.drawable.ic_default);
+                                ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_default);
 
                                 //ImageSize imageSize = new ImageSize(120, 120);
                                 //_head_iv.setImageBitmap(ImageLoader.getInstance().loadImageSync(_cover_value.trim(), imageSize));

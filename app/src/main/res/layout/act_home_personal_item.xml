@@ -15,7 +15,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="13dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_default" />
 
 
     <LinearLayout

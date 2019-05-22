@@ -67,7 +67,7 @@ public class IncomeListAdapter extends BaseAdapter {
 
         IncomeListEntity ilItem = getItem(position);
 
-        ImageLoaderManager.loadImage(ilItem.getIncomeImage(), mHolder._item_Head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(ilItem.getIncomeImage(), mHolder._item_Head, R.drawable.ic_default);
         mHolder._item_num.setText("" + (position + 4));
         mHolder._item_name.setText(ilItem.getIncomeName());
         mHolder._item_money.setText("总收入￥" + ilItem.getIncomeMoney());

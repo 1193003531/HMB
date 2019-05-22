@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="33dp"
+        android:layout_marginRight="33dp"
+        android:background="@drawable/btn_white_r5_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center_horizontal"
+            android:text="修改微网名称"
+            android:textColor="@color/color000000"
+            android:textSize="@dimen/text_size_16" />
+
+
+        <EditText
+            android:id="@+id/dialog_page_web_title"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/transparent"
+            android:hint="输入您需要修改的微网名称(30字)"
+            android:inputType="text"
+            android:maxLength="30"
+            android:textColor="@color/color333333"
+            android:textColorHint="@color/colorbbbbbb"
+            android:textSize="@dimen/text_size_13" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_05"
+            android:layout_marginTop="15dp"
+            android:background="@color/linee7e7e7" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dialog_page_web_title_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_duf_button_left"
+                android:gravity="center"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="取消"
+                android:textColor="@color/color666666"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="@dimen/line_05"
+                android:layout_height="match_parent"
+                android:background="@color/linee7e7e7" />
+
+            <TextView
+                android:id="@+id/dialog_page_web_title_sure"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_duf_button_right"
+                android:gravity="center"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="确定"
+                android:textColor="@color/FF274FF3"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -259,7 +259,7 @@ public class MarketingWebActivity extends BaseActivity {
                                                     startActivity(MessageWebActivity.class, "营销", ServerApi.SERVER_WEB_URL + "/#/marketing/edit/" + listData.get(position).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
                                                     mDialogUtils.dismissDialog();
                                                 }
-                                            }, null, new View.OnClickListener() {
+                                            }, null,null, new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
                                                     userMarketingDelData(listData.get(position).getMakingListId());

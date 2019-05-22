@@ -76,7 +76,7 @@ public class PersonalAdapter extends BaseAdapter {
             mHolder._item_money.setVisibility(View.INVISIBLE);
         }
 
-        ImageLoaderManager.loadImage(item.getWebImage(), mHolder._item_iv, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(item.getWebImage(), mHolder._item_iv, R.drawable.ic_default);
 
         mHolder._item_title.setText(item.getWebTitle());
         mHolder._item_browse.setText("浏览" + item.getWebBrowse());

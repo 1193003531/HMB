@@ -125,6 +125,7 @@ public class MarketingListActivity extends BaseActivity {
         });
 
 
+
         initEvent();
         initData();
 

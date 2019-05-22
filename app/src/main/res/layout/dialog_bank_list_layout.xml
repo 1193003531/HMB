@@ -23,6 +23,7 @@
             android:id="@+id/dialog_bank_card_list_del"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/btn_duf"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
             android:src="@drawable/wallet_bank_pay_exit_icon" />

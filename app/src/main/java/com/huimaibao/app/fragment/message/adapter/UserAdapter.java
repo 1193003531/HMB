@@ -64,7 +64,7 @@ public class UserAdapter extends BaseAdapter {
         }
 
         MessageEntity msg = getItem(position);
-        ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_default);
         if (msg.getMessageType().equals("0")) {
             mHolder._item_ll.setVisibility(View.VISIBLE);
             mHolder._item_toview.setVisibility(View.GONE);

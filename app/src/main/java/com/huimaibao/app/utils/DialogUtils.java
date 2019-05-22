@@ -44,7 +44,7 @@ public class DialogUtils {
     /**
      * 显示个人微网，营销网页弹出框
      */
-    public void showListDialog(final String type, View.OnClickListener cloneListener, View.OnClickListener amendListener, View.OnClickListener defaultListener, View.OnClickListener delListener) {
+    public void showListDialog(final String type, View.OnClickListener cloneListener, View.OnClickListener amendListener, View.OnClickListener titleListener, View.OnClickListener defaultListener, View.OnClickListener delListener) {
 
         //1、使用Dialog、设置style
         dialog = new Dialog(mActivity, R.style.DialogTheme);
@@ -61,15 +61,17 @@ public class DialogUtils {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
         //设置,修改,默认,删除
-        TextView _set_btn, _amend_btn, _default_btn, _del_btn;
+        TextView _set_btn, _amend_btn, _title_btn, _default_btn, _del_btn;
         _set_btn = dialog.findViewById(R.id.dialog_p_w_l_set);
         _amend_btn = dialog.findViewById(R.id.dialog_p_w_l_amend);
+        _title_btn = dialog.findViewById(R.id.dialog_p_w_l_title);
         _default_btn = dialog.findViewById(R.id.dialog_p_w_l_default);
         _del_btn = dialog.findViewById(R.id.dialog_p_w_l_del);
 
         if (type.equals("营销")) {
             _set_btn.setVisibility(View.GONE);
             _default_btn.setVisibility(View.GONE);
+            _title_btn.setVisibility(View.GONE);
         }
 
         //克隆设置
@@ -80,13 +82,58 @@ public class DialogUtils {
         _default_btn.setOnClickListener(defaultListener);
         //删除
         _del_btn.setOnClickListener(delListener);
-
+        //重设title
+        _title_btn.setOnClickListener(titleListener);
         dialog.findViewById(R.id.dialog_p_w_l_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
             }
         });
+    }
+
+    public void showTitleDialog(final onItemTitleListener mOnItemTitleListener) {
+
+        //1、使用Dialog、设置style
+        dialog = new Dialog(mActivity, R.style.DialogTheme);
+        //2、设置布局
+        View view = View.inflate(mActivity, R.layout.dialog_personal_web_title_layout, null);
+        dialog.setContentView(view);
+
+        Window window = dialog.getWindow();
+        //设置弹出位置
+        //window.setGravity(Gravity.BOTTOM);
+        //设置弹出动画
+        //window.setWindowAnimations(R.style.main_menu_animStyle);
+        //设置对话框大小
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+        //title
+        TextView _sure_btn;
+        final EditText _title;
+        _title = dialog.findViewById(R.id.dialog_page_web_title);
+        _sure_btn = dialog.findViewById(R.id.dialog_page_web_title_sure);
+
+        _sure_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemTitleListener.onItemTitleClick(_title.getText().toString());
+            }
+        });
+
+        dialog.findViewById(R.id.dialog_page_web_title_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    /**
+     * title监听接口
+     */
+    public interface onItemTitleListener {
+        void onItemTitleClick(String title);
     }
 
 

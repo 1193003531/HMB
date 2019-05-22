@@ -61,6 +61,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="login.app"
+                    android:scheme="huimaibao" />
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -490,6 +502,13 @@
             android:label="支付"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".appload.AndroidOPermissionActivity"
+            android:label="更新app权限"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
 
         <!-- 微信 -->
         <activity

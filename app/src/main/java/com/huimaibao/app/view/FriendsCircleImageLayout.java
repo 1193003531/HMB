@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.huimaibao.app.R;
 import com.huimaibao.app.fragment.library.act.ImageShowActivity;
 import com.huimaibao.app.utils.ImageLoaderManager;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -48,7 +49,7 @@ public class FriendsCircleImageLayout extends ViewGroup {
      * 图片宽高比(当为多张图片的时候为1)
      * 一般在url中会有宽高 可计算
      */
-    private float mItemAspectRatio=1;
+    private float mItemAspectRatio = 1;
     /**
      * 最宽的时候相对可用空间比例（当childCount=1的时候）
      * 当只有一张图片的 最大显示宽度和高度相对于可用宽的的比例
@@ -212,12 +213,11 @@ public class FriendsCircleImageLayout extends ViewGroup {
             //mItemAspectRatio = 1;
             //mItemAspectRatio = ImageLoaderManager.getAspectRatio(imageUrls.get(0).trim());
             mItemAspectRatio = setOneImageAspectRatio(imageUrls.get(0).trim());
-            //setOneImageSHow(imageUrls);
         } else {
             mItemAspectRatio = 1;
             //setMoreImageSHow(imageUrls);
         }
-        setMoreImageSHow(imageUrls);
+        setImageLoadShow(imageUrls);
     }
 
 
@@ -257,7 +257,7 @@ public class FriendsCircleImageLayout extends ViewGroup {
 
 
     /**
-     * 一张图片展示
+     * 设置一张图片展示比例
      */
     private float setOneImageAspectRatio(String url) {
 
@@ -303,14 +303,13 @@ public class FriendsCircleImageLayout extends ViewGroup {
     }
 
     /**
-     * 多张图片展示
+     * 图片下载展示
      */
-    private void setMoreImageSHow(final List<String> imageUrls) {
+    private void setImageLoadShow(final List<String> imageUrls) {
         for (int i = 0; i < imageUrls.size(); i++) {
             final RatioImageView imageView = new RatioImageView(getContext());
             imageView.setId(i);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            //ImageLoaderManager.getImageLoader(getContext()).displayImage(imageUrls.get(i).trim(), imageView, ImageLoaderManager.getPhotoImageOption());
             ImageLoaderManager.loadImages(imageUrls.get(i).trim(), imageView);
             addView(imageView);
             //点击查看大图
@@ -323,15 +322,6 @@ public class FriendsCircleImageLayout extends ViewGroup {
         }
     }
 
-    protected void setOneImageLayoutParams(RatioImageView imageView, int width, int height) {
-        imageView.setLayoutParams(new LayoutParams(width, height));
-        imageView.layout(0, 0, width, height);
-
-        LayoutParams params = getLayoutParams();
-//        params.width = width;
-        params.height = height;
-        setLayoutParams(params);
-    }
 
     /**
      * 点击图片放大
@@ -348,7 +338,6 @@ public class FriendsCircleImageLayout extends ViewGroup {
         } else {
             getContext().startActivity(intent);
         }
-
     }
 }
 

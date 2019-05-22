@@ -178,7 +178,7 @@ public class CardFragment extends BaseFragment {
 
     private void setTopText() {
         _head_value = XEmptyUtils.isSpace(XPreferencesUtils.get("logo", "") + "") ? XPreferencesUtils.get("portrait", "") + "" : XPreferencesUtils.get("logo", "") + "";
-        ImageLoaderManager.loadImage(_head_value, _top_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(_head_value, _top_head, R.drawable.ic_default);
         _top_name.setText("" + XPreferencesUtils.get("name", ""));
         _top_jobs.setText("" + XPreferencesUtils.get("profession", ""));
         _top_company.setText("" + XPreferencesUtils.get("company", ""));

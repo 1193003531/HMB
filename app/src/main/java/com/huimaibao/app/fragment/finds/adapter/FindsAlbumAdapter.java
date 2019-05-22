@@ -1,7 +1,6 @@
 package com.huimaibao.app.fragment.finds.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.huimaibao.app.R;
-import com.huimaibao.app.utils.ImageLoaderManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -66,9 +64,9 @@ public class FindsAlbumAdapter extends BaseAdapter {
                 //mHolder._item_album.setImageURI(Uri.parse(list.get(position)));
                 ImageLoader.getInstance().displayImage("file://" + list.get(position), mHolder._item_album);
             } catch (Exception e) {
-                mHolder._item_album.setImageResource(R.drawable.ic_launcher);
+                mHolder._item_album.setImageResource(R.drawable.ic_default);
             }
-            //ImageLoaderManager.loadImage(list.get(position), mHolder._item_album, R.drawable.ic_launcher);
+            //ImageLoaderManager.loadImage(list.get(position), mHolder._item_album, R.drawable.ic_default);
             if (_type) {
                 mHolder._item_del.setVisibility(View.VISIBLE);
             } else {

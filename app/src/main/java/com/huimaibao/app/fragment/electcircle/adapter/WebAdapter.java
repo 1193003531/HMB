@@ -71,7 +71,7 @@ public class WebAdapter extends BaseAdapter {
             mHolder._item_check.setImageResource(R.drawable.home_false_icon);
         }
 
-        ImageLoaderManager.loadImage(item.getWebImage(), mHolder._item_iv, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(item.getWebImage(), mHolder._item_iv, R.drawable.ic_default);
         mHolder._item_title.setText(item.getWebTitle());
         mHolder._item_share.setText("转发  " + item.getWebShare());
         mHolder._item_browse.setText("浏览  " + item.getWebBrowse());

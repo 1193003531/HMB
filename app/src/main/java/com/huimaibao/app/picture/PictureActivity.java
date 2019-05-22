@@ -36,6 +36,7 @@ import com.huimaibao.app.utils.DialogUtils;
 import com.picture.lib.PictureSelector;
 import com.picture.lib.config.PictureConfig;
 import com.picture.lib.config.PictureMimeType;
+import com.picture.lib.tools.PictureFileUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.utils.permission.XPermission;
 
@@ -55,6 +56,10 @@ public class PictureActivity extends BaseActivity {
         mDialogUtils = new DialogUtils(mActivity);
 
         new Thread(runnable).start();
+
+
+        //PictureFileUtils.deleteCacheDirFile(mActivity);
+
     }
 
 

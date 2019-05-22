@@ -466,7 +466,7 @@ public class MineFragment extends BaseFragment {
 //                    }
 
 
-                    ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), mHeadImageView, R.drawable.ic_launcher);
+                    ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), mHeadImageView, R.drawable.ic_default);
                     String name = "" + XPreferencesUtils.get("name", "");
                     String phone = "" + XPreferencesUtils.get("phone", "");
                     //3-服务商，4-普通

@@ -184,7 +184,7 @@ public class PerfectBActivity extends PictureActivity {
             _head_value = XPreferencesUtils.get("headimgurl", "").toString();
             _name_value = XPreferencesUtils.get("nickname", "").toString();
             // XCache.get(this).getAsString("headimgurl");
-            ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_launcher);
+            ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_default);
             _card_name.setText(_name_value);
             _card_name.setSelection(_name_value.length());
         }

@@ -65,12 +65,12 @@ public class CardAlbumAdapter extends BaseAdapter {
                 mHolder._item_album_details.setVisibility(View.GONE);
                 mHolder._item_album.setVisibility(View.VISIBLE);
                 mHolder._item_del.setVisibility(View.VISIBLE);
-                ImageLoaderManager.loadImage(ilList.get(position), mHolder._item_album, R.drawable.ic_launcher);
+                ImageLoaderManager.loadImage(ilList.get(position), mHolder._item_album, R.drawable.ic_default);
             } else {
                 mHolder._item_album_details.setVisibility(View.VISIBLE);
                 mHolder._item_album.setVisibility(View.GONE);
                 mHolder._item_del.setVisibility(View.GONE);
-                ImageLoaderManager.loadImage(ilList.get(position), mHolder._item_album_details, R.drawable.ic_launcher);
+                ImageLoaderManager.loadImage(ilList.get(position), mHolder._item_album_details, R.drawable.ic_default);
             }
         }
 

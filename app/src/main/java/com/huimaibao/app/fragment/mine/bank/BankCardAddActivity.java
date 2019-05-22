@@ -108,8 +108,9 @@ public class BankCardAddActivity extends BaseActivity {
                     } else {
                         showToast("卡号 " + _bank_num_v + " 不合法,请重新输入");
                     }
-
-                    getBankCardAdd(_bank_num_v);
+                    if (_bank_name.getText().toString().trim().equals("未知")) {
+                        getBankCardAdd(_bank_num_v);
+                    }
                 }
                 break;
             case R.id.bank_add_sure:

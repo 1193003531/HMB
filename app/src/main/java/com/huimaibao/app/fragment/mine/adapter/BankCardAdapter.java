@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.fragment.mine.entity.BankCardEntity;
+import com.huimaibao.app.utils.ImageLoaderManager;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XRegexUtils;
 import com.youth.xframe.utils.XStringUtils;
@@ -63,7 +64,7 @@ public class BankCardAdapter extends BaseAdapter {
                 mHolder._item_name = view.findViewById(R.id.bank_card_item_name);
                 mHolder._item_num = view.findViewById(R.id.bank_card_item_num);
                 mHolder._item_icon = view.findViewById(R.id.bank_card_item_icon);
-                mHolder._item_r_b_icon = view.findViewById(R.id.bank_card_item_w_icon);
+                mHolder._item_t_icon = view.findViewById(R.id.bank_card_item_t_icon);
             } else {
                 view = LayoutInflater.from(context).inflate(R.layout.dialog_bank_list_item, null);
                 mHolder._item_name = view.findViewById(R.id.dialog_bank_card_item_namenum);
@@ -77,14 +78,18 @@ public class BankCardAdapter extends BaseAdapter {
         BankCardEntity item = getItem(position);
         if (mType.equals("0")) {
             //item.getBankCardSColor(), item.getBankCardEColor()
-            int[] colors = {Color.rgb(253, 104, 104), Color.rgb(249, 72, 73)};
+            //int[] colors = {Color.rgb(253, 104, 104), Color.rgb(249, 72, 73)};
+            int[] colors = {item.getBankCardSColor(), item.getBankCardEColor()};
             setBankBackground(mHolder._item_ll, colors);
             mHolder._item_type.setText(item.getBankCardType());
             mHolder._item_num.setText(XRegexUtils.cardIdHide2(item.getBankCardNum()));
             mHolder._item_name.setText(item.getBankCardName());
+            ImageLoaderManager.loadImage(item.getBankCardLogoW(), mHolder._item_icon);
+            ImageLoaderManager.loadImage(item.getBankCardLogoT(), mHolder._item_t_icon);
         } else {
+            ImageLoaderManager.loadImage(item.getBankCardLogoM(), mHolder._item_d_icon);
             mHolder._item_name.setText(item.getBankCardName() + "(" + item.getBankCardNum().substring(item.getBankCardNum().length() - 4, item.getBankCardNum().length()) + ")");
-            if (item.getBankCardCheck()) {
+            if (item.isBankCardCheck()) {
                 mHolder._item_check.setVisibility(View.VISIBLE);
             } else {
                 mHolder._item_check.setVisibility(View.GONE);
@@ -97,7 +102,7 @@ public class BankCardAdapter extends BaseAdapter {
     static class ViewHolder {
         RelativeLayout _item_ll;
         TextView _item_type, _item_name, _item_num;
-        ImageView _item_icon, _item_d_icon, _item_r_b_icon, _item_check;
+        ImageView _item_icon, _item_d_icon, _item_t_icon, _item_check;
     }
 
     /**

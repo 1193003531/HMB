@@ -331,7 +331,7 @@ public class CardShareActivity extends BaseActivity {
     private void setTopText() {
         _head_value = XEmptyUtils.isSpace(XPreferencesUtils.get("logo", "") + "") ? XPreferencesUtils.get("portrait", "") + "" : XPreferencesUtils.get("logo", "") + "";
 
-        ImageLoaderManager.loadImage(_head_value, _top_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(_head_value, _top_head, R.drawable.ic_default);
         _top_name.setText("" + XPreferencesUtils.get("name", ""));
         _top_jobs.setText("" + XPreferencesUtils.get("profession", ""));
         _top_company.setText("" + XPreferencesUtils.get("company", ""));
@@ -342,7 +342,7 @@ public class CardShareActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)
+                //BitmapFactory.decodeResource(getResources(), R.mipmap.ic_default)
                 //"" + ((int)(Math.random()*90000)+100000)
                 _share_qrcode.setImageBitmap(EncodingHandler.createQRCode(ServerApi.CARD_URL + XPreferencesUtils.get("user_id", ""), 100, 100, ((BitmapDrawable) _top_head.getDrawable()).getBitmap()));
             }

@@ -118,7 +118,7 @@ public class ShareTaskAdapter extends BaseAdapter {
 
         switch (type) {
             case ITEM_CARD:
-                ImageLoaderManager.loadImage(item.getShareTaskHead(), mHolderCard._item_head, R.drawable.ic_launcher);
+                ImageLoaderManager.loadImage(item.getShareTaskHead(), mHolderCard._item_head, R.drawable.ic_default);
                 mHolderCard._item_name.setText(item.getShareTaskName());
                 mHolderCard._item_jobs.setText(item.getShareTaskJobs());
 
@@ -137,14 +137,14 @@ public class ShareTaskAdapter extends BaseAdapter {
                 });
                 break;
             case ITEM_OTHER:
-                ImageLoaderManager.loadImage(item.getShareTaskHead(), mHolderOther._item_head, R.drawable.ic_launcher);
+                ImageLoaderManager.loadImage(item.getShareTaskHead(), mHolderOther._item_head, R.drawable.ic_default);
                 mHolderOther._item_name.setText(item.getShareTaskName());
 
                 mHolderOther._item_title.setText(item.getShareTaskTitle());
                 mHolderOther._item_time.setText(XTimeUtils.getTimeRange(item.getShareTaskTime()));
                 mHolderOther._item_browse.setText("");
 
-                ImageLoaderManager.loadImage(item.getShareTaskHead(), mHolderOther._item_head, R.drawable.ic_launcher);
+                ImageLoaderManager.loadImage(item.getShareTaskHead(), mHolderOther._item_head, R.drawable.ic_default);
                 mHolderOther._item_share_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -269,7 +269,7 @@ public class ShareTaskAdapter extends BaseAdapter {
 
         _top_ll.setBackground(context.getResources().getDrawable(id));
 
-        ImageLoaderManager.loadImage(_head_image, _top_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(_head_image, _top_head, R.drawable.ic_default);
         _top_name.setText(_name_value);
         _top_jobs.setText(_jobs_value);
         _top_company.setText(_company_value);

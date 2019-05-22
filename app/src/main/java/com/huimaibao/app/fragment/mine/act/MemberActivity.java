@@ -128,7 +128,7 @@ public class MemberActivity extends BaseActivity {
 
     /***/
     private void initData() {
-        ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), _head_image, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), _head_image, R.drawable.ic_default);
         _head_name.setText("" + XPreferencesUtils.get("name", ""));
         if (XPreferencesUtils.get("vip_level", "0").equals("0")) {
             _vip_type.setText("普通用户");

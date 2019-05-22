@@ -44,7 +44,7 @@
                     android:id="@+id/a_h_i_2_head_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     app:civ_border_width="0dp" />
 
                 <TextView
@@ -126,7 +126,7 @@
                     android:id="@+id/a_h_i_1_head_image"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     app:civ_border_width="0dp" />
 
                 <TextView
@@ -210,7 +210,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:onClick="onAction"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     app:civ_border_width="0dp" />
 
                 <TextView

@@ -195,7 +195,7 @@ public class MakingCardActivity extends PictureActivity {
         _area_id_value = "" + XPreferencesUtils.get("area", "");
 
 
-        ImageLoaderManager.loadImage(_head_value, _card_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(_head_value, _card_head, R.drawable.ic_default);
         _card_name.setText(_name_value);
         _card_jobs.setText(_jobs_value);
         _card_company.setText(_company_value);

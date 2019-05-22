@@ -52,7 +52,7 @@ public class MyQRCodeActivity extends BaseActivity {
     }
 
     private void initData() {
-        ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), _Head_iv, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(XPreferencesUtils.get("portrait", "").toString(), _Head_iv, R.drawable.ic_default);
         _name_tv.setText("" + XPreferencesUtils.get("name", ""));
         _jobs_tv.setText("" + XPreferencesUtils.get("profession", ""));
         //_industry_tv.setText(""+XPreferencesUtils.get("industry", ""));
@@ -60,11 +60,11 @@ public class MyQRCodeActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)
+                //BitmapFactory.decodeResource(getResources(), R.mipmap.ic_default)
                 //"" + ((int)(Math.random()*90000)+100000)
                 //mImageView.setImageBitmap(EncodingHandler.createQRCode(ServerApi.CARD_URL + XPreferencesUtils.get("user_id", ""), XDensityUtils.getScreenWidth() - 200, XDensityUtils.getScreenWidth() - 200, ((BitmapDrawable) _Head_iv.getDrawable()).getBitmap()));
 
-                mImageView.setImageBitmap(EncodingHandler.createQRCode(ServerApi.HOME_PAGE_WEB_URL + XPreferencesUtils.get("user_id", "") + "&platform=android", XDensityUtils.getScreenWidth() - 200, XDensityUtils.getScreenWidth() - 200, ((BitmapDrawable) _Head_iv.getDrawable()).getBitmap()));
+                mImageView.setImageBitmap(EncodingHandler.createQRCode(ServerApi.HOME_PAGE_WEB_URL + XPreferencesUtils.get("user_id", "")+ "?token=" + XPreferencesUtils.get("token", "")+ "&platform=android", XDensityUtils.getScreenWidth() - 200, XDensityUtils.getScreenWidth() - 200, ((BitmapDrawable) _Head_iv.getDrawable()).getBitmap()));
 
 
             }

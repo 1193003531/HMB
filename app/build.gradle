@@ -41,6 +41,10 @@ android {
             abortOnError false
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 
@@ -59,7 +63,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //微信登录,分享
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-
     //X5
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.jar')
     //网络框架

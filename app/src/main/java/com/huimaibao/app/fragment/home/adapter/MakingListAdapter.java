@@ -65,7 +65,7 @@ public class MakingListAdapter extends BaseAdapter {
             mHolder._item_set_btn = view.findViewById(R.id.act_p_web_item_set_btn);
 
             mHolder._item_bs_ll = view.findViewById(R.id.act_p_web_item_bs_ll);
-            mHolder._item_ss_rl = view.findViewById(R.id.act_p_web_item_ss_rl);
+            mHolder._item_ss_ll = view.findViewById(R.id.act_p_web_item_ss_ll);
 
             view.setTag(mHolder);
         } else {
@@ -79,7 +79,7 @@ public class MakingListAdapter extends BaseAdapter {
             mHolder._item_duf.setVisibility(View.GONE);
             mHolder._item_bs_ll.setVisibility(View.GONE);
             mHolder._item_time.setVisibility(View.GONE);
-            mHolder._item_ss_rl.setVisibility(View.GONE);
+            mHolder._item_ss_ll.setVisibility(View.GONE);
 
             mHolder._item_sy.setVisibility(View.VISIBLE);
             mHolder._item_ljzy_btn.setVisibility(View.VISIBLE);
@@ -94,13 +94,18 @@ public class MakingListAdapter extends BaseAdapter {
 
             mHolder._item_bs_ll.setVisibility(View.VISIBLE);
             mHolder._item_time.setVisibility(View.VISIBLE);
-            mHolder._item_ss_rl.setVisibility(View.VISIBLE);
+            mHolder._item_ss_ll.setVisibility(View.VISIBLE);
 
             mHolder._item_sy.setVisibility(View.GONE);
             mHolder._item_ljzy_btn.setVisibility(View.GONE);
         }
 
-        ImageLoaderManager.loadImage(mlItem.getMakingListImage(), mHolder._item_image, R.drawable.ic_launcher);
+        if (!mlItem.getMakingListImage().equals(mHolder._item_image.getTag())) {
+            ImageLoaderManager.loadImage(mlItem.getMakingListImage(), mHolder._item_image);
+            mHolder._item_image.setTag(mlItem.getMakingListImage());
+        }
+
+
         mHolder._item_title.setText(mlItem.getMakingListTitle());
         mHolder._item_browse.setText(mlItem.getMakingListBrowse());
         mHolder._item_share.setText(mlItem.getMakingListShare());
@@ -136,8 +141,8 @@ public class MakingListAdapter extends BaseAdapter {
         ImageView _item_duf;
         TextView _item_time, _item_title, _item_browse, _item_share, _item_sy;
         TextView _item_share_btn, _item_set_btn, _item_ljzy_btn;
-        LinearLayout _item_bs_ll;
-        RelativeLayout _item_ss_rl;
+        LinearLayout _item_bs_ll, _item_ss_ll;
+        // RelativeLayout _item_ss_ll;
     }
 
     /**

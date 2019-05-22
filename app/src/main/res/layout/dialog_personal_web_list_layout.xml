@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
+            android:background="@drawable/btn_duf"
             android:drawableTop="@drawable/home_p_web_dialog_set_icon"
             android:drawablePadding="10dp"
             android:gravity="center_horizontal"
@@ -22,27 +23,44 @@
             android:paddingBottom="30dp"
             android:text="克隆设置"
             android:textColor="@color/color333333"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_11" />
 
         <TextView
             android:id="@+id/dialog_p_w_l_amend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
+            android:background="@drawable/btn_duf"
             android:drawableTop="@drawable/home_p_web_dialog_amend_icon"
             android:drawablePadding="10dp"
             android:gravity="center_horizontal"
             android:paddingTop="30dp"
             android:paddingBottom="30dp"
-            android:text="修改"
+            android:text="修改内容"
             android:textColor="@color/color333333"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_11" />
+
+        <TextView
+            android:id="@+id/dialog_p_w_l_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_duf"
+            android:drawableTop="@drawable/home_p_web_dialog_title_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_horizontal"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="重设标题"
+            android:textColor="@color/color333333"
+            android:textSize="@dimen/text_size_11" />
 
         <TextView
             android:id="@+id/dialog_p_w_l_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
+            android:background="@drawable/btn_duf"
             android:drawableTop="@drawable/home_p_web_dialog_nol_icon"
             android:drawablePadding="10dp"
             android:gravity="center_horizontal"
@@ -50,21 +68,22 @@
             android:paddingBottom="30dp"
             android:text="设为默认"
             android:textColor="@color/color333333"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_11" />
 
         <TextView
             android:id="@+id/dialog_p_w_l_del"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
+            android:background="@drawable/btn_duf"
             android:drawableTop="@drawable/home_p_web_dialog_del_icon"
             android:drawablePadding="10dp"
             android:gravity="center_horizontal"
             android:paddingTop="30dp"
             android:paddingBottom="30dp"
-            android:text="删除"
+            android:text="删除微网"
             android:textColor="@color/color333333"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="@dimen/text_size_11" />
     </LinearLayout>
 
     <View
@@ -76,9 +95,11 @@
         android:id="@+id/dialog_p_w_l_cancel"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:background="@drawable/btn_duf"
         android:gravity="center"
         android:text="取消"
-        android:textColor="@color/color101010"
-        android:textSize="16sp" />
+        android:textColor="@color/FF333333"
+        android:textSize="@dimen/text_size_20"
+        android:textStyle="bold" />
 
 </LinearLayout>

@@ -34,7 +34,7 @@
                     android:id="@+id/finds_list_comment_item_head"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     app:civ_border_width="0dp" />
 
                 <TextView

@@ -228,8 +228,8 @@ public class Card2Adapter extends BaseAdapter {
 
         _top_ll.setBackground(context.getResources().getDrawable(id));
 
-//        XImage.getInstance().load(_top_head, _head_value, R.drawable.ic_launcher);
-        ImageLoaderManager.loadImage(_head_image,_top_head,R.drawable.ic_launcher);
+//        XImage.getInstance().load(_top_head, _head_value, R.drawable.ic_default);
+        ImageLoaderManager.loadImage(_head_image,_top_head,R.drawable.ic_default);
         _top_name.setText(_name_value);
         _top_jobs.setText(_jobs_value);
         _top_company.setText(_company_value);

@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
@@ -15,7 +13,6 @@ import com.huimaibao.app.fragment.mine.entity.CardEntity;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.widget.CircleImageView;
-import com.youth.xframe.widget.RoundedImagView;
 
 import java.util.List;
 
@@ -90,7 +87,7 @@ public class CardAdapter extends BaseAdapter {
         }
 
 
-        ImageLoaderManager.loadImage(ilItem.getCardHead(), mHolder._item_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(ilItem.getCardHead(), mHolder._item_head, R.drawable.ic_default);
         mHolder._item_name.setText(XEmptyUtils.isSpace(ilItem.getCardName()) ? "" : ilItem.getCardName());
         mHolder._item_content.setText((XEmptyUtils.isSpace(ilItem.getCardJobs()) ? "" : ilItem.getCardJobs()) + "/" + (XEmptyUtils.isSpace(ilItem.getCardCompany()) ? "" : ilItem.getCardCompany()));
 

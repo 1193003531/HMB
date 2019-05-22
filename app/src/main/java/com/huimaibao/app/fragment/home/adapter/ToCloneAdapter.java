@@ -66,8 +66,16 @@ public class ToCloneAdapter extends BaseAdapter {
 
         ToCloneEntity tcItem = getItem(position);
 
-        ImageLoaderManager.loadImage( tcItem.getToCloneHead(), mHolder._item_Head, R.drawable.ic_launcher);
-        ImageLoaderManager.loadImage( tcItem.getToCloneImage(), mHolder._item_image, R.drawable.ic_launcher);
+        if (!tcItem.getToCloneHead().equals(mHolder._item_Head.getTag())) {
+            ImageLoaderManager.loadImage(tcItem.getToCloneHead(), mHolder._item_Head, R.drawable.ic_default);
+            mHolder._item_Head.setTag(tcItem.getToCloneHead());
+        }
+
+        if (!tcItem.getToCloneImage().equals(mHolder._item_image.getTag())) {
+            ImageLoaderManager.loadImage(tcItem.getToCloneImage(), mHolder._item_image, R.drawable.ic_default);
+            mHolder._item_image.setTag(tcItem.getToCloneImage());
+        }
+
 
         mHolder._item_num.setText("NO." + (position + 1));
         mHolder._item_browse.setText(tcItem.getToCloneBrowse() + "人使用");

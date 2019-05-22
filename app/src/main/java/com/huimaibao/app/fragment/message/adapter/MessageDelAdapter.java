@@ -82,7 +82,7 @@ public class MessageDelAdapter extends BaseAdapter {
             if (msg.getMessageId().equals("0")) {
                 mHolder._item_image.setImageResource(R.drawable.msg_xt_3_icon);
             } else {
-                ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_launcher);
+                ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_default);
             }
 
             if (XEmptyUtils.isSpace(msg.getMessageName())) {
@@ -100,7 +100,7 @@ public class MessageDelAdapter extends BaseAdapter {
             }
         } else {
             mHolder._item_ll.setVisibility(View.VISIBLE);
-            ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_launcher);
+            ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_default);
             mHolder._item_name.setText(msg.getMessageName());
             mHolder._item_content.setText(msg.getMessageContent());
             mHolder._item_time.setText(XTimeUtils.getTimeRange(msg.getMessageTime()));

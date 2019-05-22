@@ -12,6 +12,7 @@
     <color name="main_color">#f56900</color>
     <color name="main_color_s">#de5c00</color>
     <color name="main_color_n">#f3ccb0</color>
+    <color name="main_color_fef0e5">#fef0e5</color>
     <!--常用色-->
     <color name="_34394C">#34394C</color>
     <color name="_484F64">#484F64</color>
@@ -100,6 +101,7 @@
     <color name="e0e0e0">#e0e0e0</color>
     <color name="e8e8e8">#e8e8e8</color>
     <color name="white">#ffffff</color>
+    <color name="white_main">#aaffffff</color>
     <color name="white_50">#50ffffff</color>
     <color name="white_80">#80ffffff</color>
     <color name="transparent">#00000000</color>

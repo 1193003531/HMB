@@ -396,7 +396,7 @@ public class HomeFragment extends BaseFragment {
                     itemName.setId(i);
                     itemName.setText(iLData.get(i).getIncomeName());
                     itemMoney.setText("总收入￥" + iLData.get(i).getIncomeMoney());
-                    ImageLoaderManager.loadImage(iLData.get(i).getIncomeImage(), itemImage, R.drawable.ic_launcher);
+                    ImageLoaderManager.loadImage(iLData.get(i).getIncomeImage(), itemImage, R.drawable.ic_default);
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -746,10 +746,12 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // if ((boolean) XPreferencesUtils.get("has_usertemp", false)) {
-                startActivity(PersonalWebActivity.class, "产品微网");
+                               startActivity(PersonalWebActivity.class, "产品微网");
 //                } else {
 //                    startActivity(MessageWebActivity.class, "个人微网", "http://weixin.51huimaibao.cn/#/tools/personal/customTemplate/");
 //                }
+
+                //startActivity(MessageWebActivity.class, "产品微网", ServerApi.PRODUCT_WEB_URL);
 
             }
         });

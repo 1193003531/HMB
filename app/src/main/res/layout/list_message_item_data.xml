@@ -19,7 +19,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginLeft="@dimen/paddingLeft"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/ic_default"
             app:civ_border_color="@color/A5A8B6"
             app:civ_border_width="2dp" />
 

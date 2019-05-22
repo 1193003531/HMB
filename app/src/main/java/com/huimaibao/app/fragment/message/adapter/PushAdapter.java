@@ -60,7 +60,7 @@ public class PushAdapter extends BaseAdapter {
 
         MessageEntity msg = getItem(position);
 
-        ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(msg.getMessageImage(),mHolder._item_image,R.drawable.ic_default);
         mHolder._item_time.setText(msg.getMessageTime());
         mHolder._item_title.setText(msg.getMessageName());
         mHolder._item_content.setText(msg.getMessageContent());

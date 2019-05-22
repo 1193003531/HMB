@@ -1,8 +1,10 @@
 package com.youth.xframe.utils;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.net.Uri;
 
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.widget.XToast;
 
 import java.io.File;
@@ -341,6 +343,26 @@ public final class XFileUtils {
         }
         return size;
     }
+
+
+    /**
+     * 清除缓存
+     */
+    public static void deleteCacheDirFile(Context mContext) {
+        File cutDir = mContext.getCacheDir();
+        //LogUtils.debug("cutDir:"+cutDir);
+        if (cutDir != null) {
+            File[] files = cutDir.listFiles();
+            for (File file : files) {
+                if (file.isFile()) {
+                    file.delete();
+                }
+            }
+        }
+
+
+    }
+
 
     /**
      * 删除指定文件夹下所有文件

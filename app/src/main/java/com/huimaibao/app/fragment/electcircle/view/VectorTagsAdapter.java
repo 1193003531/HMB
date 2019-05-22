@@ -3,8 +3,6 @@ package com.huimaibao.app.fragment.electcircle.view;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,7 +45,7 @@ public class VectorTagsAdapter extends TagsAdapter {
 //        CircleImageView imageView2 = view.findViewById(R.id.vector_img_iv);
 //        imageView2.setTag("" + position);
 //        imageView2.setImageResource(R.color.tagLight);
-        ImageLoaderManager.loadImage(dataSet.get(position).get("headImage").toString(), imageView, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(dataSet.get(position).get("headImage").toString(), imageView, R.drawable.ic_default);
         imageView.setTag("" + position);
 //        imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override

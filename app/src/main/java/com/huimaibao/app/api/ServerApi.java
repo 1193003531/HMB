@@ -26,7 +26,7 @@ public interface ServerApi {
     /**
      * 域名-开发环境
      */
-    //测试服
+//    //测试服
     String SERVER_URL = "http://api.yuhongrocky.top";
     String SERVER_WEB_URL = "http://weixin.yuhongrocky.top";
 
@@ -51,10 +51,18 @@ public interface ServerApi {
      */
     String PERSONAL_DETAILS_URL = SERVER_WEB_URL + "/#/webPage/";
     String PERSONAL_DETAILS_URL2 = SERVER_WEB_URL + "/#/app/webPage/";
+
     /**
      * 克隆
      */
     String PERSONAL_CLONE_URL = SERVER_WEB_URL + "/#/app/clone/";
+
+    /**
+     * 用户互推圈网址链接
+     */
+    String ELECT_WEB_URL = SERVER_WEB_URL + "/#/app/match?";
+
+
     /**
      * 用户主页
      */
@@ -81,13 +89,14 @@ public interface ServerApi {
      */
     String CARD_URL = SERVER_WEB_URL + "/#/card/detail/";
     /**
+     * 产品微网
+     */
+    String PRODUCT_WEB_URL = SERVER_WEB_URL + "/#/activity/product" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
+    /**
      * 产品价值
      */
     String PRODUCT_URL = SERVER_WEB_URL + "/#/activity/product" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android";
-    /**
-     * 用户互推圈网址链接
-     */
-    String ELECT_WEB_URL = SERVER_WEB_URL + "/#/app/match?";
+
     /**
      * 主页
      */
@@ -334,6 +343,7 @@ public interface ServerApi {
      * 删除个人网页delelt
      */
     String USER_AMEND_URL = SERVER_URL + "/front/personal_page/customs/";
+
 
     /**
      * /front/personal_page/user_default_temp/{id}

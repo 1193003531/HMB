@@ -1,6 +1,7 @@
 package com.huimaibao.app.fragment.mine.bank;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +13,7 @@ import com.huimaibao.app.fragment.mine.entity.BankCardEntity;
 import com.huimaibao.app.fragment.mine.server.WalletLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 import com.youth.xframe.widget.NoScrollListView;
@@ -50,7 +52,7 @@ public class BankCardActivity extends BaseActivity {
         setTopRight(false, true, false, "", null);
 
         initView();
-         initData();
+        initData();
     }
 
     /***/
@@ -62,25 +64,16 @@ public class BankCardActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 XPreferencesUtils.put("BankCardId", ListData.get(position).getBankCardId());
-                startActivity(BankCardDetailActivity.class, ListData.get(position).getBankCardName(), ListData.get(position).getBankCardNum());
+
+                Bundle bundle = new Bundle();
+                bundle.putString("BankCardName", ListData.get(position).getBankCardName());
+                bundle.putString("BankCardNum", ListData.get(position).getBankCardNum());
+                bundle.putString("BankCardLogo", ListData.get(position).getBankCardLogoM());
+
+                startActivity(BankCardDetailActivity.class, bundle);
             }
         });
 
-//        ListData = new ArrayList<>();
-//
-//        for (int i = 0; i < 10; i++) {
-//            BankCardEntity entity = new BankCardEntity();
-//            entity.setBankCardId("" + i);
-//            entity.setBankCardName("工商银行" + i);
-//            entity.setBankCardNum("621023541256452168");
-//            entity.setBankCardType("储蓄卡");
-//            entity.setBankCardSColor(0xFFfd6868);
-//            entity.setBankCardEColor(0xFFf94849);
-//            ListData.add(entity);
-//        }
-//
-//        mAdapter = new BankCardAdapter(mActivity, ListData, "0");
-//        mListView.setAdapter(mAdapter);
     }
 
     /***/
@@ -125,6 +118,21 @@ public class BankCardActivity extends BaseActivity {
                             entity.setBankCardId(array.getJSONObject(i).getString("id"));
                             entity.setBankCardName(array.getJSONObject(i).getString("bank_name"));
                             entity.setBankCardNum(array.getJSONObject(i).getString("card_no"));
+                            entity.setBankCardLogoM(array.getJSONObject(i).optString("multi_logo_path", ""));
+                            entity.setBankCardLogoT(array.getJSONObject(i).optString("transparent_logo_path", ""));
+                            entity.setBankCardLogoW(array.getJSONObject(i).optString("white_logo_path", ""));
+
+                            if (XEmptyUtils.isSpace(array.getJSONObject(i).optString("begin_rgb", "fd6868"))) {
+                                entity.setBankCardSColor(Color.parseColor("#" + "fd6868"));
+                            } else {
+                                entity.setBankCardSColor(Color.parseColor("#" + (array.getJSONObject(i).optString("begin_rgb", "fd6868"))));
+                            }
+                            if (XEmptyUtils.isSpace(array.getJSONObject(i).optString("end_rgb", "f94849"))) {
+                                entity.setBankCardEColor(Color.parseColor("#" + "f94849"));
+                            } else {
+                                entity.setBankCardEColor(Color.parseColor("#" + (array.getJSONObject(i).optString("end_rgb", "f94849"))));
+                            }
+
                             entity.setBankCardType("储蓄卡");
                             ListData.add(entity);
                         }
@@ -145,12 +153,14 @@ public class BankCardActivity extends BaseActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.debug("json:" + e.toString());
                 }
             }
 
             @Override
             public void onFailed(String error) {
                 //XLog.e("error:" + error);
+                LogUtils.debug("json:" + error);
             }
         });
     }

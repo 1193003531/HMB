@@ -231,7 +231,7 @@ public class WXShare {
         //options.inJustDecodeBounds = true;
         if (XEmptyUtils.isSpace(imgUrl)) {
             msg.thumbData = WXUtils.bmpToByteArray(BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.layer_share_icon), true);
-            //msg.setThumbImage(BitmapFactory.decodeResource(mActivity.getResources(), R.mipmap.ic_launcher));
+            //msg.setThumbImage(BitmapFactory.decodeResource(mActivity.getResources(), R.mipmap.ic_default));
         } else {
             Bitmap thumb;
             try {

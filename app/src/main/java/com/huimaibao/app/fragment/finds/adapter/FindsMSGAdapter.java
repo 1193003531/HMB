@@ -75,10 +75,10 @@ public class FindsMSGAdapter extends BaseAdapter {
             mHolder._item_image.setVisibility(View.GONE);
         } else {
             mHolder._item_image.setVisibility(View.VISIBLE);
-            ImageLoaderManager.loadImage(item.getFindsImage(), mHolder._item_image, R.drawable.ic_launcher);
+            ImageLoaderManager.loadImage(item.getFindsImage(), mHolder._item_image, R.drawable.ic_default);
         }
 
-        ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head, R.drawable.ic_default);
         mHolder._item_name.setText(item.getFindsUserName());
         mHolder._item_time.setText(XTimeUtils.getTimeRangeS(item.getFindsTime()));
 

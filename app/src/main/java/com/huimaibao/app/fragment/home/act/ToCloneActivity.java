@@ -49,7 +49,7 @@ public class ToCloneActivity extends BaseActivity {
 
     private String _to_clone_value = "";
 
-    private int countPage = 1;
+    private int countPage = 1, last_page = 1;
 
     private DialogUtils mDialogUtils;
 
@@ -86,6 +86,7 @@ public class ToCloneActivity extends BaseActivity {
                                     int position, long id) {
                 //startActivity(MessageWebActivity.class, "个人微网", ServerApi.PERSONAL_DETAILS_URL + "detail/" + listData.get(position).getToCloneId());
                 Bundle bundle = new Bundle();
+                bundle.putString("userId", listData.get(position).getToCloneUserId());
                 bundle.putString("id", listData.get(position).getToCloneId());
                 bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + listData.get(position).getToCloneId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
                 bundle.putString("share_title", listData.get(position).getToCloneTitle());
@@ -140,7 +141,12 @@ public class ToCloneActivity extends BaseActivity {
 
     private void loadMoreData() {
         countPage++;
-        getData(countPage, false);
+        if (countPage <= last_page) {
+            getData(countPage, false);
+        }else{
+            // 加载完数据设置为不加载状态，将加载进度收起来
+            mSwipeRefreshView.setLoading(false);
+        }
     }
 
 
@@ -172,12 +178,13 @@ public class ToCloneActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    LogUtils.debug("home=s=" + json);
+                    LogUtils.debug("json:" + json);
                     String status = json.getString("status");
                     String message = json.getString("message");
                     String data = json.getString("data");
                     if (status.equals("0")) {
                         JSONArray array = new JSONArray(json.getJSONObject("data").getString("rank"));
+                        last_page = new JSONObject(json.getJSONObject("data").optString("meta", "")).optInt("last_page", 1);
 //                        XLog.d("array:" + array);
                         if (countPage == 1) {
                             listData = new ArrayList<>();
@@ -197,6 +204,7 @@ public class ToCloneActivity extends BaseActivity {
                             entity.setToCloneMoney(array.getJSONObject(i).getString("clone_price"));
                             entity.setToCloneHead(array.getJSONObject(i).getJSONObject("user").getString("portrait"));
                             entity.setToCloneName(array.getJSONObject(i).getJSONObject("user").getString("name"));
+                            entity.setToCloneUserId(array.getJSONObject(i).getJSONObject("user").getString("id"));
                             listData.add(entity);
                         }
                         mActivity.runOnUiThread(new Runnable() {
@@ -318,6 +326,8 @@ public class ToCloneActivity extends BaseActivity {
                 if (mSwipeRefreshView.isRefreshing()) {
                     mSwipeRefreshView.setRefreshing(false);
                 }
+                // 加载完数据设置为不加载状态，将加载进度收起来
+                mSwipeRefreshView.setLoading(false);
             }
         });
     }

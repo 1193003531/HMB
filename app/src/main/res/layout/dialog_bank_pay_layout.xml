@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="24dp"
+                android:background="@drawable/btn_duf"
                 android:paddingRight="24dp"
                 android:src="@drawable/wallet_bank_pay_exit_icon" />
         </RelativeLayout>

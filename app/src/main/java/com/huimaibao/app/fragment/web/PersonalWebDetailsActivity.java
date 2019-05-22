@@ -12,10 +12,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.JavascriptInterface;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
@@ -23,7 +29,6 @@ import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseActivity;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.home.server.HomeLogic;
-import com.huimaibao.app.fragment.mine.act.CardClipDetailActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
 import com.huimaibao.app.fragment.mine.act.MemberActivity;
 import com.huimaibao.app.http.ResultBack;
@@ -43,8 +48,9 @@ import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XStringUtils;
-import com.youth.xframe.widget.XToast;
 import com.youth.xframe.widget.CircleImageView;
+import com.youth.xframe.widget.GifView;
+import com.youth.xframe.widget.XToast;
 
 import org.json.JSONObject;
 
@@ -64,10 +70,14 @@ public class PersonalWebDetailsActivity extends BaseActivity {
 
     private DialogUtils mDialogUtils;
 
-    //用户头像，克隆，感兴趣，分享
+    //底部消息
+    private LinearLayout _bottom_ll,_interested_ll;
+    private ImageView _share_btn;
+    private GifView _interested_gif;
+    //用户头像，克隆，分享数量
     private CircleImageView _head_iv;
-    private TextView _clone_tv, _interest_tv, _interest_num, _share_num;
-    private String _personal_id_value = "", _user_id_value = "", _head_value = "", _name_value = "", _clone_money_value = "", _interest_num_value = "", _share_num_value = "";
+    private TextView _clone_tv, _interested_tv, _share_num;
+    private String _personal_id_value = "", _user_id_value = "", _head_value = "", _clone_money_value = "", _share_num_value = "";
     private String is_clone = "0";
     private boolean is_interest = false;
 
@@ -90,6 +100,7 @@ public class PersonalWebDetailsActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent.getAction().equals("two")) {
             Bundle bundle = intent.getExtras();
+            _user_id_value = bundle.getString("userId");
             _personal_id_value = bundle.getString("id");
             mUrl = bundle.getString("vUrl");
             share_title = bundle.getString("share_title");
@@ -111,14 +122,24 @@ public class PersonalWebDetailsActivity extends BaseActivity {
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(ReportActivity.class, "名片", _user_id_value);
+                        startActivity(ReportActivity.class, "网页", _user_id_value);
                         mDialogUtils.dismissDialog();
                     }
                 });
             }
         });
         init();
-        initData();
+
+        if (_user_id_value.equals("" + XPreferencesUtils.get("user_id", ""))) {
+            _bottom_ll.setVisibility(View.GONE);
+            _share_btn.setVisibility(View.VISIBLE);
+            _interested_ll.setVisibility(View.GONE);
+        } else {
+            _bottom_ll.setVisibility(View.VISIBLE);
+            _share_btn.setVisibility(View.GONE);
+            _interested_ll.setVisibility(View.VISIBLE);
+            initData();
+        }
     }
 
     /**
@@ -126,12 +147,54 @@ public class PersonalWebDetailsActivity extends BaseActivity {
      */
     public void init() {
 
+        _bottom_ll = findViewById(R.id.personal_web_details_rl);
         _head_iv = findViewById(R.id.personal_web_details_head);
         _clone_tv = findViewById(R.id.personal_web_details_clone);
-        _interest_tv = findViewById(R.id.personal_web_details_interest_tv);
-        _interest_num = findViewById(R.id.personal_web_details_interest_num);
         _share_num = findViewById(R.id.personal_web_details_share_num);
 
+        _interested_gif = findViewById(R.id.personal_web_details_interested_gif);
+        _interested_ll = findViewById(R.id.personal_web_details_interested_btn);
+        _interested_tv = findViewById(R.id.personal_web_details_interested_tv);
+        _share_btn = findViewById(R.id.personal_web_details_share_btn);
+
+        final Animation a = AnimationUtils.loadAnimation(this, R.anim.scalebig);
+        a.setFillAfter(true);
+        final Animation b = AnimationUtils.loadAnimation(this, R.anim.scalesmall);
+        b.setFillAfter(true);
+        _interested_tv.startAnimation(a);
+        a.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                _interested_tv.startAnimation(b);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        b.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                _interested_tv.startAnimation(a);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         mWebView = findViewById(R.id.personal_web_details_wv);
         WebSettings webSettings = mWebView.getSettings();
@@ -221,7 +284,7 @@ public class PersonalWebDetailsActivity extends BaseActivity {
         });
 
 
-        LogUtils.debug("mUrl:" + mUrl);
+        LogUtils.debug("json:" + mUrl);
 
         mWebView.loadUrl(mUrl);
         //mWebView.loadUrl("http://weixin.yuhongrocky.top/#/app/match?materialType=1&materialId=784");
@@ -245,9 +308,9 @@ public class PersonalWebDetailsActivity extends BaseActivity {
                 startActivity(HomePageWebActivity.class, "", ServerApi.HOME_PAGE_WEB_URL + _user_id_value + ServerApi.HOME_PAGE_WEB_TOKEN);
                 break;
             //名片
-            case R.id.personal_web_details_card:
-                startActivity(CardClipDetailActivity.class, _user_id_value);
-                break;
+//            case R.id.personal_web_details_card:
+//                startActivity(CardClipDetailActivity.class, _user_id_value);
+//                break;
             //克隆
             case R.id.personal_web_details_clone:
                 if (XPreferencesUtils.get("vip_level", "0").equals("0")) {
@@ -268,20 +331,31 @@ public class PersonalWebDetailsActivity extends BaseActivity {
                 }
                 break;
             //感兴趣
-            case R.id.personal_web_details_interest:
+            case R.id.personal_web_details_interested_gif:
+            case R.id.personal_web_details_interested_tv:
+            case R.id.personal_web_details_interested_btn:
+                //
                 if (XPreferencesUtils.get("user_id", "").equals(_user_id_value)) {
                     showToast("自己不能对自己感兴趣");
                 } else {
                     if (is_interest) {
                         showToast("已经感兴趣过了");
                     } else {
+                        _interested_ll.setVisibility(View.GONE);
+                        _interested_gif.setMovieResource(R.raw.personal_web_details_interested_gif);
+                        new Handler().postDelayed(new Runnable() {
+                            public void run() {
+                                _interested_gif.setPaused(true);
+                            }
+                        }, 1000);
                         getAddInterest();
                     }
                 }
 
                 break;
             //分享
-            case R.id.personal_web_details_share:
+            case R.id.personal_web_details_share_btn:
+            case R.id.personal_web_details_share_num:
                 setShare(share_title, share_des, ServerApi.PERSONAL_DETAILS_URL + "detail/" + _personal_id_value, share_imageUrl);
                 break;
         }
@@ -508,21 +582,21 @@ public class PersonalWebDetailsActivity extends BaseActivity {
                             JSONObject userData = new JSONObject(data.optString("user"));
                             _head_value = userData.optString("portrait", "");
                             _user_id_value = userData.optString("id", "");
-                            _name_value = userData.optString("name", "");
+                            //_name_value = userData.optString("name", "");
                         } catch (Exception e) {
                             _user_id_value = data.optString("user_id", "");
                         }
                         is_clone = data.optString("is_clone", "");
                         is_interest = data.optBoolean("is_interest", false);
                         _clone_money_value = data.optString("clone_price", "");
-                        _interest_num_value = data.optString("interest", "");
+                        //_interest_num_value = data.optString("interest", "");
                         _share_num_value = data.optString("share", "");
                         share_des = data.optString("motto", "");
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_launcher);
+                                ImageLoaderManager.loadImage(_head_value, _head_iv, R.drawable.ic_default);
                                 if (XPreferencesUtils.get("user_id", "").equals(_user_id_value)) {
                                     _clone_tv.setVisibility(View.GONE);
                                     is_interest = false;
@@ -539,13 +613,13 @@ public class PersonalWebDetailsActivity extends BaseActivity {
                                     }
                                 }
 
-                                if (is_interest) {
-                                    _interest_tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.personal_web_details_interest_true_icon), null, null);
-                                } else {
-                                    _interest_tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.personal_web_details_interest_false_icon), null, null);
-                                }
-
-                                _interest_num.setText(_interest_num_value);
+//                                if (is_interest) {
+//                                    _interest_tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.personal_web_details_interest_true_icon), null, null);
+//                                } else {
+//                                    _interest_tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.personal_web_details_interest_false_icon), null, null);
+//                                }
+//
+//                                _interest_num.setText(_interest_num_value);
                                 _share_num.setText(_share_num_value);
 
                                 //setTopTitle(_name_value + "的网页");
@@ -634,7 +708,7 @@ public class PersonalWebDetailsActivity extends BaseActivity {
                             public void run() {
                                 showToast("感兴趣成功");
                                 is_interest = true;
-                                _interest_tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.personal_web_details_interest_true_icon), null, null);
+                                //_interest_tv.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.personal_web_details_interest_true_icon), null, null);
                             }
                         });
                     } else {

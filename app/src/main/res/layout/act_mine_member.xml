@@ -42,7 +42,7 @@
                         android:id="@+id/member_vip_head_image"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_launcher" />
+                        android:src="@drawable/ic_default" />
 
                     <TextView
                         android:id="@+id/member_vip_head_name"

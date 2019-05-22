@@ -15,7 +15,6 @@ import com.huimaibao.app.fragment.electcircle.entity.ShareTaskEntity;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
-import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.RoundedImagView;
@@ -203,8 +202,8 @@ public class ShareRecordAdapter extends BaseAdapter {
             }
         }
 
-        ImageLoaderManager.loadImage(item.getShareTaskHead(), holderOther._item_head, R.drawable.ic_launcher);
-        ImageLoaderManager.loadImage(item.getShareTaskImage(), holderOther._item_other_iv, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(item.getShareTaskHead(), holderOther._item_head, R.drawable.ic_default);
+        ImageLoaderManager.loadImage(item.getShareTaskImage(), holderOther._item_other_iv, R.drawable.ic_default);
 
         holderOther._item_name.setText(XEmptyUtils.isSpace(item.getShareTaskName()) ? "未命名" : item.getShareTaskName());
 
@@ -291,7 +290,7 @@ public class ShareRecordAdapter extends BaseAdapter {
             }
         }
 
-        ImageLoaderManager.loadImage(item.getShareTaskHead(), holderCard._item_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(item.getShareTaskHead(), holderCard._item_head, R.drawable.ic_default);
 
         holderCard._item_name.setText(XEmptyUtils.isSpace(item.getShareTaskName()) ? "未命名" : item.getShareTaskName());
         holderCard._item_jobs.setText(item.getShareTaskJobs());
@@ -389,7 +388,7 @@ public class ShareRecordAdapter extends BaseAdapter {
 
         _top_ll.setBackground(context.getResources().getDrawable(id));
 
-        ImageLoaderManager.loadImage(_head_image, _top_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(_head_image, _top_head, R.drawable.ic_default);
 
         _top_name.setText(_name_value);
         _top_jobs.setText(_jobs_value);

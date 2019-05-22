@@ -3,32 +3,23 @@ package com.huimaibao.app.fragment.finds.act;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseActivity;
-import com.huimaibao.app.base.BaseApplication;
-import com.huimaibao.app.fragment.finds.adapter.FindsAdapter;
 import com.huimaibao.app.fragment.finds.adapter.FindsCommentsAdapter;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentEntity;
 import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
-import com.huimaibao.app.fragment.finds.entity.FindsCommentsEntity;
-import com.huimaibao.app.fragment.finds.entity.FindsEntity;
 import com.huimaibao.app.fragment.finds.server.FindsLogic;
 import com.huimaibao.app.fragment.home.act.ReportActivity;
 import com.huimaibao.app.fragment.mine.act.FeedbackActivity;
@@ -39,23 +30,18 @@ import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
 import com.huimaibao.app.view.FriendsCircleImageLayout;
-import com.huimaibao.app.view.NineGridViewLayout;
-import com.youth.xframe.common.XActivityStack;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XDensityUtils;
 import com.youth.xframe.utils.XEmptyUtils;
-import com.youth.xframe.utils.XFileUtils;
 import com.youth.xframe.utils.XFrameAnimation;
 import com.youth.xframe.utils.XKeyboardUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
-import com.youth.xframe.utils.XScrollViewUtils;
 import com.youth.xframe.utils.XStringUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.widget.CircleImageView;
 import com.youth.xframe.widget.GifView;
 import com.youth.xframe.widget.NoScrollListView;
 import com.youth.xframe.widget.XScrollView;
-import com.youth.xframe.widget.XToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -324,13 +310,19 @@ public class FindsCommentsActivity extends BaseActivity {
         }
 
 
-        ImageLoaderManager.loadImage(_dy_head_value, _top_head, R.drawable.ic_launcher);
-        ImageLoaderManager.loadImage(_dy_head_value, _item_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(_dy_head_value, _top_head, R.drawable.ic_default);
+        ImageLoaderManager.loadImage(_dy_head_value, _item_head, R.drawable.ic_default);
 
 
         _top_name.setText(_dy_name_value.length() > 5 ? _dy_name_value.substring(0, 5) : _dy_name_value);
         _item_name.setText(_dy_name_value);
-        _item_content.setText(XStringUtils.ToDBC(_dy_content_value));
+        if (XEmptyUtils.isSpace(_dy_content_value)) {
+            _item_content.setVisibility(View.GONE);
+        } else {
+            _item_content.setVisibility(View.VISIBLE);
+            _item_content.setText(XStringUtils.ToDBC(_dy_content_value));
+        }
+
         _item_time.setText(XTimeUtils.getTimeRangeS(_dy_time_value));
         _item_comments_num.setText(_dy_comments_num_value + "条评论");
         _top_comment_num.setText(_dy_comments_num_value + "条评论");

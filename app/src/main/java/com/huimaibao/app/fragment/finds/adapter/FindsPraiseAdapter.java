@@ -63,7 +63,7 @@ public class FindsPraiseAdapter extends BaseAdapter {
         final FindsPraiseEntity item = getItem(position);
 
 
-        ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(item.getFindsUserHead(), mHolder._item_head, R.drawable.ic_default);
         mHolder._item_name.setText(item.getFindsUserName());
 
         convertView.setOnClickListener(new View.OnClickListener() {

@@ -83,13 +83,13 @@ public class CollectionAdapter extends BaseAdapter {
         if (ilItem.getCollectionType().equals("1")) {
             mHolder._item_image.setVisibility(View.GONE);
             mHolder._item_image_ll.setVisibility(View.VISIBLE);
-            ImageLoaderManager.loadImage(ilItem.getCollectionImage1(), mHolder._item_image_1, R.drawable.ic_launcher);
-            ImageLoaderManager.loadImage(ilItem.getCollectionImage2(), mHolder._item_image_2, R.drawable.ic_launcher);
-            ImageLoaderManager.loadImage(ilItem.getCollectionImage3(), mHolder._item_image_3, R.drawable.ic_launcher);
+            ImageLoaderManager.loadImage(ilItem.getCollectionImage1(), mHolder._item_image_1, R.drawable.ic_default);
+            ImageLoaderManager.loadImage(ilItem.getCollectionImage2(), mHolder._item_image_2, R.drawable.ic_default);
+            ImageLoaderManager.loadImage(ilItem.getCollectionImage3(), mHolder._item_image_3, R.drawable.ic_default);
         } else {
             mHolder._item_image.setVisibility(View.VISIBLE);
             mHolder._item_image_ll.setVisibility(View.GONE);
-            ImageLoaderManager.loadImage(ilItem.getCollectionImage(), mHolder._item_image, R.drawable.ic_launcher);
+            ImageLoaderManager.loadImage(ilItem.getCollectionImage(), mHolder._item_image, R.drawable.ic_default);
         }
 
 

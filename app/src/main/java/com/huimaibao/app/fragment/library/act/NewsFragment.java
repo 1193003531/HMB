@@ -299,7 +299,7 @@ public class NewsFragment extends Fragment {
             columnName.setId(i);
             columnImage.setTag(i + "");
             ImageLoaderManager.loadImage(userList.get(i).getFocusOnUserHead(), columnImage);
-            //XImage.getInstance().load(columnImage, "http://n.sinaimg.cn/tech/crawl/93/w550h343/20181109/h6aT-hnprhzw6400508.jpg", R.drawable.ic_launcher);
+            //XImage.getInstance().load(columnImage, "http://n.sinaimg.cn/tech/crawl/93/w550h343/20181109/h6aT-hnprhzw6400508.jpg", R.drawable.ic_default);
             columnName.setText(userList.get(i).getFocusOnUserName());
 
 

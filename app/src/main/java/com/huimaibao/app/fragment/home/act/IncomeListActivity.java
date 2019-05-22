@@ -249,9 +249,9 @@ public class IncomeListActivity extends BaseActivity {
                                     _i_2_money.setText("总收入￥" + mlList.get(1).getIncomeMoney());
                                     _i_3_name.setText(mlList.get(2).getIncomeName());
                                     _i_3_money.setText("总收入￥" + mlList.get(2).getIncomeMoney());
-                                    ImageLoaderManager.loadImage(mlList.get(0).getIncomeImage(), _i_1_head, R.drawable.ic_launcher);
-                                    ImageLoaderManager.loadImage(mlList.get(1).getIncomeImage(), _i_2_head, R.drawable.ic_launcher);
-                                    ImageLoaderManager.loadImage(mlList.get(2).getIncomeImage(), _i_3_head, R.drawable.ic_launcher);
+                                    ImageLoaderManager.loadImage(mlList.get(0).getIncomeImage(), _i_1_head, R.drawable.ic_default);
+                                    ImageLoaderManager.loadImage(mlList.get(1).getIncomeImage(), _i_2_head, R.drawable.ic_default);
+                                    ImageLoaderManager.loadImage(mlList.get(2).getIncomeImage(), _i_3_head, R.drawable.ic_default);
                                 }
 
                                 _no_data.setVisibility(View.GONE);

@@ -22,9 +22,9 @@
         android:paddingRight="15dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/wallet_bank_2_icon" />
+            android:id="@+id/withdrawal_bank_card_logo"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"

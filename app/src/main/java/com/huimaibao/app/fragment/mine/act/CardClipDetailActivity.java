@@ -217,8 +217,8 @@ public class CardClipDetailActivity extends BaseActivity {
             setTopTextColor(R.color.color000000, R.color.color333333, R.color.color333333);
         }
 
-        ImageLoaderManager.loadImage(_head_value, _bottom_head, R.drawable.ic_launcher);
-        ImageLoaderManager.loadImage(_head_value, _top_head, R.drawable.ic_launcher);
+        ImageLoaderManager.loadImage(_head_value, _bottom_head, R.drawable.ic_default);
+        ImageLoaderManager.loadImage(_head_value, _top_head, R.drawable.ic_default);
         _top_name.setText(_name_value);
         _top_jobs.setText(_jobs_value);
         _top_company.setText(_company_value);

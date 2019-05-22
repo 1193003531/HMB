@@ -3,8 +3,10 @@ package com.huimaibao.app.fragment.home.act;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -46,6 +48,9 @@ import java.util.List;
  */
 public class PersonalWebActivity extends BaseActivity {
 
+    //引导
+    private LinearLayout _guide_ll;
+
     private String mType = "";
 
     private WXShare mWxShare;
@@ -59,9 +64,13 @@ public class PersonalWebActivity extends BaseActivity {
     private MakingListAdapter mAdapter;
     private List<MakingListEntity> listData;
 
+    //视频
+    private View mTopView;
+    private ImageView _top_video_iv;
+
     private String _personal_id_value = "";
 
-    private int countPage = 1;
+    private int countPage = 1, last_page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +91,27 @@ public class PersonalWebActivity extends BaseActivity {
             }
         });
 
+        init();
+
+        boolean isFirstPPGuide = (boolean) XPreferencesUtils.get("isFirstPPGuide", true);
+        if (isFirstPPGuide) {
+            _guide_ll.setVisibility(View.VISIBLE);
+        } else {
+            _guide_ll.setVisibility(View.GONE);
+        }
+
+    }
+
+
+    /***/
+    private void init() {
         listData = new ArrayList<>();
 
         mWxShare = WXShare.Instance(mActivity);
         mDialogUtils = new DialogUtils(mActivity);
+
+
+        _guide_ll = findViewById(R.id.dialog_home_page_web_guide_ll);
 
         _no_data = findViewById(R.id.list_no_data);
         _no_image_data = findViewById(R.id.list_no_data_iv);
@@ -95,17 +121,25 @@ public class PersonalWebActivity extends BaseActivity {
         mSwipeRefreshView = findViewById(R.id.list_swipe_value);
         mListView = findViewById(R.id.list_pull_value);
 
+
+        //mTopView = getLayoutInflater().inflate(R.layout.act_home_page_web_video, null);//线性布局可用
+        mTopView = LayoutInflater.from(this).inflate(R.layout.act_home_page_web_video, mListView, false);
+        _top_video_iv = mTopView.findViewById(R.id.dialog_home_page_web_video);
+
+        mListView.addHeaderView(mTopView);
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putString("id", listData.get(position).getMakingListId());
-                bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + listData.get(position).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
-                bundle.putString("share_title", listData.get(position).getMakingListTitle());
+                bundle.putString("userId", "" + XPreferencesUtils.get("user_id", ""));
+                bundle.putString("id", listData.get(position-1).getMakingListId());
+                bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + listData.get(position-1).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
+                bundle.putString("share_title", listData.get(position-1).getMakingListTitle());
                 bundle.putString("share_des", "");
-                bundle.putString("share_imageUrl", listData.get(position).getMakingListImage());
+                bundle.putString("share_imageUrl", listData.get(position-1).getMakingListImage());
 
                 startActivity(PersonalWebDetailsActivity.class, bundle);
             }
@@ -129,7 +163,6 @@ public class PersonalWebActivity extends BaseActivity {
 
         initEvent();
         initData();
-
     }
 
     private void initEvent() {
@@ -154,7 +187,12 @@ public class PersonalWebActivity extends BaseActivity {
 
     private void loadMoreData() {
         countPage++;
-        getPersonalData(countPage, false);
+        if (countPage <= last_page) {
+            getPersonalData(countPage, false);
+        } else {
+            // 加载完数据设置为不加载状态，将加载进度收起来
+            mSwipeRefreshView.setLoading(false);
+        }
     }
 
 
@@ -177,6 +215,21 @@ public class PersonalWebActivity extends BaseActivity {
     //To clone
     public void onAction(View v) {
         switch (v.getId()) {
+            //隐藏引导页
+            case R.id.dialog_home_page_web_guide_ll:
+            case R.id.dialog_home_page_web_guide_del:
+                XPreferencesUtils.put("isFirstPPGuide", false);
+                _guide_ll.setVisibility(View.GONE);
+                break;
+            //视频
+            case R.id.dialog_home_page_web_video_btn:
+            case R.id.dialog_home_page_web_video:
+                Uri uri = Uri.parse("https://video.pearvideo.com/mp4/adshort/20190521/cont-1557271-13933153_adpkg-ad_hd.mp4");
+                //调用系统自带的播放器
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(uri, "video/*");
+                startActivity(intent);
+                break;
             case R.id.personal_web_qzz:
                 if (listData.size() > 0) {
                     if (XPreferencesUtils.get("vip_level", "0").equals("0")) {
@@ -188,10 +241,10 @@ public class PersonalWebActivity extends BaseActivity {
                             }
                         });
                     } else {
-                        startActivity(MessageWebActivity.class, "个人微网", ServerApi.PERSONAL_DETAILS_URL + "edit" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
+                        startActivity(MessageWebActivity.class, "个人微网", ServerApi.PERSONAL_DETAILS_URL + "newEdit?create=true" + "&token=" + XPreferencesUtils.get("token", "") + "&platform=android");
                     }
                 } else {
-                    startActivity(MessageWebActivity.class, "个人微网", ServerApi.PERSONAL_DETAILS_URL + "edit" + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
+                    startActivity(MessageWebActivity.class, "个人微网", ServerApi.PERSONAL_DETAILS_URL + "newEdit?create=true" + "&token=" + XPreferencesUtils.get("token", "") + "&platform=android");
                 }
                 break;
             case R.id.personal_web_qkl:
@@ -212,11 +265,12 @@ public class PersonalWebActivity extends BaseActivity {
             public void onSuccess(Object object) {
                 try {
                     JSONObject json = new JSONObject(object.toString());
-                    LogUtils.debug("Personal=s=" + json);
+                    LogUtils.debug("json:" + json);
                     String status = json.optString("status");
                     String message = json.optString("message");
                     if (status.equals("0")) {
                         JSONArray array = new JSONArray(json.optJSONObject("data").optString("data"));
+                        last_page = json.optJSONObject("data").optInt("last_page", 1);
 //                        XLog.d("array:" + array);
                         if (countPage == 1) {
                             listData = new ArrayList<>();
@@ -273,11 +327,11 @@ public class PersonalWebActivity extends BaseActivity {
                                                                 public void onItemToCloneClick(boolean isClone, String money) {
                                                                     if (isClone) {
                                                                         if (XEmptyUtils.isSpace(money)) {
-                                                                            XToast.normal("有偿克隆请设置在1~10元");
+                                                                            ToastUtils.showCenter("有偿克隆请设置在1~10元");
                                                                         } else {
                                                                             int moneys = Integer.parseInt(money);
                                                                             if (moneys > 10) {
-                                                                                XToast.normal("有偿克隆请设置在1~10元");
+                                                                                ToastUtils.showCenter("有偿克隆请设置在1~10元");
                                                                             } else {
                                                                                 userAmendData(listData.get(position).getMakingListId(), "1", moneys + "");
                                                                                 mDialogUtils.dismissDialog();
@@ -295,8 +349,26 @@ public class PersonalWebActivity extends BaseActivity {
                                                     new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
-                                                            startActivity(MessageWebActivity.class, "个人", ServerApi.PERSONAL_DETAILS_URL + "edit/" + listData.get(position).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
+                                                            startActivity(MessageWebActivity.class, "个人", ServerApi.PERSONAL_DETAILS_URL + "newEdit/" + listData.get(position).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
                                                             mDialogUtils.dismissDialog();
+                                                        }
+                                                    },
+                                                    //重设title
+                                                    new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            mDialogUtils.dismissDialog();
+                                                            mDialogUtils.showTitleDialog(new DialogUtils.onItemTitleListener() {
+                                                                @Override
+                                                                public void onItemTitleClick(String title) {
+                                                                    if (XEmptyUtils.isSpace(title)) {
+                                                                        ToastUtils.showCenter("输入您需要修改的微网名称(30字)");
+                                                                    } else {
+                                                                        userTitleData(listData.get(position).getMakingListId(), title);
+                                                                        mDialogUtils.dismissDialog();
+                                                                    }
+                                                                }
+                                                            });
                                                         }
                                                     },
                                                     //设为默认
@@ -480,6 +552,47 @@ public class PersonalWebActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 个人微网重设title
+     */
+    private void userTitleData(String id, String title) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("title", title);
+        HomeLogic.Instance(mActivity).userAmendApi(map, id, true, "设置中...", new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    String status = json.optString("status");
+                    String message = json.optString("message");
+                    if (status.equals("0")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                showToast("设置成功");
+                                countPage = 1;
+                                getPersonalData(countPage, true);
+                            }
+                        });
+                    } else {
+                        showToast(message);
+                    }
+                } catch (Exception e) {
+                    LogUtils.debug("userAmend=s=" + e);
+                    e.printStackTrace();
+                    showToast("设置失败");
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                LogUtils.debug("userAmend=s=" + error);
+                showToast("设置失败");
+            }
+        });
+    }
+
 
     /**
      * 消息
@@ -493,6 +606,8 @@ public class PersonalWebActivity extends BaseActivity {
                 if (mSwipeRefreshView.isRefreshing()) {
                     mSwipeRefreshView.setRefreshing(false);
                 }
+                // 加载完数据设置为不加载状态，将加载进度收起来
+                mSwipeRefreshView.setLoading(false);
             }
         });
     }

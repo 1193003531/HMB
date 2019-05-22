@@ -104,15 +104,7 @@ public class XCrashHandler implements UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
-        //使用Toast来显示异常信息
-        new Thread() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_LONG).show();
-                Looper.loop();
-            }
-        }.start();
+
         //收集设备参数信息
         collectDeviceInfo(mContext);
 
@@ -140,6 +132,16 @@ public class XCrashHandler implements UncaughtExceptionHandler {
             saveCrashInfo2File(ex);
         }
 
+        //使用Toast来显示异常信息
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_LONG).show();
+                Looper.loop();
+            }
+        }.start();
+
 
         return true;
     }
@@ -159,7 +161,7 @@ public class XCrashHandler implements UncaughtExceptionHandler {
                 infos.put("versionName", versionName);
                 infos.put("versionCode", versionCode);
             }
-        } catch (NameNotFoundException e) {
+        } catch (Exception e) {
             Log.e(TAG, "an error occured when collect package info", e);
         }
         Field[] fields = Build.class.getDeclaredFields();

@@ -27,7 +27,7 @@
                 android:id="@+id/lib_focus_on_item_name_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_default" />
 
             <TextView
                 android:id="@+id/lib_focus_on_item_name"
@@ -80,7 +80,7 @@
             android:layout_marginRight="3dp"
             android:layout_weight="1.0"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/ic_default"
             android:visibility="gone" />
 
         <LinearLayout
@@ -104,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     android:scaleType="centerCrop" />
 
                 <View
@@ -117,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     android:scaleType="centerCrop" />
 
                 <View
@@ -130,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
-                    android:src="@drawable/ic_launcher"
+                    android:src="@drawable/ic_default"
                     android:scaleType="centerCrop" />
             </LinearLayout>
 
@@ -141,7 +141,7 @@
                 android:layout_height="168dp"
                 android:layout_weight="1.0"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/ic_default"
                 android:visibility="gone" />
         </LinearLayout>
 
