@@ -8,7 +8,7 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,8 +18,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.huimaibao.app.R;
-import com.huimaibao.app.utils.ToastUtils;
-import com.youth.xframe.pickers.util.LogUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -107,11 +107,15 @@ public interface ServerApi {
      * 公共接口
      */
 
+
+     //阿里云oss上传
     /**
-     * 阿里云oss上传
+     * 图片
      */
     String OSS_STS_URL = SERVER_URL + "/app/oss-sts";
     String OSS_IMAGE_URL = "http://hytx-app.oss-cn-hangzhou.aliyuncs.com/";
+    /**视频*/
+    String OSS_STS_VIDEO_URL = SERVER_URL + "/app/oss-upload";
 
     /**
      * 会员充值,克隆付费，脉宝充值

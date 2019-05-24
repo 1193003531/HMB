@@ -337,7 +337,7 @@ public class FindsCommentsActivity extends BaseActivity {
             _item_praise_iv.setImageResource(R.drawable.finds_list_praise_29);
         }
 
-        if (_userid_value.equals(XPreferencesUtils.get("user_id", ""))) {
+        if (_dy_userid_value.equals(_userid_value)) {
             _item_focus_iv.setVisibility(View.GONE);
             _dy_isfocus_value = "1";
         } else {
@@ -732,7 +732,7 @@ public class FindsCommentsActivity extends BaseActivity {
                     LogUtils.debug("finds:" + json);
                     String msg = json.getString("message");
                     if (json.getString("status").equals("0")) {
-                        if (XEmptyUtils.isSpace(json.optString("data", ""))) {
+                        if (XEmptyUtils.isSpace(json.optString("data", "")) || json.optString("data", "").length() < 5) {
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

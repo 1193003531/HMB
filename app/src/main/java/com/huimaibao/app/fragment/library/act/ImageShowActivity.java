@@ -3,15 +3,14 @@ package com.huimaibao.app.fragment.library.act;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -21,19 +20,15 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
-import com.huimaibao.app.base.BaseApplication;
 import com.huimaibao.app.fragment.library.adapter.ImagePagerAdapter;
 import com.huimaibao.app.utils.DialogUtils;
-import com.youth.xframe.utils.XFileUtils;
 import com.youth.xframe.utils.imageshow.ImageShowViewPager;
 import com.youth.xframe.utils.permission.XPermission;
-import com.youth.xframe.widget.XToast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 

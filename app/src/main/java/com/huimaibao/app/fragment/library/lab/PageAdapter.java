@@ -1,8 +1,8 @@
 package com.huimaibao.app.fragment.library.lab;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.huimaibao.app.fragment.library.act.NewsFragment;

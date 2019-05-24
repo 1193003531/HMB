@@ -6,47 +6,23 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.viewpager.widget.ViewPager;
+
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
-import com.huimaibao.app.fragment.electcircle.act.ShareRecordActivity;
-import com.huimaibao.app.fragment.electcircle.materialLib.ShareRecordFragment;
 import com.huimaibao.app.fragment.home.act.SreachActivity;
 import com.huimaibao.app.fragment.library.adapter.NewsFragmentPagerAdapter;
-import com.huimaibao.app.fragment.message.adapter.MessageAdapter;
-import com.huimaibao.app.fragment.message.adapter.MessageDelAdapter;
-import com.huimaibao.app.fragment.message.entity.MessageEntity;
 import com.huimaibao.app.fragment.message.fragment.MsgFragment;
 import com.huimaibao.app.fragment.message.fragment.MsgListFragment;
-import com.huimaibao.app.fragment.message.server.MessageLogic;
-import com.huimaibao.app.fragment.mine.act.CardClipDetailActivity;
-import com.huimaibao.app.http.ResultBack;
-import com.huimaibao.app.utils.DialogUtils;
-import com.youth.xframe.pickers.util.LogUtils;
-import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
-import com.youth.xframe.utils.XTimeUtils;
-import com.youth.xframe.widget.XSwipeRefreshView;
-import com.youth.xframe.widget.XToast;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class MessageActivity extends BaseActivity {
     private String mType = "消息";

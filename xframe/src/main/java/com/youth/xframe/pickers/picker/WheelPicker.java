@@ -1,9 +1,9 @@
 package com.youth.xframe.pickers.picker;
 
 import android.app.Activity;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
-import android.support.annotation.Nullable;
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntRange;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import com.youth.xframe.pickers.common.ConfirmDialog;

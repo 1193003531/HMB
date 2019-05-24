@@ -71,7 +71,7 @@
                 android:text="免费克隆"
                 android:textColor="@color/main_color"
                 android:textSize="@dimen/text_size_10"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/personal_web_details_share_num"

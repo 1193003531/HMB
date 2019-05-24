@@ -19,9 +19,9 @@ package com.huimaibao.app.tablayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.design.R;
-import android.support.design.widget.TabLayout;
-import android.support.v7.widget.TintTypedArray;
+import com.google.android.material.R;
+import com.google.android.material.tabs.TabLayout;
+import androidx.appcompat.widget.TintTypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 

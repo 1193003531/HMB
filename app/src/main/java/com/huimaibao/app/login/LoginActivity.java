@@ -177,6 +177,7 @@ public class LoginActivity extends Activity {
                 break;
             //短信登录
             case R.id.login_sms:
+                XPreferencesUtils.put("phone", _phone_et.getText().toString().trim());
                 intent.setClass(LoginActivity.this, LoginSMSActivity.class);
                 intent.putExtra("vType", "短信登录");
                 startActivity(intent);
@@ -185,6 +186,7 @@ public class LoginActivity extends Activity {
                 break;
             //忘记密码
             case R.id.login_forgot:
+                XPreferencesUtils.put("phone", _phone_et.getText().toString().trim());
                 intent.setClass(LoginActivity.this, ForgotActivity.class);
                 intent.putExtra("vType", "找回密码");
                 startActivity(intent);

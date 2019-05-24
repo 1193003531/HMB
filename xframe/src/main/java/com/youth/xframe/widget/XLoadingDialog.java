@@ -3,21 +3,16 @@ package com.youth.xframe.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.os.Looper;
-import android.support.annotation.ColorInt;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.text.TextUtils;
+
+import androidx.annotation.ColorInt;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.youth.xframe.R;
-import com.youth.xframe.XFrame;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.utils.XOutdatedUtils;
 

@@ -1,14 +1,13 @@
 package com.youth.xframe.widget;
 
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 public class XColorDrawable extends Drawable {
     private Paint mPaint;

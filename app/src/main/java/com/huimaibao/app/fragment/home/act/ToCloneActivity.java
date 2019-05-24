@@ -2,7 +2,7 @@ package com.huimaibao.app.fragment.home.act;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -24,7 +24,6 @@ import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.XStringUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;
-import com.youth.xframe.widget.XToast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -2,7 +2,7 @@ package com.huimaibao.app.fragment.finds.act;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -11,16 +11,11 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.base.BaseActivity;
-import com.huimaibao.app.fragment.finds.adapter.FindsAdapter;
 import com.huimaibao.app.fragment.finds.adapter.FindsMSGAdapter;
-import com.huimaibao.app.fragment.finds.adapter.FindsPraiseAdapter;
-import com.huimaibao.app.fragment.finds.entity.FindsEntity;
 import com.huimaibao.app.fragment.finds.entity.FindsMSGEntity;
-import com.huimaibao.app.fragment.finds.entity.FindsPraiseEntity;
 import com.huimaibao.app.fragment.finds.server.FindsLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.utils.DialogUtils;
-import com.huimaibao.app.utils.ToastUtils;
 import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.widget.XSwipeRefreshView;

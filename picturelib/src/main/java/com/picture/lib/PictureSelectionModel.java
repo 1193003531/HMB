@@ -2,17 +2,15 @@ package com.picture.lib;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.FloatRange;
-import android.support.annotation.IntRange;
-import android.support.annotation.StyleRes;
-import android.support.v4.app.Fragment;
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntRange;
+import androidx.annotation.StyleRes;
+import androidx.fragment.app.Fragment;
 
-import com.picture.lib.config.PictureConfig;
 import com.picture.lib.config.PictureSelectionConfig;
 import com.picture.lib.entity.LocalMedia;
 import com.picture.lib.tools.DoubleUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

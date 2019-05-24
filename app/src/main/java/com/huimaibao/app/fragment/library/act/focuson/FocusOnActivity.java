@@ -2,8 +2,8 @@ package com.huimaibao.app.fragment.library.act.focuson;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +20,7 @@ import com.huimaibao.app.fragment.library.server.LibLogic;
 import com.huimaibao.app.http.ResultBack;
 import com.youth.xframe.banner.BaseIndicator;
 import com.youth.xframe.banner.Indicator;
-import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XDensityUtils;
-import com.youth.xframe.utils.XPreferencesUtils;
 import com.youth.xframe.utils.statusbar.XStatusBar;
 
 import org.json.JSONArray;

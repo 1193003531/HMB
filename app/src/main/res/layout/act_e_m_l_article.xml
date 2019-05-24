@@ -45,7 +45,7 @@
             android:scaleType="matrix" />
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/article_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

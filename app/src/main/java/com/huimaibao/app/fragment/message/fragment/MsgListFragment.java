@@ -2,8 +2,8 @@ package com.huimaibao.app.fragment.message.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.huimaibao.app.R;
 import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.base.BaseFragment;
-import com.huimaibao.app.fragment.message.act.MessageActivity;
 import com.huimaibao.app.fragment.message.act.MessageListActivity;
 import com.huimaibao.app.fragment.message.adapter.MessageDelAdapter;
 import com.huimaibao.app.fragment.message.entity.MessageEntity;

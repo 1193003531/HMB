@@ -1,9 +1,8 @@
 package com.huimaibao.app.fragment.library.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.view.PagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.huimaibao.app.R;
 import com.huimaibao.app.fragment.library.adapter.view.Options;
-import com.huimaibao.app.utils.ImageLoaderManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;

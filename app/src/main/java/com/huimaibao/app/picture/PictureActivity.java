@@ -19,8 +19,12 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.OSSConstants;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
+import com.alibaba.sdk.android.oss.common.utils.IOUtils;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
@@ -36,11 +40,16 @@ import com.huimaibao.app.utils.DialogUtils;
 import com.picture.lib.PictureSelector;
 import com.picture.lib.config.PictureConfig;
 import com.picture.lib.config.PictureMimeType;
-import com.picture.lib.tools.PictureFileUtils;
+import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.utils.permission.XPermission;
 
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * 继承这个类来让Activity获取拍照的能力
@@ -55,7 +64,7 @@ public class PictureActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mDialogUtils = new DialogUtils(mActivity);
 
-        new Thread(runnable).start();
+        // new Thread(runnable).start();
 
 
         //PictureFileUtils.deleteCacheDirFile(mActivity);
@@ -85,8 +94,14 @@ public class PictureActivity extends BaseActivity {
         TextView _btn_1, _btn_2;
         _btn_1 = dialog.findViewById(com.huimaibao.app.R.id.dialog_general_1_btn);
         _btn_2 = dialog.findViewById(com.huimaibao.app.R.id.dialog_general_2_btn);
-        _btn_1.setText("拍照");
-        _btn_2.setText("相册");
+        if (type.equals("视频")) {
+            _btn_1.setText("拍摄");
+            _btn_2.setText("本地视频");
+        } else {
+            _btn_1.setText("拍照");
+            _btn_2.setText("相册");
+        }
+
 
         _btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +117,8 @@ public class PictureActivity extends BaseActivity {
                         public void onPermissionGranted() {
                             if (type.equals("头像")) {
                                 checkHeadCamera();
+                            } else if (type.equals("视频")) {
+                                checkCameraVideo();
                             } else {
                                 checkCorpCompressCamera();
                             }
@@ -117,6 +134,8 @@ public class PictureActivity extends BaseActivity {
                 } else {
                     if (type.equals("头像")) {
                         checkHeadCamera();
+                    } else if (type.equals("视频")) {
+                        checkCameraVideo();
                     } else {
                         checkCorpCompressCamera();
                     }
@@ -140,6 +159,8 @@ public class PictureActivity extends BaseActivity {
                         public void onPermissionGranted() {
                             if (type.equals("头像")) {
                                 check1CropCompress();
+                            } else if (type.equals("视频")) {
+                                checkGalleryVideo();
                             } else {
                                 check09Compress(maxnum);
                             }
@@ -155,6 +176,8 @@ public class PictureActivity extends BaseActivity {
                 } else {
                     if (type.equals("头像")) {
                         check1CropCompress();
+                    } else if (type.equals("视频")) {
+                        checkGalleryVideo();
                     } else {
                         check09Compress(maxnum);
                     }
@@ -183,6 +206,7 @@ public class PictureActivity extends BaseActivity {
 
     //初始化使用参数
     private void init() {
+        //
         OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(ServerApi.OSS_STS_URL);
 
         ClientConfiguration conf = new ClientConfiguration();
@@ -192,6 +216,12 @@ public class PictureActivity extends BaseActivity {
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         oss = new OSSClient(BaseApplication.getAppContext(), "http://oss-cn-hangzhou.aliyuncs.com", credentialProvider, conf);
         //XLog.d("oss----------------");
+        LogUtils.debug("error:" + oss);
+    }
+
+    private void inits() {
+
+
     }
 
     /**
@@ -270,14 +300,50 @@ public class PictureActivity extends BaseActivity {
     /**
      * 断点续传上传
      */
-    public void loadVideo(String uploadFilePath) {
+    public void loadVideo(final String object, String uploadFilePath, final LoadCallback loadCallback) {
+
+
+//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(ServerApi.OSS_STS_VIDEO_URL);
+////
+//        ClientConfiguration conf = new ClientConfiguration();
+//        conf.setConnectionTimeout(15 * 1000); // 连接超时时间，默认15秒
+//        conf.setSocketTimeout(15 * 1000); // Socket超时时间，默认15秒
+//        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+//        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+//        oss = new OSSClient(BaseApplication.getAppContext(), "http://hytx-video.oss-cn-hangzhou.aliyuncs.com", credentialProvider, conf);
+
+
+
+        OSSCredentialProvider credentialProvider = new OSSFederationCredentialProvider() {
+            @Override
+            public OSSFederationToken getFederationToken() {
+                try {
+                    URL stsUrl = new URL(ServerApi.OSS_STS_VIDEO_URL);
+                    HttpURLConnection conn = (HttpURLConnection) stsUrl.openConnection();
+                    InputStream input = conn.getInputStream();
+                    String jsonText = IOUtils.readStreamAsString(input, OSSConstants.DEFAULT_CHARSET_NAME);
+                    JSONObject jsonObjs = new JSONObject(jsonText);
+                    LogUtils.debug("json:"+jsonObjs);
+                    String ak = jsonObjs.getString("AccessKeyId");
+                    String sk = jsonObjs.getString("AccessKeySecret");
+                    String token = jsonObjs.getString("SecurityToken");
+                    String expiration = jsonObjs.getString("Expiration");
+                    return new OSSFederationToken(ak, sk, token, expiration);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+
+        oss = new OSSClient(BaseApplication.getAppContext(), "http://hytx-video.oss-cn-hangzhou.aliyuncs.com",credentialProvider);
+
         //调用OSSAsyncTask cancel()方法时是否需要删除断点记录文件的设置
         String recordDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/oss_record/";
         final File recordDir = new File(recordDirectory);
 
         if (Build.VERSION.SDK_INT >= 23) {//判断当前系统的版本
             XPermission.requestPermissions(mActivity, 1010, new String[]{
-                    Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE
             }, new XPermission.OnPermissionListener() {
@@ -305,8 +371,13 @@ public class PictureActivity extends BaseActivity {
         }
 
 
+        try {
+            String url = oss.presignConstrainedObjectURL("hytx-video", object, 30 * 60);
+        } catch (Exception e) {
+
+        }
         // 创建断点上传请求，参数中给出断点记录文件的保存位置，需是一个文件夹的绝对路径
-        ResumableUploadRequest request = new ResumableUploadRequest("hytx-video", setVideoUrl(), uploadFilePath, recordDirectory);
+        ResumableUploadRequest request = new ResumableUploadRequest("hytx-video", object, uploadFilePath, recordDirectory);
         //设置false,取消时，不删除断点记录文件，如果不进行设置，默认true，是会删除断点记录文件，下次再进行上传时会重新上传。
         request.setDeleteUploadOnCancelling(false);
         // 设置上传过程回调
@@ -314,6 +385,13 @@ public class PictureActivity extends BaseActivity {
             @Override
             public void onProgress(ResumableUploadRequest request, long currentSize, long totalSize) {
                 Log.d("resumableUpload", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                final int progress = (int) (100 * currentSize / totalSize);
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogUtils.showLoadingDialog("上传" + progress + "%");
+                    }
+                });
             }
         });
 
@@ -322,11 +400,44 @@ public class PictureActivity extends BaseActivity {
             @Override
             public void onSuccess(ResumableUploadRequest request, ResumableUploadResult result) {
                 Log.d("resumableUpload", "success!");
+                loadCallback.onSuccess(request, ServerApi.OSS_IMAGE_URL + object);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogUtils.dismissDialog();
+                    }
+                });
             }
 
             @Override
             public void onFailure(ResumableUploadRequest request, ClientException clientExcepion, ServiceException serviceException) {
                 // 异常处理
+                showToast("上传失败");
+                LogUtils.debug("error:" + clientExcepion.getMessage());
+                LogUtils.debug("error:" + serviceException.getErrorCode());
+                LogUtils.debug("error:" + serviceException.getRequestId());
+                LogUtils.debug("error:" + serviceException.getHostId());
+                LogUtils.debug("error:" + serviceException.getRawMessage());
+                // 请求异常
+                if (clientExcepion != null) {
+                    // 本地异常如网络异常等
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常
+                    LogUtils.debug("error:" + serviceException.getErrorCode());
+                    LogUtils.debug("error:" + serviceException.getRequestId());
+                    LogUtils.debug("error:" + serviceException.getHostId());
+                    LogUtils.debug("error:" + serviceException.getRawMessage());
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogUtils.dismissDialog();
+                    }
+                });
+                loadCallback.onFailure(request, clientExcepion, serviceException);
             }
         });
         // 可以等待直到任务完成
@@ -589,6 +700,28 @@ public class PictureActivity extends BaseActivity {
                 .synOrAsy(false)//同步true或异步false 压缩 默认同步
 
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+    }
+
+    /**
+     * 拍摄
+     */
+    private void checkCameraVideo() {
+        PictureSelector.create(mActivity)
+                .openCamera(PictureMimeType.ofVideo())
+                .recordVideoSecond(40)
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+    }
+
+    /**
+     * 本地视频
+     */
+    private void checkGalleryVideo() {
+        PictureSelector.create(mActivity)
+                .openGallery(PictureMimeType.ofVideo())
+                .imageSpanCount(4)// 每行显示个数 int
+                .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .isCamera(false)//是否带相机
+                .forResult(PictureConfig.CHOOSE_REQUEST);
     }
 
 }

@@ -23,7 +23,10 @@ import com.huimaibao.app.login.logic.LoginLogic;
 import com.huimaibao.app.main.MainActivity;
 import com.huimaibao.app.picture.LoadCallback;
 import com.huimaibao.app.picture.PictureActivity;
+import com.huimaibao.app.utils.DialogUtils;
 import com.huimaibao.app.utils.ImageLoaderManager;
+import com.huimaibao.app.video.FileUtils;
+import com.huimaibao.app.video.VideoUtils;
 import com.picture.lib.PictureSelector;
 import com.picture.lib.config.PictureConfig;
 import com.picture.lib.entity.LocalMedia;
@@ -79,7 +82,7 @@ public class PerfectBActivity extends PictureActivity {
         });
 
         // takePhoneHelper = TakePhoneHelper.of(this);
-
+        mDialogUtils=new DialogUtils(mActivity);
         initView();
         initData();
     }
@@ -122,7 +125,8 @@ public class PerfectBActivity extends PictureActivity {
             case R.id.login_perfect_image:
                 //takePhoneHelper.setTakePhone(1, true, true, 200, 200, true, 102400, 0, 0);
                 //takePhoneHelper.showTakePhoneDialog(getTakePhoto());
-                showTakePhoneDialog("头像",1);
+                //showTakePhoneDialog("头像", 1);
+                showTakePhoneDialog("视频", 1);
                 break;
             //保存
             case R.id.login_perfect_save:
@@ -368,6 +372,7 @@ public class PerfectBActivity extends PictureActivity {
         setEdAnimation(_company_value, _card_company_tv);
     }
 
+    private DialogUtils mDialogUtils;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -393,28 +398,85 @@ public class PerfectBActivity extends PictureActivity {
                         }
                     }
 
+//
+//                    final String object = setImageUrl();
+//
+//                    putLoadImage(object, urlPath, new LoadCallback() {
+//                        @Override
+//                        public void onSuccess(Object o, Object result) {
+//                            mActivity.runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    showToast("上传成功");
+//                                    _head_value = ServerApi.OSS_IMAGE_URL + object;
+//                                    ImageLoaderManager.loadImage(_head_value, _head_iv);
+//                                }
+//                            });
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
+//
+//                        }
+//                    });
 
-                    final String object = setImageUrl();
 
-                    putLoadImage(object, urlPath, new LoadCallback() {
-                        @Override
-                        public void onSuccess(Object o, Object result) {
-                            mActivity.runOnUiThread(new Runnable() {
+                    try {
+                        if (urlPath.length() < 5) {
+                            showToast("请选择视频后,再点击上传");
+                            return;
+                        }
+
+                        double size = FileUtils.getFileOrFilesSize(urlPath, 3);
+                        Log.d("pictureUrl:", "" + size);
+                        //* 1024 * 1024
+                        if (size > 600) {
+//                            "文件大于600M";
+                            showToast("文件大于600M,请重新选择");
+                        } else {
+                            Log.d("pictureUrl:", "" + size);
+                            mDialogUtils.showLoadingDialog("压缩中...");
+                            FileUtils.getCompressorVideo(mActivity, urlPath, new VideoUtils.UploadSuccess() {
                                 @Override
-                                public void run() {
-                                    showToast("上传成功");
-                                    _head_value = ServerApi.OSS_IMAGE_URL + object;
-                                    ImageLoaderManager.loadImage(_head_value, _head_iv);
+                                public void success(String Uri) {
+                                    mDialogUtils.dismissDialog();
+                                    if (!Uri.isEmpty()) {
+                                        Log.d("pictureUrls:", Uri);
+                                        final String object = setVideoUrl();
+                                        showToast("压缩成功");
+                                        loadVideo(object, Uri, new LoadCallback() {
+                                            @Override
+                                            public void onSuccess(Object o, Object result) {
+                                                mActivity.runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        showToast("上传成功");
+                                                        _head_value = ServerApi.OSS_IMAGE_URL + object;
+                                                        LogUtils.debug("json:" + _head_value);
+                                                    }
+                                                });
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
+
+                                            }
+                                        });
+
+                                    } else {
+                                        showToast("压缩失败,请重新选择");
+                                    }
                                 }
                             });
-
                         }
 
-                        @Override
-                        public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
-
-                        }
-                    });
+                    } catch (Exception e) {
+                        Log.d("pictureUrl:", e.toString());
+                        mDialogUtils.dismissDialog();
+                        showToast("选择视频失败,请重新选择");
+                    }
 
 
                     break;

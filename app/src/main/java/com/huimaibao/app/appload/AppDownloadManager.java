@@ -12,10 +12,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
 
 import com.huimaibao.app.BuildConfig;
-import com.youth.xframe.pickers.util.LogUtils;
 import com.youth.xframe.utils.XEmptyUtils;
 import com.youth.xframe.widget.XToast;
 
