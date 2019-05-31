@@ -33,6 +33,8 @@ import com.youth.xframe.widget.XCrashHandler;
 import java.io.File;
 import java.util.ArrayList;
 
+import androidx.multidex.MultiDex;
+
 /**
  * 保存全局变量设计的基本类application
  */
@@ -82,13 +84,12 @@ public class BaseApplication extends XApplication {
     }
 
 
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//        mBaseApplication = this;
-//        //MultiDex分包方法 必须最先初始化
-//        // MultiDex.install(this);
-//    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        //MultiDex分包方法 必须最先初始化
+        MultiDex.install(base);
+    }
 
     public static BaseApplication getApp() {
         return mBaseApplication;

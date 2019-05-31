@@ -68,7 +68,6 @@ public class XStringUtils {
         return nf.format(f);
     }
 
-
     /*** 半角转换为全角
      *textView 排版
      * @param input

@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,7 +31,9 @@ import com.huimaibao.app.http.ResultBack;
 import com.huimaibao.app.share.OnResponseListener;
 import com.huimaibao.app.share.WXShare;
 import com.huimaibao.app.utils.DialogUtils;
+import com.huimaibao.app.utils.ImageLoaderManager;
 import com.huimaibao.app.utils.ToastUtils;
+import com.huimaibao.app.video.FileUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.youth.xframe.pickers.util.LogUtils;
@@ -39,6 +45,7 @@ import com.youth.xframe.widget.XToast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +74,8 @@ public class PersonalWebActivity extends BaseActivity {
     //视频
     private View mTopView;
     private ImageView _top_video_iv;
+    private String _video_url = "";
+
 
     private String _personal_id_value = "";
 
@@ -126,7 +135,6 @@ public class PersonalWebActivity extends BaseActivity {
         mTopView = LayoutInflater.from(this).inflate(R.layout.act_home_page_web_video, mListView, false);
         _top_video_iv = mTopView.findViewById(R.id.dialog_home_page_web_video);
 
-        mListView.addHeaderView(mTopView);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -135,11 +143,11 @@ public class PersonalWebActivity extends BaseActivity {
                                     int position, long id) {
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", "" + XPreferencesUtils.get("user_id", ""));
-                bundle.putString("id", listData.get(position-1).getMakingListId());
-                bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + listData.get(position-1).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
-                bundle.putString("share_title", listData.get(position-1).getMakingListTitle());
+                bundle.putString("id", listData.get(position - 1).getMakingListId());
+                bundle.putString("vUrl", ServerApi.PERSONAL_DETAILS_URL2 + listData.get(position - 1).getMakingListId() + "?token=" + XPreferencesUtils.get("token", "") + "&platform=android");
+                bundle.putString("share_title", listData.get(position - 1).getMakingListTitle());
                 bundle.putString("share_des", "");
-                bundle.putString("share_imageUrl", listData.get(position-1).getMakingListImage());
+                bundle.putString("share_imageUrl", listData.get(position - 1).getMakingListImage());
 
                 startActivity(PersonalWebDetailsActivity.class, bundle);
             }
@@ -163,6 +171,7 @@ public class PersonalWebActivity extends BaseActivity {
 
         initEvent();
         initData();
+        getPersonalVideoData();
     }
 
     private void initEvent() {
@@ -224,7 +233,11 @@ public class PersonalWebActivity extends BaseActivity {
             //视频
             case R.id.dialog_home_page_web_video_btn:
             case R.id.dialog_home_page_web_video:
-                Uri uri = Uri.parse("https://video.pearvideo.com/mp4/adshort/20190521/cont-1557271-13933153_adpkg-ad_hd.mp4");
+                if (XEmptyUtils.isSpace(_video_url)) {
+                    ToastUtils.showCenter("视频文件为空");
+                    return;
+                }
+                Uri uri = Uri.parse(_video_url);
                 //调用系统自带的播放器
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(uri, "video/*");
@@ -429,6 +442,48 @@ public class PersonalWebActivity extends BaseActivity {
             public void onFailed(String error) {
                 LogUtils.debug("error:" + error);
                 showNoRefresh();
+            }
+        });
+    }
+
+
+    /**
+     * 获取个人微网视频广告
+     */
+    private void getPersonalVideoData() {
+        HomeLogic.Instance(mActivity).userPersonalVideoApi(new ResultBack() {
+            @Override
+            public void onSuccess(Object object) {
+                try {
+                    JSONObject json = new JSONObject(object.toString());
+                    LogUtils.debug("json:" + json);
+                    String status = json.optString("status");
+                    String message = json.optString("message");
+                    if (status.equals("0")) {
+                        JSONObject data = new JSONObject(json.optString("data"));
+                        _video_url = data.optString("video_path", "");
+                        final String image_path = data.optString("image_path", "").trim();
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                ImageLoaderManager.loadImage(image_path, _top_video_iv);
+
+                                mListView.addHeaderView(mTopView);
+                            }
+                        });
+                    } else {
+                        showToast(message);
+                    }
+                } catch (Exception e) {
+                    //XLog.d("error:" + e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                //XLog.d("error:" + error);
             }
         });
     }

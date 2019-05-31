@@ -108,14 +108,17 @@ public interface ServerApi {
      */
 
 
-     //阿里云oss上传
+    //阿里云oss上传
     /**
      * 图片
      */
     String OSS_STS_URL = SERVER_URL + "/app/oss-sts";
     String OSS_IMAGE_URL = "http://hytx-app.oss-cn-hangzhou.aliyuncs.com/";
-    /**视频*/
-    String OSS_STS_VIDEO_URL = SERVER_URL + "/app/oss-upload";
+    /**
+     * 视频
+     */
+    String OSS_STS_VIDEO_URL = SERVER_URL + "/app/oss-video-sts";
+    String OSS_VIDEO_URL = "http://hytx-video.oss-cn-hangzhou.aliyuncs.com/";
 
     /**
      * 会员充值,克隆付费，脉宝充值
@@ -706,4 +709,9 @@ public interface ServerApi {
      * phone
      */
     String INVITATION_PHONE_URL = SERVER_URL + "/app/invitation-phone";
+    /**
+     * 获取产品微网视频广告
+     * get
+     */
+    String PERSONAL_PAGE_VIDEO_URL = SERVER_URL + "/front/personal_page/propaganda";
 }

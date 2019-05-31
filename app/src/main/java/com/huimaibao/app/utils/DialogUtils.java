@@ -475,8 +475,6 @@ public class DialogUtils {
         drawable.setColor(Color.WHITE);
         XOutdatedUtils.setBackground(loadingView, drawable);
         loadingMessage.setText(msg);
-
-
     }
 
 

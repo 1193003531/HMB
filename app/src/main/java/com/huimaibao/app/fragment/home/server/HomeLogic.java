@@ -357,6 +357,43 @@ public class HomeLogic {
         }
     }
 
+
+    /**
+     * 自己的个人微网视频广告
+     */
+    public void userPersonalVideoApi(final ResultBack resultBack) {
+        if (XNetworkUtils.isConnected()) {
+            XHttp.obtain().get(ServerApi.PERSONAL_PAGE_VIDEO_URL, null, new HttpCallBack() {
+                @Override
+                public void showProgress() {
+                    if (false)
+                        mDialogUtils.showLoadingDialog("加载中...");
+
+                }
+
+                @Override
+                public void dismissProgress() {
+                    if (false)
+                        mDialogUtils.dismissDialog();
+
+                }
+
+                @Override
+                public void onSuccess(Object o) {
+                    resultBack.onSuccess(o);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    resultBack.onFailed(error);
+                }
+            });
+        } else {
+            XToast.normal(mActivity.getResources().getString(R.string.network_enable));
+        }
+    }
+
+
     /**
      * 用户个人微网详情
      */

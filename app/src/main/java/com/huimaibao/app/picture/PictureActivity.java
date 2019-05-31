@@ -19,12 +19,8 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
-import com.alibaba.sdk.android.oss.common.OSSConstants;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
-import com.alibaba.sdk.android.oss.common.utils.IOUtils;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.DeleteObjectRequest;
 import com.alibaba.sdk.android.oss.model.DeleteObjectResult;
@@ -41,32 +37,28 @@ import com.picture.lib.PictureSelector;
 import com.picture.lib.config.PictureConfig;
 import com.picture.lib.config.PictureMimeType;
 import com.youth.xframe.pickers.util.LogUtils;
+import com.youth.xframe.utils.XStringUtils;
 import com.youth.xframe.utils.XTimeUtils;
 import com.youth.xframe.utils.permission.XPermission;
 
-import org.json.JSONObject;
-
 import java.io.File;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * 继承这个类来让Activity获取拍照的能力
  */
 public class PictureActivity extends BaseActivity {
 
-    private DialogUtils mDialogUtils;
-    public OSS oss;
+    public DialogUtils mDialogUtils;
+    public OSS oss, oss2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDialogUtils = new DialogUtils(mActivity);
 
-        // new Thread(runnable).start();
+        new Thread(runnable).start();
 
-
+        new Thread(runnables).start();
         //PictureFileUtils.deleteCacheDirFile(mActivity);
 
     }
@@ -216,29 +208,47 @@ public class PictureActivity extends BaseActivity {
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         oss = new OSSClient(BaseApplication.getAppContext(), "http://oss-cn-hangzhou.aliyuncs.com", credentialProvider, conf);
         //XLog.d("oss----------------");
-        LogUtils.debug("error:" + oss);
+        LogUtils.debug("oss:" + oss);
     }
 
+    Runnable runnables = new Runnable() {
+        @Override
+        public void run() {
+            inits();
+        }
+    };
+
     private void inits() {
+        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(ServerApi.OSS_STS_VIDEO_URL);
+//
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(60 * 1000); // 连接超时时间，默认60秒
+        conf.setSocketTimeout(60 * 1000); // Socket超时时间，默认60秒
+        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
+        oss2 = new OSSClient(BaseApplication.getAppContext(), "http://oss-cn-hangzhou.aliyuncs.com", credentialProvider, conf);
 
-
+        LogUtils.debug("oss2:" + oss2);
     }
 
     /**
      * 阿里云OSS上传（默认是异步单文件上传）
      */
     public void putLoadImage(final String object, String uploadFilePath, final LoadCallback loadCallback) {
-
+        //init();
 
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest("hytx-app", object, uploadFilePath);
 
         // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            String progress = "0";
+
             @Override
-            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-                //Log.d("PutObject", "currentSize: " + currentSize + " totalSize: " + totalSize);
-                final int progress = (int) (100 * currentSize / totalSize);
+            public void onProgress(PutObjectRequest request, final long currentSize, final long totalSize) {
+                LogUtils.debug("json:", "currentSize: " + currentSize + " totalSize: " + totalSize);
+                progress = "" + (int) ((XStringUtils.m1((currentSize * 1.0 / totalSize) + "")) * 100);
+                //LogUtils.debug("json:" + progress);
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -271,12 +281,12 @@ public class PictureActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+            public void onFailure(PutObjectRequest request, ClientException clientException, ServiceException serviceException) {
                 showToast("上传失败");
                 // 请求异常
-                if (clientExcepion != null) {
+                if (clientException != null) {
                     // 本地异常如网络异常等
-                    clientExcepion.printStackTrace();
+                    clientException.printStackTrace();
                 }
                 if (serviceException != null) {
                     // 服务异常
@@ -291,9 +301,82 @@ public class PictureActivity extends BaseActivity {
                         mDialogUtils.dismissDialog();
                     }
                 });
-                loadCallback.onFailure(request, clientExcepion, serviceException);
+                loadCallback.onFailure(request, clientException, serviceException);
             }
         });
+
+        //task.waitUntilFinished(); // 等待任务完成
+        //task.cancel(); // 可以取消任务
+    }
+
+    /**
+     * 视频上传
+     */
+
+
+    public void putLoadVideo(final String object, String uploadFilePath, final LoadCallback loadCallback) {
+        //inits();
+
+        // 构造上传请求
+        PutObjectRequest put = new PutObjectRequest("hytx-video", object, uploadFilePath);
+
+        // 异步上传时可以设置进度回调
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+
+            String progress = "0";
+
+            @Override
+            public void onProgress(PutObjectRequest request, final long currentSize, final long totalSize) {
+                //LogUtils.debug("json:", "currentSize: " + currentSize + " totalSize: " + totalSize);
+
+                progress = "" + (int) ((XStringUtils.m1((currentSize * 1.0 / totalSize) + "")) * 100);
+                LogUtils.debug("json:" + progress);
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogUtils.showLoadingDialog("上传" + progress + "%");
+                    }
+                });
+            }
+        });
+
+
+        OSSAsyncTask task = oss2.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+
+                loadCallback.onSuccess(request, ServerApi.OSS_VIDEO_URL + object);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogUtils.dismissDialog();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientException, ServiceException serviceException) {
+                LogUtils.debug("json:" + clientException.getMessage());
+                LogUtils.debug("json:" + serviceException.getErrorCode());
+                LogUtils.debug("json:" + serviceException.getRequestId());
+                LogUtils.debug("json:" + serviceException.getHostId());
+                LogUtils.debug("json:" + serviceException.getRawMessage());
+                showToast("上传失败");
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDialogUtils.dismissDialog();
+                    }
+                });
+                loadCallback.onFailure(request, clientException, serviceException);
+            }
+        });
+
+//        task.waitUntilFinished(); // 等待任务完成
+//        task.cancel(); // 可以取消任务
     }
 
 
@@ -301,43 +384,6 @@ public class PictureActivity extends BaseActivity {
      * 断点续传上传
      */
     public void loadVideo(final String object, String uploadFilePath, final LoadCallback loadCallback) {
-
-
-//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(ServerApi.OSS_STS_VIDEO_URL);
-////
-//        ClientConfiguration conf = new ClientConfiguration();
-//        conf.setConnectionTimeout(15 * 1000); // 连接超时时间，默认15秒
-//        conf.setSocketTimeout(15 * 1000); // Socket超时时间，默认15秒
-//        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
-//        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
-//        oss = new OSSClient(BaseApplication.getAppContext(), "http://hytx-video.oss-cn-hangzhou.aliyuncs.com", credentialProvider, conf);
-
-
-
-        OSSCredentialProvider credentialProvider = new OSSFederationCredentialProvider() {
-            @Override
-            public OSSFederationToken getFederationToken() {
-                try {
-                    URL stsUrl = new URL(ServerApi.OSS_STS_VIDEO_URL);
-                    HttpURLConnection conn = (HttpURLConnection) stsUrl.openConnection();
-                    InputStream input = conn.getInputStream();
-                    String jsonText = IOUtils.readStreamAsString(input, OSSConstants.DEFAULT_CHARSET_NAME);
-                    JSONObject jsonObjs = new JSONObject(jsonText);
-                    LogUtils.debug("json:"+jsonObjs);
-                    String ak = jsonObjs.getString("AccessKeyId");
-                    String sk = jsonObjs.getString("AccessKeySecret");
-                    String token = jsonObjs.getString("SecurityToken");
-                    String expiration = jsonObjs.getString("Expiration");
-                    return new OSSFederationToken(ak, sk, token, expiration);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
-
-        oss = new OSSClient(BaseApplication.getAppContext(), "http://hytx-video.oss-cn-hangzhou.aliyuncs.com",credentialProvider);
-
         //调用OSSAsyncTask cancel()方法时是否需要删除断点记录文件的设置
         String recordDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/oss_record/";
         final File recordDir = new File(recordDirectory);
@@ -371,11 +417,6 @@ public class PictureActivity extends BaseActivity {
         }
 
 
-        try {
-            String url = oss.presignConstrainedObjectURL("hytx-video", object, 30 * 60);
-        } catch (Exception e) {
-
-        }
         // 创建断点上传请求，参数中给出断点记录文件的保存位置，需是一个文件夹的绝对路径
         ResumableUploadRequest request = new ResumableUploadRequest("hytx-video", object, uploadFilePath, recordDirectory);
         //设置false,取消时，不删除断点记录文件，如果不进行设置，默认true，是会删除断点记录文件，下次再进行上传时会重新上传。
@@ -396,7 +437,7 @@ public class PictureActivity extends BaseActivity {
         });
 
 
-        OSSAsyncTask resumableTask = oss.asyncResumableUpload(request, new OSSCompletedCallback<ResumableUploadRequest, ResumableUploadResult>() {
+        OSSAsyncTask ossAsyncTask = oss2.asyncResumableUpload(request, new OSSCompletedCallback<ResumableUploadRequest, ResumableUploadResult>() {
             @Override
             public void onSuccess(ResumableUploadRequest request, ResumableUploadResult result) {
                 Log.d("resumableUpload", "success!");
@@ -441,7 +482,7 @@ public class PictureActivity extends BaseActivity {
             }
         });
         // 可以等待直到任务完成
-        // resumableTask.waitUntilFinished();
+        ossAsyncTask.waitUntilFinished();
     }
 
 

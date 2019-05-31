@@ -2,28 +2,42 @@ package com.huimaibao.app.fragment.web;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ProgressBar;
 
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.ServiceException;
 import com.huimaibao.app.R;
-import com.huimaibao.app.base.BaseActivity;
+import com.huimaibao.app.api.ServerApi;
 import com.huimaibao.app.fragment.home.act.LibraryActivity;
 import com.huimaibao.app.fragment.home.act.MakingCardActivity;
 import com.huimaibao.app.fragment.home.act.PersonalWebActivity;
+import com.huimaibao.app.picture.LoadCallback;
+import com.huimaibao.app.picture.PictureActivity;
 import com.huimaibao.app.share.OnResponseListener;
 import com.huimaibao.app.share.WXShare;
 import com.huimaibao.app.utils.ToastUtils;
+import com.huimaibao.app.video.FileUtils;
+import com.huimaibao.app.video.VideoUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.picture.lib.PictureSelector;
+import com.picture.lib.config.PictureConfig;
+import com.picture.lib.entity.LocalMedia;
+
+import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -36,7 +50,9 @@ import com.youth.xframe.widget.XToast;
 
 import org.json.JSONObject;
 
-public class MessageWebActivity extends BaseActivity {
+import java.util.List;
+
+public class MessageWebActivity extends PictureActivity {
 
     private Context mContext;
     private WebView mWebView;
@@ -52,6 +68,12 @@ public class MessageWebActivity extends BaseActivity {
     private final static int FILE_CHOOSER_RESULT_CODE = 10000;
 
 
+    //拍摄或本地视频路径
+    private String urlPath = "";
+    //上传返回视频链接
+    private String videoPathUrl = "";
+    //private DialogUtils mDialogUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +81,8 @@ public class MessageWebActivity extends BaseActivity {
         setNeedBackGesture(false);
         mContext = this;
         mWxShare = WXShare.Instance(mActivity);
+
+        // mDialogUtils = new DialogUtils(mActivity);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -82,11 +106,14 @@ public class MessageWebActivity extends BaseActivity {
         mWebView = findViewById(R.id.message_web_value);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        // 设置允许JS弹窗
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setSupportZoom(true); //支持缩放
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
 
+        //设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+
+        webSettings.setSupportZoom(true); //支持缩放
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setBlockNetworkImage(false);//解决图片不显示
         webSettings.setDomStorageEnabled(true);//设置适应Html5 //重点是这个设置
@@ -112,6 +139,19 @@ public class MessageWebActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView webView, String s) {
                 super.onPageFinished(webView, s);
+                //mWebView.loadUrl("javascript:callJS(" + "'videoPathUrl'" + ")");
+                //LogUtils.debug("json:" + "javascript:callJS(" + "'videoPathUrl'" + ")");
+                //LogUtils.debug("json:" + "javascript:callJS('" +videoPathUrl  + "')");
+                if (Build.VERSION.SDK_INT < 18) {
+                    mWebView.loadUrl("javascript:androidShowVideo('" + videoPathUrl + "')");
+                } else {
+                    mWebView.evaluateJavascript("javascript:androidShowVideo('" + videoPathUrl + "')", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String value) {
+                            //此处为 js 返回的结果
+                        }
+                    });
+                }
             }
 
         });
@@ -158,13 +198,36 @@ public class MessageWebActivity extends BaseActivity {
                 }
 
             }
+
+//            @Override
+//            public boolean onJsAlert(WebView webView, String s, String s1, JsResult jsResult) {
+//                return super.onJsAlert(webView, s, s1, jsResult);
+//            }
+
+//            @Override
+//            public boolean onJsAlert(WebView webView, String url, String message, final JsResult result) {
+//                AlertDialog.Builder b = new AlertDialog.Builder(mActivity);
+//                b.setTitle("Alert");
+//                b.setMessage(message);
+//                b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        result.confirm();
+//                    }
+//                });
+//                b.setCancelable(false);
+//                b.create().show();
+//                return true;
+//            }
+
         });
 
 
         LogUtils.debug("json:" + mUrl);
-
-        mWebView.loadUrl(mUrl);
+        videoPathUrl = "https://hytx-video.oss-cn-hangzhou.aliyuncs.com/video/190529/1559114634778_604977.quicktime";
+       mWebView.loadUrl(mUrl);
         //mWebView.loadUrl("http://weixin.yuhongrocky.top/#/app/match?materialType=1&materialId=784");
+        //mWebView.loadUrl("file:///android_asset/javascript.html");
 
     }
 
@@ -214,6 +277,17 @@ public class MessageWebActivity extends BaseActivity {
             finish();
         }
 
+        //选择视频
+        @JavascriptInterface
+        public void toVideoView() {   //提供给js调用的方法
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showTakePhoneDialog("视频", 1);
+                }
+            });
+        }
+
         //分享
         @JavascriptInterface
         public void toShareView(String str) {   //提供给js调用的方法
@@ -234,6 +308,7 @@ public class MessageWebActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
+
 
         /**
          * 营销攻略
@@ -284,6 +359,7 @@ public class MessageWebActivity extends BaseActivity {
         }
 
     }
+
 
     /**
      * 分享
@@ -358,15 +434,30 @@ public class MessageWebActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FILE_CHOOSER_RESULT_CODE) {
-            if (null == uploadMessage && null == uploadMessageAboveL) return;
-            Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
-            if (uploadMessageAboveL != null) {
-                onActivityResultAboveL(requestCode, resultCode, data);
-            } else if (uploadMessage != null) {
-                uploadMessage.onReceiveValue(result);
-                uploadMessage = null;
+//        if (requestCode == FILE_CHOOSER_RESULT_CODE) {
+//
+//        }
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case FILE_CHOOSER_RESULT_CODE:
+                    if (null == uploadMessage && null == uploadMessageAboveL) return;
+                    Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
+                    if (uploadMessageAboveL != null) {
+                        onActivityResultAboveL(requestCode, resultCode, data);
+                    } else if (uploadMessage != null) {
+                        uploadMessage.onReceiveValue(result);
+                        uploadMessage = null;
+                    }
+                    break;
+                case PictureConfig.CHOOSE_REQUEST:
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    for (int i = 0; i < selectList.size(); i++) {
+                        urlPath = selectList.get(i).getPath();
+                    }
+                    upLoadVideo();
+                    break;
             }
+
         }
     }
 
@@ -419,5 +510,76 @@ public class MessageWebActivity extends BaseActivity {
 //            }
 //        }
 //    }
+
+    /**
+     * 上传视频
+     */
+    private void upLoadVideo() {
+        try {
+            if (urlPath.length() < 5) {
+                showToast("选择视频失败,请重新选择");
+                return;
+            }
+
+            if (FileUtils.getFileOrFilesSize(urlPath, 3) > 300) {
+                showToast("当前视频文件容量超过300MB，请重新选择视频文件!");
+            } else {
+                mDialogUtils.showLoadingDialog("压缩中...");
+
+                FileUtils.getCompressorVideo(mActivity, urlPath, new VideoUtils.UploadSuccess() {
+                    @Override
+                    public void success(final String Uri) {
+                        mDialogUtils.dismissDialog();
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!Uri.isEmpty()) {
+                                    final String object = setVideoUrl();
+                                    putLoadVideo(object, Uri, new LoadCallback() {
+                                        @Override
+                                        public void onSuccess(Object o, Object result) {
+                                            mActivity.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    showToast("上传成功");
+                                                    videoPathUrl = ServerApi.OSS_VIDEO_URL + object;
+                                                    LogUtils.debug("json:" + videoPathUrl);
+                                                    if (Build.VERSION.SDK_INT < 18) {
+                                                        mWebView.loadUrl("javascript:androidShowVideo('" + videoPathUrl + "')");
+                                                    } else {
+                                                        mWebView.evaluateJavascript("javascript:androidShowVideo('" + videoPathUrl + "')", new ValueCallback<String>() {
+                                                            @Override
+                                                            public void onReceiveValue(String value) {
+                                                                //此处为 js 返回的结果
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            });
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Object o, ClientException clientException, ServiceException serviceException) {
+                                        }
+                                    });
+
+
+                                } else {
+                                    showToast("压缩失败,请重新选择");
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+        } catch (Exception e) {
+            Log.d("pictureUrl:", e.toString());
+            mDialogUtils.dismissDialog();
+            showToast("选择视频失败,请重新选择");
+        }
+    }
+
 
 }
