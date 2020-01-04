@@ -443,8 +443,15 @@ public class DialogUtils {
     // private XColorDrawable drawable;
     public void showLoadingDialog(String msg) {
         XColorDrawable drawable = new XColorDrawable();
+        TextView loadingMessage;
         if (dialog != null) {
             if (dialog.isShowing()) {
+                try {
+                    loadingMessage = dialog.findViewById(R.id.xframe_loading_message);
+                    loadingMessage.setText(msg);
+                } catch (Exception e) {
+                }
+
                 return;
             }
         }
@@ -468,7 +475,7 @@ public class DialogUtils {
         // 设置背景gif图片资源
         gif.setMovieResource(R.raw.load_gif_icon);
 
-        TextView loadingMessage = dialog.findViewById(R.id.xframe_loading_message);
+        loadingMessage = dialog.findViewById(R.id.xframe_loading_message);
         // ProgressBar progressBar =  dialog.findViewById(com.youth.xframe.R.id.xframe_loading_progressbar);
         LinearLayout loadingView = dialog.findViewById(R.id.xframe_loading_view);
         loadingMessage.setPadding(15, 0, 0, 0);

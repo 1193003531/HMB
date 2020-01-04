@@ -142,16 +142,16 @@ public class MessageWebActivity extends PictureActivity {
                 //mWebView.loadUrl("javascript:callJS(" + "'videoPathUrl'" + ")");
                 //LogUtils.debug("json:" + "javascript:callJS(" + "'videoPathUrl'" + ")");
                 //LogUtils.debug("json:" + "javascript:callJS('" +videoPathUrl  + "')");
-                if (Build.VERSION.SDK_INT < 18) {
-                    mWebView.loadUrl("javascript:androidShowVideo('" + videoPathUrl + "')");
-                } else {
-                    mWebView.evaluateJavascript("javascript:androidShowVideo('" + videoPathUrl + "')", new ValueCallback<String>() {
-                        @Override
-                        public void onReceiveValue(String value) {
-                            //此处为 js 返回的结果
-                        }
-                    });
-                }
+//                if (Build.VERSION.SDK_INT < 18) {
+//                    mWebView.loadUrl("javascript:androidShowVideo('" + videoPathUrl + "')");
+//                } else {
+//                    mWebView.evaluateJavascript("javascript:androidShowVideo('" + videoPathUrl + "')", new ValueCallback<String>() {
+//                        @Override
+//                        public void onReceiveValue(String value) {
+//                            //此处为 js 返回的结果
+//                        }
+//                    });
+//                }
             }
 
         });

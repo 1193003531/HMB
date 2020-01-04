@@ -50,6 +50,8 @@ public class PictureActivity extends BaseActivity {
 
     public DialogUtils mDialogUtils;
     public OSS oss, oss2;
+    private int progress = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,12 +244,11 @@ public class PictureActivity extends BaseActivity {
 
         // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
-            String progress = "0";
 
             @Override
             public void onProgress(PutObjectRequest request, final long currentSize, final long totalSize) {
                 LogUtils.debug("json:", "currentSize: " + currentSize + " totalSize: " + totalSize);
-                progress = "" + (int) ((XStringUtils.m1((currentSize * 1.0 / totalSize) + "")) * 100);
+                progress = (int) ((XStringUtils.m1((currentSize * 1.0 / totalSize) + "")) * 100);
                 //LogUtils.debug("json:" + progress);
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
@@ -312,8 +313,6 @@ public class PictureActivity extends BaseActivity {
     /**
      * 视频上传
      */
-
-
     public void putLoadVideo(final String object, String uploadFilePath, final LoadCallback loadCallback) {
         //inits();
 
@@ -323,13 +322,11 @@ public class PictureActivity extends BaseActivity {
         // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
 
-            String progress = "0";
 
             @Override
             public void onProgress(PutObjectRequest request, final long currentSize, final long totalSize) {
                 //LogUtils.debug("json:", "currentSize: " + currentSize + " totalSize: " + totalSize);
-
-                progress = "" + (int) ((XStringUtils.m1((currentSize * 1.0 / totalSize) + "")) * 100);
+                progress = (int) ((XStringUtils.m1((currentSize * 1.0 / totalSize) + "")) * 100);
                 LogUtils.debug("json:" + progress);
                 mActivity.runOnUiThread(new Runnable() {
                     @Override

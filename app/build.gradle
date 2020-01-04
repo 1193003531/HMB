@@ -81,6 +81,6 @@ dependencies {
     //压缩视频
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
     //lottie动画
-    implementation 'com.airbnb.android:lottie:3.0.3'
+    //implementation 'com.airbnb.android:lottie:3.0.3'
 
 }
